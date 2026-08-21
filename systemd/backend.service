@@ -1,0 +1,58 @@
+# ============================================================================
+# FastAPI Backend Systemd Service
+# ============================================================================
+# : /etc/systemd/system/vidgen-backend.service
+# :  FastAPI  API
+# ============================================================================
+
+[Unit]
+Description=Vidgen Backend API (FastAPI)
+Documentation=https://fastapi.tiangolo.com/
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# （）
+WorkingDirectory=/path/to/vidgen/backend
+
+Environment="PATH=/path/to/vidgen/backend/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="LANG=en_US.UTF-8"
+Environment="LC_ALL=en_US.UTF-8"
+
+#  .env （）
+EnvironmentFile=/path/to/vidgen/backend/.env
+
+# Start
+#  Gunicorn + Uvicorn Workers
+ExecStart=/path/to/vidgen/backend/venv/bin/gunicorn app.main:app \
+    --workers 4 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 127.0.0.1:8000 \
+    --timeout 120 \
+    --access-logfile /var/log/vidgen/backend-access.log \
+    --error-logfile /var/log/vidgen/backend-error.log \
+    --log-level info \
+    --preload
+
+#  Uvicorn（，）
+# ExecStart=/path/to/vidgen/backend/venv/bin/uvicorn app.main:app \
+#     --host 127.0.0.1 \
+#     --port 8000 \
+#     --log-level info
+
+# Restart
+Restart=always
+RestartSec=3
+
+LimitNOFILE=65536
+
+# （）
+# PrivateTmp=true
+# NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,102 @@
+# VidGen Project Cursor AI Rules
+
+## Language & Copywriting Guidelines
+
+### Frontend (User-facing)
+- **English Only**: All frontend interfaces, copywriting, comments, variables, and translation key names must be in English.
+- User-visible notifications, labels, error messages, empty states, etc. must be in English.
+- Default language for internationalization (i18n) is English.
+
+### Admin Panel (Admin-facing)
+- Admin operations backend routes (`backend/app/routes/admin*.py`) and Admin Panel app (`admin/`) preserve Chinese for now for future i18n adaptation.
+
+## Python Enum Conventions (Important)
+
+### Enum Definition Guidelines
+- **Enum Member Names (name) MUST be uppercase**: `PENDING`, `RESOLVED`, `DISMISSED`
+- **Enum Values (value) MUST be uppercase**: `PENDING = "PENDING"` (not `PENDING = "pending"`)
+- **Do NOT use `values_callable` in SQLAlchemy Enum columns**: Let SQLAlchemy use default behavior (sending enum name to database).
+
+### Correct Example
+```python
+class ReportStatus(str, Enum):
+    """Report status enum"""
+    PENDING = "PENDING"      # ✅ Correct: name and value are uppercase
+    RESOLVED = "RESOLVED"    # ✅ Correct
+    DISMISSED = "DISMISSED"  # ✅ Correct
+```
+
+### Incorrect Example (Do NOT do this)
+```python
+class ReportStatus(str, Enum):
+    PENDING = "pending"      # ❌ Incorrect: lowercase value
+    pending = "PENDING"      # ❌ Incorrect: lowercase name
+    PENDING = "Pending"      # ❌ Incorrect: mixed case value
+```
+
+### Usage in SQLAlchemy Models
+```python
+# ✅ Correct: do not use values_callable
+status = Column(SQLEnum(ReportStatus), default=ReportStatus.PENDING, nullable=False)
+
+# ❌ Incorrect: do not use values_callable
+# status = Column(SQLEnum(ReportStatus, values_callable=lambda obj: [e.value for e in obj]), ...)
+```
+
+### Database Migration Guidelines
+- PostgreSQL enum type values must use **uppercase**:
+  ```sql
+  CREATE TYPE reportstatus AS ENUM ('PENDING', 'RESOLVED', 'DISMISSED')
+  ```
+- Migration scripts should convert existing lowercase values to uppercase.
+- Use `UPPER()` function to convert existing data.
+
+### API Layer Handling
+- API request parameters can accept lowercase (for backward compatibility), but database storage is strictly uppercase.
+- API response enum values are recommended to use lowercase via `.value` property for developer ergonomics.
+- Use `EnumType(value)` or `EnumType[value.upper()]` in route handlers.
+
+### Rationale
+1. **Consistency**: Both name and value are uppercase, avoiding ambiguity.
+2. **SQLAlchemy Default Behavior**: No `values_callable` required, cleaner codebase.
+3. **Database Uniformity**: Enum values stored as uppercase prevent case mismatch bugs.
+
+## Other Code Standards
+
+### Python Code Style
+- Use Type Hints.
+- Follow PEP 8 style guide.
+- Format code with `black`.
+- Run type checks with `mypy`.
+
+### Database Models
+- All models inherit from `Base`.
+- Use SQLAlchemy ORM; avoid raw SQL.
+- Timestamps use `DateTime(timezone=True)`.
+- Soft deletes use `deleted_at` field.
+
+### Python Time / Timezone Handling
+- **Must use for current UTC time**: `datetime.now(timezone.utc)`
+- **Import**: `from datetime import datetime, timezone`
+- **DO NOT use** `datetime.utcnow()`: Returns naive datetime which PostgreSQL interprets as local time.
+- **Correct**: `report.resolved_at = datetime.now(timezone.utc)`
+- **Incorrect**: `report.resolved_at = datetime.utcnow()`  # ❌
+
+### Database Migration Workflow
+- **⚠️ NEVER run migrations automatically**: `alembic upgrade head` must be manually executed by developers.
+- **Backup database before migrating**: Always backup production database before running migrations.
+- **Migration file naming convention**: Use descriptive names, e.g. `an46292392ft_add_reports_table.py`.
+- **Migration file location**: Place all files in `backend/migrations/versions/`.
+
+### API Routes
+- Use FastAPI dependency injection (`Depends`).
+- Use standardized `success_response` and `error_response` formats.
+- Use Pydantic models for request/response validation.
+
+### Frontend Code
+- Use Vue 3 Composition API.
+- TypeScript type definitions.
+- Use `useAdminApi` or `useApi` composables for API calls.
+- Use `useToast` for notifications.
+- **Icons**: Prefer Lucide icons (e.g. `lucide-vue-next`).
+- Interface Copywriting: English only.

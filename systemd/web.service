@@ -1,0 +1,48 @@
+# ============================================================================
+# Nuxt Web (C ) Systemd Service
+# ============================================================================
+# : /etc/systemd/system/vidgen-web.service
+# :  Nuxt.js C  (web)
+# ============================================================================
+
+[Unit]
+Description=Vidgen Web (Nuxt.js C-end)
+Documentation=https://nuxt.com/
+After=network.target vidgen-backend.service
+Wants=vidgen-backend.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# （）
+WorkingDirectory=/path/to/vidgen/web
+
+Environment="PATH=/usr/bin:/bin:/usr/local/bin"
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+Environment="HOST=127.0.0.1"
+
+#  .env （）
+EnvironmentFile=/path/to/vidgen/web/.env
+
+# Start
+#  1:  npm（，）
+ExecStart=/usr/bin/npm run preview
+
+#  2:  Node（， npm run build）
+# ExecStart=/usr/bin/node /path/to/vidgen/web/.output/server/index.mjs
+
+#  3:  Worker（）
+# ExecStart=/usr/bin/node /path/to/vidgen/web/.output/server/index.mjs --workers=4
+
+# Restart
+Restart=always
+RestartSec=3
+
+LimitNOFILE=65536
+# MemoryLimit=1G  # ：
+
+[Install]
+WantedBy=multi-user.target

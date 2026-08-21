@@ -1,0 +1,42 @@
+# ============================================================================
+# Flower Systemd Service
+# ============================================================================
+# : /etc/systemd/system/flower.service
+# : Celery  Web
+# : http://localhost:5555
+# ============================================================================
+
+[Unit]
+Description=Flower - Celery Monitoring Tool for Vidgen
+Documentation=https://flower.readthedocs.io/
+After=network.target celery-worker.service
+Wants=celery-worker.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# （）
+WorkingDirectory=/path/to/vidgen/backend
+
+Environment="PATH=/path/to/vidgen/backend/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="LANG=en_US.UTF-8"
+Environment="LC_ALL=en_US.UTF-8"
+
+#  .env （）
+# EnvironmentFile=/path/to/vidgen/backend/.env
+
+# Start
+ExecStart=/path/to/vidgen/backend/venv/bin/celery -A app.celery_app flower \
+    --port=5555 \
+    --basic_auth=admin:change_this_password
+
+# Restart
+Restart=always
+RestartSec=10
+
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,43 @@
+# ============================================================================
+# Celery Beat Systemd Service
+# ============================================================================
+# : /etc/systemd/system/celery-beat.service
+# :  Celery Beat
+# :  Beat ，
+# ============================================================================
+
+[Unit]
+Description=Celery Beat Scheduler for Vidgen
+Documentation=https://docs.celeryq.dev/
+After=network.target redis.service
+Wants=redis.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# （）
+WorkingDirectory=/path/to/vidgen/backend
+
+Environment="PATH=/path/to/vidgen/backend/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="LANG=en_US.UTF-8"
+Environment="LC_ALL=en_US.UTF-8"
+
+#  .env （）
+# EnvironmentFile=/path/to/vidgen/backend/.env
+
+# Start
+ExecStart=/path/to/vidgen/backend/venv/bin/celery -A app.celery_app beat \
+    --loglevel=info \
+    --pidfile=/var/run/celery/beat.pid \
+    --logfile=/var/log/celery/beat.log
+
+# Restart
+Restart=always
+RestartSec=10
+
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

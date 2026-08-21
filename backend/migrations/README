@@ -1,0 +1,33 @@
+# Database Migrations (Alembic)
+
+ Alembic 。
+
+## 🚀
+
+
+：
+
+```bash
+cd backend
+python -m alembic upgrade head
+```
+
+
+ `app/models/` ，：
+
+```bash
+cd backend
+python -m alembic revision --autogenerate -m ""
+```
+
+ `versions/` 。。
+
+
+- `env.py`: Alembic ，。
+- `script.py.mako`: 。
+- `versions/`: （ `0001_initial_migration.py`）。
+
+
+ Alembic ，，， `upgrade()`  `downgrade()`  `op.execute()`  SQL。
+
+ `versions/1e46292392d6_initial_migration.py`。

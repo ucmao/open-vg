@@ -1,0 +1,779 @@
+<template>
+  <div class="bg-gray-50">
+    <!-- Header -->
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-900">NSFW</h2>
+        <p class="text-gray-600 mt-1">{{ activeTab === 'pending' ? 'NSFW，' : 'View' }}</p>
+      </div>
+      <div v-if="activeTab === 'pending'" class="flex items-center gap-3">
+        <!-- Tag Filter -->
+        <select
+          v-model="selectedTag"
+          @change="handleTagChange"
+          class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        >
+          <option value=""></option>
+          <option value="VIOLENCE"></option>
+          <option value="PORNOGRAPHY"></option>
+          <option value="ILLEGAL"></option>
+          <option value="OTHER"></option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-1 mb-6 border-b border-gray-200">
+      <button
+        type="button"
+        @click="setTab('pending')"
+        :class="[
+          'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
+          activeTab === 'pending' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+        ]"
+      >
+
+      </button>
+      <button
+        type="button"
+        @click="setTab('logs')"
+        :class="[
+          'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
+          activeTab === 'logs' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+        ]"
+      >
+
+      </button>
+    </div>
+
+    <!-- Tab:  -->
+    <!-- Loading State -->
+    <div v-if="activeTab === 'pending' && loading && works.length === 0" class="flex justify-center items-center py-20">
+      <div class="text-center">
+        <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-gray-600">...</p>
+      </div>
+    </div>
+
+    <!-- Works List -->
+    <div v-else-if="activeTab === 'pending' && works.length > 0" class="space-y-4">
+      <div
+        v-for="work in works"
+        :key="work.id"
+        class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
+      >
+        <div class="flex gap-6">
+          <!-- Work Image/Video -->
+          <div class="flex-shrink-0">
+            <div class="w-32 h-32 rounded-lg overflow-hidden bg-gray-100 relative">
+              <!-- Image or Video Thumbnail -->
+              <img
+                v-if="getWorkImageUrl(work)"
+                :src="getWorkImageUrl(work)"
+                :alt="work.title || 'Work'"
+                class="w-full h-full object-cover"
+                @error="handleImageError"
+              />
+              <!-- Video Player -->
+              <video
+                v-else-if="isVideoWork(work) && getWorkVideoUrl(work)"
+                :src="getWorkVideoUrl(work)"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+              ></video>
+              <!-- Fallback Placeholder -->
+              <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
+                <Video v-if="isVideoWork(work)" class="w-12 h-12" />
+                <ImageIcon v-else class="w-12 h-12" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Work Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  {{ work.title || '' }}
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    {{ work.type }}
+                  </span>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    {{ work.model_name }}
+                  </span>
+                  <!-- NSFW Tags -->
+                  <span
+                    v-for="tag in work.nsfw_tags || []"
+                    :key="tag"
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                    :class="{
+                      'bg-red-100 text-red-800': tag === 'VIOLENCE',
+                      'bg-pink-100 text-pink-800': tag === 'PORNOGRAPHY',
+                      'bg-orange-100 text-orange-800': tag === 'ILLEGAL',
+                      'bg-gray-100 text-gray-800': !['VIOLENCE', 'PORNOGRAPHY', 'ILLEGAL'].includes(tag)
+                    }"
+                  >
+                    {{ getTagLabel(tag) }}
+                  </span>
+                  <span
+                    v-if="work.auto_moderated"
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"
+                  >
+
+                  </span>
+                </div>
+                <div class="text-sm text-gray-600 mb-3">
+                  <p class="mb-1"><span class="font-medium">Notice：</span> {{ truncateText(work.prompt, 150) }}</p>
+                  <p v-if="work.negative_prompt" class="mb-1">
+                    <span class="font-medium">Notice：</span> {{ truncateText(work.negative_prompt, 100) }}
+                  </p>
+                  <p class="text-gray-500">
+                    ： <span class="font-medium">{{ work.user?.nickname || '' }}</span>
+                    {{ formatDate(work.created_at) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3 mt-4">
+              <button
+                @click="handleApprove(work.id)"
+                :disabled="actionLoading === work.id"
+                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                <Check class="w-4 h-4" />
+
+              </button>
+              <button
+                @click="showRejectModal(work)"
+                :disabled="actionLoading === work.id"
+                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                <X class="w-4 h-4" />
+
+              </button>
+              <a
+                :href="getFrontendUrl(work.url_slug ? `/prompt/${work.url_slug}` : (work.short_code ? `/prompt/${work.short_code}` : '/explore'))"
+                target="_blank"
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
+              >
+                <ExternalLink class="w-4 h-4" />
+                View
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div v-if="total > pageSize" class="flex justify-center items-center gap-2 mt-6">
+        <button
+          @click="loadPage(page - 1)"
+          :disabled="page === 1 || loading"
+          class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+
+        </button>
+        <span class="text-sm text-gray-600">
+           {{ page }} ， {{ Math.ceil(total / pageSize) }}
+        </span>
+        <button
+          @click="loadPage(page + 1)"
+          :disabled="page >= Math.ceil(total / pageSize) || loading"
+          class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State (Pending) -->
+    <div v-else-if="activeTab === 'pending'" class="text-center py-20 bg-white border border-gray-200 rounded-lg">
+      <CheckCircle class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+      <h3 class="text-lg font-medium text-gray-900 mb-2">！</h3>
+      <p class="text-gray-600">NSFW。</p>
+    </div>
+
+    <!-- Tab:  -->
+    <template v-if="activeTab === 'logs'">
+      <!-- Logs Filters -->
+      <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+            <select
+              v-model="filters.moderation_type"
+              @change="pageLogs = 1; fetchLogs()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option value=""></option>
+              <option value="NSFW">NSFW</option>
+              <option value="SHARE_REVIEW"></option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">ActionType</label>
+            <select
+              v-model="filters.action_type"
+              @change="pageLogs = 1; fetchLogs()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option value=""></option>
+              <option value="AUTO_BLOCKED"></option>
+              <option value="AUTO_FLAGGED"></option>
+              <option value="MANUAL_FLAGGED"></option>
+              <option value="AUTO_APPROVED"></option>
+              <option value="MANUAL_APPROVED"></option>
+              <option value="MANUAL_REJECTED"></option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">ID</label>
+            <input
+              v-model.number="filters.work_id"
+              type="number"
+              placeholder="ID"
+              @keyup.enter="pageLogs = 1; fetchLogs()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            />
+          </div>
+          <div class="flex items-end">
+            <button
+              @click="clearFilters"
+              class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Loading -->
+      <div v-if="loadingLogs && logs.length === 0" class="flex justify-center items-center py-20 bg-white border border-gray-200 rounded-lg">
+        <div class="text-center">
+          <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p class="text-gray-600">...</p>
+        </div>
+      </div>
+
+      <!-- Logs Table -->
+      <div v-else-if="logs.length > 0" class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="w-12 px-4 py-3 text-left">
+                  <input
+                    type="checkbox"
+                    :checked="selectedAllLogs"
+                    @change="toggleSelectAllLogs"
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                </th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">ID</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">/Title</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Status</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40"></th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Action</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40"></th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Action</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <template v-for="log in logs" :key="log.id">
+                <tr class="hover:bg-gray-50 cursor-pointer transition-colors" @click="toggleExpandLog(log.id)">
+                  <td class="px-4 py-3 whitespace-nowrap" @click.stop>
+                    <input
+                      type="checkbox"
+                      :checked="selectedLogs.includes(log.id)"
+                      @change="toggleSelectLog(log.id)"
+                      @click.stop
+                      class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                  </td>
+                  <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">#{{ log.work_id }}</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">
+                    <div class="max-w-[200px] truncate" :title="log.work?.title || log.work?.share_name || ''">
+                      {{ log.work?.title || log.work?.share_name || '' }}
+                    </div>
+                  </td>
+                  <td class="px-4 py-3 whitespace-nowrap">
+                    <div class="flex flex-col gap-1">
+                      <span
+class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                        :class="{ 'bg-blue-100 text-blue-800': log.moderation_type === 'NSFW', 'bg-green-100 text-green-800': log.moderation_type === 'SHARE_REVIEW' }"
+>
+                        {{ log.moderation_type === 'NSFW' ? 'NSFW' : '' }}
+                      </span>
+                      <span
+class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                        :class="{
+                          'bg-red-100 text-red-800': log.action_type === 'AUTO_BLOCKED' || log.action_type === 'MANUAL_REJECTED',
+                          'bg-yellow-100 text-yellow-800': log.action_type === 'MANUAL_FLAGGED' || log.action_type === 'AUTO_FLAGGED',
+                          'bg-green-100 text-green-800': log.action_type === 'AUTO_APPROVED' || log.action_type === 'MANUAL_APPROVED'
+                        }"
+>
+                        {{ getActionLabel(log.action_type) }}
+                      </span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <div v-if="log.reason" class="max-w-[160px] truncate" :title="log.reason">{{ log.reason }}</div>
+                    <span v-else class="text-gray-400">-</span>
+                  </td>
+                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-600">
+                    {{ log.moderator ? (log.moderator.nickname || log.moderator.username) : '' }}
+                  </td>
+                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-600">{{ formatDateShort(log.created_at) }}</td>
+                  <td class="px-4 py-3 whitespace-nowrap text-sm" @click.stop>
+                    <button @click="toggleExpandLog(log.id)" class="text-blue-600 hover:text-blue-800 font-medium">
+                      {{ expandedLogs.includes(log.id) ? '' : 'View' }}
+                    </button>
+                  </td>
+                </tr>
+                <!-- Expanded Row -->
+                <tr v-if="expandedLogs.includes(log.id)" class="bg-gray-50">
+                  <td colspan="8" class="px-4 py-6">
+                    <div class="space-y-4">
+                      <div v-if="log.work" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                          <div>
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2"></h4>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 space-y-2">
+                              <div class="flex justify-between"><span class="text-sm text-gray-600">ID:</span><span class="text-sm font-medium text-gray-900">#{{ log.work_id }}</span></div>
+                              <div class="flex justify-between"><span class="text-sm text-gray-600">Title:</span><span class="text-sm font-medium text-gray-900">{{ log.work.title || log.work.share_name || '' }}</span></div>
+                              <div v-if="log.work.category" class="flex justify-between"><span class="text-sm text-gray-600">Category:</span><span class="text-sm font-medium text-gray-900">{{ log.work.category }}</span></div>
+                              <div v-if="log.work.user" class="flex justify-between"><span class="text-sm text-gray-600">:</span><span class="text-sm font-medium text-gray-900">{{ log.work.user.nickname || log.work.user.handle }}</span></div>
+                            </div>
+                          </div>
+                          <div v-if="log.work.prompt">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2">Prompt</h4>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4"><p class="text-sm text-gray-700 whitespace-pre-wrap break-words">{{ log.work.prompt }}</p></div>
+                          </div>
+                          <div v-if="log.work.negative_prompt">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2">Negative Prompt</h4>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4"><p class="text-sm text-gray-700 whitespace-pre-wrap break-words">{{ log.work.negative_prompt }}</p></div>
+                          </div>
+                        </div>
+                        <div class="space-y-4">
+                          <div v-if="log.work.file_url">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2"></h4>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4">
+                              <img v-if="log.work.type === 'text-to-image' || log.work.type === 'image-to-image' || log.work.type === 'text2img' || log.work.type === 'img2img'" :src="log.work.file_url" :alt="log.work.title || 'Work preview'" class="w-full rounded-lg object-cover max-h-96" />
+                              <video v-else-if="log.work.type === 'text-to-video' || log.work.type === 'image-to-video' || log.work.type === 'text2video' || log.work.type === 'img2video'" :src="log.work.file_url" controls class="w-full rounded-lg max-h-96" />
+                            </div>
+                          </div>
+                          <div v-if="log.nsfw_tags && log.nsfw_tags.length > 0">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2">NSFW</h4>
+                            <div class="flex flex-wrap gap-2">
+                              <span
+v-for="tag in log.nsfw_tags" :key="tag" class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium"
+                                :class="{ 'bg-red-100 text-red-800': tag.toUpperCase() === 'VIOLENCE', 'bg-pink-100 text-pink-800': tag.toUpperCase() === 'PORNOGRAPHY', 'bg-orange-100 text-orange-800': tag.toUpperCase() === 'ILLEGAL', 'bg-gray-100 text-gray-800': !['VIOLENCE', 'PORNOGRAPHY', 'ILLEGAL'].includes(tag.toUpperCase()) }"
+>
+                                {{ getTagLabelLog(tag) }}
+                              </span>
+                            </div>
+                          </div>
+                          <div v-if="log.flagged_keywords && log.flagged_keywords.length > 0">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2"></h4>
+                            <div class="flex flex-wrap gap-2">
+                              <span
+v-for="(kw, idx) in log.flagged_keywords" :key="idx" class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium"
+                                :class="{ 'bg-red-100 text-red-800 border border-red-300': kw.severity?.toUpperCase() === 'HIGH', 'bg-yellow-100 text-yellow-800 border border-yellow-300': kw.severity?.toUpperCase() === 'MEDIUM', 'bg-blue-100 text-blue-800 border border-blue-300': kw.severity?.toUpperCase() === 'LOW', 'bg-gray-100 text-gray-800': !kw.severity }"
+>
+                                {{ kw.word }}<span v-if="kw.severity" class="ml-1 text-[10px]">({{ getSeverityLabel(kw.severity) }})</span>
+                              </span>
+                            </div>
+                          </div>
+                          <div v-if="log.reason">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2"></h4>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4"><p class="text-sm text-gray-700 whitespace-pre-wrap">{{ log.reason }}</p></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex justify-end gap-2 pt-4 border-t border-gray-200">
+                        <NuxtLink v-if="log.work_id" :to="`/users/works?work_id=${log.work_id}`" class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors">View</NuxtLink>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        <!-- Logs Pagination -->
+        <div v-if="totalLogs > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-gray-600"> {{ (pageLogs - 1) * pageSizeLogs + 1 }}  {{ Math.min(pageLogs * pageSizeLogs, totalLogs) }} ， {{ totalLogs }} </span>
+            <select v-model="pageSizeLogs" @change="pageLogs = 1; fetchLogs()" class="px-2 py-1 border rounded text-sm outline-none focus:ring-2 focus:ring-blue-500">
+              <option :value="10">10</option>
+              <option :value="20">20</option>
+              <option :value="50">50</option>
+              <option :value="100">100</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <button @click="loadPageLogs(1)" :disabled="pageLogs === 1 || loadingLogs" class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" title="">
+              <ChevronsLeft class="w-4 h-4" />
+            </button>
+            <button @click="loadPageLogs(pageLogs - 1)" :disabled="pageLogs === 1 || loadingLogs" class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"></button>
+            <span class="text-sm text-gray-600"> <input v-model.number="pageInputLogs" @keyup.enter="handlePageInputLogs" @blur="handlePageInputLogs" type="number" :min="1" :max="Math.ceil(totalLogs / pageSizeLogs)" class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500" /> / {{ Math.ceil(totalLogs / pageSizeLogs) }} </span>
+            <button @click="loadPageLogs(pageLogs + 1)" :disabled="pageLogs >= Math.ceil(totalLogs / pageSizeLogs) || loadingLogs" class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"></button>
+            <button @click="loadPageLogs(Math.ceil(totalLogs / pageSizeLogs))" :disabled="pageLogs >= Math.ceil(totalLogs / pageSizeLogs) || loadingLogs" class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" title="">
+              <ChevronsRight class="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Empty -->
+      <div v-else class="text-center py-20 bg-white border border-gray-200 rounded-lg">
+        <FileText class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+        <h3 class="text-lg font-medium text-gray-900 mb-2"></h3>
+        <p class="text-gray-600">。</p>
+      </div>
+    </template>
+
+    <!-- Reject Modal -->
+    <div
+      v-if="rejectModalWork"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      @click.self="closeRejectModal"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4"></h3>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+             <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            v-model="rejectReason"
+            rows="4"
+            :class="['w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none', rejectReasonError ? 'border-red-500' : 'border-gray-300']"
+            placeholder="e.g. Violation of content policy (English only)"
+          ></textarea>
+          <p v-if="rejectReasonError" class="mt-1 text-xs text-red-500">{{ rejectReasonError }}</p>
+          <p v-else class="mt-1 text-xs text-gray-500"></p>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button
+            @click="closeRejectModal"
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            @click="handleReject"
+            :disabled="!rejectReason.trim() || actionLoading === rejectModalWork.id"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, reactive, computed } from 'vue'
+import { Video, ImageIcon, Check, X, ExternalLink, CheckCircle, ChevronsLeft, ChevronsRight, FileText } from 'lucide-vue-next'
+import { validateReason } from '~/utils/reasonValidation'
+import { useFrontendUrl } from '~/composables/useFrontendUrl'
+
+definePageMeta({
+  layout: 'default'
+})
+
+useHead({
+  title: 'NSFW',
+  meta: [
+    { name: 'robots', content: 'noindex, nofollow' }
+  ]
+})
+
+const route = useRoute()
+const router = useRouter()
+const api = useAdminApi()
+const { toast } = useToast()
+const { confirm } = useConfirm()
+const { requireAuth } = useAdminAuth()
+const { getWorkImageUrl, getWorkVideoUrl, isVideoWork } = useWorkMedia()
+const { loadBaseUrl, getFrontendUrl } = useFrontendUrl()
+
+const activeTab = ref<'pending' | 'logs'>('pending')
+
+onMounted(() => {
+  loadBaseUrl()
+  requireAuth()
+  const tab = route.query.tab as string
+  if (tab === 'logs') {
+    activeTab.value = 'logs'
+    fetchLogs()
+  } else {
+    fetchWorks()
+  }
+})
+
+const works = ref<any[]>([])
+const loading = ref(false)
+const page = ref(1)
+const pageSize = ref(20)
+const total = ref(0)
+const actionLoading = ref<number | null>(null)
+const rejectModalWork = ref<any>(null)
+const rejectReason = ref('')
+const rejectReasonError = ref('')
+const selectedTag = ref('')
+
+const logs = ref<any[]>([])
+const loadingLogs = ref(false)
+const pageLogs = ref(1)
+const pageSizeLogs = ref(20)
+const totalLogs = ref(0)
+const pageInputLogs = ref(1)
+const expandedLogs = ref<number[]>([])
+const selectedLogs = ref<number[]>([])
+const filters = reactive({
+  moderation_type: '',
+  action_type: '',
+  work_id: null as number | null
+})
+const selectedAllLogs = computed(() => logs.value.length > 0 && selectedLogs.value.length === logs.value.length)
+function toggleSelectAllLogs() {
+  if (selectedAllLogs.value) selectedLogs.value = []
+  else selectedLogs.value = logs.value.map(log => log.id)
+}
+function toggleSelectLog(logId: number) {
+  const index = selectedLogs.value.indexOf(logId)
+  if (index > -1) selectedLogs.value.splice(index, 1)
+  else selectedLogs.value.push(logId)
+}
+function toggleExpandLog(logId: number) {
+  const index = expandedLogs.value.indexOf(logId)
+  if (index > -1) expandedLogs.value.splice(index, 1)
+  else expandedLogs.value.push(logId)
+}
+async function fetchLogs() {
+  try {
+    loadingLogs.value = true
+    const params: any = { page: pageLogs.value, page_size: pageSizeLogs.value }
+    if (filters.moderation_type) params.moderation_type = filters.moderation_type
+    if (filters.action_type) params.action_type = filters.action_type
+    if (filters.work_id) params.work_id = filters.work_id
+    const response = await api.get('/api/admin/moderation/logs', { params })
+    if (response.success) {
+      logs.value = response.data.items || []
+      totalLogs.value = response.data.pagination?.total ?? response.data.total ?? 0
+      pageInputLogs.value = pageLogs.value
+      expandedLogs.value = []
+      selectedLogs.value = []
+    }
+  } catch (error: any) {
+    console.error('Failed to fetch logs:', error)
+    toast.error(error.message || 'failed')
+  } finally {
+    loadingLogs.value = false
+  }
+}
+function loadPageLogs(newPage: number) {
+  if (newPage < 1) newPage = 1
+  const maxPage = Math.ceil(totalLogs.value / pageSizeLogs.value)
+  if (newPage > maxPage && maxPage > 0) newPage = maxPage
+  pageLogs.value = newPage
+  pageInputLogs.value = newPage
+  fetchLogs()
+}
+function handlePageInputLogs() {
+  const newPage = parseInt(String(pageInputLogs.value)) || 1
+  loadPageLogs(newPage)
+}
+function clearFilters() {
+  filters.moderation_type = ''
+  filters.action_type = ''
+  filters.work_id = null
+  pageLogs.value = 1
+  pageInputLogs.value = 1
+  fetchLogs()
+}
+function getActionLabel(actionType: string) {
+  const labels: Record<string, string> = {
+    AUTO_BLOCKED: '',
+    AUTO_FLAGGED: '',
+    MANUAL_FLAGGED: '',
+    AUTO_APPROVED: '',
+    MANUAL_APPROVED: '',
+    MANUAL_REJECTED: ''
+  }
+  return labels[actionType] || actionType
+}
+function getTagLabelLog(tag: string) {
+  const labels: Record<string, string> = { VIOLENCE: '', PORNOGRAPHY: '', ILLEGAL: '', OTHER: '' }
+  return labels[tag.toUpperCase()] || tag
+}
+function getSeverityLabel(severity: string | null): string {
+  if (!severity) return ''
+  const labels: Record<string, string> = { HIGH: '', MEDIUM: '', LOW: '' }
+  return labels[severity.toUpperCase()] || severity
+}
+function formatDateShort(dateString: string) {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-')
+}
+
+function setTab(tab: 'pending' | 'logs') {
+  activeTab.value = tab
+  router.replace({ path: '/moderation/nsfw', query: tab === 'logs' ? { tab: 'logs' } : {} })
+  if (tab === 'logs') fetchLogs()
+}
+
+const fetchWorks = async () => {
+  try {
+    loading.value = true
+    const params: any = {
+      page: page.value,
+      page_size: pageSize.value
+    }
+    if (selectedTag.value) {
+      params.tag = selectedTag.value
+    }
+    
+    const response = await api.get('/api/admin/moderation/nsfw/pending', { params })
+    
+    if (response.success) {
+      works.value = response.data.items || []
+      total.value = response.data.total || 0
+    } else {
+      toast.error(response.message || 'Listfailed')
+    }
+  } catch (error: any) {
+    console.error('Failed to fetch works:', error)
+    toast.error(error.message || 'Listfailed')
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadPage = (newPage: number) => {
+  page.value = newPage
+  fetchWorks()
+}
+
+const handleTagChange = () => {
+  // Filter，Reset
+  page.value = 1
+  fetchWorks()
+}
+
+const handleApprove = async (workId: number) => {
+  const confirmed = await confirm({
+    title: 'NSFW',
+    message: 'ConfirmNSFW？'
+  })
+  
+  if (!confirmed) {
+    return
+  }
+  
+  try {
+    actionLoading.value = workId
+    const response = await api.post(`/api/admin/moderation/nsfw/${workId}/approve`, {})
+    
+    if (response.success) {
+      toast.success('NSFW')
+      fetchWorks()
+    } else {
+      toast.error(response.message || '')
+    }
+  } catch (error: any) {
+    console.error('Failed to approve work:', error)
+    toast.error(error.message || '')
+  } finally {
+    actionLoading.value = null
+  }
+}
+
+const showRejectModal = (work: any) => {
+  rejectModalWork.value = work
+  rejectReason.value = ''
+  rejectReasonError.value = ''
+}
+
+const closeRejectModal = () => {
+  rejectModalWork.value = null
+  rejectReason.value = ''
+  rejectReasonError.value = ''
+}
+
+const handleReject = async () => {
+  rejectReasonError.value = ''
+  const trimmed = rejectReason.value.trim()
+  if (!trimmed) {
+    toast.error('Please enter')
+    return
+  }
+  const { valid, message } = validateReason(trimmed)
+  if (!valid) {
+    rejectReasonError.value = message || ''
+    toast.error(rejectReasonError.value)
+    return
+  }
+
+  if (!rejectModalWork.value) return
+
+  try {
+    actionLoading.value = rejectModalWork.value.id
+    const response = await api.post(`/api/admin/moderation/nsfw/${rejectModalWork.value.id}/reject`, {
+      reason: trimmed
+    })
+    
+    if (response.success) {
+      toast.success('')
+      closeRejectModal()
+      fetchWorks()
+    } else {
+      toast.error(response.message || '')
+    }
+  } catch (error: any) {
+    console.error('Failed to reject work:', error)
+    toast.error(error.message || '')
+  } finally {
+    actionLoading.value = null
+  }
+}
+
+const getTagLabel = (tag: string) => {
+  const labels: Record<string, string> = {
+    'VIOLENCE': '',
+    'PORNOGRAPHY': '',
+    'ILLEGAL': '',
+    'OTHER': ''
+  }
+  return labels[tag] || tag
+}
+
+const truncateText = (text: string, maxLength: number) => {
+  if (!text) return ''
+  return text.length > maxLength ? text.substring(0, maxLength) + '...' : text
+}
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+const handleImageError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  if (img) {
+    img.style.display = 'none'
+  }
+}
+</script>

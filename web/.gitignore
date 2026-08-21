@@ -1,0 +1,21 @@
+# Nuxt / Node
+.nuxt/
+.output/
+.nitro/
+dist/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs & OS
+*.log
+.DS_Store
+.vscode/
+.idea/

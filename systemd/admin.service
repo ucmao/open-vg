@@ -1,0 +1,44 @@
+# ============================================================================
+# Nuxt Admin Web Systemd Service
+# ============================================================================
+# : /etc/systemd/system/vidgen-admin.service
+# :  Nuxt.js （admin，）
+# : https://admin.yourdomain.com → Nginx  3001
+# ============================================================================
+
+[Unit]
+Description=Vidgen Admin Web (Nuxt.js)
+Documentation=https://nuxt.com/
+After=network.target vidgen-backend.service
+Wants=vidgen-backend.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# （ deploy.sh  /path/to/vidgen）
+WorkingDirectory=/path/to/vidgen/admin
+
+Environment="PATH=/usr/bin:/bin:/usr/local/bin"
+Environment="NODE_ENV=production"
+Environment="PORT=3001"
+Environment="HOST=127.0.0.1"
+
+#  .env （）
+EnvironmentFile=/path/to/vidgen/admin/.env
+
+# Start： npm run preview（ npm run build）
+ExecStart=/usr/bin/npm run preview
+
+# ： Node（， npm run build）
+# ExecStart=/usr/bin/node /path/to/vidgen/admin/.output/server/index.mjs
+
+# Restart
+Restart=always
+RestartSec=3
+
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
