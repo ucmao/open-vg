@@ -12,6 +12,8 @@ module.exports = {
     'vue/html-self-closing': 'off',
     'vue/attributes-order': 'off',
     'vue/html-indent': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }]
+    'vue/no-v-html': 'off',
+    'vue/prop-name-casing': 'off',
+    '@typescript-eslint/no-unused-vars': 'off'
   }
 }

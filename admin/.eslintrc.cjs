@@ -20,6 +20,9 @@ module.exports = {
     'no-empty': 'off',
     'no-constant-condition': 'off',
     'no-irregular-whitespace': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }]
+    'vue/no-v-html': 'off',
+    'vue/prop-name-casing': 'off',
+    'vue/no-template-shadow': 'off',
+    '@typescript-eslint/no-unused-vars': 'off'
   }
 }
