@@ -22,5 +22,5 @@ backend/app/routes/
 
 ## 🔒 JWT Scopes & Dependencies
 
-- **User Authentication**: `get_current_user` dependency verifies bearer JWTs signed with `JWT_SECRET_KEY`.
-- **Admin Authentication**: `get_current_admin_user` dependency enforces `is_admin = True` and validates tokens signed with `ADMIN_JWT_SECRET_KEY`.
+- **User Authentication**: `get_current_user` dependency verifies bearer JWTs signed with `JWT_SECRET`.
+- **Admin Authentication**: `get_current_admin_user` dependency enforces `role = "super_admin"` and validates bearer JWTs signed with `JWT_SECRET`.

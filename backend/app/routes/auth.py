@@ -63,10 +63,9 @@ async def send_code(request: SendCodeRequest, db: Session = Depends(get_db)):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         
-        logger.info(f"Verification code for {request.email}: {code}")
-        
         # In development, return the code for testing
         if os.getenv("ENVIRONMENT") == "development":
+            logger.debug("Development mode: Verification code generated")
             return success_response(
                 data={"code": code, "expires_in": 300},
                 message=f"Verification code: {code} (Dev Mode)"
@@ -388,10 +387,9 @@ async def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         
-        logger.info(f"Password reset code for {request.email}: {code}")
-        
         # In development, return the code for testing
         if os.getenv("ENVIRONMENT") == "development":
+            logger.debug("Development mode: Password reset code generated")
             return success_response(
                 data={"code": code, "expires_in": 600},
                 message=f"Password reset code: {code} (Dev Mode)"

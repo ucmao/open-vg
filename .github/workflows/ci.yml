@@ -24,12 +24,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Check Python Syntax & Imports
+      - name: Full Python Compile Verification
         run: |
-          python -m py_compile backend/app/main.py backend/app/utils/auth.py backend/app/utils/crypto.py
+          python -m compileall -q backend/app backend/scripts
 
   web-checks:
-    name: Web Frontend Lint & Build
+    name: Web Frontend Lint & Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +49,10 @@ jobs:
         working-directory: web
         run: npm run lint
 
+      - name: Run TypeScript Typecheck
+        working-directory: web
+        run: npm run typecheck
+
       - name: Build Web Application
         working-directory: web
         run: npm run build
@@ -56,7 +60,7 @@ jobs:
           NUXT_PUBLIC_API_BASE_URL: http://localhost:8000
 
   admin-checks:
-    name: Admin Dashboard Lint & Build
+    name: Admin Dashboard Lint & Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,6 +79,10 @@ jobs:
       - name: Run ESLint
         working-directory: admin
         run: npm run lint
+
+      - name: Run TypeScript Typecheck
+        working-directory: admin
+        run: npm run typecheck
 
       - name: Build Admin Application
         working-directory: admin

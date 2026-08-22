@@ -3,11 +3,23 @@ from pydantic import BaseModel, HttpUrl
 from app.services.parser.parser_factory import ParserFactory
 from app.utils.logger import logger
 import os
+import secrets
 
 router = APIRouter()
 
-# Security Token configured via .env or falls back to a strong default
-SECURITY_TOKEN = os.getenv("OVERSEAS_PARSER_TOKEN", "vidgen_secure_overseas_parser_2026")
+_env_mode = os.getenv("ENVIRONMENT", "development").strip().lower()
+SECURITY_TOKEN = os.getenv("OVERSEAS_PARSER_TOKEN", "").strip()
+
+if _env_mode == "production":
+    if not SECURITY_TOKEN:
+        raise RuntimeError(
+            "CRITICAL SECURITY ERROR: Missing OVERSEAS_PARSER_TOKEN in PRODUCTION mode! "
+            "Please set a strong random OVERSEAS_PARSER_TOKEN environment variable."
+        )
+else:
+    if not SECURITY_TOKEN:
+        logger.warning("OVERSEAS_PARSER_TOKEN not configured. Using temporary fallback token for development.")
+        SECURITY_TOKEN = "vidgen_dev_overseas_parser_token_change_me"
 
 class ParseRequest(BaseModel):
     url: str
@@ -30,9 +42,9 @@ async def parse_overseas_url(req: ParseRequest = Body(...)):
     Parse TikTok, YouTube, Instagram, and Twitter URLs.
     Secured by a matching token between the domestic and overseas server.
     """
-    # 1. Validate security token
-    if req.token != SECURITY_TOKEN:
-        logger.warning(f"Unauthorized overseas parse attempt with token: {req.token}")
+    # 1. Validate security token using constant-time comparison
+    if not secrets.compare_digest(req.token, SECURITY_TOKEN):
+        logger.warning("Unauthorized overseas parse attempt with invalid security token.")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unauthorized parser token"

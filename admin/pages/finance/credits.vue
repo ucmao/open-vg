@@ -573,8 +573,6 @@ const fetchUserDetails = async (userId: number) => {
       if (response.success && response.data.items) {
         const user = response.data.items.find((u: any) => u.id === userId)
         if (user) {
-          console.log('Fetched user from API:', user)
-          console.log('User total_credits:', user.total_credits, 'Type:', typeof user.total_credits)
           // Update selected user with fetched data
           let credits = 0
           if (user.total_credits !== undefined && user.total_credits !== null) {

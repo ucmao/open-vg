@@ -67,5 +67,5 @@ vidgen/
 
 ## 🔒 Security Model & Isolation
 
-- **Token Isolation**: User tokens (`auth_token`) and Admin tokens (`admin_token`) are signed with distinct secrets (`JWT_SECRET_KEY` vs `ADMIN_JWT_SECRET_KEY`) to prevent privilege escalation.
+- **Token Isolation**: User tokens (`auth_token`) and Admin tokens (`admin_token`) are scoped by role (`user` vs `super_admin`) and signed using `JWT_SECRET`.
 - **Port Exposure**: In production, application servers listen strictly on `127.0.0.1`. Only Nginx exposes ports 80/443.

@@ -11,7 +11,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-환영합니다-brightgreen.svg?style=for-the-badge)](https://github.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-환영합니다-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
 
 [English](README.md) | [简体中文](README_CN.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Español](README_ES.md) | [Português](README_PT.md)
 

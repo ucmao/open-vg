@@ -620,9 +620,9 @@ sudo systemctl reset-failed celery-worker  #
 
 ## 📚
 
-- [Celery ](../backend/CELERY_README.md)
-- [Celery ](https://docs.celeryq.dev/)
-- [Systemd ](https://www.freedesktop.org/software/systemd/man/)
+- [Deployment Documentation](../docs/05-deployment/)
+- [Celery Documentation](https://docs.celeryq.dev/)
+- [Systemd Documentation](https://www.freedesktop.org/software/systemd/man/)
 
 ---
 

@@ -41,8 +41,7 @@ sudo ./deploy.sh
 
 ```
 
-
- [CELERY_SYSTEMD_DEPLOYMENT.md](../docs/CELERY_SYSTEMD_DEPLOYMENT.md)
+详细部署步骤与配置说明请参见 [系统部署与运维文档](../docs/05-deployment/)。
 
 ---
 
@@ -186,9 +185,8 @@ sudo systemctl enable vidgen-backend celery-worker vidgen-web vidgen-admin
 ## 🆘
 
 
-- [Celery Systemd ](../docs/CELERY_SYSTEMD_DEPLOYMENT.md) -
-- [Celery ](../backend/CELERY_README.md) -
-- [](../docs/COMMAND_LINE_DEPLOYMENT_CN.md) -
+- [部署文档总览](../docs/README.md)
+- [系统架构与部署](../docs/05-deployment/)
 
 
 **Q:  3 ？**

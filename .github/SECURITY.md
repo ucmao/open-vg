@@ -1,23 +1,30 @@
-# Security Policy
+# Security Policy & Vulnerability Reporting
 
-## Supported Versions
+The VidGen maintainers take the security of our platform and user data seriously. We appreciate the responsible disclosure of security vulnerabilities by security researchers and open-source developers.
 
-Only the latest release / `main` branch of VidGen receives security updates.
+---
 
-| Version | Supported          |
-| ------- | ------------------ |
-| main    | :white_check_mark: |
-| < 1.0   | :x:                |
+## 🔒 Supported Versions
 
-## Reporting a Vulnerability
+| Version | Supported |
+|---|---|
+| Main Branch | :white_check_mark: Supported |
+| < 1.0.0 | :x: End of Life |
 
-We take the security of VidGen seriously. If you discover a security vulnerability, please **DO NOT** open a public issue.
+---
 
-Instead, please report security vulnerabilities by emailing the maintainers or submitting a private security advisory on GitHub.
+## 🚨 Reporting a Vulnerability
 
-### What to Include
-- Description of the vulnerability.
-- Steps to reproduce or proof-of-concept exploit code.
-- Potential impact of the issue.
+If you discover a security vulnerability in VidGen:
 
-We will review reports promptly and take necessary actions to remediate vulnerabilities.
+1. **Do NOT open a public GitHub issue**.
+2. Email your findings confidentially to `security@vidgenerator.ai`.
+3. Include:
+   - Type of vulnerability (e.g. SQL Injection, XSS, SSRF, Broken Auth)
+   - Step-by-step proof of concept (PoC) to reproduce
+   - Potential impact of the issue
+
+### Disclosure Process
+- **Acknowledgement**: We will acknowledge receipt of your report within 48 hours.
+- **Triage & Patching**: We will investigate and publish a patch within 14 days for critical vulnerabilities.
+- **Credit**: We will publicly credit your contribution in the security advisory release notes.

@@ -17,8 +17,9 @@ This document serves as the authoritative reference for all environment variable
 
 | Variable Name | Required | Default Value | Description |
 |---|---|---|---|
-| `JWT_SECRET_KEY` | **Yes** | `change_this_secret_key` | Secret key used for user JWT token signatures |
-| `ADMIN_JWT_SECRET_KEY` | **Yes** | `change_this_admin_secret_key` | Isolated secret key for Admin panel JWT signatures |
+| `JWT_SECRET` | **Yes** | `your_jwt_secret_key_at_least_16_chars_long` | Secret key used for user and admin JWT token signatures |
+| `CONFIG_ENCRYPTION_KEY` | **Yes** | `your_random_config_encryption_key_here` | Secret key used to encrypt vendor API Keys in the database |
+| `OVERSEAS_PARSER_TOKEN` | **Yes** | `your_random_overseas_parser_token_here` | Secret token for authenticating overseas parser requests |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | No | `10080` (7 days) | Token expiration duration in minutes |
 
 ### AI Model Provider API Keys
