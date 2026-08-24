@@ -28,6 +28,10 @@ jobs:
         run: |
           python -m compileall -q backend/app backend/scripts
 
+      - name: Run Backend Unit Tests
+        working-directory: backend
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
   web-checks:
     name: Web Frontend Lint & Typecheck
     runs-on: ubuntu-latest
@@ -52,6 +56,10 @@ jobs:
       - name: Run TypeScript Typecheck
         working-directory: web
         run: npm run typecheck
+
+      - name: Run Unit Tests
+        working-directory: web
+        run: npm test
 
       - name: Build Web Application
         working-directory: web
@@ -83,6 +91,10 @@ jobs:
       - name: Run TypeScript Typecheck
         working-directory: admin
         run: npm run typecheck
+
+      - name: Run Unit Tests
+        working-directory: admin
+        run: npm test
 
       - name: Build Admin Application
         working-directory: admin

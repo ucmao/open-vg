@@ -14,7 +14,10 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "quality": "npm run lint && npm run typecheck && npm run test"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
@@ -41,6 +44,7 @@
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "typescript": "^5.3.3",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^2.1.10",
+    "vitest": "^3.2.4"
   }
 }
