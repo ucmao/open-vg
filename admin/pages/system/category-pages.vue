@@ -477,7 +477,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { Download, CloudUpload, Loader2, X, ChevronDown } from 'lucide-vue-next'
+import { Download, CloudUpload, Loader2, X, ChevronDown } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

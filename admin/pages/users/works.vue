@@ -811,7 +811,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { ChevronDown, Play, Video, ImageIcon, EyeOff, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, FileText, X } from 'lucide-vue-next'
+import { ChevronDown, Play, Video, ImageIcon, EyeOff, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, FileText, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

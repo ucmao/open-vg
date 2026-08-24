@@ -175,7 +175,7 @@ import {
   Layers,
   Palette,
   FolderTree
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

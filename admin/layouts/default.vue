@@ -609,7 +609,7 @@ import {
   BadgeDollarSign,
   SlidersHorizontal,
   Wand2,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const route = useRoute()
 const router = useRouter()

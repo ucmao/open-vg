@@ -1,8 +1,6 @@
-module.exports = {
-  root: true,
-  extends: [
-    '@nuxt/eslint-config'
-  ],
+import { createConfigForNuxt } from '@nuxt/eslint-config'
+
+export default createConfigForNuxt().append({
   rules: {
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
@@ -23,6 +21,12 @@ module.exports = {
     'vue/no-v-html': 'off',
     'vue/prop-name-casing': 'off',
     'vue/no-template-shadow': 'off',
-    '@typescript-eslint/no-unused-vars': 'off'
-  }
-}
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-dynamic-delete': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/unified-signatures': 'off',
+    'import/first': 'off',
+    'nuxt/prefer-import-meta': 'off',
+  },
+})

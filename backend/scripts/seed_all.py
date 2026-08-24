@@ -15,6 +15,21 @@ import os
 import sys
 import subprocess
 from pathlib import Path
+
+backend_dir = Path(__file__).resolve().parents[1]
+backend_path = str(backend_dir)
+if backend_path not in sys.path:
+    sys.path.insert(0, backend_path)
+
+# Child seed scripts are invoked by file path, so propagate the backend root
+# explicitly instead of relying on the caller's current working directory.
+existing_pythonpath = os.environ.get("PYTHONPATH")
+os.environ["PYTHONPATH"] = (
+    f"{backend_path}{os.pathsep}{existing_pythonpath}"
+    if existing_pythonpath
+    else backend_path
+)
+
 try:
     from dotenv import load_dotenv
     load_dotenv()

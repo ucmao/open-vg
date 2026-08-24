@@ -188,7 +188,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Trash2, ChevronsLeft, ChevronsRight, MessageCircle } from 'lucide-vue-next'
+import { Trash2, ChevronsLeft, ChevronsRight, MessageCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

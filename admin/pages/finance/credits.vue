@@ -356,7 +356,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { Plus, Download, ChevronsLeft, ChevronsRight, X } from 'lucide-vue-next'
+import { Plus, Download, ChevronsLeft, ChevronsRight, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { validateReason } from '~/utils/reasonValidation'

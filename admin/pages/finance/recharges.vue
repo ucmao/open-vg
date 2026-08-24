@@ -183,7 +183,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { Download, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { Download, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import type { PaginatedData, PaymentOrder } from '~/types/domain'

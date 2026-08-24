@@ -1,0 +1,9 @@
+# Development and test dependencies. This includes the runtime dependency set.
+-r requirements.in
+
+black>=24.8.0
+flake8>=7.0.0
+mypy>=1.11.0
+pytest>=8.0.0
+pytest-asyncio>=0.23.3
+pytest-cov>=4.1.0

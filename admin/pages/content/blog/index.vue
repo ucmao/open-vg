@@ -343,7 +343,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch, computed } from 'vue'
-import { Plus, Pencil, Copy, Trash2, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { Plus, Pencil, Copy, Trash2, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
 definePageMeta({

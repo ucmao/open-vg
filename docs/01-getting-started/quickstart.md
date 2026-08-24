@@ -42,8 +42,8 @@ Once containers start:
 If you want to run VidGen directly from source for development:
 
 ### Step 1: Install System Dependencies
-- Node.js `20.x LTS`
-- Python `3.10+` (Recommended: `3.11`)
+- Node.js `24.x LTS` (24.15+)
+- Python `3.11+`
 - Redis `6.x+` (`brew install redis` or `sudo apt install redis-server`)
 
 ### Step 2: Install Backend Dependencies

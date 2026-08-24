@@ -863,7 +863,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { ChevronsLeft, ChevronsRight, Users, X, Download, CloudUpload, CheckCircle } from 'lucide-vue-next'
+import { ChevronsLeft, ChevronsRight, Users, X, Download, CloudUpload, CheckCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

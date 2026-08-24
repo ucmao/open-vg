@@ -2,13 +2,11 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-# VidGen 🎨⚡
-
 **Plateforme de génération de vidéo et d'image par IA open source de niveau production**
 
 [![Live Demo](https://img.shields.io/badge/Demo_en_Direct-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Bienvenus-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
@@ -78,7 +76,7 @@ Que vous lanciez une plateforme de génération d'images/vidéos par IA ou que v
 | :--- | :--- |
 | **Portail Web Frontend** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
 | **Panneau d'Administration** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 langues), Axios |
-| **API Backend** | **FastAPI** (Python 3.10+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
+| **API Backend** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
 | **File de Tâches & Workers** | **Celery**, **Flower** (Surveillance), **Redis** (Broker & Cache) |
 | **Base de Données** | **PostgreSQL** 14+ avec suivi des migrations **Alembic** |
 | **Stockage & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (compatible S3) |
@@ -158,7 +156,7 @@ docker compose up -d
 ### 🛠️ Option 2 : Configuration Manuel Locale
 
 #### Prérequis
-- **Python** : 3.10 ou supérieur
+- **Python** : 3.11 ou supérieur
 - **Node.js** : 18.x ou supérieur
 - **PostgreSQL** : 14.x ou supérieur
 - **Redis** : 6.x ou supérieur

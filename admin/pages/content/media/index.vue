@@ -164,7 +164,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from 'vue'
-import { Loader2, Plus, Play, FileText, ImageIcon } from 'lucide-vue-next'
+import { Loader2, Plus, Play, FileText, ImageIcon } from '@lucide/vue'
 
 definePageMeta({
   layout: 'default'

@@ -483,7 +483,7 @@ v-for="(kw, idx) in log.flagged_keywords" :key="idx" class="inline-flex items-ce
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, computed } from 'vue'
-import { Video, ImageIcon, Check, X, ExternalLink, CheckCircle, ChevronsLeft, ChevronsRight, FileText } from 'lucide-vue-next'
+import { Video, ImageIcon, Check, X, ExternalLink, CheckCircle, ChevronsLeft, ChevronsRight, FileText } from '@lucide/vue'
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 

@@ -533,7 +533,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch, computed } from 'vue'
-import { Video, Image as ImageIcon } from 'lucide-vue-next'
+import { Video, Image as ImageIcon } from '@lucide/vue'
 
 const api = useApi()
 const config = useRuntimeConfig()

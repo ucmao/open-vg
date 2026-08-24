@@ -501,7 +501,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick, watch } from 'vue'
-import { Eye, Download, Loader2, Zap, Copy, PencilLine, X, ImageIcon } from 'lucide-vue-next'
+import { Eye, Download, Loader2, Zap, Copy, PencilLine, X, ImageIcon } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

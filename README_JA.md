@@ -2,13 +2,11 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-# VidGen 🎨⚡
-
 **本番環境対応のオープンソース AI ビデオ＆画像生成プラットフォーム**
 
 [![Live Demo](https://img.shields.io/badge/ライブデモ-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
@@ -78,7 +76,7 @@
 | :--- | :--- |
 | **フロントエンド Web** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
 | **管理画面 Admin** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (6 言語対応), Axios |
-| **バックエンド API** | **FastAPI** (Python 3.10+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
+| **バックエンド API** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
 | **タスクキュー＆監視** | **Celery**, **Flower** (キュー監視), **Redis** (Broker & キャッシュ) |
 | **データベース** | **PostgreSQL** 14+ , **Alembic** マイグレーション管理 |
 | **ストレージ＆ CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3 互換オブジェクトストレージ) |
@@ -158,7 +156,7 @@ docker compose up -d
 ### 🛠️ 方法二：ローカル手動ビルド起動
 
 #### 前提環境
-- **Python**: 3.10 以上
+- **Python**: 3.11 以上
 - **Node.js**: 18.x 以上
 - **PostgreSQL**: 14.x 以上
 - **Redis**: 6.x 以上

@@ -23,7 +23,7 @@ This document details how to deploy VidGen on Linux VPS / bare-metal servers usi
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3.11 python3.11-venv python3-pip postgresql redis-server nginx git curl
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 

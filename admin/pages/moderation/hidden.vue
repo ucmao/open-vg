@@ -436,7 +436,7 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue'
-import { Video, ImageIcon, Play, EyeOff, X } from 'lucide-vue-next'
+import { Video, ImageIcon, Play, EyeOff, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

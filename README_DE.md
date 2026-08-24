@@ -2,13 +2,11 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-# VidGen 🎨⚡
-
 **Produktionsbereite Open-Source-KI-Video- und Bildgenerierungsplattform**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Willkommen-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
@@ -78,7 +76,7 @@ Egal ob Sie eine Plattform zur KI-Bild-/Videogenerierung starten oder benutzerde
 | :--- | :--- |
 | **Frontend Web Portal** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
 | **Admin Panel** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 Sprachen), Axios |
-| **Backend API** | **FastAPI** (Python 3.10+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
+| **Backend API** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
 | **Aufgabenwarteschlange & Worker** | **Celery**, **Flower** (Überwachung), **Redis** (Broker & Cache) |
 | **Datenbank** | **PostgreSQL** 14+ mit **Alembic** Datenbank-Migrationsverfolgung |
 | **Speicher & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3-kompatibler Objektspeicher) |
@@ -158,7 +156,7 @@ docker compose up -d
 ### 🛠️ Option 2: Manuelle lokale Einrichtung
 
 #### Voraussetzungen
-- **Python**: 3.10 oder höher
+- **Python**: 3.11 oder höher
 - **Node.js**: 18.x oder höher
 - **PostgreSQL**: 14.x oder höher
 - **Redis**: 6.x oder höher

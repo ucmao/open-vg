@@ -227,7 +227,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Play, ImageIcon, Eye, Bookmark, Zap, Heart, Star } from 'lucide-vue-next'
+import { Play, ImageIcon, Eye, Bookmark, Zap, Heart, Star } from '@lucide/vue'
 import type { Work } from '~/types/domain'
 const props = withDefaults(defineProps<{
   work: Work

@@ -294,7 +294,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Activity, CircleDollarSign, TriangleAlert, Database, HelpCircle } from 'lucide-vue-next'
+import { Activity, CircleDollarSign, TriangleAlert, Database, HelpCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 
 definePageMeta({

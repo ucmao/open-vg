@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from typing import Generator
 import os
 from dotenv import load_dotenv
@@ -44,4 +43,3 @@ def init_db():
     Should be called on application startup.
     """
     Base.metadata.create_all(bind=engine)
-

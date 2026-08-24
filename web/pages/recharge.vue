@@ -353,7 +353,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { ShieldCheck, Info, X, Loader2 } from 'lucide-vue-next'
+import { ShieldCheck, Info, X, Loader2 } from '@lucide/vue'
 
 const { requireAuth } = useAuth()
 const userStore = useUserStore()

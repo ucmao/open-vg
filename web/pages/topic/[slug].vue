@@ -671,7 +671,7 @@ v-if="comp.type === 'cta'" :class="{
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { ChevronLeft, ChevronRight, Zap, ClipboardCopy, ImageIcon, ChevronDown } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, Zap, ClipboardCopy, ImageIcon, ChevronDown } from '@lucide/vue'
 
 const { isVideoWork, getWorkImageUrl, getWorkVideoUrl, getWorkVideoPoster } = useWorkMedia()
 

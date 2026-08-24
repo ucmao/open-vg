@@ -386,7 +386,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { ChevronDown, Download, Mail, Users, HelpCircle, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { ChevronDown, Download, Mail, Users, HelpCircle, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import UserStatusChangeModal from '~/components/UserStatusChangeModal.vue'

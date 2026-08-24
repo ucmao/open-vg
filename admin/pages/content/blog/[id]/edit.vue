@@ -496,7 +496,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ChevronLeft, Pencil, Check, Clock, User, Settings, Loader2, Zap, ImageIcon, Trash2, Plus, Search, Menu, X, TriangleAlert } from 'lucide-vue-next'
+import { ChevronLeft, Pencil, Check, Clock, User, Settings, Loader2, Zap, ImageIcon, Trash2, Plus, Search, Menu, X, TriangleAlert } from '@lucide/vue'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import AuthorSelectModal from '~/components/AuthorSelectModal.vue'
 

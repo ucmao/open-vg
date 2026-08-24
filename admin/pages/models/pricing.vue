@@ -571,7 +571,7 @@ class="absolute top-[2px] rounded-full h-5 w-5 bg-white border transition-all"
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted } from 'vue'
-import { Layers, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { Layers, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 

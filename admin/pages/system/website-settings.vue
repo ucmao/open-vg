@@ -415,7 +415,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { Info, ExternalLink, Plus, Star, Eye, EyeOff, Check, X } from 'lucide-vue-next'
+import { Info, ExternalLink, Plus, Star, Eye, EyeOff, Check, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

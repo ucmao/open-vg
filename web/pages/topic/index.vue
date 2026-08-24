@@ -85,7 +85,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight } from '@lucide/vue'
 
 const api = useApi()
 const config = useRuntimeConfig()

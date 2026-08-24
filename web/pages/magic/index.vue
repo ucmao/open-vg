@@ -296,7 +296,7 @@
 <script setup lang="ts">
 // Trigger route update
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight } from '@lucide/vue'
 
 const api = useApi()
 const config = useRuntimeConfig()

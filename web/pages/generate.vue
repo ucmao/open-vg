@@ -881,7 +881,7 @@ import { ref, reactive, computed, onMounted, onUnmounted, watch, nextTick } from
 import {
   Info, RefreshCw, X, Plus, Zap, ChevronLeft, ChevronRight, Download, Eye, Minus, LayoutList,
   Ban, Clock, Globe, Lock, Trash2, ImageIcon, Video, Loader2
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import { findMatchingModel } from '~/utils/modelMatcher'
 import { getGenerationErrorMessage } from '~/utils/generationError'
 

@@ -305,7 +305,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Info, Maximize2, X } from 'lucide-vue-next'
+import { Info, Maximize2, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import {
   Chart as ChartJS,

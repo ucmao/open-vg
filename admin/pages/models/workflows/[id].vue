@@ -717,7 +717,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick, provide } from 'vue'
-import { Undo2, Redo2, RefreshCw, ChevronLeft, Check, ImageIcon, Video, Zap, ChevronDown, X, Pencil, Copy, HelpCircle, Info, Keyboard } from 'lucide-vue-next'
+import { Undo2, Redo2, RefreshCw, ChevronLeft, Check, ImageIcon, Video, Zap, ChevronDown, X, Pencil, Copy, HelpCircle, Info, Keyboard } from '@lucide/vue'
 import { onClickOutside } from '@vueuse/core'
 import { VueFlow, useVueFlow, Handle, Position } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'

@@ -222,7 +222,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
-import { Plus, Workflow, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { Plus, Workflow, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 
 definePageMeta({
   layout: 'default',

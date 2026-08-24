@@ -2,13 +2,11 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-# VidGen 🎨⚡
-
 **Plataforma de generación de video e imagen con IA de código abierto de grado de producción**
 
 [![Live Demo](https://img.shields.io/badge/Demo_en_Vivo-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Bienvenidos-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
@@ -78,7 +76,7 @@ Ya sea que esté lanzando una plataforma de generación de imágenes/videos con 
 | :--- | :--- |
 | **Portal Web Frontend** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
 | **Panel de Administración** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (6 idiomas), Axios |
-| **API Backend** | **FastAPI** (Python 3.10+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
+| **API Backend** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
 | **Cola de Tareas y Workers** | **Celery**, **Flower** (Monitoreo), **Redis** (Broker y Caché) |
 | **Base de Datos** | **PostgreSQL** 14+ con rastreo de migraciones **Alembic** |
 | **Almacenamiento y CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (compatible con S3) |
@@ -158,7 +156,7 @@ docker compose up -d
 ### 🛠️ Opción 2: Configuración Manual Local
 
 #### Requisitos Previos
-- **Python**: 3.10 o superior
+- **Python**: 3.11 o superior
 - **Node.js**: 18.x o superior
 - **PostgreSQL**: 14.x o superior
 - **Redis**: 6.x o superior

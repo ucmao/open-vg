@@ -739,7 +739,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
-import { Plus, Upload, Download, ChevronsLeft, ChevronsRight, BookOpen } from 'lucide-vue-next'
+import { Plus, Upload, Download, ChevronsLeft, ChevronsRight, BookOpen } from '@lucide/vue'
 
 definePageMeta({
   layout: 'default',

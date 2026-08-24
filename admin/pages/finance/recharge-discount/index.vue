@@ -454,7 +454,7 @@
 </template>
 
 <script setup lang="ts">
-import { X, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import { X, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import type { EmailPreset, EmailPreview, PaginatedData, RechargePromo, UserSummary } from '~/types/domain'
 
 definePageMeta({ layout: 'default' })

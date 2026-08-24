@@ -310,7 +310,7 @@ import {
   Redo2,
   RefreshCw,
   Highlighter,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import MediaSelectorModal from './MediaSelectorModal.vue'
 import MediaInsertConfigModal from './MediaInsertConfigModal.vue'
 import LinkInsertModal from './LinkInsertModal.vue'

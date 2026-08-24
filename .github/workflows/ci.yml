@@ -6,10 +6,18 @@ on:
   pull_request:
     branches: [ main, master, dev ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   backend-checks:
     name: Backend Code Integrity
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
@@ -22,7 +30,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt
+          pip install -r backend/requirements-dev.txt
+          pip check
 
       - name: Full Python Compile Verification
         run: |
@@ -35,13 +44,14 @@ jobs:
   web-checks:
     name: Web Frontend Lint & Typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24.15'
           cache: 'npm'
           cache-dependency-path: web/package-lock.json
 
@@ -70,13 +80,14 @@ jobs:
   admin-checks:
     name: Admin Dashboard Lint & Typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24.15'
           cache: 'npm'
           cache-dependency-path: admin/package-lock.json
 

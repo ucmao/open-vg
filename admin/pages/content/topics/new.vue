@@ -1828,7 +1828,7 @@ import {
   Quote,
   BarChart3,
   CheckCircle,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import PromptInsertModal from '~/components/PromptInsertModal.vue'
 import WorkSearchModal from '~/components/WorkSearchModal.vue'

@@ -1458,7 +1458,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, watch, nextTick } from 'vue'
-import { Plus, Search, X, ChevronsLeft, ChevronsRight, Lock, Eye, EyeOff, TriangleAlert, ChevronDown, ImageIcon } from 'lucide-vue-next'
+import { Plus, Search, X, ChevronsLeft, ChevronsRight, Lock, Eye, EyeOff, TriangleAlert, ChevronDown, ImageIcon } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

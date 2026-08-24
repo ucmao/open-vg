@@ -682,7 +682,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { Search, Video, ImageIcon, Check, X, Ban, ExternalLink, ChevronsLeft, ChevronsRight, CheckCircle, Eye, FileText } from 'lucide-vue-next'
+import { Search, Video, ImageIcon, Check, X, Ban, ExternalLink, ChevronsLeft, ChevronsRight, CheckCircle, Eye, FileText } from '@lucide/vue'
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 

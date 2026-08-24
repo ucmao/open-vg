@@ -808,7 +808,7 @@ class CreateWorkflowRequest(BaseModel):
     description: Optional[str] = None
     # work_type  generate_pages
     work_type: str = Field(..., min_length=1, max_length=50)
-    nodes: List[WorkflowNode] = Field(..., min_items=1, description="Workflow nodes")
+    nodes: List[WorkflowNode] = Field(..., min_length=1, description="Workflow nodes")
     edges: List[WorkflowEdge] = Field(default_factory=list, description="Connections between nodes")
     viewport: Optional[Dict[str, Any]] = Field(None, description="Canvas viewport position")
     is_active: bool = Field(default=True)
@@ -820,7 +820,7 @@ class UpdateWorkflowRequest(BaseModel):
     description: Optional[str] = None
     # work_type  generate_pages
     work_type: Optional[str] = Field(None, min_length=1, max_length=50)
-    nodes: Optional[List[WorkflowNode]] = Field(None, min_items=1, description="Workflow nodes")
+    nodes: Optional[List[WorkflowNode]] = Field(None, min_length=1, description="Workflow nodes")
     edges: Optional[List[WorkflowEdge]] = Field(None, description="Connections between nodes")
     viewport: Optional[Dict[str, Any]] = Field(None, description="Canvas viewport position")
     is_active: Optional[bool] = None
@@ -1008,4 +1008,3 @@ class UpdateHomepageBlockRequest(BaseModel):
     config: Optional[dict] = Field(None, description="Full configuration JSON")
     sort_order: Optional[int] = Field(None, description="Sort order")
     is_enabled: Optional[bool] = Field(None, description="Is enabled")
-
