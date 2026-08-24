@@ -113,7 +113,7 @@
                 </span>
               </td>
               <td class="px-6 py-4">
-                <div class="text-xs text-gray-600 max-w-xs truncate" :title="item.description">
+                <div class="text-xs text-gray-600 max-w-xs truncate" :title="item.description || undefined">
                   {{ item.description || '-' }}
                 </div>
               </td>
@@ -360,6 +360,7 @@ import { Plus, Download, ChevronsLeft, ChevronsRight, X } from 'lucide-vue-next'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { validateReason } from '~/utils/reasonValidation'
+import type { CreditRecord, PaginatedData, UserSummary } from '~/types/domain'
 
 definePageMeta({
   layout: 'default',
@@ -369,7 +370,7 @@ definePageMeta({
 const adminApi = useAdminApi()
 const { toast } = useToast()
 
-const creditData = ref<any[]>([])
+const creditData = ref<CreditRecord[]>([])
 const loading = ref(false)
 const page = ref(1)
 const pageSize = ref(20)
@@ -384,12 +385,12 @@ const filters = ref({
 // Adjust Credit Modal State
 const showAdjustModal = ref(false)
 const submittingAdjust = ref(false)
-const userSuggestions = ref<any[]>([])
+const userSuggestions = ref<UserSummary[]>([])
 const showUserSuggestions = ref(false)
 const userSearchContainer = ref<HTMLElement | null>(null)
 const adjustForm = reactive({
   userSearch: '',
-  selectedUser: null as any,
+  selectedUser: null as UserSummary | null,
   amount: 0,
   description: ''
 })
@@ -398,7 +399,7 @@ const adjustDescriptionError = ref('')
 const loadData = async () => {
   loading.value = true
   try {
-    const params: any = {
+    const params: Record<string, string | number> = {
       page: page.value,
       page_size: pageSize.value,
       search: filters.value.search
@@ -407,7 +408,7 @@ const loadData = async () => {
     if (filters.value.type) params.type = filters.value.type
     if (filters.value.user_id) params.user_id = filters.value.user_id
 
-    const response = await adminApi.get('/api/admin/finance/credits', { params })
+    const response = await adminApi.get<PaginatedData<CreditRecord>>('/api/admin/finance/credits', { params })
     if (response.success) {
       creditData.value = response.data.items
       // Handle both pagination formats
@@ -449,7 +450,7 @@ const formatDate = (dateString: string) => {
 }
 
 const formatCreditType = (type: string) => {
-  const map: any = {
+  const map: Record<string, string> = {
     'recharge': '',
     'consume': '',
     'gift': '',
@@ -459,7 +460,7 @@ const formatCreditType = (type: string) => {
 }
 
 // CSV Export Functions
-const escapeCSV = (value: any): string => {
+const escapeCSV = (value: unknown): string => {
   if (value === null || value === undefined) return ''
   const str = String(value)
   // If contains comma, quote, or newline, wrap in quotes and escape quotes
@@ -553,7 +554,7 @@ const closeAdjustModal = () => {
   }
 }
 
-let searchTimeout: NodeJS.Timeout | null = null
+let searchTimeout: ReturnType<typeof setTimeout> | null = null
 
 const fetchUserDetails = async (userId: number) => {
   // If user already has total_credits, don't fetch again
@@ -563,7 +564,7 @@ const fetchUserDetails = async (userId: number) => {
 
   try {
     // Get user from users list API - search by ID
-    const response = await adminApi.get(`/api/admin/users`, {
+    const response = await adminApi.get<PaginatedData<UserSummary>>(`/api/admin/users`, {
       params: {
         page: 1,
         page_size: 100,
@@ -571,7 +572,7 @@ const fetchUserDetails = async (userId: number) => {
       }
     })
       if (response.success && response.data.items) {
-        const user = response.data.items.find((u: any) => u.id === userId)
+        const user = response.data.items.find((u) => u.id === userId)
         if (user) {
           // Update selected user with fetched data
           let credits = 0
@@ -582,23 +583,23 @@ const fetchUserDetails = async (userId: number) => {
             }
           }
           adjustForm.selectedUser = {
-            ...adjustForm.selectedUser,
+            ...user,
             total_credits: credits,
-            avatar_url: user.avatar_url || adjustForm.selectedUser.avatar_url
+            avatar_url: user.avatar_url || adjustForm.selectedUser?.avatar_url
           }
           console.log('Updated selected user total_credits:', adjustForm.selectedUser.total_credits)
           return
         }
       }
     // If not found by search, try to get all users and find by ID
-    const allResponse = await adminApi.get(`/api/admin/users`, {
+    const allResponse = await adminApi.get<PaginatedData<UserSummary>>(`/api/admin/users`, {
       params: {
         page: 1,
         page_size: 1000  // Get more users to find the one we need
       }
     })
     if (allResponse.success && allResponse.data.items) {
-      const user = allResponse.data.items.find((u: any) => u.id === userId)
+      const user = allResponse.data.items.find((u) => u.id === userId)
       if (user) {
         console.log('Fetched user from all users API:', user)
         console.log('User total_credits:', user.total_credits, 'Type:', typeof user.total_credits)
@@ -610,9 +611,9 @@ const fetchUserDetails = async (userId: number) => {
           }
         }
         adjustForm.selectedUser = {
-          ...adjustForm.selectedUser,
+          ...user,
           total_credits: credits,
-          avatar_url: user.avatar_url || adjustForm.selectedUser.avatar_url
+          avatar_url: user.avatar_url || adjustForm.selectedUser?.avatar_url
         }
         console.log('Updated selected user total_credits:', adjustForm.selectedUser.total_credits)
         return
@@ -631,7 +632,7 @@ const fetchUserDetails = async (userId: number) => {
   }
 }
 
-const selectUser = async (user: any) => {
+const selectUser = async (user: UserSummary) => {
   console.log('Selecting user:', user)
   console.log('User total_credits:', user.total_credits, 'Type:', typeof user.total_credits)
   
@@ -670,14 +671,14 @@ const searchUsers = async () => {
   const searchValue = adjustForm.userSearch.trim()
   if (searchValue && /^\d+$/.test(searchValue)) {
     try {
-      const response = await adminApi.get('/api/admin/users', {
+      const response = await adminApi.get<PaginatedData<UserSummary>>('/api/admin/users', {
         params: {
           page: 1,
           page_size: 100
         }
       })
       if (response.success && response.data.items) {
-        const user = response.data.items.find((u: any) => u.id === parseInt(searchValue))
+        const user = response.data.items.find((u) => u.id === parseInt(searchValue))
         if (user) {
           // Auto-select if found by ID
           await selectUser(user)
@@ -698,7 +699,7 @@ const searchUsers = async () => {
   // Debounce search for email/nickname/handle
   searchTimeout = setTimeout(async () => {
     try {
-      const response = await adminApi.get('/api/admin/users/search', {
+      const response = await adminApi.get<UserSummary[]>('/api/admin/users/search', {
         params: {
           query: searchValue,
           limit: 10
@@ -708,7 +709,7 @@ const searchUsers = async () => {
         userSuggestions.value = response.data || []
         console.log('User suggestions:', userSuggestions.value)
         // Log each user's total_credits
-        userSuggestions.value.forEach((u: any) => {
+        userSuggestions.value.forEach((u) => {
           console.log(`User ${u.id} (${u.email}): total_credits =`, u.total_credits, 'Type:', typeof u.total_credits)
         })
         showUserSuggestions.value = true
@@ -724,7 +725,7 @@ const searchUsers = async () => {
   }, 300)
 }
 
-const getDisplayCredits = (user: any) => {
+const getDisplayCredits = (user: UserSummary | null) => {
   if (!user) return 0
   const credits = user.total_credits
   if (credits === undefined || credits === null) return 0
@@ -738,7 +739,8 @@ const canSubmitAdjust = computed(() => {
 })
 
 const handleAdjustCredits = async () => {
-  if (!canSubmitAdjust.value) {
+  const selectedUser = adjustForm.selectedUser
+  if (!canSubmitAdjust.value || !selectedUser) {
     toast.error('')
     return
   }
@@ -755,7 +757,7 @@ const handleAdjustCredits = async () => {
   submittingAdjust.value = true
   try {
     const response = await adminApi.post('/api/admin/finance/manual-credit', {
-      user_id: adjustForm.selectedUser.id,
+      user_id: selectedUser.id,
       amount: adjustForm.amount,
       description: trimmed
     })

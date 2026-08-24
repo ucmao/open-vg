@@ -87,6 +87,7 @@
 </template>
 
 <script setup lang="ts">
+import type { AdminLoginResult } from '~/types/domain'
 import { ref, reactive } from 'vue'
 
 definePageMeta({
@@ -118,7 +119,7 @@ const handleLogin = async () => {
     error.value = ''
     
     const api = useAdminApi()
-    const response = await api.post('/api/admin/auth/login', {
+    const response = await api.post<AdminLoginResult>('/api/admin/auth/login', {
       username: form.username,
       password: form.password
     })

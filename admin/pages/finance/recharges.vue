@@ -186,6 +186,7 @@ import { ref, onMounted } from 'vue'
 import { Download, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
+import type { PaginatedData, PaymentOrder } from '~/types/domain'
 
 definePageMeta({
   layout: 'default',
@@ -195,7 +196,7 @@ definePageMeta({
 const adminApi = useAdminApi()
 const { toast } = useToast()
 
-const rechargeData = ref<any[]>([])
+const rechargeData = ref<PaymentOrder[]>([])
 const loading = ref(false)
 const page = ref(1)
 const pageSize = ref(20)
@@ -209,7 +210,7 @@ const filters = ref({
 const loadData = async () => {
   loading.value = true
   try {
-    const params: any = {
+    const params: Record<string, string | number> = {
       page: page.value,
       page_size: pageSize.value,
       search: filters.value.search
@@ -217,7 +218,7 @@ const loadData = async () => {
 
     if (filters.value.status) params.status = filters.value.status
 
-    const response = await adminApi.get('/api/admin/finance/recharges', { params })
+    const response = await adminApi.get<PaginatedData<PaymentOrder>>('/api/admin/finance/recharges', { params })
     if (response.success) {
       rechargeData.value = response.data.items
       // Handle both pagination formats
@@ -259,7 +260,7 @@ const formatDate = (dateString: string) => {
 }
 
 const formatStatus = (status: string) => {
-  const map: any = {
+  const map: Record<string, string> = {
     'completed': '',
     'pending': '',
     'failed': 'failed',
@@ -268,7 +269,7 @@ const formatStatus = (status: string) => {
   return map[status] || status
 }
 
-const formatPaymentProvider = (provider: string) => {
+const formatPaymentProvider = (provider?: string | null) => {
   const map: Record<string, string> = {
     paypal: 'PayPal',
     stripe: 'Stripe'
@@ -276,7 +277,7 @@ const formatPaymentProvider = (provider: string) => {
   return map[provider || ''] || (provider || '-')
 }
 
-const getPaymentExternalId = (item: any) => {
+const getPaymentExternalId = (item: PaymentOrder | null) => {
   if (!item) return null
   if (item.paypal_order_id) return item.paypal_order_id
   if (item.stripe_payment_intent_id) return item.stripe_payment_intent_id
@@ -285,7 +286,7 @@ const getPaymentExternalId = (item: any) => {
 }
 
 // CSV Export Functions
-const escapeCSV = (value: any): string => {
+const escapeCSV = (value: unknown): string => {
   if (value === null || value === undefined) return ''
   const str = String(value)
   // If contains comma, quote, or newline, wrap in quotes and escape quotes

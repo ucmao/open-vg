@@ -4,7 +4,7 @@
  * For videos: thumbnail_url (compressed video) > canonical_url > file_url
  */
 export const useWorkMedia = () => {
-  const isVideoWork = (work: any): boolean => {
+  const isVideoWork = (work: WorkMedia | null | undefined): boolean => {
     const workType = work?.type || work?.work_type || ''
     return workType.includes('video') || false
   }
@@ -26,7 +26,7 @@ export const useWorkMedia = () => {
     return /\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv)$/i.test(urlWithoutQuery) || url.startsWith('data:video/')
   }
 
-  const getWorkImageUrl = (work: any): string => {
+  const getWorkImageUrl = (work: WorkMedia | null | undefined): string => {
     if (!work) return ''
     
     // 🖼️ For image types, prioritize thumbnail_url (compressed image)
@@ -50,7 +50,7 @@ export const useWorkMedia = () => {
     return ''
   }
 
-  const getWorkVideoUrl = (work: any): string => {
+  const getWorkVideoUrl = (work: WorkMedia | null | undefined): string => {
     if (!work) return ''
     
     // 🎬 For video types, prioritize thumbnail_url (compressed video) as autoplay source
@@ -64,7 +64,7 @@ export const useWorkMedia = () => {
     return ''
   }
 
-  const getWorkVideoPoster = (work: any): string => {
+  const getWorkVideoPoster = (work: WorkMedia | null | undefined): string => {
     if (!work) return ''
     const thumbnail = work.thumbnail_url || ''
     // Only use as poster if it's a valid image
@@ -78,3 +78,4 @@ export const useWorkMedia = () => {
     getWorkVideoPoster
   }
 }
+import type { WorkMedia } from '~/types/domain'

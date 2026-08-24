@@ -47,10 +47,11 @@
 import { Handle, Position, useVueFlow } from '@vue-flow/core'
 import { computed } from 'vue'
 import { getTypeColorClass, inferTypeFromName } from '~/composables/useWorkflowTypeColors'
+import type { WorkflowNodeData } from '~/types/domain'
 
 const props = defineProps<{
   id: string
-  data: any
+  data: WorkflowNodeData
   selected?: boolean
 }>()
 
@@ -72,7 +73,7 @@ const getInputHandleClass = (paramName: string, paramType?: string) => {
   const type = paramType || inferTypeFromName(paramName)
   const edgesList = flowEdges.value || []
   const handleId = `input-${paramName}`
-  const isConnected = edgesList.some((edge: any) => 
+  const isConnected = edgesList.some((edge) =>
     edge.target === props.id && edge.targetHandle === handleId
   )
   return getTypeColorClass(type, { connected: isConnected })

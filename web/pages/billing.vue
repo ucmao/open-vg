@@ -135,12 +135,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import type { CreditRecord, PaginatedData } from '~/types/domain'
 
 const { requireAuth } = useAuth()
 const userStore = useUserStore()
 const api = useApi()
 
-const creditRecords = ref<any[]>([])
+const creditRecords = ref<CreditRecord[]>([])
 const loading = ref(true)
 const page = ref(1)
 const pageSize = ref(20)
@@ -160,7 +161,7 @@ const recordTypeLabel = (type: string) => {
 const fetchCredits = async () => {
   try {
     loading.value = true
-    const res = await api.get(`/api/user/credits?page=${page.value}&page_size=${pageSize.value}`)
+    const res = await api.get<PaginatedData<CreditRecord>>(`/api/user/credits?page=${page.value}&page_size=${pageSize.value}`)
     if (res.success) {
       creditRecords.value = res.data.items
       total.value = res.data.total
@@ -209,7 +210,7 @@ const exportToCSV = async () => {
     exporting.value = true
     
     // Fetch all records for export (use a large page size)
-    const res = await api.get(`/api/user/credits?page=1&page_size=10000`)
+    const res = await api.get<PaginatedData<CreditRecord>>(`/api/user/credits?page=1&page_size=10000`)
     
     if (!res.success) {
       toast.error('Failed to fetch records for export')
@@ -232,7 +233,7 @@ const exportToCSV = async () => {
     let runningBalance = userStore.availableCredits
     
     // Process records in reverse order (newest to oldest) to calculate balance after each transaction
-    const recordsWithBalance = allRecords.map((record: any) => {
+    const recordsWithBalance = allRecords.map((record) => {
       // Current balance is the balance after this transaction
       const balanceAfter = runningBalance
       // Move backwards: subtract this transaction's amount to get balance before it
@@ -249,7 +250,7 @@ const exportToCSV = async () => {
     // Build CSV content
     const csvRows = [
       headers.join(','),
-      ...recordsWithBalance.map((record: any) => {
+      ...recordsWithBalance.map((record) => {
         const date = formatDateTimeForCSV(record.created_at)
         const type = `"${record.type}"`
         const description = `"${(record.description || '').replace(/"/g, '""')}"`
@@ -299,4 +300,3 @@ useHead({
   title: 'Billing & Credits — VidGen'
 })
 </script>
-

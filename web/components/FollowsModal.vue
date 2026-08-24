@@ -78,17 +78,19 @@
 </template>
 
 <script setup lang="ts">
+import type { UserSummary } from '~/types/domain'
+
 defineProps<{
   isOpen: boolean
   type: 'following' | 'followers'
-  users: any[]
+  users: UserSummary[]
   loading: boolean
 }>()
 
 defineEmits<{
   close: []
-  unfollow: [user: any]
-  removeFollower: [user: any]
+  unfollow: [user: UserSummary]
+  removeFollower: [user: UserSummary]
 }>()
 </script>
 
@@ -107,4 +109,3 @@ defineEmits<{
   background: rgba(255, 255, 255, 0.2);
 }
 </style>
-

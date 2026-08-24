@@ -120,10 +120,18 @@
 import { Handle, Position, useVueFlow } from '@vue-flow/core'
 import { computed, inject } from 'vue'
 import { getTypeColorClass } from '~/composables/useWorkflowTypeColors'
+import type { WorkflowNodeData, WorkflowParamDefinition } from '~/types/domain'
+
+interface DisplayParam extends WorkflowParamDefinition {
+  name: string
+  connected: boolean
+  visible: boolean
+  isSystemInjected: boolean
+}
 
 const props = defineProps<{
   id: string
-  data: any
+  data: WorkflowNodeData
   selected?: boolean
 }>()
 
@@ -183,7 +191,7 @@ const paramHandles = computed(() => {
   // Get edges from Vue Flow context (edges is a ref)
   const edgesList = flowEdges.value || []
   
-  return Object.entries(params).map(([name, def]: [string, any]) => {
+  return Object.entries(params).map(([name, def]: [string, WorkflowParamDefinition]) => {
     const hasMapping = !!paramMappings[name]
     const hasDefault = !!paramDefaults[name]
     // Default to visible if not explicitly set
@@ -193,7 +201,7 @@ const paramHandles = computed(() => {
     // Check if there's an edge connecting to this handle
     // Handle ID format is "input-{name}" (e.g., "input-prompt", "input-image")
     const handleId = `input-${name}`
-    const connectedEdge = edgesList.find((edge: any) => {
+    const connectedEdge = edgesList.find((edge) => {
       if (!edge || edge.target !== props.id) return false
       // Check if targetHandle matches (could be "input-prompt" or just "prompt")
       const targetHandle = edge.targetHandle || ''
@@ -267,7 +275,7 @@ const paramHandles = computed(() => {
     let isConnectedFromImageOrVideoInput = false
     if (connectedEdge) {
       const sourceNodeId = connectedEdge.source
-      const sourceNode = flowNodes.value?.find((n: any) => n.id === sourceNodeId)
+      const sourceNode = flowNodes.value?.find((n) => n.id === sourceNodeId)
       if (sourceNode) {
         // ：promptPreset, apiCall
         // ：promptInput, imageInput, videoInput, paramInput
@@ -283,7 +291,7 @@ const paramHandles = computed(() => {
       const match = mapping.match(/\$\.([^.]+)/)
       if (match) {
         const sourceNodeId = match[1]
-        const sourceNode = flowNodes.value?.find((n: any) => n.id === sourceNodeId)
+        const sourceNode = flowNodes.value?.find((n) => n.id === sourceNodeId)
         if (sourceNode) {
           isConnectedFromPromptPreset = sourceNode.type === 'prompt_default_hidden'
           isConnectedFromApiOutput = sourceNode.type === 'apiCall'
@@ -312,7 +320,7 @@ const paramHandles = computed(() => {
   }) // Show ALL parameters, including hidden ones
 })
 
-const getHandleClass = (param: any) => {
+const getHandleClass = (param: DisplayParam) => {
   const { type, connected, visible, isSystemInjected } = param
   return getTypeColorClass(type, { connected, visible, isSystemInjected })
 }
@@ -320,7 +328,7 @@ const getHandleClass = (param: any) => {
 const getOutputHandleClass = computed(() => {
   const outputType = props.data?.output_type
   const edgesList = flowEdges.value || []
-  const hasOutputConnection = edgesList.some((edge: any) => 
+  const hasOutputConnection = edgesList.some((edge) =>
     edge.source === props.id && edge.sourceHandle === 'output'
   )
   return getTypeColorClass(outputType, { connected: hasOutputConnection })

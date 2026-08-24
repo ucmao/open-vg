@@ -94,10 +94,11 @@
 import { Handle, Position, useVueFlow } from '@vue-flow/core'
 import { inject, computed, ref } from 'vue'
 import { getTypeColorClass } from '~/composables/useWorkflowTypeColors'
+import type { WorkflowNodeData } from '~/types/domain'
 
 const props = defineProps<{
   id: string
-  data: any
+  data: WorkflowNodeData
   selected?: boolean
 }>()
 
@@ -110,7 +111,7 @@ const { edges: flowEdges } = useVueFlow()
 const mediaArray = computed(() => {
   const value = props.data?.value
   if (!value) return []
-  if (Array.isArray(value)) return value.map((v: any) => (typeof v === 'string' ? v.trim() : v)).filter(Boolean)
+  if (Array.isArray(value)) return value.map((v) => v.trim()).filter(Boolean)
   // /List JSON
   if (typeof value === 'string') {
     const trimmed = value.trim()
@@ -118,7 +119,7 @@ const mediaArray = computed(() => {
       try {
         const parsed = JSON.parse(trimmed)
         if (Array.isArray(parsed)) {
-          return parsed.map((v: any) => (typeof v === 'string' ? v.trim() : String(v))).filter(Boolean)
+          return parsed.map((v: unknown) => (typeof v === 'string' ? v.trim() : String(v))).filter(Boolean)
         }
       } catch {
         //  JSON，
@@ -164,7 +165,7 @@ const isImage = (url: string) => {
 //  (array Type，)
 const getOutputHandleClass = computed(() => {
   const edgesList = flowEdges.value || []
-  const isConnected = edgesList.some((edge: any) => 
+  const isConnected = edgesList.some((edge) =>
     edge.source === props.id && edge.sourceHandle === 'output-array'
   )
   return getTypeColorClass('array', { connected: isConnected })

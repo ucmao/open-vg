@@ -72,10 +72,11 @@
 import { Handle, Position, useVueFlow } from '@vue-flow/core'
 import { inject, computed, ref } from 'vue'
 import { getTypeColorClass } from '~/composables/useWorkflowTypeColors'
+import type { WorkflowNodeData } from '~/types/domain'
 
 const props = defineProps<{
   id: string
-  data: any
+  data: WorkflowNodeData
   selected?: boolean
 }>()
 
@@ -86,7 +87,7 @@ const imageError = ref(false)
 const { edges: flowEdges } = useVueFlow()
 
 const imageValue = computed(() => {
-  return props.data?.value || ''
+  return typeof props.data.value === 'string' ? props.data.value : ''
 })
 
 const isImage = computed(() => {
@@ -104,7 +105,7 @@ const isVideo = computed(() => {
 //  (image Type)
 const getOutputHandleClass = computed(() => {
   const edgesList = flowEdges.value || []
-  const isConnected = edgesList.some((edge: any) => 
+  const isConnected = edgesList.some((edge) =>
     edge.source === props.id && edge.sourceHandle === 'output-image'
   )
   return getTypeColorClass('image', { connected: isConnected })

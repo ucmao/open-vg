@@ -1,11 +1,5 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
-
-interface ApiResponse<T = any> {
-  success: boolean
-  message: string
-  data?: T
-  errors?: Record<string, string>
-}
+import type { ApiResponse } from '~/types/api'
 
 class ApiClient {
   private client: AxiosInstance
@@ -80,11 +74,11 @@ class ApiClient {
     return this.client.get(url, config)
   }
 
-  async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  async post<T = any, TBody = unknown>(url: string, data?: TBody, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     return this.client.post(url, data, config)
   }
 
-  async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  async put<T = any, TBody = unknown>(url: string, data?: TBody, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     return this.client.put(url, data, config)
   }
 

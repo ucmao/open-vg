@@ -57,10 +57,11 @@
 import { Handle, Position, useVueFlow } from '@vue-flow/core'
 import { inject, computed } from 'vue'
 import { getTypeColorClass } from '~/composables/useWorkflowTypeColors'
+import type { WorkflowNodeData } from '~/types/domain'
 
 const props = defineProps<{
   id: string
-  data: any
+  data: WorkflowNodeData
   selected?: boolean
 }>()
 
@@ -70,7 +71,7 @@ const handleInputNodeDoubleClick = inject<(nodeId: string, nodeType: string) => 
 const { edges: flowEdges } = useVueFlow()
 
 const promptValue = computed(() => {
-  const value = props.data?.value || ''
+  const value = typeof props.data.value === 'string' ? props.data.value : ''
   if (!value) return ''
   // Show first 50 characters, truncate if longer
   return value.length > 50 ? value.substring(0, 50) + '...' : value
@@ -79,7 +80,7 @@ const promptValue = computed(() => {
 //  (prompt Type text/string)
 const getOutputHandleClass = computed(() => {
   const edgesList = flowEdges.value || []
-  const isConnected = edgesList.some((edge: any) => 
+  const isConnected = edgesList.some((edge) =>
     edge.source === props.id && edge.sourceHandle === 'output-prompt'
   )
   return getTypeColorClass('text', { connected: isConnected })

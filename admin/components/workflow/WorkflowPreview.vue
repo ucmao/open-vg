@@ -59,6 +59,7 @@ import MediaArrayInputNode from '~/components/workflow/MediaArrayInputNode.vue'
 import ParamInputNode from '~/components/workflow/ParamInputNode.vue'
 import UserInputNode from '~/components/workflow/UserInputNode.vue'
 import WorkflowPreviewControls from '~/components/workflow/WorkflowPreviewControls.vue'
+import type { BackendWorkflowEdge, BackendWorkflowNode, WorkflowEdge, WorkflowNode, WorkflowNodeType, WorkflowRecord } from '~/types/domain'
 
 const props = defineProps<{
   workflowId: number | null
@@ -82,25 +83,25 @@ const nodeTypes: any = {
 
 const KNOWN_TYPES = new Set(Object.keys(nodeTypes))
 
-const nodes = ref<any[]>([])
-const edges = ref<any[]>([])
+const nodes = ref<WorkflowNode[]>([])
+const edges = ref<WorkflowEdge[]>([])
 const workflowTitle = ref<string>('')
 const defaultViewport = { x: 0, y: 0, zoom: 0.8 }
 
-function mapBackendNodeType (t: string): string {
+function mapBackendNodeType (t: string): WorkflowNodeType {
   if (t === 'api_call') return 'apiCall'
   if (t === 'prompt_input') return 'promptInput'
   if (t === 'param_input') return 'paramInput'
   if (t === 'user_input') return 'userInput'
-  const mapped = t || 'promptInput'
+  const mapped = (t || 'promptInput') as WorkflowNodeType
   return KNOWN_TYPES.has(mapped) ? mapped : 'promptInput'
 }
 
-function normalizeNodes (workflowNodes: any[]): any[] {
+function normalizeNodes (workflowNodes: BackendWorkflowNode[]): WorkflowNode[] {
   if (!workflowNodes?.length) return []
   return workflowNodes
-    .filter((n: any) => n && n.id && !String(n.id).startsWith('edge-'))
-    .map((node: any) => {
+    .filter((n) => n && n.id && !String(n.id).startsWith('edge-'))
+    .map((node) => {
       const nodeType = mapBackendNodeType(node.type)
       const position = node.position && typeof node.position.x === 'number' && typeof node.position.y === 'number'
         ? node.position
@@ -114,9 +115,9 @@ function normalizeNodes (workflowNodes: any[]): any[] {
     })
 }
 
-function normalizeEdges (workflowEdges: any[]): any[] {
+function normalizeEdges (workflowEdges: BackendWorkflowEdge[]): WorkflowEdge[] {
   if (!workflowEdges?.length) return []
-  return workflowEdges.map((e: any) => ({
+  return workflowEdges.map((e) => ({
     id: e.id,
     source: e.source,
     target: e.target,
@@ -137,7 +138,7 @@ async function loadWorkflow () {
   loading.value = true
   error.value = ''
   try {
-    const res = await api.get(`/api/admin/workflows/${props.workflowId}`)
+    const res = await api.get<WorkflowRecord>(`/api/admin/workflows/${props.workflowId}`)
     if (res.success && res.data) {
       const w = res.data
       workflowTitle.value = w.name || ''

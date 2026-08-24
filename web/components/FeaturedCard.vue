@@ -106,9 +106,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { Work } from '~/types/domain'
 
 const props = defineProps<{
-  work: any
+  work: Work
   size?: 'large' | 'medium'
 }>()
 
@@ -127,7 +128,7 @@ const formatNumber = (num: number) => {
   return num.toString()
 }
 
-const getWorkUrl = (work: any) => {
+const getWorkUrl = (work: Work) => {
   if (!work) return '/explore'
   if (work.url_slug) return `/prompt/${work.url_slug}`
   if (work.short_code) return `/prompt/${work.short_code}`
@@ -136,4 +137,3 @@ const getWorkUrl = (work: any) => {
   return '/explore'
 }
 </script>
-

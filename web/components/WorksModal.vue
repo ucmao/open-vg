@@ -62,10 +62,12 @@
 </template>
 
 <script setup lang="ts">
+import type { Work } from '~/types/domain'
+
 defineProps<{
   isOpen: boolean
   title: string
-  works: any[]
+  works: Work[]
   loading: boolean
   hasMore: boolean
   icon: string

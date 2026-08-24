@@ -1,28 +1,8 @@
 import { defineStore } from 'pinia'
+import type { LoginResult, User } from '~/types/domain'
+import { isApiError } from '~/types/api'
 
-export interface User {
-  id: number
-  handle: string
-  email: string
-  nickname: string
-  avatar_url: string | null
-  bio: string | null
-  total_credits: number
-  created_at: string
-  gender?: string | null
-  location?: string | null
-  instagram_handle?: string | null
-  twitter_handle?: string | null
-  discord_handle?: string | null
-  handle_updated_at?: string | null
-  following_count?: number
-  followers_count?: number
-  public_works_count?: number
-  total_views?: number
-  total_favorites?: number
-  total_likes?: number
-  total_remixes?: number
-}
+export type { User } from '~/types/domain'
 
 interface UserState {
   user: User | null
@@ -79,14 +59,16 @@ function getAuthCookie() {
 }
 
 // Helper function to safely set cookie
-function setAuthCookie(token: string | null, options?: { maxAge?: number; sameSite?: string; path?: string; secure?: boolean }) {
+type SameSite = true | false | 'lax' | 'strict' | 'none'
+
+function setAuthCookie(token: string | null, options?: { maxAge?: number; sameSite?: SameSite; path?: string; secure?: boolean }) {
   // Check if we can access Nuxt app instance
   try {
     const nuxtApp = useNuxtApp()
     if (nuxtApp) {
       const authCookie = useCookie('auth_token', {
         maxAge: options?.maxAge || 60 * 60 * 24 * 7, // 7 days
-        sameSite: (options?.sameSite as any) || 'lax',
+        sameSite: options?.sameSite || 'lax',
         path: options?.path || '/',
         secure: options?.secure ?? (process.env.NODE_ENV === 'production')
       })
@@ -137,16 +119,16 @@ export const useUserStore = defineStore('user', {
       try {
         this.loading = true
         const api = useApi()
-        const response = await api.get('/api/user/profile')
+        const response = await api.get<User>('/api/user/profile')
         
         if (response.success) {
           this.user = response.data
         } else {
           this.logout()
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Failed to fetch user profile:', error)
-        if (error.status === 401 || error.status === 403) {
+        if (isApiError(error) && (error.status === 401 || error.status === 403)) {
           this.logout()
         }
       } finally {
@@ -158,7 +140,7 @@ export const useUserStore = defineStore('user', {
       try {
         this.loading = true
         const api = useApi()
-        const response = await api.post('/api/auth/login', { email, password })
+        const response = await api.post<LoginResult>('/api/auth/login', { email, password })
         
         if (response.success) {
           this.setToken(response.data.access_token)

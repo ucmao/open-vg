@@ -261,18 +261,19 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import type { ApiLibraryEntry, WorkflowEdge, WorkflowNode, WorkflowParamDefinition } from '~/types/domain'
 
 const { toast } = useToast()
 
 const props = defineProps<{
-  node: any
-  apiLibraryEntries: any[]
-  allNodes?: any[] // All nodes in the workflow for connection options
-  edges?: any[] // All edges in the workflow to check connections
+  node: WorkflowNode
+  apiLibraryEntries: ApiLibraryEntry[]
+  allNodes?: WorkflowNode[] // All nodes in the workflow for connection options
+  edges?: WorkflowEdge[] // All edges in the workflow to check connections
 }>()
 
 const emit = defineEmits<{
-  update: [node: any]
+  update: [node: WorkflowNode]
   'highlight-source': [nodeId: string | null, paramName: string | null]
   'test-node': [nodeId: string]
 }>()
@@ -322,7 +323,7 @@ const paramsList = computed(() => {
   const visibility = props.node.data.params_visibility || {}
   const mappings = props.node.data.param_mappings || {}
   
-  return Object.entries(schema).map(([name, def]: [string, any]) => {
+  return Object.entries(schema).map(([name, def]: [string, WorkflowParamDefinition]) => {
     // Determine visibility: if mapped to user_input, it's visible; otherwise use visibility setting
     const mapping = mappings[name] || ''
     const isUserInput = mapping === `$.user_input.${name}`
@@ -631,10 +632,6 @@ const isSystemPresetAndConnected = (paramName: string) => {
       }
     }
     
-    // visibilityfalse，
-    if (!mapping && visibility[paramName] === false) {
-      return true
-    }
   }
   
   return false
@@ -787,7 +784,7 @@ const getConnectedEdge = (paramName: string) => {
   
   const handleId = `input-${paramName}`
   
-  return props.edges.find((edge: any) => {
+  return props.edges.find((edge) => {
     if (!edge || edge.target !== props.node.id) return false
     const targetHandle = edge.targetHandle || ''
     // Normalize both sides for comparison

@@ -734,6 +734,7 @@ import UserInputNode from '~/components/workflow/UserInputNode.vue'
 import NodeConfigPanel from '~/components/workflow/NodeConfigPanel.vue'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import MediaArraySelectorModal from '~/components/MediaArraySelectorModal.vue'
+import type { ApiLibraryEntry, PaginatedData, WorkflowEdge, WorkflowNode, WorkflowRecord } from '~/types/domain'
 
 definePageMeta({
   layout: 'default',
@@ -759,8 +760,8 @@ const isWorkflowPastePage = computed(() => {
 })
 
 // Vue Flow
-const nodes = ref<any[]>([])
-const edges = ref<any[]>([])
+const nodes = ref<WorkflowNode[]>([])
+const edges = ref<WorkflowEdge[]>([])
 const { 
   onNodesChange, 
   onEdgesChange, 
@@ -780,7 +781,7 @@ const cleanupDisconnectedParams = (deletedNodeIds: Set<string>, deletedEdgeIds: 
   // （DeleteDelete）
   // ：DeleteAction，Delete
   const currentEdges = edges.value
-  const affectedEdges: any[] = []
+  const affectedEdges: WorkflowEdge[] = []
   
   // （Delete）
   currentEdges.forEach(edge => {
@@ -1076,8 +1077,8 @@ const formatDateTime = (dateString: string | null) => {
   }
 }
 
-const selectedNode = ref<any>(null)
-const apiLibraryEntries = ref<any[]>([])
+const selectedNode = ref<WorkflowNode | null>(null)
+const apiLibraryEntries = ref<ApiLibraryEntry[]>([])
 const saving = ref(false)
 const loading = ref(false)
 
@@ -1092,14 +1093,14 @@ const findApiEntry = (apiId: number | null | undefined) => {
 // Input node modals
 const showPromptInputModal = ref(false)
 const promptInputValue = ref('')
-const currentPromptNode = ref<any>(null)
+const currentPromptNode = ref<WorkflowNode | null>(null)
 const showMediaSelector = ref(false)
 const showMediaArraySelector = ref(false)
-const currentImageNode = ref<any>(null)
-const currentMediaArrayNode = ref<any>(null)
+const currentImageNode = ref<WorkflowNode | null>(null)
+const currentMediaArrayNode = ref<WorkflowNode | null>(null)
 
 // Undo/Redo
-const history = ref<any[]>([])
+const history = ref<Array<{ nodes: WorkflowNode[]; edges: WorkflowEdge[] }>>([])
 const historyIndex = ref(-1)
 const maxHistorySize = 50
 
@@ -1119,8 +1120,8 @@ const isDeleting = ref(false)
 // Clipboard for copy/paste (supports cross-workflow)
 const CLIPBOARD_KEY = 'workflow_clipboard'
 interface ClipboardData {
-  nodes: any[]
-  edges: any[]
+  nodes: WorkflowNode[]
+  edges: WorkflowEdge[]
   workflowId?: number | null
   timestamp: number
 }
@@ -1233,15 +1234,13 @@ onUnmounted(() => {
 // Fetch API Library entries
 const fetchApiLibrary = async () => {
   try {
-    const response = await api.get('/api/admin/api-library')
+    const response = await api.get<PaginatedData<ApiLibraryEntry> | ApiLibraryEntry[]>('/api/admin/api-library')
     if (response.success) {
       // Handle paginated response format
-      if (response.data?.items && Array.isArray(response.data.items)) {
-        apiLibraryEntries.value = response.data.items
-      } else if (Array.isArray(response.data)) {
+      if (Array.isArray(response.data)) {
         apiLibraryEntries.value = response.data
       } else {
-        apiLibraryEntries.value = []
+        apiLibraryEntries.value = response.data.items
       }
     } else {
       apiLibraryEntries.value = []
@@ -1257,7 +1256,7 @@ const fetchApiLibrary = async () => {
 const fetchWorkflow = async (id: number) => {
   loading.value = true
   try {
-    const response = await api.get(`/api/admin/workflows/${id}`)
+    const response = await api.get<WorkflowRecord>(`/api/admin/workflows/${id}`)
     if (!response || !response.success) {
       const errorMessage = response?.message || 'failed'
       toast.error(errorMessage)
@@ -2018,7 +2017,7 @@ const handleInputNodeDoubleClick = (nodeId: string, nodeType: string) => {
   if (!node) return
   if (nodeType === 'promptInput' || nodeType === 'paramInput' || nodeType === 'prompt_default_hidden') {
     currentPromptNode.value = node
-    promptInputValue.value = node.data?.value || ''
+    promptInputValue.value = typeof node.data.value === 'string' ? node.data.value : ''
     showPromptInputModal.value = true
   } else if (nodeType === 'image_default' || nodeType === 'video_default') {
     currentImageNode.value = node
@@ -2087,14 +2086,15 @@ const handleTestNode = async (nodeId: string) => {
 }
 
 const savePromptInput = () => {
-  if (currentPromptNode.value) {
-    const index = nodes.value.findIndex(n => n.id === currentPromptNode.value.id)
+  const currentNode = currentPromptNode.value
+  if (currentNode) {
+    const index = nodes.value.findIndex(n => n.id === currentNode.id)
     if (index !== -1) {
       nodes.value[index].data.value = promptInputValue.value
       
       // If this is a prompt_default_hidden node, update connected target nodes' param_defaults
-      if (currentPromptNode.value.type === 'prompt_default_hidden' && promptInputValue.value) {
-        const connectedEdges = edges.value.filter(e => e.source === currentPromptNode.value.id)
+      if (currentNode.type === 'prompt_default_hidden' && promptInputValue.value) {
+        const connectedEdges = edges.value.filter(e => e.source === currentNode.id)
         connectedEdges.forEach(edge => {
           const targetNodeIndex = nodes.value.findIndex(n => n.id === edge.target)
           if (targetNodeIndex !== -1) {
@@ -2117,9 +2117,12 @@ const savePromptInput = () => {
   showPromptInputModal.value = false
 }
 
-const handleMediaSelect = (item: any) => {
-  if (currentImageNode.value && item.file_url) {
-    const index = nodes.value.findIndex(n => n.id === currentImageNode.value.id)
+interface SelectedMedia { file_url?: string | null }
+
+const handleMediaSelect = (item: SelectedMedia) => {
+  const currentNode = currentImageNode.value
+  if (currentNode && item.file_url) {
+    const index = nodes.value.findIndex(n => n.id === currentNode.id)
     if (index !== -1) {
       nodes.value[index].data.value = item.file_url
       saveToHistory()
@@ -2128,12 +2131,13 @@ const handleMediaSelect = (item: any) => {
   showMediaSelector.value = false
 }
 
-const handleMediaArraySelect = (items: any[]) => {
-  if (currentMediaArrayNode.value && items.length > 0) {
-    const index = nodes.value.findIndex(n => n.id === currentMediaArrayNode.value.id)
+const handleMediaArraySelect = (items: SelectedMedia[]) => {
+  const currentNode = currentMediaArrayNode.value
+  if (currentNode && items.length > 0) {
+    const index = nodes.value.findIndex(n => n.id === currentNode.id)
     if (index !== -1) {
       // Save URL
-      const urls = items.map(item => item.file_url).filter(Boolean)
+      const urls = items.map(item => item.file_url).filter((url): url is string => Boolean(url))
       nodes.value[index].data.value = urls
       saveToHistory()
     }

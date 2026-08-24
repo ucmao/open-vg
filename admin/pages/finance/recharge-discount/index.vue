@@ -455,6 +455,7 @@
 
 <script setup lang="ts">
 import { X, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
+import type { EmailPreset, EmailPreview, PaginatedData, RechargePromo, UserSummary } from '~/types/domain'
 
 definePageMeta({ layout: 'default' })
 
@@ -462,7 +463,7 @@ const adminApi = useAdminApi()
 const { toast } = useToast()
 
 const loading = ref(false)
-const items = ref<any[]>([])
+const items = ref<RechargePromo[]>([])
 const total = ref(0)
 const page = ref(1)
 const pageSize = ref(20)
@@ -474,17 +475,17 @@ const filters = ref({
 const showModal = ref(false)
 const editingId = ref<number | null>(null)
 const submitting = ref(false)
-const deleteTarget = ref<any | null>(null)
-const sendEmailTarget = ref<any | null>(null)
-const emailPresets = ref<{ key: string; label: string }[]>([])
+const deleteTarget = ref<RechargePromo | null>(null)
+const sendEmailTarget = ref<RechargePromo | null>(null)
+const emailPresets = ref<EmailPreset[]>([])
 const sendEmailReasonKey = ref('exclusive')
 const sendingEmail = ref(false)
-const emailPreview = ref<{ subject: string; html_content: string } | null>(null)
+const emailPreview = ref<EmailPreview | null>(null)
 const loadingPreview = ref(false)
 
 const form = reactive({
   userSearch: '',
-  selectedUser: null as { id: number; email?: string; nickname?: string; handle?: string; avatar_url?: string } | null,
+  selectedUser: null as UserSummary | null,
   applyToAllUsers: false,
   extra_credits_percent: 10,
   valid_from: '' as string,
@@ -492,7 +493,7 @@ const form = reactive({
   name: ''
 })
 
-const userSuggestions = ref<any[]>([])
+const userSuggestions = ref<UserSummary[]>([])
 const showUserSuggestions = ref(false)
 const userSearchContainer = ref<HTMLElement | null>(null)
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
@@ -524,7 +525,7 @@ async function loadList () {
     if (filters.value.search?.trim()) {
       params.search = filters.value.search.trim()
     }
-    const res = await adminApi.get('/api/admin/recharge-discount', { params })
+    const res = await adminApi.get<PaginatedData<RechargePromo>>('/api/admin/recharge-discount', { params })
     if (res.success && res.data) {
       items.value = res.data.items ?? []
       total.value = res.data.total ?? 0
@@ -565,7 +566,7 @@ function openCreateModal () {
   showModal.value = true
 }
 
-function editItem (item: any) {
+function editItem (item: RechargePromo) {
   editingId.value = item.id
   form.extra_credits_percent = item.extra_credits_percent
   form.valid_from = item.valid_from ? new Date(item.valid_from).toISOString().slice(0, 16) : ''
@@ -597,7 +598,7 @@ async function searchUsers () {
   }
   if (/^\d+$/.test(searchValue)) {
     try {
-      const res = await adminApi.get('/api/admin/users', { params: { page: 1, page_size: 100 } })
+      const res = await adminApi.get<PaginatedData<UserSummary>>('/api/admin/users', { params: { page: 1, page_size: 100 } })
       if (res.success && res.data?.items) {
         const user = res.data.items.find((u: any) => u.id === parseInt(searchValue, 10))
         if (user) {
@@ -615,9 +616,9 @@ async function searchUsers () {
   }
   searchTimeout = setTimeout(async () => {
     try {
-      const res = await adminApi.get('/api/admin/users/search', { params: { query: searchValue, limit: 10 } })
+      const res = await adminApi.get<UserSummary[]>('/api/admin/users/search', { params: { query: searchValue, limit: 10 } })
       if (res.success && res.data) {
-        userSuggestions.value = Array.isArray(res.data) ? res.data : (res.data?.items ?? res.data ?? [])
+        userSuggestions.value = res.data
       } else {
         userSuggestions.value = []
       }
@@ -627,7 +628,7 @@ async function searchUsers () {
   }, 300)
 }
 
-function selectUser (u: any) {
+function selectUser (u: UserSummary) {
   form.selectedUser = { id: u.id, email: u.email, nickname: u.nickname, handle: u.handle, avatar_url: u.avatar_url }
   form.userSearch = u.email || u.nickname || u.handle || ''
   showUserSuggestions.value = false
@@ -694,13 +695,13 @@ async function copyUrl (url: string) {
   }
 }
 
-function confirmDelete (item: any) {
+function confirmDelete (item: RechargePromo) {
   deleteTarget.value = item
 }
 
 async function loadEmailPresets () {
   try {
-    const res = await adminApi.get('/api/admin/recharge-discount/email-presets')
+    const res = await adminApi.get<EmailPreset[]>('/api/admin/recharge-discount/email-presets')
     if (res.success && res.data && Array.isArray(res.data)) {
       emailPresets.value = res.data
       if (emailPresets.value.length && !sendEmailReasonKey.value) {
@@ -731,7 +732,7 @@ async function loadEmailPreview () {
   loadingPreview.value = true
   emailPreview.value = null
   try {
-    const res = await adminApi.get(
+    const res = await adminApi.get<EmailPreview>(
       `/api/admin/recharge-discount/${sendEmailTarget.value.id}/email-preview`,
       { params: { reason_key: sendEmailReasonKey.value } }
     )
@@ -748,7 +749,7 @@ async function loadEmailPreview () {
   }
 }
 
-async function openSendEmailModal (item: any) {
+async function openSendEmailModal (item: RechargePromo) {
   sendEmailTarget.value = item
   sendEmailReasonKey.value = 'exclusive'
   emailPreview.value = null

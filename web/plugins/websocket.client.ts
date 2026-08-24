@@ -1,11 +1,12 @@
 import { getGenerationErrorMessage } from '~/utils/generationError'
+import type { ClientWebSocketMessage, ServerWebSocketEvent } from '~/types/domain'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { user, isAuthenticated } = useAuth()
   const { fetchUnreadCount } = useNotifications()
   const { toast } = useToast()
   let socket: WebSocket | null = null
-  let reconnectTimer: any = null
+  let reconnectTimer: ReturnType<typeof setTimeout> | null = null
   let reconnectAttempts = 0
   const MAX_RECONNECT_ATTEMPTS = 5
   const INITIAL_RECONNECT_DELAY = 5000 // 5 seconds
@@ -49,7 +50,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
       socket.onmessage = (event) => {
         try {
-          const data = JSON.parse(event.data)
+          const data: unknown = JSON.parse(String(event.data))
+          if (!isServerWebSocketEvent(data)) return
           
           // Handle generation complete
           if (data.type === 'generation_complete') {
@@ -138,8 +140,26 @@ export default defineNuxtPlugin((nuxtApp) => {
   return {
     provide: {
       ws: {
-        send: (msg: any) => socket?.send(JSON.stringify(msg))
+        send: (msg: ClientWebSocketMessage) => socket?.send(JSON.stringify(msg))
       }
     }
   }
 })
+
+function isServerWebSocketEvent(value: unknown): value is ServerWebSocketEvent {
+  if (typeof value !== 'object' || value === null || !('type' in value)) return false
+  const event = value as Record<string, unknown>
+  if (event.type === 'notification') {
+    return event.message === undefined || event.message === null || typeof event.message === 'string'
+  }
+  if (event.type !== 'generation_complete') return false
+  return typeof event.work_id === 'number'
+    && (event.status === 'success' || event.status === 'failed')
+    && isOptionalString(event.file_url)
+    && isOptionalString(event.nsfw_status)
+    && isOptionalString(event.error_message)
+}
+
+function isOptionalString(value: unknown): value is string | null | undefined {
+  return value === undefined || value === null || typeof value === 'string'
+}

@@ -15,7 +15,7 @@
       <img
         v-if="displayImageUrl"
         :src="displayImageUrl"
-        :alt="work.share_name || work.title || work.prompt"
+        :alt="work.share_name || work.title || work.prompt || ''"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
@@ -228,8 +228,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Play, ImageIcon, Eye, Bookmark, Zap, Heart, Star } from 'lucide-vue-next'
+import type { Work } from '~/types/domain'
 const props = withDefaults(defineProps<{
-  work: any
+  work: Work
   mode?: 'gallery' | 'profile' // 🎨 Added mode to distinguish styles
 }>(), {
   mode: 'gallery'
@@ -286,7 +287,7 @@ const formatNumber = (num: number) => {
   return num.toString()
 }
 
-const getWorkUrl = (work: any) => {
+const getWorkUrl = (work: Work) => {
   if (work.url_slug) return `/prompt/${work.url_slug}`
   if (work.short_code) return `/prompt/${work.short_code}`
   // Fallback: if neither exists, return empty to prevent invalid links
@@ -303,4 +304,3 @@ const handleRemix = () => {
   }
 }
 </script>
-

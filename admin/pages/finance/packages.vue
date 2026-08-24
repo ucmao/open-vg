@@ -204,6 +204,7 @@ import { Plus } from 'lucide-vue-next'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
+import type { RechargePackage } from '~/types/domain'
 
 definePageMeta({
   layout: 'default',
@@ -214,7 +215,7 @@ const adminApi = useAdminApi()
 const { toast } = useToast()
 const { confirm } = useConfirm()
 
-const packages = ref<any[]>([])
+const packages = ref<RechargePackage[]>([])
 const loading = ref(false)
 const showPackageModal = ref(false)
 const isEditingPackage = ref(false)
@@ -234,7 +235,7 @@ const packageForm = reactive({
 const fetchPackages = async () => {
   loading.value = true
   try {
-    const res = await adminApi.get('/api/admin/finance/packages')
+    const res = await adminApi.get<RechargePackage[]>('/api/admin/finance/packages')
     if (res && res.data) {
       packages.value = res.data
     }
@@ -261,7 +262,7 @@ const openCreatePackageModal = () => {
   showPackageModal.value = true
 }
 
-const openEditPackageModal = (pkg: any) => {
+const openEditPackageModal = (pkg: RechargePackage) => {
   isEditingPackage.value = true
   currentPackageId.value = pkg.id
   Object.assign(packageForm, {
@@ -308,7 +309,7 @@ const handlePackageSubmit = async () => {
   }
 }
 
-const handlePackageDelete = async (pkg: any) => {
+const handlePackageDelete = async (pkg: RechargePackage) => {
   const confirmed = await confirm({
     title: 'Delete',
     message: `ConfirmDelete "${pkg.name}" (${pkg.credits}  / $${pkg.amount}) ？Action。`,
