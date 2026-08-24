@@ -4,12 +4,10 @@
 
 **Produktionsbereite Open-Source-KI-Video- und Bildgenerierungsplattform**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Willkommen-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
+[![Nuxt 3](https://img.shields.io/badge/Nuxt-3.21.11-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
 [English](README.md) | [简体中文](README_CN.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Español](README_ES.md) | [Português](README_PT.md) | [Deutsch](README_DE.md) | [Français](README_FR.md)
 
@@ -74,11 +72,11 @@ Egal ob Sie eine Plattform zur KI-Bild-/Videogenerierung starten oder benutzerde
 
 | Schicht | Technologien |
 | :--- | :--- |
-| **Frontend Web Portal** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
-| **Admin Panel** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 Sprachen), Axios |
-| **Backend API** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
-| **Aufgabenwarteschlange & Worker** | **Celery**, **Flower** (Überwachung), **Redis** (Broker & Cache) |
-| **Datenbank** | **PostgreSQL** 14+ mit **Alembic** Datenbank-Migrationsverfolgung |
+| **Frontend Web Portal** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
+| **Admin Panel** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 Sprachen), Axios |
+| **Backend API** | **FastAPI 0.115+** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
+| **Aufgabenwarteschlange & Worker** | **Celery 5.4+**, **Flower 2.0+** (Überwachung), **Redis 7** (Broker & Cache) |
+| **Datenbank** | **PostgreSQL 15+** mit **Alembic** Datenbank-Migrationsverfolgung |
 | **Speicher & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3-kompatibler Objektspeicher) |
 | **KI-Anbieter** | SiliconFlow, Replicate, Google Gemini, Benutzerdefinierte Adapter |
 | **Zahlungs-Gateways** | PayPal SDK, Stripe API |
@@ -157,9 +155,9 @@ docker compose up -d
 
 #### Voraussetzungen
 - **Python**: 3.11 oder höher
-- **Node.js**: 18.x oder höher
-- **PostgreSQL**: 14.x oder höher
-- **Redis**: 6.x oder höher
+- **Node.js**: 24.15 oder höher
+- **PostgreSQL**: 15.x oder höher
+- **Redis**: 7.x oder höher
 
 ---
 

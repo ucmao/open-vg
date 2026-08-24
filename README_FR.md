@@ -4,12 +4,10 @@
 
 **Plateforme de génération de vidéo et d'image par IA open source de niveau production**
 
-[![Live Demo](https://img.shields.io/badge/Demo_en_Direct-vidgenerator.ai-0070f3?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vidgenerator.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Bienvenus-brightgreen.svg?style=for-the-badge)](.github/CONTRIBUTING.md)
+[![Nuxt 3](https://img.shields.io/badge/Nuxt-3.21.11-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
 [English](README.md) | [简体中文](README_CN.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Español](README_ES.md) | [Português](README_PT.md) | [Deutsch](README_DE.md) | [Français](README_FR.md)
 
@@ -74,11 +72,11 @@ Que vous lanciez une plateforme de génération d'images/vidéos par IA ou que v
 
 | Couche | Technologies |
 | :--- | :--- |
-| **Portail Web Frontend** | **Nuxt 3** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
-| **Panneau d'Administration** | **Nuxt 3** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 langues), Axios |
-| **API Backend** | **FastAPI** (Python 3.11+), **SQLAlchemy** (Async ORM), **Pydantic v2**, JWT |
-| **File de Tâches & Workers** | **Celery**, **Flower** (Surveillance), **Redis** (Broker & Cache) |
-| **Base de Données** | **PostgreSQL** 14+ avec suivi des migrations **Alembic** |
+| **Portail Web Frontend** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
+| **Panneau d'Administration** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, **Vue i18n** (8 langues), Axios |
+| **API Backend** | **FastAPI 0.115+** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
+| **File de Tâches & Workers** | **Celery 5.4+**, **Flower 2.0+** (Surveillance), **Redis 7** (Broker & Cache) |
+| **Base de Données** | **PostgreSQL 15+** avec suivi des migrations **Alembic** |
 | **Stockage & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (compatible S3) |
 | **Fournisseurs d'IA** | SiliconFlow, Replicate, Google Gemini, Adaptateurs Personnalisés |
 | **Passerelles de Paiement** | PayPal SDK, Stripe API |
@@ -157,9 +155,9 @@ docker compose up -d
 
 #### Prérequis
 - **Python** : 3.11 ou supérieur
-- **Node.js** : 18.x ou supérieur
-- **PostgreSQL** : 14.x ou supérieur
-- **Redis** : 6.x ou supérieur
+- **Node.js** : 24.15 ou supérieur
+- **PostgreSQL** : 15.x ou supérieur
+- **Redis** : 7.x ou supérieur
 
 ---
 
