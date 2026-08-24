@@ -1805,7 +1805,7 @@ const applyFontSize = () => {
       // Check if selection is already wrapped in a styled element
       let element = range.commonAncestorContainer.nodeType === Node.TEXT_NODE 
         ? range.commonAncestorContainer.parentElement 
-        : range.commonAncestorContainer as Element
+        : range.commonAncestorContainer as HTMLElement
       
       // Find the innermost element that contains the selection
       while (element && element !== editorRef.value) {
@@ -2567,4 +2567,3 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 </style>
-

@@ -249,7 +249,7 @@ const result = ref<any>(null)
 const activeTab = ref('tools')
 const history = ref<string[]>([]) // For Undo function
 const localRecent = ref<any[]>([]) // For persistent history tab
-const panelStyle = reactive({ top: '0px', left: '0px' })
+const panelStyle = reactive({ top: '0px', left: '0px', maxHeight: '400px' })
 
 const actions = [
   { id: 'optimize', label: 'Rewrite prompt', desc: 'Rephrase & improve clarity' },

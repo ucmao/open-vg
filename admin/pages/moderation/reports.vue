@@ -26,7 +26,7 @@
         <span class="text-sm font-medium text-blue-700"> {{ selectedLogIds.length }} </span>
         <div class="h-4 w-px bg-blue-200"></div>
         <button
-          @click="handleBatchDismiss"
+          @click="handleBatchDismissLogs"
           class="px-3 py-1.5 bg-orange-600 text-white text-sm font-medium rounded hover:bg-orange-700 transition-colors"
         >
 

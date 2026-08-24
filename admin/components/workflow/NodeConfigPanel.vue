@@ -1089,7 +1089,7 @@ const updateDefaultValue = (paramName: string, value: string) => {
   if (value !== '' && value !== null && value !== undefined) {
     // Handle different types
     if (param?.type === 'bool' || param?.type === 'boolean') {
-      defaults[paramName] = value === 'true' || value === true
+      defaults[paramName] = value === 'true'
     } else if (param?.type === 'int' || param?.type === 'integer') {
       const intValue = parseInt(value, 10)
       defaults[paramName] = isNaN(intValue) ? value : intValue

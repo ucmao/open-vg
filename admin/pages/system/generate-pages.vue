@@ -863,8 +863,9 @@ const deleteGenerateConfig = async (category: any) => {
       toast.success('CategoryDelete')
       await loadGenerateTree()
     }
-  } catch (error) {
-    toast.error(error.response?.data?.message || 'Deletefailed')
+  } catch (error: unknown) {
+    const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message
+    toast.error(message || 'Deletefailed')
     console.error('Failed to delete generate config:', error)
   }
 }
@@ -1022,4 +1023,3 @@ onMounted(async () => {
   loadGenerateTree()
 })
 </script>
-

@@ -1088,7 +1088,7 @@ const { getBadgeLabel, getBadgeClassObject } = useModelBadge()
 
 // Types
 interface SelectOption {
-  value: string | number
+  value: string | number | boolean
   label: string
   description?: string
   right?: string
@@ -1465,17 +1465,17 @@ const updateDefaultParams = (preserve = false) => {
         // Handle array default value
         let defaultArray: string[] = []
         if (Array.isArray(p.default)) {
-          defaultArray = p.default.filter((item): item is string => typeof item === 'string')
+          defaultArray = p.default.filter((item: unknown): item is string => typeof item === 'string')
         } else if (typeof p.default === 'string') {
           try {
             const parsed = JSON.parse(p.default)
             if (Array.isArray(parsed)) {
-              defaultArray = parsed.filter((item): item is string => typeof item === 'string')
+              defaultArray = parsed.filter((item: unknown): item is string => typeof item === 'string')
             } else {
               defaultArray = [p.default]
             }
           } catch {
-            defaultArray = p.default.split(',').map(v => v.trim()).filter(Boolean)
+            defaultArray = p.default.split(',').map((v: string) => v.trim()).filter(Boolean)
           }
         }
         if (defaultArray.length > 0) {
@@ -1959,7 +1959,7 @@ const toggleParamMenu = (key: string) => {
   activeParamMenu.value = activeParamMenu.value === key ? null : key
 }
 
-const selectParamValue = (key: string, value: string | number | object) => {
+const selectParamValue = (key: string, value: string | number | boolean | object) => {
   form.params[key] = value
   activeParamMenu.value = null
 }
@@ -2615,17 +2615,17 @@ const handleRemixEvent = async (event: Event) => {
         // Handle array default value
         let defaultArray: string[] = []
         if (Array.isArray(p.default)) {
-          defaultArray = p.default.filter((item): item is string => typeof item === 'string')
+          defaultArray = p.default.filter((item: unknown): item is string => typeof item === 'string')
         } else if (typeof p.default === 'string') {
           try {
             const parsed = JSON.parse(p.default)
             if (Array.isArray(parsed)) {
-              defaultArray = parsed.filter((item): item is string => typeof item === 'string')
+              defaultArray = parsed.filter((item: unknown): item is string => typeof item === 'string')
             } else {
               defaultArray = [p.default]
             }
           } catch {
-            defaultArray = p.default.split(',').map(v => v.trim()).filter(Boolean)
+            defaultArray = p.default.split(',').map((v: string) => v.trim()).filter(Boolean)
           }
         }
         if (defaultArray.length > 0) {

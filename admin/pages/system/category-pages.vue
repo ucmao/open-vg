@@ -493,13 +493,29 @@ const { toast } = useToast()
 const { confirm } = useConfirm()
 const { loadBaseUrl, getFrontendUrl } = useFrontendUrl()
 
+interface CategoryPageNode {
+  id: number
+  parent_id: number | null
+  parent_category_name?: string
+  category_name: string
+  page_path: string
+  title: string
+  description: string
+  keywords: string
+  display_description: string
+  sort_order: number
+  is_active: boolean
+  show_in_explore: boolean
+  children?: CategoryPageNode[]
+}
+
 // Category Config
 const loadingCategoryTree = ref(false)
-const categoryTree = ref([])
+const categoryTree = ref<CategoryPageNode[]>([])
 const showCategoryConfigModal = ref(false)
 const showCategoryImportModal = ref(false)
 const importingCategoryConfig = ref(false)
-const categoryConfigImportPreview = ref([])
+const categoryConfigImportPreview = ref<CategoryPageNode[]>([])
 const categoryConfigFileInput = ref<HTMLInputElement | null>(null)
 const expandedParentIds = ref<Record<number, boolean>>({})
 const selectedCategoryIds = ref<number[]>([])

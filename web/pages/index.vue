@@ -705,7 +705,14 @@ const carouselConfig = computed(() => ({
 }))
 
 // FAQs（ Help Center）
-const faqItems = [
+interface FaqItem {
+  question: string
+  answer: string
+  link?: string
+  linkText?: string
+}
+
+const faqItems: FaqItem[] = [
   {
     question: 'What is VidGen?',
     answer: 'VidGen is an AI creative platform for generating images and videos. You can create art with various AI models, use Magic effects, and share your creations in the community gallery.'

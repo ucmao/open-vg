@@ -34,7 +34,7 @@
           type="target"
           :position="Position.Left"
           class="!w-3 !h-3 !border-2 !border-white !cursor-crosshair"
-          :class="getInputHandleClass(paramName, param?.type)"
+          :class="getInputHandleClass(String(paramName), param?.type)"
           style="left: -6px;"
         />
         <span class="text-gray-600 truncate flex-1 ml-1">{{ paramName }}</span>

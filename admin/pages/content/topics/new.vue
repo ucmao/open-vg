@@ -920,7 +920,7 @@
                           >{{ h || '' }}</span>
                         </th>
                         <th v-if="selectedBlockIndex === idx" class="w-10 border border-gray-200 bg-gray-50 p-1">
-                          <button type="button" aria-label="" class="w-full py-1 text-blue-600 text-xs font-bold" @click.stop="element.headers.push(''); element.rows.forEach(r => r.push(''))">+</button>
+                          <button type="button" aria-label="" class="w-full py-1 text-blue-600 text-xs font-bold" @click.stop="element.headers.push(''); element.rows.forEach((r: unknown[]) => r.push(''))">+</button>
                         </th>
                       </tr>
                     </thead>
@@ -1068,14 +1068,14 @@
                       muted
                       loop
                       playsinline
-                      @error="$event.target.style.display='none'"
+                      @error="hideBrokenMedia"
                     />
                     <!-- Image -->
                     <img 
                       v-else-if="getWorkImageUrl(work)" 
                       :src="getWorkImageUrl(work)" 
                       class="w-full h-full object-cover"
-                      @error="$event.target.style.display='none'"
+                      @error="hideBrokenMedia"
                     />
                     <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-600 font-bold uppercase tracking-widest text-center p-4">
                        #{{ work.id || idx + 1 }}
@@ -1605,7 +1605,7 @@
                   muted
                   loop
                   playsinline
-                  @error="$event.target.style.display='none'"
+                  @error="hideBrokenMedia"
                 />
                 <!-- Image preview -->
                 <img v-else-if="getWorkImageUrl(work)" :src="getWorkImageUrl(work)" class="w-full h-full object-cover" />
@@ -1834,6 +1834,10 @@ import PromptInsertModal from '~/components/PromptInsertModal.vue'
 import WorkSearchModal from '~/components/WorkSearchModal.vue'
 
 const { isVideoWork, getWorkImageUrl, getWorkVideoUrl, getWorkVideoPoster } = useWorkMedia()
+
+const hideBrokenMedia = (event: Event) => {
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.style.display = 'none'
+}
 
 definePageMeta({
   layout: 'default'

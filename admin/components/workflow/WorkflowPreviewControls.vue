@@ -1,12 +1,12 @@
 <template>
   <div class="absolute top-2 right-2 z-10 flex items-center gap-1 bg-white/90 border border-gray-200 rounded-md shadow-sm px-1 py-0.5">
-    <button type="button" title="" class="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700" @click="zoomOut">
+    <button type="button" title="" class="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700" @click="() => zoomOut()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
       </svg>
     </button>
     <span class="text-xs text-gray-500 min-w-[2.5rem] text-center">{{ zoomLabel }}</span>
-    <button type="button" title="" class="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700" @click="zoomIn">
+    <button type="button" title="" class="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700" @click="() => zoomIn()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
       </svg>

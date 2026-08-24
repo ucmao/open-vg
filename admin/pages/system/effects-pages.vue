@@ -493,14 +493,30 @@ const { toast } = useToast()
 const { confirm } = useConfirm()
 const { loadBaseUrl, getFrontendUrl } = useFrontendUrl()
 
+interface EffectsPageNode {
+  id: number
+  parent_id: number | null
+  parent_category_name?: string
+  category_name: string
+  page_path: string
+  title: string
+  description: string
+  keywords: string
+  display_description: string
+  sort_order: number
+  is_active: boolean
+  show_in_explore: boolean
+  children?: EffectsPageNode[]
+}
+
 
 // Effects Category Config
 const loadingEffectsTree = ref(false)
-const effectsTree = ref([])
+const effectsTree = ref<EffectsPageNode[]>([])
 const showEffectsConfigModal = ref(false)
 const showEffectsImportModal = ref(false)
 const importingEffectsConfig = ref(false)
-const effectsImportPreview = ref([])
+const effectsImportPreview = ref<EffectsPageNode[]>([])
 const effectsFileInput = ref<HTMLInputElement | null>(null)
 const expandedEffectsParentIds = ref<Record<number, boolean>>({})
 const selectedEffectsIds = ref<number[]>([])
@@ -518,7 +534,7 @@ const editingEffectsConfig = ref({
   is_active: false,
   show_in_explore: false
 })
-const availableModelCategories = ref([])
+const availableModelCategories = ref<Record<string, unknown>[]>([])
 const loadingModelCategories = ref(false)
 
 const getCategoryPageUrl = (pagePath: string): string => {
@@ -872,8 +888,9 @@ const deleteEffectsConfig = async (category: any) => {
       toast.success('CategoryDelete')
       await loadEffectsTree()
     }
-  } catch (error) {
-    toast.error(error.response?.data?.message || 'Deletefailed')
+  } catch (error: unknown) {
+    const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message
+    toast.error(message || 'Deletefailed')
     console.error('Failed to delete effects config:', error)
   }
 }

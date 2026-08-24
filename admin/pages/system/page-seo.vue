@@ -191,8 +191,18 @@ const { toast } = useToast()
 const { confirm } = useConfirm()
 const { loadBaseUrl, getFrontendUrl } = useFrontendUrl()
 
+interface PageSeo {
+  id: number
+  page_name: string
+  page_path: string
+  title: string
+  description: string
+  keywords: string
+  is_enabled: boolean
+}
+
 const loading = ref(false)
-const pageSeos = ref([])
+const pageSeos = ref<PageSeo[]>([])
 
 const pageAccentMap: Record<string, { bar: string; badge: string }> = {
   home: { bar: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700' },
@@ -243,7 +253,7 @@ const loadPageSeos = async () => {
     const response = await adminApi.get('/api/admin/seo/pages')
     if (response.success) {
       const pageOrder = ['home', 'explore', 'templates', 'effects', 'category', 'create', 'blog', 'topics']
-      pageSeos.value = response.data.sort((a, b) => {
+      pageSeos.value = (response.data as PageSeo[]).sort((a: PageSeo, b: PageSeo) => {
         const indexA = pageOrder.indexOf(a.page_name)
         const indexB = pageOrder.indexOf(b.page_name)
         if (indexA !== -1 && indexB !== -1) {
@@ -284,7 +294,7 @@ const togglePageEnabled = async (page: any) => {
   await updatePageSeo(page)
 }
 
-const updatePageSeo = async (page) => {
+const updatePageSeo = async (page: PageSeo) => {
   try {
     const response = await adminApi.put(`/api/admin/seo/pages/${page.page_name}`, {
       title: page.title,

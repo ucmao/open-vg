@@ -243,14 +243,14 @@
                 <div class="flex items-center gap-2" v-if="model.example_galleries && model.example_galleries.length > 0">
                   <div class="relative w-12 h-12 bg-gray-100 rounded border border-gray-200 overflow-hidden group">
                     <img v-if="isImageUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" @error="handleImageError" />
-                    <video v-else-if="isVideoUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" muted loop @mouseenter="$event.target.play()" @mouseleave="$event.target.pause()"></video>
+                    <video v-else-if="isVideoUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" muted loop @mouseenter="playVideo" @mouseleave="pauseVideo"></video>
                     <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"></div>
                     <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center">Before</div>
                   </div>
                   <div class="text-gray-400">→</div>
                   <div class="relative w-12 h-12 bg-gray-100 rounded border border-gray-200 overflow-hidden group">
                     <img v-if="isImageUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" @error="handleImageError" />
-                    <video v-else-if="isVideoUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" muted loop @mouseenter="$event.target.play()" @mouseleave="$event.target.pause()"></video>
+                    <video v-else-if="isVideoUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" muted loop @mouseenter="playVideo" @mouseleave="pauseVideo"></video>
                     <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"></div>
                     <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center">After</div>
                   </div>
@@ -1986,6 +1986,14 @@ const handleImageError = (event: Event) => {
   if (target) {
     target.style.display = 'none'
   }
+}
+
+const playVideo = (event: Event) => {
+  if (event.currentTarget instanceof HTMLVideoElement) void event.currentTarget.play()
+}
+
+const pauseVideo = (event: Event) => {
+  if (event.currentTarget instanceof HTMLVideoElement) event.currentTarget.pause()
 }
 
 const formatDate = (dateStr: string) => {

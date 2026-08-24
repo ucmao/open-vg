@@ -412,16 +412,8 @@ const fetchUserSpace = async (isLoadMore = false) => {
   }
 }
 
-const observer: IntersectionObserver | null = null
-
 onMounted(() => {
   fetchUserSpace()
-})
-
-onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
-  }
 })
 
 watch(sortBy, () => {

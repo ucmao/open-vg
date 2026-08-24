@@ -1,4 +1,3 @@
-import { defineNuxtPlugin } from '#app'
 import { getGenerationErrorMessage } from '~/utils/generationError'
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -135,12 +134,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       reconnectAttempts = 0
     }
   }, { immediate: true })
-
-  // Cleanup on app unmount
-  nuxtApp.hook('app:unmounted', () => {
-    socket?.close()
-    if (reconnectTimer) clearTimeout(reconnectTimer)
-  })
 
   return {
     provide: {

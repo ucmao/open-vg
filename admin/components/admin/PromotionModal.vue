@@ -472,7 +472,7 @@
                           step="0.5"
                           :value="selectedStop.position"
                           class="flex-1 h-2 rounded accent-blue-600"
-                          @input="(e: Event) => setGradientStopPosition(selectedStop.id, +(e.target as HTMLInputElement).value)"
+                          @input="updateSelectedStopPosition"
                         />
                       </div>
                       <!-- （ + ） -->
@@ -1385,6 +1385,13 @@ function setGradientStopPosition(id: string, position: number) {
   const s = gradientStops.value.find(x => x.id === id)
   if (s) s.position = Math.min(100, Math.max(0, Math.round(position * 10) / 10))
   updateGradientFromPicker()
+}
+
+function updateSelectedStopPosition(event: Event) {
+  const stop = selectedStop.value
+  if (stop && event.currentTarget instanceof HTMLInputElement) {
+    setGradientStopPosition(stop.id, Number(event.currentTarget.value))
+  }
 }
 
 function setSelectedStopColor(color: string) {

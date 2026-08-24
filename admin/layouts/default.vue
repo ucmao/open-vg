@@ -725,7 +725,7 @@ function toggleSidebarCollapsed() {
   }
 }
 
-const toggleGroup = (groupName: string) => {
+const toggleGroup = (groupName: keyof typeof expandedGroups) => {
   expandedGroups[groupName] = !expandedGroups[groupName]
   hasCustomExpandedState.value = true
   saveExpandedGroups()

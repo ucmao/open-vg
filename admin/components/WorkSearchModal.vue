@@ -96,7 +96,7 @@
                 muted
                 loop
                 playsinline
-                @error="$event.target.style.display='none'"
+                @error="hideBrokenMedia"
               />
               <!-- Image -->
               <img
@@ -104,7 +104,7 @@
                 :src="getWorkImageUrl(work)"
                 class="w-full h-full object-cover"
                 :alt="work.title || work.share_name || ` #${work.id}`"
-                @error="$event.target.style.display='none'"
+                @error="hideBrokenMedia"
               />
               <div v-else class="w-full h-full flex flex-col items-center justify-center p-3 text-center">
                 <div class="text-2xl mb-2">{{ isVideoWork(work) ? '🎬' : '🖼️' }}</div>
@@ -187,6 +187,10 @@ const works = ref<any[]>([])
 const loading = ref(false)
 const selectedWorks = ref<any[]>([])
 const isComposing = ref(false)
+
+const hideBrokenMedia = (event: Event) => {
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.style.display = 'none'
+}
 
 const isSelected = (workId: number) => {
   return selectedWorks.value.some(w => w.id === workId)

@@ -35,7 +35,7 @@
           type="source"
           :position="Position.Right"
           class="!w-3 !h-3 !border-2 !border-white !cursor-crosshair"
-          :class="getOutputHandleClass(paramName, param?.type)"
+          :class="getOutputHandleClass(String(paramName), param?.type)"
           style="right: -6px;"
         />
       </div>

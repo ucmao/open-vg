@@ -296,7 +296,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick, onUnmounted } from 'vue'
+import { ref, onMounted, watch, nextTick, onUnmounted, type CSSProperties } from 'vue'
 
 const banners = ref<any[]>([])
 const dismissedBanners = ref<Set<number>>(new Set()) // banner
@@ -382,7 +382,14 @@ const contentTextBlockClass = (banner: any) => {
 const stripHtml = (s: string) => (s || '').replace(/<[^>]+>/g, '').trim()
 
 // ： content_items ， title/content/image_url
-const contentItems = (banner: any): { title: string; content: string; image_url: string }[] => {
+interface BannerContentItem {
+  title: string
+  content?: string
+  image_url: string
+  trailing_image_url: string
+}
+
+const contentItems = (banner: any): BannerContentItem[] => {
   const items = banner?.content_items
   if (Array.isArray(items) && items.length > 0) return items.map((it: any) => ({ title: it.title ?? '', image_url: it.image_url ?? '', trailing_image_url: it.trailing_image_url ?? '' }))
   return [{ title: banner?.title ?? '', image_url: banner?.image_url ?? '', trailing_image_url: '' }]
@@ -435,7 +442,7 @@ const contentDisplayIndexFor = (banner: any) => {
 const contentNoTransitionFor = (banner: any) => !!(banner?.id != null && contentNoTransition.value[banner.id])
 
 // ： translateY， translateX； transition:'none' “”
-const carouselStripStyle = (banner: any) => {
+const carouselStripStyle = (banner: any): CSSProperties => {
   const stripLen = carouselStripItems(banner).length
   const pct = contentDisplayIndexFor(banner) * (100 / stripLen)
   const dir = contentScrollDirection(banner)

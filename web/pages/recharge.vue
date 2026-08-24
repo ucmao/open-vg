@@ -257,7 +257,6 @@
               <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0 text-violet-400">
                   <span v-if="item.iconSvg" class="w-6 h-6 block [&>svg]:w-full [&>svg]:h-full" v-html="item.iconSvg"></span>
-                  <span v-else class="text-xl">{{ item.icon }}</span>
                 </div>
                 <div>
                   <div class="text-sm font-medium text-white mb-0.5">{{ item.label }}</div>
@@ -368,7 +367,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 const selectedTier = ref<any>(null)
-const paymentProvider = ref<'paypal'>('paypal')
+const paymentProvider = ref<'paypal' | 'stripe'>('paypal')
 const loading = ref(true)
 const showPaymentModal = ref(false)
 const processingPayment = ref(false)

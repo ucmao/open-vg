@@ -369,7 +369,7 @@
                           muted
                           loop
                           playsinline
-                          @error="$event.target.style.display='none'"
+                          @error="hideBrokenMedia"
                         />
                         <!-- Image -->
                         <img 
@@ -835,7 +835,11 @@ const getHeroButtonStyleOnly = (style: string | undefined, forContentArea = fals
 
 const route = useRoute()
 const api = useApi()
-const toast = useToast()
+const { toast } = useToast()
+
+const hideBrokenMedia = (event: Event) => {
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.style.display = 'none'
+}
 
 // Fetch topic data with SSR support
 const { data: topicResult, pending: loading } = await useAsyncData(`topic-${route.params.slug}`, async () => {
@@ -924,7 +928,7 @@ if (topic.value) {
   })
 }
 
-const components = computed(() => {
+const components = computed<any[]>(() => {
   return topic.value?.config?.components || []
 })
 

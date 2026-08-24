@@ -16,7 +16,6 @@ export default defineNuxtConfig({
     // Admin: SPA mode, no index
     '/**': {
       ssr: false,
-      index: false,
       headers: {
         'X-Robots-Tag': 'noindex, nofollow'
       }

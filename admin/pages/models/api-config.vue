@@ -2920,62 +2920,6 @@ const handleSubmit = async () => {
       return
     }
 
-    // ：
-    // Note: Gallery sync check is simplified for workflow-based models
-    // The field configuration comes from workflow, so we skip the detailed sync check
-    if (false && form.example_galleries.length > 0) {
-      const firstGallery = form.example_galleries[0]
-      if (canApplyGallery(firstGallery)) {
-        const selectedApi = null // api_id is no longer used
-        if (selectedApi && selectedApi.params_schema) {
-          const paramsSchema = selectedApi.params_schema
-          
-          //  Prompt
-          const promptKey = Object.keys(paramsSchema).find(key => {
-            const config = paramsSchema[key]
-            const keyLower = key.toLowerCase()
-            const nameLower = (config.name || '').toLowerCase()
-            return keyLower === 'prompt' || nameLower.includes('prompt') || nameLower.includes('Notice')
-          })
-          
-          const imageKeys = Object.keys(paramsSchema).filter(key => {
-            const config = paramsSchema[key]
-            const fieldType = config.type || inferFieldType(key, config)
-            return fieldType === 'image' || fieldType === 'video'
-          })
-
-          let needsSync = false
-          //  Prompt
-          if (promptKey && (parsedParamsConfig[promptKey]?.default !== (firstGallery.after_prompt || '').trim())) {
-            needsSync = true
-          }
-          if (!needsSync) {
-            for (const key of imageKeys) {
-              if (parsedParamsConfig[key]?.default !== (firstGallery.before_url || '').trim()) {
-                needsSync = true
-                break
-              }
-            }
-          }
-
-          if (needsSync) {
-            const confirmed = await confirm({
-              title: '',
-              message: '（Prompt ），“”Save？',
-              confirmText: 'Save',
-              cancelText: 'Save'
-            })
-            
-            if (confirmed) {
-              applyGalleryToFields(0)
-              //  parsedParamsConfig， applyGalleryToFields  paramsConfigJson
-              parsedParamsConfig = JSON.parse(paramsConfigJson.value)
-            }
-          }
-        }
-      }
-    }
-
     // ： after_url
     const validGalleries = form.example_galleries.filter(g => g.after_url && g.after_url.trim())
 

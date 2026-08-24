@@ -151,7 +151,7 @@
                   placeholder="X handle"
                   autofocus
                   @blur="editingSocial = null; handleUpdateProfile(true)"
-                  @keyup.enter="$event.target.blur()"
+                  @keyup.enter="blurInput"
                 />
               </div>
               <button
@@ -196,7 +196,7 @@
                   placeholder="Discord ID"
                   autofocus
                   @blur="editingSocial = null; handleUpdateProfile(true)"
-                  @keyup.enter="$event.target.blur()"
+                  @keyup.enter="blurInput"
                 />
               </div>
               <button
@@ -726,6 +726,10 @@ const workFilters = reactive({
 
 const searchDebounceTimer = ref<any>(null)
 
+const blurInput = (event: KeyboardEvent) => {
+  if (event.currentTarget instanceof HTMLInputElement) event.currentTarget.blur()
+}
+
 // Watch for filter changes
 watch(() => workFilters.privacy, () => {
   loadTabData()
@@ -1030,9 +1034,6 @@ const showFavoritesList = async () => {
   await fetchFavorites(false)
 }
 
-// Setup infinite scroll
-const observer: IntersectionObserver | null = null
-
 // 🚀 Track generating tasks for status polling
 const pendingWorkIds = ref<Set<number>>(new Set())
 let pollingInterval: ReturnType<typeof setInterval> | null = null
@@ -1125,19 +1126,10 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
-  }
   // 🚀 Clean up polling
   if (pollingInterval) {
     clearInterval(pollingInterval)
     pollingInterval = null
-  }
-})
-
-onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
   }
 })
 

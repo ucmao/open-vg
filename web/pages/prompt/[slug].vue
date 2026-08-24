@@ -1033,7 +1033,6 @@ class="inline-block w-2 h-2 rounded-full"
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
-import { useAsyncData, createError } from '#app'
 
 const route = useRoute()
 const router = useRouter()
@@ -1183,7 +1182,7 @@ const fetchRelatedWorks = async () => {
     }
     
     const res = await api.get(url)
-    let items = []
+    let items: any[] = []
     
     if (res.success) {
       // Filter out current work and current author's works
@@ -2129,8 +2128,6 @@ if (workError.value) {
   // Extract status code from error if available
   if (workError.value.statusCode) {
     errorStatus.value = workError.value.statusCode
-  } else if (workError.value.status) {
-    errorStatus.value = workError.value.status
   }
 }
 

@@ -1912,24 +1912,24 @@ const updateDefaultParams = (preserveParams: boolean = false) => {
         } else if (config.type === 'array') {
           // Preserve user-uploaded array (e.g. image list) when switching models when we have content
           const arr = Array.isArray(oldValue) ? oldValue : (typeof oldValue === 'string' ? (() => { try { const p = JSON.parse(oldValue); return Array.isArray(p) ? p : [oldValue]; } catch { return oldValue ? [oldValue] : []; } })() : [])
-          const strArr = arr.filter((item): item is string => typeof item === 'string')
+          const strArr = arr.filter((item: unknown): item is string => typeof item === 'string')
           if (strArr.length > 0) {
             newParams[key] = strArr
             newPreviews[key] = oldPreviews[key] || strArr[0]
           } else {
             let defaultArray: string[] = []
             if (Array.isArray(config.default)) {
-              defaultArray = config.default.filter((item): item is string => typeof item === 'string')
+              defaultArray = config.default.filter((item: unknown): item is string => typeof item === 'string')
             } else if (typeof config.default === 'string') {
               try {
                 const parsed = JSON.parse(config.default)
                 if (Array.isArray(parsed)) {
-                  defaultArray = parsed.filter((item): item is string => typeof item === 'string')
+                  defaultArray = parsed.filter((item: unknown): item is string => typeof item === 'string')
                 } else {
                   defaultArray = [config.default]
                 }
               } catch {
-                defaultArray = config.default.split(',').map(v => v.trim()).filter(Boolean)
+                defaultArray = config.default.split(',').map((v: string) => v.trim()).filter(Boolean)
               }
             }
             if (defaultArray.length > 0) {
@@ -1953,18 +1953,18 @@ const updateDefaultParams = (preserveParams: boolean = false) => {
           // Handle array default value (could be array of URLs or JSON string)
           let defaultArray: string[] = []
           if (Array.isArray(config.default)) {
-            defaultArray = config.default.filter((item): item is string => typeof item === 'string')
+            defaultArray = config.default.filter((item: unknown): item is string => typeof item === 'string')
           } else if (typeof config.default === 'string') {
             try {
               const parsed = JSON.parse(config.default)
               if (Array.isArray(parsed)) {
-                defaultArray = parsed.filter((item): item is string => typeof item === 'string')
+                defaultArray = parsed.filter((item: unknown): item is string => typeof item === 'string')
               } else {
                 defaultArray = [config.default]
               }
             } catch {
               // Comma-separated string
-              defaultArray = config.default.split(',').map(v => v.trim()).filter(Boolean)
+              defaultArray = config.default.split(',').map((v: string) => v.trim()).filter(Boolean)
             }
           }
           if (defaultArray.length > 0) {
@@ -2911,7 +2911,6 @@ const pollGenerationStatus = async (workId: number) => {
             activeWorkIds.delete(workId)
             updateHistoryByWorkId(workId, { status: 'failed' })
             if (latestWorkId.value === workId) {
-              isGenerating.value = false
               latestWorkId.value = null
             }
           }
@@ -2939,7 +2938,6 @@ const pollGenerationStatus = async (workId: number) => {
           
           // ，
           if (latestWorkId.value === workId) {
-            isGenerating.value = false
             latestWorkId.value = null
           }
           
@@ -2955,7 +2953,6 @@ const pollGenerationStatus = async (workId: number) => {
       
       // ，
       if (latestWorkId.value === workId) {
-        isGenerating.value = false
         latestWorkId.value = null
       }
       

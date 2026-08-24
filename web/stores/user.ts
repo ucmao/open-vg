@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-interface User {
+export interface User {
   id: number
   handle: string
   email: string
@@ -9,7 +9,19 @@ interface User {
   bio: string | null
   total_credits: number
   created_at: string
-  // ... Other fields unchanged
+  gender?: string | null
+  location?: string | null
+  instagram_handle?: string | null
+  twitter_handle?: string | null
+  discord_handle?: string | null
+  handle_updated_at?: string | null
+  following_count?: number
+  followers_count?: number
+  public_works_count?: number
+  total_views?: number
+  total_favorites?: number
+  total_likes?: number
+  total_remixes?: number
 }
 
 interface UserState {

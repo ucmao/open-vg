@@ -284,7 +284,7 @@ const handleHeightChange = () => {
   }
 }
 
-const alignOptions = [
+const alignOptions: { value: 'left' | 'center' | 'right'; label: string; icon: string }[] = [
   { value: 'left', label: '', icon: 'M3 6h18M3 12h12M3 18h18' },
   { value: 'center', label: '', icon: 'M3 6h18M6 12h12M3 18h18' },
   { value: 'right', label: '', icon: 'M3 6h18M9 12h12M3 18h18' }
@@ -334,4 +334,3 @@ const confirm = () => {
   emit('confirm', { ...config })
 }
 </script>
-

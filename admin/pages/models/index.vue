@@ -279,14 +279,14 @@
                 <div class="flex items-center gap-2" v-if="model.example_galleries && model.example_galleries.length > 0">
                   <div class="relative w-12 h-12 bg-gray-100 rounded border border-gray-200 overflow-hidden group">
                     <img v-if="isImageUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" @error="handleImageError" />
-                    <video v-else-if="isVideoUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" muted loop @mouseenter="$event.target.play()" @mouseleave="$event.target.pause()"></video>
+                    <video v-else-if="isVideoUrl(model.example_galleries[0].before_url)" :src="model.example_galleries[0].before_url" class="w-full h-full object-cover" muted loop @mouseenter="playVideo" @mouseleave="pauseVideo"></video>
                     <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"></div>
                     <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center">Before</div>
                   </div>
                   <div class="text-gray-400">→</div>
                   <div class="relative w-12 h-12 bg-gray-100 rounded border border-gray-200 overflow-hidden group">
                     <img v-if="isImageUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" @error="handleImageError" />
-                    <video v-else-if="isVideoUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" muted loop @mouseenter="$event.target.play()" @mouseleave="$event.target.pause()"></video>
+                    <video v-else-if="isVideoUrl(model.example_galleries[0].after_url)" :src="model.example_galleries[0].after_url" class="w-full h-full object-cover" muted loop @mouseenter="playVideo" @mouseleave="pauseVideo"></video>
                     <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"></div>
                     <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[8px] text-center">After</div>
                   </div>
@@ -2499,6 +2499,14 @@ const handleImageError = (event: Event) => {
   }
 }
 
+const playVideo = (event: Event) => {
+  if (event.currentTarget instanceof HTMLVideoElement) void event.currentTarget.play()
+}
+
+const pauseVideo = (event: Event) => {
+  if (event.currentTarget instanceof HTMLVideoElement) event.currentTarget.pause()
+}
+
 const getPriceRange = (model: any): string => {
   const baseCost = model.cost || 0
   const params = model.params || model.params_config || {}
@@ -3007,62 +3015,6 @@ const handleSubmit = async () => {
       toast.error(' JSON ')
       submitting.value = false
       return
-    }
-
-    // ：
-    // Note: Gallery sync check is simplified for workflow-based models
-    // The field configuration comes from workflow, so we skip the detailed sync check
-    if (false && form.example_galleries.length > 0) {
-      const firstGallery = form.example_galleries[0]
-      if (canApplyGallery(firstGallery)) {
-        const selectedApi = null // api_id is no longer used
-        if (selectedApi && selectedApi.params_schema) {
-          const paramsSchema = selectedApi.params_schema
-          
-          //  Prompt
-          const promptKey = Object.keys(paramsSchema).find(key => {
-            const config = paramsSchema[key]
-            const keyLower = key.toLowerCase()
-            const nameLower = (config.name || '').toLowerCase()
-            return keyLower === 'prompt' || nameLower.includes('prompt') || nameLower.includes('Notice')
-          })
-          
-          const imageKeys = Object.keys(paramsSchema).filter(key => {
-            const config = paramsSchema[key]
-            const fieldType = config.type || inferFieldType(key, config)
-            return fieldType === 'image' || fieldType === 'video'
-          })
-
-          let needsSync = false
-          //  Prompt
-          if (promptKey && (parsedParamsConfig[promptKey]?.default !== (firstGallery.after_prompt || '').trim())) {
-            needsSync = true
-          }
-          if (!needsSync) {
-            for (const key of imageKeys) {
-              if (parsedParamsConfig[key]?.default !== (firstGallery.before_url || '').trim()) {
-                needsSync = true
-                break
-              }
-            }
-          }
-
-          if (needsSync) {
-            const confirmed = await confirm({
-              title: '',
-              message: '（Prompt ），“”Save？',
-              confirmText: 'Save',
-              cancelText: 'Save'
-            })
-            
-            if (confirmed) {
-              applyGalleryToFields(0)
-              //  parsedParamsConfig， applyGalleryToFields  paramsConfigJson
-              parsedParamsConfig = JSON.parse(paramsConfigJson.value)
-            }
-          }
-        }
-      }
     }
 
     // ： after_url
