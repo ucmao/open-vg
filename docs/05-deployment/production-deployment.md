@@ -20,18 +20,27 @@ This document details how to deploy VidGen on Linux VPS / bare-metal servers usi
 ## 🚀 Step-by-Step Production Setup
 
 ### 1. Prerequisites Installation
+
+The deployment baseline is Python 3.11+, Node.js 24.15+, PostgreSQL 15+, and Redis 7+. Ensure your distribution's package repositories provide compatible PostgreSQL and Redis versions.
+
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3.11 python3.11-venv python3-pip postgresql redis-server nginx git curl
 curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 sudo apt install -y nodejs
+
+# Verify the installed runtimes and services meet the required baseline
+python3.11 --version
+node --version
+psql --version
+redis-server --version
 ```
 
 ### 2. Code Directory Setup
 ```bash
 sudo mkdir -p /www/wwwroot
 cd /www/wwwroot
-sudo git clone https://github.com/your-org/vidgen.git vidgen
+sudo git clone https://github.com/ucmao/vidgen.git vidgen
 sudo chown -R www-data:www-data /www/wwwroot/vidgen
 ```
 
@@ -42,15 +51,15 @@ python3.11 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-alembic upgrade head
-python scripts/import_models.py
-python scripts/create_first_admin.py
+# Apply migrations and initialize the admin account, AI models, recharge
+# packages, and SEO settings in one step.
+python scripts/seed_all.py
 ```
 
 ### 4. Build Frontends
 ```bash
-cd /www/wwwroot/vidgen/web && npm install && npm run build
-cd /www/wwwroot/vidgen/admin && npm install && npm run build
+cd /www/wwwroot/vidgen/web && npm ci && npm run build
+cd /www/wwwroot/vidgen/admin && npm ci && npm run build
 ```
 
 ### 5. Register Systemd Services

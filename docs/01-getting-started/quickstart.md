@@ -16,7 +16,7 @@ The fastest way to spin up the entire VidGen stack (Web Portal, Admin Panel, Fas
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/vidgen.git
+git clone https://github.com/ucmao/vidgen.git
 cd vidgen
 
 # Copy sample environment configuration
@@ -44,7 +44,8 @@ If you want to run VidGen directly from source for development:
 ### Step 1: Install System Dependencies
 - Node.js `24.x LTS` (24.15+)
 - Python `3.11+`
-- Redis `6.x+` (`brew install redis` or `sudo apt install redis-server`)
+- PostgreSQL `15.x+` (`brew install postgresql@15` or install it from your distribution's package repository)
+- Redis `7.x+` (`brew install redis` or `sudo apt install redis-server`)
 
 ### Step 2: Install Backend Dependencies
 ```bash
@@ -68,7 +69,7 @@ To test AI video and image generation locally without paid API keys:
 MOCK_AI_GENERATION=true
 ```
 
-### Step 4: Install Frontend Dependencies & Start Servers
+### Step 5: Install Frontend Dependencies & Start Servers
 
 **Terminal 1 - FastAPI Backend API:**
 ```bash

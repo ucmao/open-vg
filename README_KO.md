@@ -7,7 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.21.11-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.141.1-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
 
 [English](README.md) | [简体中文](README_CN.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Español](README_ES.md) | [Português](README_PT.md)
 
@@ -74,7 +75,7 @@
 | :--- | :--- |
 | **프론트엔드 Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
 | **어드민 패널 Admin** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, **Vue i18n** (6개 국어 지원), Axios |
-| **백엔드 API** | **FastAPI 0.115+** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
+| **백엔드 API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
 | **작업 큐 및 모니터링** | **Celery 5.4+**, **Flower 2.0+** (큐 모니터링), **Redis 7** (Broker & 캐시) |
 | **데이터베이스** | **PostgreSQL 15+**, **Alembic** 데이터베이스 마이그레이션 관리 |
 | **스토리지 및 CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3 호환 오브젝트 스토리지) |

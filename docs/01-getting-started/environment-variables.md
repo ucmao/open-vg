@@ -10,8 +10,8 @@ This document serves as the authoritative reference for all environment variable
 
 | Variable Name | Required | Default Value | Description |
 |---|---|---|---|
-| `DATABASE_URL` | **Yes** | `sqlite+aiosqlite:///./sql_app.db` | Async SQLAlchemy database URI (PostgreSQL or SQLite) |
-| `REDIS_URL` | **Yes** | `redis://localhost:6379/0` | Redis connection URI for Celery broker & WebSocket Pub/Sub |
+| `DATABASE_URL` | **Yes** | `postgresql://user:password@localhost:5432/aigc_platform` | SQLAlchemy database URI for PostgreSQL 15+ |
+| `REDIS_URL` | **Yes** | `redis://localhost:6379` | Redis 7+ connection URI for Celery broker & WebSocket Pub/Sub |
 
 ### Authentication & Security
 
@@ -27,7 +27,7 @@ This document serves as the authoritative reference for all environment variable
 | Variable Name | Required | Default Value | Description |
 |---|---|---|---|
 | `SILICONFLOW_API_KEY` | No | `""` | SiliconFlow API Key (FLUX, HunyuanVideo, SDXL) |
-| `REPLICATE_API_TOKEN` | No | `""` | Replicate API Token |
+| `REPLICATE_API_KEY` | No | `""` | Replicate API key; the backend passes it to the Replicate SDK |
 | `GEMINI_API_KEY` | No | `""` | Google Gemini API Key |
 | `MIDJOURNEY_API_KEY` | No | `""` | Midjourney Proxy API Key |
 
