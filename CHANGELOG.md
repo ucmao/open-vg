@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-08-25
+
+### Added
+- **Admin i18n & Language Switching**: Complete Chinese/English bilingual support for the super admin panel (`useAdminI18n`, locale dictionaries).
+- **Unit Testing & CI Integration**: Frontend/backend unit test coverage integrated directly into GitHub Actions CI workflows.
+
+### Changed
+- **Type Safety & Code Quality**: Refactored component types across `web` and `admin` applications, resolving all Vue type-check issues and achieving zero ESLint warnings.
+- **Documentation & Deployment**: Updated quickstart guide, environment variable docs, and deployment requirements across multi-language READMEs.
+
+### Security & Maintenance
+- **Markdown Sanitization**: Added strict sanitizer for user-generated Markdown link targets to prevent XSS.
+- **Dependency Pinning**: Upgraded core dependencies, synchronized lockfiles, and tightened Python backend package bounds.
+
 ## [1.0.0] - 2026-08-22
 
 ### Added
