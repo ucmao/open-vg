@@ -7,8 +7,8 @@ export const usePageSeo = () => {
       // Determine the base URL for SSR vs Client
       // In Nuxt 3, useFetch handles relative URLs on the client, but needs absolute on the server
       let baseUrl = apiBaseUrl
-      if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-        baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+      if (process.server) {
+        baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
       }
 
       const url = `${baseUrl}/api/seo/page-configs`

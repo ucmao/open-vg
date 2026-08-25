@@ -1,0 +1,26 @@
+[
+  {
+    "id": 10,
+    "user_id": null,
+    "extra_credits_percent": "20.00",
+    "valid_from": "2026-02-09 18:52:00+08:00",
+    "valid_until": "2026-02-14 23:59:00+08:00",
+    "promo_code": "f2918fe1687546d9",
+    "name": null,
+    "created_at": "2026-02-09 18:52:44.270571+08:00",
+    "updated_at": "2026-02-09 18:52:44.270571+08:00",
+    "created_by": 1
+  },
+  {
+    "id": 11,
+    "user_id": null,
+    "extra_credits_percent": "50.00",
+    "valid_from": "2026-02-13 18:58:00+08:00",
+    "valid_until": "2026-02-22 18:59:00+08:00",
+    "promo_code": "a1a85aaeb67a41f5",
+    "name": null,
+    "created_at": "2026-02-13 18:59:39.684765+08:00",
+    "updated_at": "2026-02-13 18:59:39.684765+08:00",
+    "created_by": 1
+  }
+]

@@ -264,8 +264,8 @@ const { data: postResult, pending: loading } = await useAsyncData(`blog-${route.
   try {
     // For SSR, ensure absolute URL
     let baseUrl = api.baseUrl
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/blog/${route.params.slug}`)

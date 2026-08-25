@@ -56,7 +56,7 @@
           >
             <div class="flex items-start justify-between mb-3">
               <div>
-                <h3 class="text-base font-semibold text-gray-900">{{ config.description || config.config_key }}</h3>
+                <h3 class="text-base font-semibold text-gray-900">{{ getConfigTitle(config) }}</h3>
                 <p class="text-xs text-gray-500 font-mono mt-1">{{ config.config_key }}</p>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
@@ -76,7 +76,7 @@
               @blur="updateConfig(config)"
               rows="3"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              :placeholder="` ${config.description}`"
+              :placeholder="getConfigDescription(config)"
             ></textarea>
             <input
               v-else
@@ -84,7 +84,7 @@
               @blur="updateConfig(config)"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              :placeholder="` ${config.description}`"
+              :placeholder="getConfigDescription(config)"
             />
           </div>
         </div>
@@ -117,8 +117,8 @@
         >
           <div class="flex items-start justify-between mb-3">
             <div>
-              <h3 class="text-base font-semibold text-gray-900"> {{ $adminT("Robots.txt", "自定义 Robots.txt 内容") }} </h3>
-              <p class="text-sm text-gray-600 mt-1">{{ config.description }}</p>
+              <h3 class="text-base font-semibold text-gray-900"> {{ getConfigTitle(config) }} </h3>
+              <p class="text-sm text-gray-600 mt-1">{{ getConfigDescription(config) }}</p>
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input
@@ -170,9 +170,9 @@
             <div class="flex items-start justify-between mb-3">
               <div>
                 <h3 class="text-base font-semibold text-gray-900">
-                  {{ getSitemapTitle(config.config_key) }}
+                  {{ getConfigTitle(config) }}
                 </h3>
-                <p class="text-sm text-gray-600 mt-1">{{ config.description }}</p>
+                <p class="text-sm text-gray-600 mt-1">{{ getConfigDescription(config) }}</p>
                 <p v-if="config.config_key === 'sitemap_include_works'" class="text-xs text-amber-600 mt-2 flex items-center">
                   <Info class="w-3 h-3 mr-1" /> {{ $adminT("Note: Non-featured work pages will be automatically set to noindex to protect domain authority.", "注：非精选作品页面将自动设置为 noindex 以保护主站权重。") }} </p>
               </div>
@@ -340,7 +340,7 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <h3 class="text-lg leading-6 font-bold text-gray-900 mb-4">{{ modalForm.isEdit ? 'Edit' : '' }}</h3>
+            <h3 class="text-lg leading-6 font-bold text-gray-900 mb-4">{{ modalForm.isEdit ? $adminT("Edit Code Snippet", "编辑代码片段") : $adminT("Add Custom Code Snippet", "添加自定义代码片段") }}</h3>
             <div class="space-y-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700">{{ $adminT("Title (Description)", "标题 (描述)") }}</label>
@@ -348,7 +348,7 @@
                   v-model="modalForm.description" 
                   type="text" 
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
-                  :placeholder="$adminT('For example: Google Analyci, 100-degree statistics, dia validation', '例如：Google Analytics, 百度统计, Meta 验证')"
+                  :placeholder="$adminT('For example: Google Analytics, Baidu Analytics, Meta Verification', '例如：Google Analytics, 百度统计, Meta 验证')"
                 />
               </div>
               <div>
@@ -365,7 +365,7 @@
                 </div>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700"> {{ $adminT("(HTML/JS/Meta)", "代码内容 (HTML/JS/Meta)") }}</label>
+                <label class="block text-sm font-medium text-gray-700"> {{ $adminT("Code Content (HTML/JS/Meta)", "代码内容 (HTML/JS/Meta)") }}</label>
                 <textarea 
                   v-model="modalForm.config_value" 
                   rows="10" 
@@ -456,17 +456,45 @@ const customSnippets = computed(() => {
   )
 })
 
-const getSitemapTitle = (key) => {
+const getConfigTitle = (config) => {
+  if (!config) return ''
   const titles = {
-    'sitemap_include_works': adminT("/Prompts", "作品/Prompts"),
-    'sitemap_include_blogs': adminT("Blog articles", "博客文章"),
-    'sitemap_include_topics': adminT("Topic", "专题"),
+    'base_url': adminT("Website Base URL", "网站基础域名"),
+    'site_name': adminT("Website Name", "网站名称"),
+    'site_description': adminT("Website Description", "网站描述"),
+    'site_keywords': adminT("Website Keywords", "网站关键词"),
+    'robots_txt_custom': adminT("Custom Robots.txt Content", "自定义 Robots.txt 内容"),
+    'sitemap_include_works': adminT("Works / Prompts", "作品/Prompts"),
+    'sitemap_include_blogs': adminT("Blog Articles", "博客文章"),
+    'sitemap_include_topics': adminT("Topics", "专题"),
     'sitemap_include_users': adminT("User Home Page", "用户主页"),
-    'sitemap_include_categories': adminT("Work category pages", "作品分类页面"),
-    'sitemap_include_effects': adminT("Effects category pages", "特效分类页面"),
-    'sitemap_include_generate': adminT("Generation category pages", "生成分类页面")
+    'sitemap_include_categories': adminT("Work Category Pages", "作品分类页面"),
+    'sitemap_include_effects': adminT("Effects Category Pages", "特效分类页面"),
+    'sitemap_include_generate': adminT("Generation Category Pages", "生成分类页面")
   }
-  return titles[key] || key
+  return titles[config.config_key] || config.description || config.config_key
+}
+
+const getConfigDescription = (config) => {
+  if (!config) return ''
+  const descriptions = {
+    'base_url': adminT("Website base URL (used to generate sitemap and robots.txt file)", "网站基础域名（用于生成站点地图及 robots.txt 文件）"),
+    'site_name': adminT("Global website name", "全局网站名称"),
+    'site_description': adminT("Global website description for SEO", "全局网站描述，用于 SEO"),
+    'site_keywords': adminT("Global website keywords, separated by commas", "全局网站关键词，以逗号分隔"),
+    'robots_txt_custom': adminT("Custom robots.txt content (leave empty to use default configuration)", "自定义 robots.txt 内容（留空则使用默认配置）"),
+    'sitemap_include_works': adminT("Include work detail pages in sitemap (/work/...)", "在站点地图中包含作品详情页 (/work/...)"),
+    'sitemap_include_blogs': adminT("Include blog article pages in sitemap", "在站点地图中包含博客文章页"),
+    'sitemap_include_topics': adminT("Include topic pages in sitemap", "在站点地图中包含专题页"),
+    'sitemap_include_users': adminT("Include user profile pages in sitemap", "在站点地图中包含用户主页"),
+    'sitemap_include_categories': adminT("Include work category pages in sitemap (/category/...)", "在站点地图中包含作品分类页面 (/category/...)"),
+    'sitemap_include_effects': adminT("Include effect category pages in sitemap (/effects/...)", "在站点地图中包含特效分类页面 (/effects/...)"),
+    'sitemap_include_generate': adminT("Include generation category pages in sitemap (/generate/...)", "在站点地图中包含生成分类页面 (/generate/...)")
+  }
+  if (descriptions[config.config_key]) {
+    return descriptions[config.config_key]
+  }
+  return config.description || ''
 }
 
 const loadConfigs = async () => {

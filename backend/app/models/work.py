@@ -256,7 +256,7 @@ class Work(Base):
             "nsfw_tags": self.nsfw_tags or [],
             "auto_moderated": self.auto_moderated,
             "storage_key": self.storage_key,
-            "canonical_url": self.canonical_url,
+            "canonical_url": storage.get_public_url(self.canonical_url) if self.canonical_url else None,
             "short_code": self.short_code,
             "url_slug": self.url_slug,
             "like_count": self.like_count,

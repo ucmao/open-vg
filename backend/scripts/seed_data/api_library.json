@@ -1,0 +1,2036 @@
+[
+  {
+    "id": 6,
+    "api_key": "replicate_luma_ray-flash-2-720p_28",
+    "name": "Luma Ray Flash 2.0",
+    "provider": "replicate",
+    "provider_model_id": "luma/ray-flash-2-720p",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the motion..."
+      },
+      "start_image": {
+        "type": "image",
+        "name": "Start Frame",
+        "required": false
+      },
+      "end_image": {
+        "type": "image",
+        "name": "End Frame",
+        "required": false,
+        "visible": false
+      },
+      "duration": {
+        "type": "int",
+        "default": 5,
+        "options": [
+          5,
+          9
+        ],
+        "cost_additions": {
+          "5": 0,
+          "9": 15
+        }
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "options": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "cost_additions": {
+          "1:1": 0,
+          "16:9": 0,
+          "9:16": 0,
+          "4:3": 0,
+          "3:4": 0,
+          "21:9": 0,
+          "9:21": 0
+        }
+      },
+      "loop": {
+        "type": "bool",
+        "name": "Loop",
+        "default": false,
+        "visible": false
+      },
+      "concepts": {
+        "type": "text",
+        "name": "Camera Language",
+        "default": "",
+        "placeholder": "e.g. zoom_in, pan_left, handheld...",
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/luma/ray-flash-2-720p",
+    "official_price": 0.06,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": null,
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-29 11:32:29.562560+08:00",
+    "task_type": "视频生成",
+    "output_type": "video"
+  },
+  {
+    "id": 2,
+    "api_key": "replicate_google_imagen-4-fast_21",
+    "name": "Google Imagen 4 Fast",
+    "provider": "replicate",
+    "provider_model_id": "google/imagen-4-fast",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe what you want to create..."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3"
+        ]
+      },
+      "safety_filter_level": {
+        "type": "string",
+        "name": "Safety Filter",
+        "default": "block_only_high",
+        "options": [
+          "block_low_and_above",
+          "block_medium_and_above",
+          "block_only_high"
+        ],
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/google/imagen-4-fast",
+    "official_price": 0.02,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "$0.02 per output image",
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-02-28 12:22:11.354083+08:00",
+    "task_type": "图片生成",
+    "output_type": "image"
+  },
+  {
+    "id": 5,
+    "api_key": "replicate_black-forest-labs_flux-schnell_20",
+    "name": "FLUX.1 [schnell]",
+    "provider": "replicate",
+    "provider_model_id": "black-forest-labs/flux-schnell",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe what you want to create..."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "16:9",
+          "21:9",
+          "3:2",
+          "2:3",
+          "4:5",
+          "5:4",
+          "3:4",
+          "4:3",
+          "9:16",
+          "9:21"
+        ]
+      },
+      "num_inference_steps": {
+        "type": "int",
+        "default": 4,
+        "min": 1,
+        "max": 4,
+        "visible": false
+      },
+      "megapixels": {
+        "type": "string",
+        "default": "1",
+        "options": [
+          "1",
+          "0.25"
+        ],
+        "visible": false
+      },
+      "go_fast": {
+        "type": "bool",
+        "default": true,
+        "visible": false
+      },
+      "output_quality": {
+        "type": "int",
+        "default": 80,
+        "min": 0,
+        "max": 100,
+        "visible": false
+      },
+      "seed": {
+        "type": "int",
+        "default": 0,
+        "min": 0,
+        "max": 9999999999,
+        "visible": false
+      },
+      "disable_safety_checker": {
+        "type": "bool",
+        "default": false,
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/black-forest-labs/flux-schnell",
+    "official_price": 0.003,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "$3 per thousand output images",
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-02-05 15:44:22.280432+08:00",
+    "task_type": "图片生成",
+    "output_type": "image"
+  },
+  {
+    "id": 4,
+    "api_key": "replicate_prunaai_p-image_19",
+    "name": "PrunaAI P-Image",
+    "provider": "replicate",
+    "provider_model_id": "prunaai/p-image",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe what you want to create. Excellent text rendering capabilities..."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "custom"
+        ]
+      },
+      "width": {
+        "type": "int",
+        "name": "Width",
+        "required": false,
+        "default": 1024,
+        "min": 256,
+        "max": 1440,
+        "description": "Custom width. Only effective when aspect_ratio='custom'. Must be a multiple of 16"
+      },
+      "height": {
+        "type": "int",
+        "name": "Height",
+        "required": false,
+        "default": 576,
+        "min": 256,
+        "max": 1440,
+        "description": "Custom height. Only effective when aspect_ratio='custom'. Must be a multiple of 16"
+      },
+      "prompt_upsampling": {
+        "type": "bool",
+        "name": "Prompt Upsampling",
+        "default": false,
+        "description": "Enable LLM to automatically expand your prompt for richer images",
+        "visible": false
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647,
+        "visible": false
+      },
+      "disable_safety_checker": {
+        "type": "bool",
+        "name": "Disable Safety Checker",
+        "default": false,
+        "description": "Disable built-in image content filter",
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/prunaai/p-image",
+    "official_price": 0.005,
+    "official_currency": "USD",
+    "official_unit": "per output image",
+    "is_active": true,
+    "notes": null,
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-24 01:26:13.582483+08:00",
+    "task_type": "图片生成",
+    "output_type": "image"
+  },
+  {
+    "id": 10,
+    "api_key": "replicate_kwaivgi_kling-v2_1_49",
+    "name": "Kling V2.1",
+    "provider": "replicate",
+    "provider_model_id": "kwaivgi/kling-v2.1",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the motion in the scene (e.g., 'woman takes her hands out her pockets')..."
+      },
+      "start_image": {
+        "type": "image",
+        "name": "Start Image",
+        "required": true,
+        "description": "First frame of the video. Required in v2.1, text-only generation not supported"
+      },
+      "mode": {
+        "type": "string",
+        "name": "Mode",
+        "default": "standard",
+        "options": [
+          "standard",
+          "pro"
+        ],
+        "description": "standard: 720p resolution, pro: 1080p resolution with higher quality"
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "options": [
+          5,
+          10
+        ]
+      },
+      "end_image": {
+        "type": "image",
+        "name": "End Image",
+        "required": false,
+        "description": "Last frame of the video. Only supported in Pro mode. Model will generate coherent motion between start and end frames"
+      },
+      "negative_prompt": {
+        "type": "text",
+        "name": "Negative Prompt",
+        "default": "",
+        "required": false,
+        "multiline": true,
+        "placeholder": "Exclude unwanted elements (e.g., deformed limbs, blur)"
+      }
+    },
+    "api_docs_url": "https://replicate.com/kwaivgi/kling-v2.1",
+    "official_price": 0.09,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": null,
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-29 11:32:35.140604+08:00",
+    "task_type": "视频生成",
+    "output_type": "video"
+  },
+  {
+    "id": 1,
+    "api_key": "replicate_google_nano-banana-pro_23",
+    "name": "Google Nano Banana Pro",
+    "provider": "replicate",
+    "provider_model_id": "google/nano-banana-pro",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe what you want to create (supports multi-line)..."
+      },
+      "image_input": {
+        "type": "image",
+        "name": "Input Images",
+        "required": false,
+        "multiple": true,
+        "description": "Used for transformations or as a reference. Up to 14 images supported"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "match_input_image",
+        "options": [
+          "match_input_image",
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9",
+          "21:9"
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "2K",
+        "options": [
+          "1K",
+          "2K"
+        ],
+        "cost_additions": {
+          "1K": 0,
+          "2K": 10
+        }
+      },
+      "safety_filter_level": {
+        "type": "string",
+        "name": "Safety Filter",
+        "default": "block_only_high",
+        "options": [
+          "block_low_and_above",
+          "block_medium_and_above",
+          "block_only_high"
+        ],
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/google/nano-banana-pro",
+    "official_price": 0.15,
+    "official_currency": "USD",
+    "official_unit": "per output image",
+    "is_active": true,
+    "notes": null,
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-02-28 12:22:21.074348+08:00",
+    "task_type": "图片生成",
+    "output_type": "image"
+  },
+  {
+    "id": 8,
+    "api_key": "replicate_wan-video_wan-2_2-i2v-fast_53",
+    "name": "Wan 2.2 I2v Fast",
+    "provider": "replicate",
+    "provider_model_id": "wan-video/wan-2.2-i2v-fast",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the motion, lighting changes, and camera movement..."
+      },
+      "image": {
+        "type": "image",
+        "name": "First Frame",
+        "required": true
+      },
+      "last_image": {
+        "type": "image",
+        "name": "Last Frame",
+        "required": false,
+        "placeholder": "If provided, creates transition animation from first to last frame"
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "480p",
+        "options": [
+          "480p",
+          "720p"
+        ]
+      },
+      "num_frames": {
+        "type": "int",
+        "name": "Number of Frames",
+        "default": 81,
+        "min": 81,
+        "max": 121
+      },
+      "frames_per_second": {
+        "type": "int",
+        "name": "FPS",
+        "default": 16,
+        "min": 5,
+        "max": 30
+      },
+      "interpolate_output": {
+        "type": "bool",
+        "name": "Interpolate Output",
+        "default": false,
+        "description": "Use ffmpeg to interpolate frames to 30 FPS for smoother video"
+      },
+      "go_fast": {
+        "type": "bool",
+        "name": "Fast Mode",
+        "default": true
+      },
+      "sample_shift": {
+        "type": "float",
+        "name": "Sample Shift",
+        "default": 12,
+        "min": 1,
+        "max": 20,
+        "description": "Adjust distribution shift during generation"
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647
+      },
+      "disable_safety_checker": {
+        "type": "bool",
+        "name": "Disable Safety Checker",
+        "default": false
+      },
+      "lora_weights_transformer": {
+        "type": "text",
+        "name": "LoRA Weights URL",
+        "required": false,
+        "placeholder": "URL to external .safetensors style model for Transformer"
+      },
+      "lora_scale_transformer": {
+        "type": "float",
+        "name": "LoRA Scale",
+        "default": 1,
+        "min": 0,
+        "max": 2,
+        "description": "Adjust LoRA influence weight"
+      }
+    },
+    "api_docs_url": "https://replicate.com/wan-video/wan-2.2-i2v-fast",
+    "official_price": 0.145,
+    "official_currency": "USD",
+    "official_unit": "per output video",
+    "is_active": true,
+    "notes": "收尾",
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-29 22:47:38.607706+08:00",
+    "task_type": "视频生成",
+    "output_type": "video"
+  },
+  {
+    "id": 7,
+    "api_key": "replicate_google_veo-3-fast_25",
+    "name": "Google Veo 3 Fast",
+    "provider": "replicate",
+    "provider_model_id": "google/veo-3-fast",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "min_length": 3,
+        "multiline": true,
+        "placeholder": "Describe the scene and motion (e.g., 'Rotate the shoe'). Veo understands camera instructions well..."
+      },
+      "generate_audio": {
+        "type": "bool",
+        "name": "Generate Audio",
+        "default": true,
+        "description": "Generate native audio that matches the environment",
+        "visible": true
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 4,
+        "options": [
+          4,
+          6,
+          8
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "9:16"
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "720p",
+        "options": [
+          "720p",
+          "1080p"
+        ],
+        "visible": false
+      },
+      "negative_prompt": {
+        "type": "text",
+        "name": "Negative Prompt",
+        "required": false,
+        "multiline": true,
+        "placeholder": "Describe what you don't want in the video...",
+        "visible": false
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647,
+        "visible": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/google/veo-3-fast",
+    "official_price": 0.15,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": null,
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-29 12:48:54.821914+08:00",
+    "task_type": "视频生成",
+    "output_type": "video"
+  },
+  {
+    "id": 12,
+    "api_key": "replicate_qwen_qwen-image-edit",
+    "name": "Qwen Image Edit",
+    "provider": "replicate",
+    "provider_model_id": "qwen/qwen-image-edit",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Text instruction on how to edit the given image. (e.g., 'Change the sweater to be blue with white text')"
+      },
+      "image": {
+        "type": "image",
+        "name": "Reference Image",
+        "required": true,
+        "description": "Image to use as reference. Must be jpeg, png, gif, or webp."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "9:16",
+        "options": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "match_input_image"
+        ],
+        "description": "Aspect ratio for the generated image."
+      },
+      "output_format": {
+        "type": "string",
+        "name": "Output Format",
+        "default": "webp",
+        "options": [
+          "webp",
+          "jpg",
+          "png"
+        ],
+        "description": "Format of the output images."
+      },
+      "output_quality": {
+        "type": "int",
+        "name": "Output Quality",
+        "default": 95,
+        "min": 0,
+        "max": 100,
+        "description": "Quality when saving the output images, from 0 to 100. (Not relevant for .png)"
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "description": "Random seed. Set for reproducible generation."
+      },
+      "go_fast": {
+        "type": "bool",
+        "name": "Go Fast",
+        "default": true,
+        "description": "Run faster predictions with additional optimizations."
+      },
+      "disable_safety_checker": {
+        "type": "bool",
+        "name": "Disable Safety Checker",
+        "default": false,
+        "description": "Disable safety checker for generated images."
+      }
+    },
+    "api_docs_url": "https://replicate.com/qwen/qwen-image-edit",
+    "official_price": 0.03,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "单张输出图片定价 0.03 美元",
+    "created_at": "2026-01-28 19:31:42.701956+08:00",
+    "updated_at": "2026-01-30 20:25:55.558840+08:00",
+    "task_type": null,
+    "output_type": "image"
+  },
+  {
+    "id": 11,
+    "api_key": "replicate_minimax_hailuo-2.3-fast",
+    "name": "Hailuo 2.3 Fast",
+    "provider": "replicate",
+    "provider_model_id": "minimax/hailuo-2.3-fast",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the scene and motion (e.g., 'a tiktok dancer is dancing on a small drone, doing flips and tricks'). Hailuo 2.3 handles complex physics and character movements well..."
+      },
+      "first_frame_image": {
+        "type": "image",
+        "name": "First Frame Image",
+        "required": true,
+        "description": "First frame of the video. The output video will have the same aspect ratio as this image."
+      },
+      "prompt_optimizer": {
+        "type": "bool",
+        "name": "Prompt Optimizer",
+        "default": true,
+        "description": "Whether to use the model's native prompt optimizer to enhance your description"
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 6,
+        "options": [
+          6,
+          10
+        ],
+        "description": "Duration of the video in seconds. 10s is only available for 768p resolution."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "768p",
+        "options": [
+          "768p",
+          "1080p"
+        ],
+        "description": "Pick between 768p or 1080p. 1080p supports only 6-second duration."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647,
+        "description": "Random seed for generation. Set to 0 for random."
+      }
+    },
+    "api_docs_url": "https://replicate.com/minimax/hailuo-2.3-fast/examples",
+    "official_price": 0.19,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "768P | 6秒：约 $0.19/支（$10 约可做 52 支）\n768P | 10秒：约 $0.32/支（$10 约可做 31 支）\n1080P | 6秒：约 $0.33/支（$10 约可做 30 支）",
+    "created_at": "2026-01-28 19:28:55.436770+08:00",
+    "updated_at": "2026-01-29 10:55:16.891680+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 13,
+    "api_key": "replicate_bytedance_seedance-1.5-pro",
+    "name": "Seedance 1.5 Pro",
+    "provider": "replicate",
+    "provider_model_id": "bytedance/seedance-1.5-pro",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the scene, action, and sound (e.g., 'A kitten is yawning at the camera'). Dialogue in double quotes will be voiced..."
+      },
+      "image": {
+        "type": "image",
+        "name": "First Frame Image",
+        "required": false,
+        "description": "Optional: First frame for Image-to-Video. If provided, aspect_ratio will be ignored to match this image."
+      },
+      "last_frame_image": {
+        "type": "image",
+        "name": "Last Frame Image",
+        "required": false,
+        "description": "Optional: Target last frame. Only works when 'First Frame Image' is also provided."
+      },
+      "generate_audio": {
+        "type": "bool",
+        "name": "Generate Audio",
+        "default": true,
+        "description": "Whether to generate synchronized audio (voice, SFX, or BGM) based on content."
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "min": 2,
+        "max": 12,
+        "description": "Video duration in seconds. Set -1 for Smart Duration (model decides)."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "1:1",
+          "21:9",
+          "9:21",
+          "adaptive"
+        ],
+        "description": "Video aspect ratio. 'adaptive' follows the reference image or prompt intent."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "1080p",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Video resolution. Higher resolution costs more and may limit duration."
+      },
+      "fps": {
+        "type": "int",
+        "name": "FPS",
+        "default": 24,
+        "description": "Frame rate (frames per second)."
+      },
+      "camera_fixed": {
+        "type": "bool",
+        "name": "Camera Fixed",
+        "default": false,
+        "description": "If true, the camera remains static. If false, camera motion follows the prompt."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": -1,
+        "min": -1,
+        "max": 2147483647,
+        "description": "Set -1 for random seed, or a specific number for reproducible results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/bytedance/seedance-1.5-pro",
+    "official_price": 0.026,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": "带音频（with_audio）每秒 0.052 美元（约 19 秒 / 1 美元），无音频（without_audio）每秒 0.026 美元（约 38 秒 / 1 美元）",
+    "created_at": "2026-01-28 20:42:47.839389+08:00",
+    "updated_at": "2026-01-29 11:34:27.646589+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 14,
+    "api_key": "replicate_bytedance_seedream-4.5",
+    "name": "Seedream 4.5",
+    "provider": "replicate",
+    "provider_model_id": "bytedance/seedream-4.5",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the image or the edit instructions (e.g., 'A vintage café with a sign saying Seedream 4.5')."
+      },
+      "image_input": {
+        "type": "image",
+        "name": "Input Images",
+        "multiple": true,
+        "required": false,
+        "description": "List of 1-14 images for single or multi-reference generation (image-to-image)."
+      },
+      "size": {
+        "type": "string",
+        "name": "Size",
+        "default": "2K",
+        "options": [
+          "2K",
+          "4K",
+          "custom"
+        ],
+        "description": "Image resolution: 2K (2048px), 4K (4096px), or 'custom' for specific dimensions."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "match_input_image",
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "description": "Used when size is not 'custom'. 'match_input_image' follows the first reference image."
+      },
+      "width": {
+        "type": "int",
+        "name": "Custom Width",
+        "default": 2048,
+        "min": 1024,
+        "max": 4096,
+        "description": "Used only when size='custom'."
+      },
+      "height": {
+        "type": "int",
+        "name": "Custom Height",
+        "default": 2048,
+        "min": 1024,
+        "max": 4096,
+        "description": "Used only when size='custom'."
+      },
+      "sequential_image_generation": {
+        "type": "string",
+        "name": "Sequential Mode",
+        "default": "disabled",
+        "options": [
+          "disabled",
+          "auto"
+        ],
+        "description": "'auto' lets the model decide whether to generate multiple related images (e.g., story scenes)."
+      },
+      "max_images": {
+        "type": "int",
+        "name": "Max Images",
+        "default": 1,
+        "min": 1,
+        "max": 15,
+        "description": "Maximum number of images to generate in sequential mode."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "description": "Set for reproducible generation."
+      }
+    },
+    "api_docs_url": "https://replicate.com/bytedance/seedream-4.5",
+    "official_price": 0.04,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "单张输出图片定价 0.04 美元",
+    "created_at": "2026-01-28 20:45:05.538427+08:00",
+    "updated_at": "2026-01-30 20:23:33.358760+08:00",
+    "task_type": null,
+    "output_type": "image"
+  },
+  {
+    "id": 9,
+    "api_key": "replicate_bytedance_seedance-1-pro-fast_46",
+    "name": "Seedance 1 Pro Fast",
+    "provider": "replicate",
+    "provider_model_id": "bytedance/seedance-1-pro-fast",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the video content. Excellent support for cinematic descriptions (e.g., supercar, sunset, cinematic lighting)..."
+      },
+      "image": {
+        "type": "image",
+        "name": "Start Image",
+        "required": true,
+        "description": "First frame of the video. Upload to enable I2V mode. If provided, aspect_ratio will be ignored"
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "1080p",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Different resolutions have tiered pricing"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "9:21"
+        ],
+        "description": "Wide aspect ratio support. Ignored if image is provided"
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "min": 2,
+        "max": 12,
+        "description": "Flexible duration range from 2 to 12 seconds"
+      },
+      "camera_fixed": {
+        "type": "bool",
+        "name": "Camera Fixed",
+        "default": false,
+        "description": "If true, locks camera position (only objects move). If false, allows camera pan/tilt/zoom"
+      },
+      "fps": {
+        "type": "int",
+        "name": "FPS",
+        "default": 24,
+        "description": "Fixed at 24 FPS, standard cinematic frame rate"
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647,
+        "description": "Random seed for fixing generation results, useful for debugging the same shot"
+      }
+    },
+    "api_docs_url": "https://replicate.com/bytedance/seedance-1-pro-fast",
+    "official_price": 0.06,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": "480p 每秒 0.015 美元（约 66 秒 / 1 美元）、720p 每秒 0.025 美元（40 秒 / 1 美元）、1080p 每秒 0.06 美元（约 16 秒 / 1 美元）",
+    "created_at": "2026-01-24 00:26:09.039676+08:00",
+    "updated_at": "2026-01-29 11:33:43.359561+08:00",
+    "task_type": "视频生成",
+    "output_type": "video"
+  },
+  {
+    "id": 16,
+    "api_key": "replicate_kwaivgi_kling-v2.6",
+    "name": "Kling V2.6",
+    "provider": "replicate",
+    "provider_model_id": "kwaivgi/kling-v2.6",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the scene, motion, and audio (e.g., 'A woman walks down a neon street, saying \"Let's begin.\" Ambient rain sound.')",
+        "description": "Text prompt for video and audio generation. Dialogue in double quotes will be lip-synced."
+      },
+      "image": {
+        "type": "image",
+        "name": "First Frame Image",
+        "required": false,
+        "description": "Optional: Reference image for Image-to-Video. If provided, the video will start from this frame."
+      },
+      "negative_prompt": {
+        "type": "text",
+        "name": "Negative Prompt",
+        "required": false,
+        "default": "",
+        "description": "Specify elements to exclude from the generation."
+      },
+      "generate_audio": {
+        "type": "bool",
+        "name": "Generate Audio",
+        "default": true,
+        "description": "Whether to generate synchronized audio (voice, SFX, and ambient sounds) in a single pass."
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "options": [
+          5,
+          10
+        ],
+        "description": "Video duration in seconds. Kling v2.6 supports 5s or 10s clips."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "description": "Video aspect ratio."
+      },
+      "mode": {
+        "type": "string",
+        "name": "Mode",
+        "default": "std",
+        "options": [
+          "std",
+          "pro"
+        ],
+        "description": "Generation mode. 'std' is faster/cheaper, 'pro' offers higher quality."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": -1,
+        "min": -1,
+        "max": 2147483647,
+        "description": "Set -1 for random seed, or a specific number for reproducible results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/kwaivgi/kling-v2.6",
+    "official_price": 0.07,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": "含音频视频单价分为两档：0.07美元/秒（约14秒/1美元）和0.14美元/秒（约71秒/10美元）。",
+    "created_at": "2026-02-05 10:32:06.254974+08:00",
+    "updated_at": "2026-02-05 15:45:06.427432+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 18,
+    "api_key": "gemini_gemini-2.5-flash-lite",
+    "name": "Gemini 2.5 Flash Lite",
+    "provider": "gemini",
+    "provider_model_id": "gemini-2.5-flash-lite",
+    "params_schema": {
+      "instruction": {
+        "type": "text",
+        "name": "Instruction",
+        "required": false,
+        "multiline": true,
+        "placeholder": "e.g. Translate the following to English."
+      },
+      "prompt": {
+        "type": "text",
+        "name": "Content to translate",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Input text to translate..."
+      }
+    },
+    "api_docs_url": "",
+    "official_price": null,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "",
+    "created_at": "2026-02-10 17:06:35.615012+08:00",
+    "updated_at": "2026-02-10 17:06:35.615012+08:00",
+    "task_type": null,
+    "output_type": "text"
+  },
+  {
+    "id": 17,
+    "api_key": "replicate_wan-video_wan-2.2-animate-replace",
+    "name": "Wan 2.2 Animate Replace",
+    "provider": "replicate",
+    "provider_model_id": "wan-video/wan-2.2-animate-replace",
+    "params_schema": {
+      "video": {
+        "type": "video",
+        "name": "Reference Video",
+        "required": true,
+        "description": "The source video containing the person/character you want to replace. The motion and background will be preserved."
+      },
+      "character_image": {
+        "type": "image",
+        "name": "Character Image",
+        "required": true,
+        "description": "The image of the target character. The model will swap the person in the video with this character."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "720",
+        "options": [
+          "480",
+          "720"
+        ],
+        "description": "Output video resolution (short side)."
+      },
+      "go_fast": {
+        "type": "bool",
+        "name": "Go Fast",
+        "default": false,
+        "description": "Apply additional optimizations for faster generation."
+      },
+      "merge_audio": {
+        "type": "bool",
+        "name": "Merge Audio",
+        "default": true,
+        "description": "If true, the original audio from the reference video will be added to the result."
+      },
+      "refert_num": {
+        "type": "int",
+        "name": "Reference Frames",
+        "default": 1,
+        "min": 1,
+        "max": 5,
+        "description": "Number of reference frames used from the character image (Note: Currently optimized for 1)."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": -1,
+        "min": -1,
+        "max": 2147483647,
+        "description": "Set -1 for random seed, or a specific number for reproducible results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/wan-video/wan-2.2-animate-replace",
+    "official_price": 0.02,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "目标分辨率 480：每秒 0.02 美元（即 1 美元可生成 50 秒）；目标分辨率 720：每秒 0.05 美元（即 1 美元可生成 20 秒）",
+    "created_at": "2026-02-05 16:46:54.649771+08:00",
+    "updated_at": "2026-02-05 17:58:27.058664+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 15,
+    "api_key": "replicate_wan-video_wan-2.6-i2v",
+    "name": "Wan 2.6 I2v",
+    "provider": "replicate",
+    "provider_model_id": "wan-video/wan-2.6-i2v",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the scene and motion (e.g., 'The vintage clock starts ticking, gears turning inside...')",
+        "description": "Text prompt for video generation."
+      },
+      "image": {
+        "type": "image",
+        "name": "Input Image",
+        "required": true,
+        "description": "Input image to be animated into a video."
+      },
+      "negative_prompt": {
+        "type": "text",
+        "name": "Negative Prompt",
+        "required": false,
+        "default": "",
+        "description": "Describe elements to avoid in the generated video."
+      },
+      "audio": {
+        "type": "file",
+        "name": "Audio File",
+        "required": false,
+        "description": "Optional: Audio file (wav/mp3, 3-30s) for voice or music synchronization."
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "options": [
+          5,
+          10,
+          15
+        ],
+        "description": "Duration of the generated video in seconds."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "720p",
+        "options": [
+          "720p",
+          "1080p"
+        ],
+        "description": "Video resolution. Higher resolution provides more detail but takes longer."
+      },
+      "enable_prompt_expansion": {
+        "type": "bool",
+        "name": "Enable Prompt Expansion",
+        "default": true,
+        "description": "If true, uses an AI optimizer to enrich your prompt for better visual results."
+      },
+      "multi_shots": {
+        "type": "bool",
+        "name": "Multi-Shots",
+        "default": false,
+        "description": "Enable intelligent multi-shot segmentation. Only active when 'Prompt Expansion' is enabled."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": -1,
+        "min": -1,
+        "max": 2147483647,
+        "description": "Set -1 for random seed, or a specific number for reproducible results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/wan-video/wan-2.6-i2v",
+    "official_price": 0.1,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": "720p 分辨率视频单价为 0.10 美元 / 秒（1 美元可生成 10 秒），1080p 分辨率视频单价为 0.15 美元 / 秒（10 美元约可生成 66 秒）。",
+    "created_at": "2026-02-05 10:30:41.579403+08:00",
+    "updated_at": "2026-02-05 22:34:45.027601+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 19,
+    "api_key": "replicate_google_veo-3.1",
+    "name": "Google Veo 3.1",
+    "provider": "replicate",
+    "provider_model_id": "google/veo-3.1",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "min_length": 3,
+        "multiline": true,
+        "placeholder": "Describe the scene and motion (e.g., 'A cinematic shot of a car driving through neon streets, camera pans left'). Veo understands camera instructions well."
+      },
+      "image": {
+        "type": "image",
+        "name": "First Frame Image",
+        "required": false,
+        "description": "Optional: Image to use as the starting frame for Image-to-Video generation."
+      },
+      "last_frame": {
+        "type": "image",
+        "name": "Last Frame Image",
+        "required": false,
+        "description": "Optional: Image to use as the ending frame. Use with 'First Frame Image' to create a transition."
+      },
+      "reference_images": {
+        "type": "array",
+        "name": "Reference Images",
+        "required": false,
+        "description": "Up to 3 images for character or style consistency. Currently works best with 16:9 aspect ratio and 8s duration."
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 8,
+        "options": [
+          4,
+          6,
+          8
+        ],
+        "description": "Video duration in seconds."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "1080p",
+        "options": [
+          "720p",
+          "1080p"
+        ],
+        "description": "The output resolution of the video."
+      },
+      "generate_audio": {
+        "type": "bool",
+        "name": "Generate Audio",
+        "default": true,
+        "description": "Whether to generate native audio that matches the visual environment."
+      },
+      "negative_prompt": {
+        "type": "text",
+        "name": "Negative Prompt",
+        "required": false,
+        "multiline": true,
+        "placeholder": "Describe elements you want to exclude from the video (e.g., 'blur, distorted, low quality')."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "default": 0,
+        "min": 0,
+        "max": 2147483647,
+        "description": "Set to 0 for a random seed, or use a specific number for reproducible results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/google/veo-3.1",
+    "official_price": null,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "带音频版本每秒 0.40 美元（10 美元可生成 25 秒），不带音频版本每秒 0.20 美元（10 美元可生成 50 秒）。",
+    "created_at": "2026-02-13 14:48:26.618663+08:00",
+    "updated_at": "2026-02-13 14:52:31.745734+08:00",
+    "task_type": null,
+    "output_type": "video"
+  },
+  {
+    "id": 20,
+    "api_key": "replicate_google_nano-banana-2",
+    "name": "Google Nano Banana 2",
+    "provider": "replicate",
+    "provider_model_id": "google/nano-banana-2",
+    "params_schema": {
+      "prompt": {
+        "type": "string",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "An isometric 3D miniature diorama of a cozy Japanese ramen shop at night. Warm light spills from the entrance. Tiny detailed figures sit at the counter. Steam rises from bowls of ramen. Rain puddles reflect neon signs on the street. Tilt-shift photography effect.",
+        "description": "A text description of the image you want to generate"
+      },
+      "image_input": {
+        "type": "file[]",
+        "name": "Image Input",
+        "default": [],
+        "description": "Input images to transform or use as reference (supports up to 14 images)"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "match_input_image",
+        "options": [
+          "match_input_image",
+          "1:1",
+          "1:4",
+          "1:8",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:1",
+          "4:3",
+          "4:5",
+          "5:4",
+          "8:1",
+          "9:16",
+          "16:9",
+          "21:9"
+        ],
+        "description": "Aspect ratio of the generated image"
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "1K",
+        "options": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "description": "Resolution of the generated image. Higher resolutions take longer to generate."
+      },
+      "google_search": {
+        "type": "boolean",
+        "name": "Google Search",
+        "default": false,
+        "description": "Use Google Web Search grounding to generate images based on real-time information (e.g. weather, sports scores, recent events)."
+      },
+      "image_search": {
+        "type": "boolean",
+        "name": "Image Search",
+        "default": false,
+        "description": "Use Google Image Search grounding to find web images as visual context for generation. When enabled, web search is also used automatically."
+      },
+      "output_format": {
+        "type": "string",
+        "name": "Output Format",
+        "default": "jpg",
+        "options": [
+          "jpg",
+          "png"
+        ],
+        "description": "Format of the output image"
+      }
+    },
+    "api_docs_url": "https://replicate.com/google/nano-banana-2",
+    "official_price": null,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "1K图每张0.067美元（约1美元14张），2K图每张0.101美元（约10美元99张），4K图每张0.151美元（约10美元66张）。",
+    "created_at": "2026-02-28 12:20:36.234334+08:00",
+    "updated_at": "2026-02-28 13:48:48.786769+08:00",
+    "task_type": null,
+    "output_type": "image"
+  },
+  {
+    "id": 21,
+    "api_key": "replicate_bytedance_seedream-5-lite",
+    "name": "Seedream 5 Lite",
+    "provider": "replicate",
+    "provider_model_id": "bytedance/seedream-5-lite",
+    "params_schema": {
+      "prompt": {
+        "type": "string",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "A striking fashion editorial photograph of a model wearing an elaborate haute couture gown made entirely of living flowers — white peonies, pale pink roses, and trailing jasmine...",
+        "description": "Text prompt for image generation"
+      },
+      "image_input": {
+        "type": "file[]",
+        "name": "Image Input",
+        "default": [],
+        "description": "Input image(s) for image-to-image generation. List of 1-14 images for single or multi-reference generation."
+      },
+      "size": {
+        "type": "string",
+        "name": "Size",
+        "default": "2K",
+        "options": [
+          "2K",
+          "3K"
+        ],
+        "description": "Image resolution: 2K (2048px) or 3K (3072px)."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "match_input_image",
+        "options": [
+          "match_input_image",
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "description": "Image aspect ratio. Use 'match_input_image' to automatically match the input image's aspect ratio."
+      },
+      "sequential_image_generation": {
+        "type": "string",
+        "name": "Sequential Mode",
+        "default": "disabled",
+        "options": [
+          "disabled",
+          "auto"
+        ],
+        "description": "Group image generation mode. 'disabled' generates a single image. 'auto' lets the model decide whether to generate multiple related images (e.g., story scenes, character variations)."
+      },
+      "max_images": {
+        "type": "integer",
+        "name": "Max Images",
+        "default": 1,
+        "min": 1,
+        "max": 15,
+        "description": "Maximum number of images to generate when sequential_image_generation='auto'. Range: 1-15. Total images (input + generated) cannot exceed 15."
+      },
+      "output_format": {
+        "type": "string",
+        "name": "Output Format",
+        "default": "png",
+        "options": [
+          "png",
+          "jpeg"
+        ],
+        "description": "Output image format."
+      }
+    },
+    "api_docs_url": "https://replicate.com/bytedance/seedream-5-lite",
+    "official_price": 0.035,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "$0.035 per output image",
+    "created_at": "2026-02-28 12:34:39.082456+08:00",
+    "updated_at": "2026-02-28 13:51:04.452067+08:00",
+    "task_type": null,
+    "output_type": "image"
+  },
+  {
+    "id": 23,
+    "api_key": "replicate_black-forest-labs_flux-redux-schnell",
+    "name": "FLUX.1 Redux [schnell]",
+    "provider": "replicate",
+    "provider_model_id": "black-forest-labs/flux-redux-schnell",
+    "params_schema": {
+      "redux_image": {
+        "type": "image",
+        "name": "Reference Image",
+        "required": true
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "16:9",
+          "21:9",
+          "3:2",
+          "2:3",
+          "4:5",
+          "5:4",
+          "3:4",
+          "4:3",
+          "9:16",
+          "9:21"
+        ]
+      },
+      "megapixels": {
+        "type": "string",
+        "default": "1",
+        "options": [
+          "1",
+          "0.25"
+        ]
+      },
+      "num_inference_steps": {
+        "type": "int",
+        "default": 4,
+        "min": 1,
+        "max": 4
+      },
+      "output_quality": {
+        "type": "int",
+        "default": 80,
+        "min": 0,
+        "max": 100
+      },
+      "seed": {
+        "type": "int",
+        "default": 0,
+        "min": 0,
+        "max": 9999999999
+      },
+      "disable_safety_checker": {
+        "type": "bool",
+        "default": false
+      }
+    },
+    "api_docs_url": "https://replicate.com/black-forest-labs/flux-redux-schnell",
+    "official_price": 0.003,
+    "official_currency": "USD",
+    "official_unit": "per output images",
+    "is_active": true,
+    "notes": "Auto-imported for flux-redux",
+    "created_at": "2026-04-15 05:23:37.169912+08:00",
+    "updated_at": "2026-04-15 06:05:42.287889+08:00",
+    "task_type": "img to img",
+    "output_type": "image"
+  },
+  {
+    "id": 24,
+    "api_key": "a2e_wan2_6-i2v-flash",
+    "name": "A2E Wan 2.6 I2V",
+    "provider": "a2e",
+    "provider_model_id": "wan2.6-i2v-flash",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe the motion..."
+      },
+      "image_url": {
+        "type": "image",
+        "name": "Start Image",
+        "required": true
+      },
+      "duration": {
+        "type": "string",
+        "name": "Duration",
+        "default": "5",
+        "options": [
+          "5",
+          "10",
+          "15"
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "720p",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ]
+      },
+      "audio": {
+        "type": "bool",
+        "name": "Enable Audio",
+        "default": true
+      },
+      "enable_prompt_expansion": {
+        "type": "bool",
+        "name": "Prompt Expansion",
+        "default": false
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "required": false
+      }
+    },
+    "api_docs_url": "https://video.a2e.ai/",
+    "official_price": 0.05,
+    "official_currency": "USD",
+    "official_unit": "per video",
+    "is_active": true,
+    "notes": "Auto-imported for a2e-wan2.6-i2v",
+    "created_at": "2026-04-15 05:23:37.169912+08:00",
+    "updated_at": "2026-04-15 06:05:49.696455+08:00",
+    "task_type": "img to video",
+    "output_type": "video"
+  },
+  {
+    "id": 25,
+    "api_key": "replicate_openai_gpt-image-2",
+    "name": "Gpt Image 2",
+    "provider": "replicate",
+    "provider_model_id": "openai/gpt-image-2",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "A text description of the desired image, generation content or image editing instructions",
+        "description": "Text prompt for image generation and image editing"
+      },
+      "openai_api_key": {
+        "type": "string",
+        "name": "OpenAI API Key",
+        "required": false,
+        "visible": false,
+        "description": "Your OpenAI API key (optional - uses proxy if not provided)"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "3:2",
+          "2:3"
+        ],
+        "description": "The aspect ratio of the generated image"
+      },
+      "input_images": {
+        "type": "file[]",
+        "name": "Input Images",
+        "required": false,
+        "default": [],
+        "description": "A list of images to use as input for image generation, style transfer and image editing"
+      },
+      "number_of_images": {
+        "type": "integer",
+        "name": "Number Of Images",
+        "default": 1,
+        "min": 1,
+        "max": 10,
+        "description": "Number of images to generate in a single request (1-10)"
+      },
+      "quality": {
+        "type": "string",
+        "name": "Quality",
+        "default": "auto",
+        "options": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "description": "The quality of the generated image, lower quality is faster and cheaper"
+      },
+      "background": {
+        "type": "string",
+        "name": "Background",
+        "default": "auto",
+        "options": [
+          "auto",
+          "opaque"
+        ],
+        "description": "Set whether the background is transparent or opaque or choose automatically. GPT Image 2 does not support transparent backgrounds."
+      },
+      "output_compression": {
+        "type": "integer",
+        "name": "Output Compression",
+        "default": 90,
+        "min": 0,
+        "max": 100,
+        "description": "Image compression level (0-100%)"
+      },
+      "output_format": {
+        "type": "string",
+        "name": "Output Format",
+        "default": "webp",
+        "options": [
+          "webp",
+          "png",
+          "jpeg"
+        ],
+        "description": "Output image file format"
+      },
+      "moderation": {
+        "type": "string",
+        "name": "Moderation",
+        "default": "auto",
+        "options": [
+          "auto",
+          "low"
+        ],
+        "description": "Content moderation level, low for less strict content filtering"
+      },
+      "user_id": {
+        "type": "text",
+        "name": "User ID",
+        "required": false,
+        "multiline": true,
+        "placeholder": "An optional unique identifier representing your end-user",
+        "description": "Unique end-user identifier, helps OpenAI monitor and detect abuse"
+      }
+    },
+    "api_docs_url": "https://replicate.com/openai/gpt-image-2",
+    "official_price": null,
+    "official_currency": "USD",
+    "official_unit": "per_request",
+    "is_active": true,
+    "notes": "Criteria\n\nmodel variant is auto\n$0.128\nper output image\n\nor around 78 images for $10\n\nCriteria\n\nmodel variant is low\n$0.012\nper output image\n\nor around 83 images for $1\n\nCriteria\n\nmodel variant is medium\n$0.047\nper output image\n\nor around 21 images for $1\n\nCriteria\n\nmodel variant is high\n$0.128\nper output image\n\nor around 78 images for $10",
+    "created_at": "2026-04-22 13:48:24.675691+08:00",
+    "updated_at": "2026-04-22 13:48:24.675691+08:00",
+    "task_type": null,
+    "output_type": "image"
+  },
+  {
+    "id": 22,
+    "api_key": "a2e_flux-1-schnell",
+    "name": "A2E z-image",
+    "provider": "a2e",
+    "provider_model_id": "a2e",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": true,
+        "multiline": true,
+        "placeholder": "Describe what you want to create..."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3"
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "1080p",
+        "options": [
+          "1080p",
+          "2k",
+          "4k"
+        ]
+      }
+    },
+    "api_docs_url": "https://video.a2e.ai/",
+    "official_price": 0.01,
+    "official_currency": "USD",
+    "official_unit": "per image",
+    "is_active": true,
+    "notes": "Auto-imported for a2e-z-image",
+    "created_at": "2026-04-15 05:23:37.169912+08:00",
+    "updated_at": "2026-04-15 12:32:54.586565+08:00",
+    "task_type": "text to img",
+    "output_type": "image"
+  },
+  {
+    "id": 26,
+    "api_key": "replicate_bytedance_seedance-2.5",
+    "name": "Seedance 2.5",
+    "provider": "replicate",
+    "provider_model_id": "bytedance/seedance-2.5",
+    "params_schema": {
+      "prompt": {
+        "type": "text",
+        "name": "Prompt",
+        "required": false,
+        "multiline": true,
+        "max_length": 2000,
+        "placeholder": "Describe the video scenes and motions to generate (up to 2000 characters). Enclose character dialogues with double quotes \"\". Can be left empty when providing reference media."
+      },
+      "image": {
+        "type": "image",
+        "name": "First Frame",
+        "required": false,
+        "description": "Starting image for image‑to‑video or start‑end‑frame generation. Cannot be used together with reference_images / reference_videos / reference_audios."
+      },
+      "last_frame_image": {
+        "type": "image",
+        "name": "Last Frame",
+        "required": false,
+        "description": "Ending frame image for the generated video. Must be used together with the starting frame image (image)."
+      },
+      "reference_images": {
+        "type": "file_array",
+        "name": "Reference Images",
+        "required": false,
+        "default": [],
+        "description": "List of reference images (max 30). Reference via [Image1], [Image2] in the Prompt. Cannot be used together with start‑end frame images."
+      },
+      "reference_videos": {
+        "type": "file_array",
+        "name": "Reference Videos",
+        "required": false,
+        "default": [],
+        "description": "List of reference videos (max 10, total duration ≤ 30 seconds). Reference via [Video1] in the Prompt."
+      },
+      "reference_audios": {
+        "type": "file_array",
+        "name": "Reference Audios",
+        "required": false,
+        "default": [],
+        "description": "List of reference audios (max 10, total duration ≤ 30 seconds). Reference via [Audio1] in the Prompt. At least one reference image or video is required."
+      },
+      "duration": {
+        "type": "int",
+        "name": "Duration",
+        "default": 5,
+        "min": -1,
+        "max": 30,
+        "description": "Video duration in seconds, valid range 4‑30. Set to -1 for auto‑determined duration (-1 is mandatory for video edit mode)."
+      },
+      "resolution": {
+        "type": "string",
+        "name": "Resolution",
+        "default": "720p",
+        "options": [
+          "480p",
+          "720p"
+        ],
+        "description": "Output video resolution."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "name": "Aspect Ratio",
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "description": "Video aspect ratio. Set to 'adaptive' for model‑driven optimal ratio (must use 'adaptive' for start‑end‑frame, edit and extend modes)."
+      },
+      "generate_audio": {
+        "type": "bool",
+        "name": "Generate Audio",
+        "default": true,
+        "description": "Synchronously generate voice‑over, lip‑sync, sound effects and background music."
+      },
+      "watermark": {
+        "type": "bool",
+        "name": "Watermark",
+        "default": false,
+        "description": "Whether to embed watermark in generated video."
+      },
+      "output_format": {
+        "type": "string",
+        "name": "Output Format",
+        "default": "mp4",
+        "options": [
+          "mp4",
+          "mov"
+        ],
+        "description": "Output video container format."
+      },
+      "seed": {
+        "type": "int",
+        "name": "Seed",
+        "required": false,
+        "min": 0,
+        "description": "Random seed for reproducible generation results."
+      }
+    },
+    "api_docs_url": "https://replicate.com/bytedance/seedance-2.5",
+    "official_price": 0.2312,
+    "official_currency": "USD",
+    "official_unit": "per_second",
+    "is_active": true,
+    "notes": "字节跳动 Seedance 2.5 旗舰级视频大模型。原生支持 30 秒生成与音效同步，支持多模态参考集（最多 30 张图片 / 10 个视频 / 10 个音频）及首尾帧控制。",
+    "created_at": "2026-08-21 19:29:36.969766+08:00",
+    "updated_at": "2026-08-25 06:22:33.471543+08:00",
+    "task_type": null,
+    "output_type": "video"
+  }
+]

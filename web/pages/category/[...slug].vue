@@ -245,8 +245,8 @@ if (slugArray.length === 0) {
   const { data: pageStatus } = await useAsyncData('category-page-status', async () => {
     try {
       let baseUrl = config.public.apiBaseUrl as string
-      if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-        baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+      if (process.server) {
+        baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
       }
       
       const response = await $fetch<any>(`${baseUrl}/api/seo/page-status/category`)
@@ -277,8 +277,8 @@ const { data: categoryPageData } = await useAsyncData(`category-page-${categoryP
   if (slugArray.length === 0) return null // Root /category uses general Page SEO
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/category-pages/by-path${categoryPath}`)
@@ -457,8 +457,8 @@ const { data: worksData } = await useAsyncData(
       const categoryForQuery = categoryFromPath || (route.query.category as string)
       
       let baseUrl = config.public.apiBaseUrl as string
-      if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-        baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+      if (process.server) {
+        baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
       }
       
       const api = useApi()
@@ -520,8 +520,8 @@ const { data: subcategoriesData } = await useAsyncData(
     
     try {
       let baseUrl = config.public.apiBaseUrl as string
-      if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-        baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+      if (process.server) {
+        baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
       }
       
       // Get children categories for this level 1 category

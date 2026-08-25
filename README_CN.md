@@ -148,7 +148,7 @@ docker compose up -d
 - 🔧 **Admin 管理后台**: `http://localhost:3001` (默认管理员账号: `admin` / 密码: `admin123`)
 - 🐍 **后端 API 文档 (Swagger UI)**: `http://localhost:8000/docs`
 
-> 💡 **自动种子数据（Seed Data）**：容器启动时会自动运行 `scripts/seed_all.py`，1 分钟内自动完成数据库 Migration、初始超级管理员创建、预置 AI 模型导入、积分充值套餐与全站 SEO 配置初始化！
+> 💡 **一键初始化**：容器启动时会自动运行 `scripts/seed_all.py`，完成数据库迁移、超级管理员创建、全站页面配置、AI 模型与工作流、博客、充值配置，以及引用公共 CDN 图片的 Demo 作品导入。CDN 媒体不可用时前端会自动显示内置占位图；生产 API 密钥和统计标识不会包含在种子数据中，统计代码模板会以关闭状态导入，请通过后台或环境配置单独设置。
 
 ---
 
@@ -183,15 +183,15 @@ cp .env.example .env
 #### 初始化数据库与基础数据
 
 ```bash
-# 执行 Alembic 数据库迁移
-alembic upgrade head
+# 可选：先设置初始管理员；未设置时使用开发环境默认值
+export INITIAL_ADMIN_USERNAME=admin
+export INITIAL_ADMIN_PASSWORD=请替换为安全密码
 
-# 执行脚本文档初始化基础数据
-python scripts/init_database.py
-python scripts/create_first_admin.py
-python scripts/init_seo_config.py
-python scripts/init_recharge_packages.py
+# 一次完成迁移、管理员创建及完整 Demo 数据导入
+python scripts/seed_all.py
 ```
+
+该命令可重复执行。初始化失败时会以非零状态退出，不会继续执行后续步骤。
 
 #### 启动 FastAPI 服务
 

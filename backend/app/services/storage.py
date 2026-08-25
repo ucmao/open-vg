@@ -35,6 +35,9 @@ class StorageService:
     def __init__(self):
         self.is_local = False
         self.is_mock = False
+        self.s3_client = None
+        self.bucket_name = R2_BUCKET_NAME
+        self.public_domain = R2_PUBLIC_DOMAIN
         
         # Check if R2 is configured
         if not all([R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_BUCKET_NAME]):
@@ -76,8 +79,6 @@ class StorageService:
                 config=s3_config,
                 region_name=region
             )
-            self.bucket_name = R2_BUCKET_NAME
-            self.public_domain = R2_PUBLIC_DOMAIN
         except Exception as e:
             logger.error(f"Failed to initialize R2 client: {e}. Falling back to LOCAL mode.")
             self.is_local = True
@@ -177,7 +178,7 @@ class StorageService:
         """
         if not key:
             return ""
-            
+
         # 1. If it's already a full local URL, return it as is
         if "localhost" in key or "/static/" in key:
             return key

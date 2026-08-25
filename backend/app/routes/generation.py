@@ -22,7 +22,8 @@ from ..models.generation_config import (
     get_available_models,
     get_model_cost,
     validate_params,
-    MODELS
+    MODELS,
+    normalize_work_type,
 )
 from ..utils.auth import get_current_active_user, get_current_user_optional
 from ..utils.responses import success_response, error_response
@@ -123,12 +124,13 @@ async def get_models(
     """
     try:
         if work_type:
-            if work_type not in MODELS:
+            canonical_work_type = normalize_work_type(work_type)
+            if canonical_work_type not in MODELS:
                 return error_response(
                     message=f"Invalid work type: {work_type}",
                     status_code=status.HTTP_400_BAD_REQUEST
                 )
-            models = get_available_models(work_type)
+            models = {canonical_work_type: get_available_models(canonical_work_type)}
         else:
             models = MODELS
         
@@ -842,4 +844,3 @@ async def get_generation_status(
             message="An error occurred while retrieving status",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-

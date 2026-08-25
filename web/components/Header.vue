@@ -889,8 +889,8 @@ const isActive = (path: string) => {
 const { data: pageStatuses } = await useAsyncData('header-page-statuses', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const pageNames = ['explore', 'templates', 'create', 'blog', 'topics']
@@ -933,8 +933,8 @@ const { data: pageStatuses } = await useAsyncData('header-page-statuses', async 
 const { data: modelTopicSlugs } = await useAsyncData('header-model-topic-slugs', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     // Use same API endpoint as magic page: /api/topic/slugs-by-model
@@ -955,8 +955,8 @@ const { data: modelTopicSlugs } = await useAsyncData('header-model-topic-slugs',
 const { data: allTopicSlugs } = await useAsyncData('header-all-topic-slugs', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     // Get all published topics to check if effect slug matches any topic slug
@@ -984,8 +984,8 @@ const MAGIC_MODELS_LIMIT = 8
 const { data: generationModelsData } = await useAsyncData('header-generation-models', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/generate/models`)

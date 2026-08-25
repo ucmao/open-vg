@@ -4,7 +4,7 @@
  */
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const apiBaseUrl = config.public.apiBaseUrl || 'http://localhost:8000'
+  const apiBaseUrl = process.env.NUXT_INTERNAL_API_URL || config.public.apiBaseUrl || 'http://localhost:8000'
   
   try {
     // Fetch sitemap.xml from backend

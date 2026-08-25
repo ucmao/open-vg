@@ -182,8 +182,8 @@ const config = useRuntimeConfig()
 const { data: pageStatuses } = await useAsyncData('footer-page-statuses', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const pageNames = ['explore', 'templates', 'create', 'blog', 'topics', 'effects', 'category']

@@ -17,7 +17,22 @@ _cache_timestamp: Optional[float] = None
 CACHE_TTL = 300  # Cache for 5 minutes
 
 # Redis cache key (without global prefix; prefix applied in redis_cache.build_key)
-_REDIS_MODELS_KEY = "models:active:v1"
+_REDIS_MODELS_KEY = "models:active:v2"
+
+WORK_TYPE_ALIASES = {
+    "text2img": "text-to-image",
+    "img2img": "image-to-image",
+    "text2video": "text-to-video",
+    "img2video": "image-to-video",
+    "img_effects": "image-effects",
+    "vid_effects": "video-effects",
+}
+
+
+def normalize_work_type(work_type: str) -> str:
+    """Return the canonical work type while preserving unknown extensions."""
+    normalized = (work_type or "").strip().lower()
+    return WORK_TYPE_ALIASES.get(normalized, normalized)
 
 
 def _load_models_from_db(force_refresh: bool = False) -> Dict:
@@ -69,7 +84,7 @@ def _load_models_from_db(force_refresh: bool = False) -> Dict:
             models_dict: Dict = {}
             for model in db_models:
                 try:
-                    work_type = model.work_type or "unknown"
+                    work_type = normalize_work_type(model.work_type) or "unknown"
                     if work_type not in models_dict:
                         models_dict[work_type] = {}
 
@@ -172,6 +187,7 @@ def get_model_config(work_type: str, model_name: str) -> dict:
     Get configuration for a specific model from database.
     """
     models = get_models()
+    work_type = normalize_work_type(work_type)
     
     if work_type not in models:
         raise ValueError(f"Invalid work type or no active models: {work_type}")
@@ -186,7 +202,7 @@ def get_available_models(work_type: str) -> dict:
     """
     Get all available active models for a work type.
     """
-    return get_models().get(work_type, {})
+    return get_models().get(normalize_work_type(work_type), {})
 
 
 def get_model_cost(work_type: str, model_name: str, params: dict = None) -> int:

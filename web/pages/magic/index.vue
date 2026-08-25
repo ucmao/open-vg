@@ -306,8 +306,8 @@ const { getBadgeLabel, getBadgeClassObject } = useModelBadge()
 const { data: pageStatus } = await useAsyncData('magic-page-status', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/seo/page-status/templates`)
@@ -325,8 +325,8 @@ const { data: pageStatus } = await useAsyncData('magic-page-status', async () =>
 const { data: effectsPageStatus } = await useAsyncData('effects-page-status-for-magic', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/seo/page-status/effects`)
@@ -357,8 +357,8 @@ if (pageStatus.value && pageStatus.value.exists && !pageStatus.value.is_enabled)
 const { data: pageSeoData } = await useAsyncData('magic-page-seo', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/seo/page-configs`)
@@ -376,8 +376,8 @@ const { data: pageSeoData } = await useAsyncData('magic-page-seo', async () => {
 const { data: modelPageSlugByModel } = await useAsyncData<Record<string, string>>('magic-slugs-by-model', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     const response = await $fetch<any>(`${baseUrl}/api/topic/slugs-by-model`)
     if (response?.success && response.data) return response.data

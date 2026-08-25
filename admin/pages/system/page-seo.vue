@@ -235,14 +235,14 @@ const getPageIcon = (name: string) => {
 
 const getPageDisplayName = (name: string) => {
   const names: Record<string, string> = {
-    home: ' (Home)',
-    explore: ' (Explore)',
-    templates: ' (Magic)',
-    create: ' (Create)',
-    blog: ' (Blog)',
-    topics: ' (Topics)',
-    effects: ' (Effects)',
-    category: 'Category (Category)'
+    home: adminT("Home Page", "首页"),
+    explore: adminT("Explore Page", "探索页"),
+    templates: adminT("Magic Page", "Magic 特效页"),
+    create: adminT("Create Page", "创作页"),
+    blog: adminT("Blog Page", "博客页"),
+    topics: adminT("Topics Page", "专题页"),
+    effects: adminT("Effects Category Page", "特效分类页"),
+    category: adminT("Work Category Page", "作品分类页")
   }
   return names[name] ?? name
 }

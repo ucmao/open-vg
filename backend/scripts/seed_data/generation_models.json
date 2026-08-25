@@ -1,0 +1,2102 @@
+[
+  {
+    "id": 83,
+    "model_key": "google-veo-3-1-jtki",
+    "name": "Google Veo 3.1",
+    "description": "",
+    "cost": 30,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "4": 0,
+          "6": 15,
+          "8": 30
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 12:43:55.764883+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-video",
+    "is_featured": false,
+    "workflow_id": 58,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": null
+  },
+  {
+    "id": 102,
+    "model_key": "kiss-anime-kjqt",
+    "name": "Kiss Anime",
+    "description": "Kiss Anime",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-12 18:02:48.080048+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/bztg3SFFGwAkCcikB2C2M5q5QurJ.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/N9H04DJoKPFO9DrG1Uk7Elm5Wnc2.webm",
+        "after_prompt": null,
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 77,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 94,
+    "model_key": "ai-aging-filter-ajq4",
+    "name": "AI Aging Filter",
+    "description": "AI Aging Filter",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/ntfSBsLYMxX7EzIMsMR9yEFhHfHA.webp"
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-30 18:22:13.359632+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/ntfSBsLYMxX7EzIMsMR9yEFhHfHA.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/eSWEiRglqRbzpy9vPIW3NBgfDCMc.webp",
+        "after_prompt": "Please generate an elderly photo for the uploaded image, maintaining character consistency.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Hot Image effects|Popular",
+    "work_type": "image-effects",
+    "is_featured": false,
+    "workflow_id": 67,
+    "icon_url": null,
+    "badge": "new"
+  },
+  {
+    "id": 98,
+    "model_key": "kling-v2-6-yjjl",
+    "name": "Kling V3.0",
+    "description": "",
+    "cost": 30,
+    "is_active": true,
+    "sort_order": 3,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 35,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "5": 0,
+          "10": 35
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-05 10:46:48.803893+08:00",
+    "updated_at": "2026-04-15 11:11:14.386178+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 72,
+    "icon_url": "https://cdn.vidgenerator.ai/743ws0kQbA9MHQIXMpzzlWxmzK8T.jpg",
+    "badge": null
+  },
+  {
+    "id": 109,
+    "model_key": "nano-banana-2-vtur",
+    "name": "Nano Banana 2",
+    "description": "nano-banana-2",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {
+      "safety_filter_level": {},
+      "resolution": {
+        "cost_additions": {
+          "1K": 0,
+          "2K": 0,
+          "4K": 5
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-27 17:53:18.175316+08:00",
+    "updated_at": "2026-04-22 15:07:45.646555+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-image",
+    "is_featured": false,
+    "workflow_id": 84,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": "new"
+  },
+  {
+    "id": 129,
+    "model_key": "g-jkl9",
+    "name": "GPT Image 2",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "aspect_ratio": {},
+      "quality": {
+        "cost_additions": {
+          "auto": 0,
+          "low": 0,
+          "medium": 5,
+          "high": 5
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-04-22 15:07:26.687557+08:00",
+    "updated_at": "2026-04-22 15:10:04.878691+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-image",
+    "is_featured": false,
+    "workflow_id": 92,
+    "icon_url": "https://cdn.vidgenerator.ai/usoXYyCHKrXBNakJsnSbRN0vlkE0.png",
+    "badge": null
+  },
+  {
+    "id": 131,
+    "model_key": "s-6dbn",
+    "name": "Seedance 2.5",
+    "description": "Seedance 2.5",
+    "cost": 100,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              5,
+              10,
+              20
+            ],
+            [
+              11,
+              15,
+              40
+            ],
+            [
+              16,
+              20,
+              60
+            ],
+            [
+              21,
+              25,
+              80
+            ],
+            [
+              26,
+              30,
+              100
+            ]
+          ]
+        }
+      },
+      "resolution": {
+        "cost_additions": {
+          "480p": 0,
+          "720p": 0
+        }
+      },
+      "aspect_ratio": {
+        "cost_additions": {
+          "16:9": 0,
+          "4:3": 0,
+          "1:1": 0,
+          "3:4": 0,
+          "9:16": 0,
+          "21:9": 0,
+          "adaptive": 0
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-08-24 16:06:25.239883+08:00",
+    "updated_at": "2026-08-24 16:18:12.700226+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 96,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 103,
+    "model_key": "french-kiss-generator-1ezx",
+    "name": "French Kiss Generator",
+    "description": "French Kiss Generator",
+    "cost": 30,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-13 11:35:24.838611+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/4NlhblO1ZI819LLS8kJxmarWdrxs.webp",
+        "before_prompt": "According to the two people in the uploaded photo, they are sitting closely together in the cramped back seat of the car. Their bodies lean towards each other, in a gentle embrace, gazing into each other's eyes with soft smiles, their actions intimate and ambiguous. The two move naturally (avoiding abstraction), and their body structures are normal. The lighting inside the car is dim, with cinematic light and shadow creating a private and alluring atmosphere. Outside the car window, it's a rainy night. The scene is realistic and detailed. It's a close-up shot from the side of the characters. Prohibited: abstraction, distortion, low quality, clipping, unnatural movements.",
+        "after_url": "https://cdn.vidgenerator.ai/ewBXfruOB0k0zfzhPX7RXdOig8Lr.webm",
+        "after_prompt": "Setting: On a rainy night, the two are sitting in the back seat of a car, and the car keeps driving forward.(sounds of rain and the car driving). The two hug each other tighter. (the car keeps driving.) Then the two kiss passionately and passionately, then kissing with their tongues, while caressing each other. As the kiss deepens, the car subtly rocks and creaks. Side lights of other cars outside highlights glistening skin and intertwined. The two's movements are large and intense. (Kissing sounds, wheezing sounds, breathing sounds, sounds of fabric rubbing) The camera slowly zooms in to capture the two kissing.  Avoid: Slow.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 79,
+    "icon_url": null,
+    "badge": "hot"
+  },
+  {
+    "id": 58,
+    "model_key": "ai-travel-generator-da6l",
+    "name": "AI Travel Generator",
+    "description": "AI Travel Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 16,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/dCBel0MYH0JkjSXRQSVJFCxjwpyt.jpg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "Excellent for image variations and reference-based generation. Supports up to 14 input images.",
+    "created_at": "2026-01-25 22:20:49.129371+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/dCBel0MYH0JkjSXRQSVJFCxjwpyt.jpg",
+        "before_prompt": "A medium shot of a handsome middle-aged man with sophisticated silver-grey hair and a well-groomed beard. He is wearing a high-quality black tailored suit with a crisp open-collar white shirt. Standing on a sunny city street with modern office buildings and blurred skyscrapers in the background. Cinematic natural lighting, sharp focus on facial details, hyper-realistic texture, 8k resolution, shot on 35mm lens, professional corporate photography.",
+        "after_url": "https://cdn.vidgenerator.ai/brtLJkeHbXGc5ZKjRkZmAp8emAHi.mp4",
+        "after_prompt": "The camera is Super Dolly Out, zooming out from the close-up and gradually reducing the subject to reveal the panoramic view.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 8,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 95,
+    "model_key": "ai-figure-generator-6snt",
+    "name": "AI Figure Generator",
+    "description": "AI Figure Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 3,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/UF1JzuUCsHDeOxBctaTeT2eHYc7A.webp"
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-30 18:32:24.574109+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/UF1JzuUCsHDeOxBctaTeT2eHYc7A.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/KA2uF9t9IZqFf9WANpnjnjvylLWB.webp",
+        "after_prompt": "Please generate the figurine according to the uploaded image, maintaining consistency",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Hot Image effects|Popular",
+    "work_type": "image-effects",
+    "is_featured": false,
+    "workflow_id": 68,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 79,
+    "model_key": "seedream-4-5-w1j4",
+    "name": "Seedream 4.5",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 12:33:13.416784+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-image",
+    "is_featured": false,
+    "workflow_id": 55,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 84,
+    "model_key": "vidgen-pjpm",
+    "name": "VidGen",
+    "description": "High-Quality Image Generation Tool",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 5,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 13:48:39.661721+08:00",
+    "updated_at": "2026-04-15 11:12:54.920654+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-image",
+    "is_featured": false,
+    "workflow_id": 55,
+    "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
+    "badge": null
+  },
+  {
+    "id": 130,
+    "model_key": "g-0xcn",
+    "name": "GPT Image 2",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "quality": {
+        "cost_additions": {
+          "auto": 0,
+          "low": 0,
+          "medium": 5,
+          "high": 5
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-04-22 15:08:54.842546+08:00",
+    "updated_at": "2026-04-22 18:38:40.987936+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 91,
+    "icon_url": "https://cdn.vidgenerator.ai/usoXYyCHKrXBNakJsnSbRN0vlkE0.png",
+    "badge": null
+  },
+  {
+    "id": 99,
+    "model_key": "wan-2-6-i2v-jmj4",
+    "name": "Wan 2.7",
+    "description": "",
+    "cost": 35,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "duration": {
+        "cost_additions": {
+          "5": 0,
+          "10": 35,
+          "15": 70
+        }
+      },
+      "resolution": {
+        "cost_additions": {
+          "480p": 0,
+          "720p": 0,
+          "1080p": 35
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-05 10:48:53.266045+08:00",
+    "updated_at": "2026-04-15 11:10:45.988026+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 71,
+    "icon_url": "https://cdn.vidgenerator.ai/idYfyviejDv8qGH84McHZMnrPMKW.webp",
+    "badge": null
+  },
+  {
+    "id": 132,
+    "model_key": "seedance2-5-pro",
+    "name": "Seedance 2.5 Unrestricted",
+    "description": "Seedance 2.5 Unrestricted",
+    "cost": 50,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "resolution": {
+        "cost_additions": {
+          "480": 0,
+          "720": 20
+        }
+      },
+      "merge_audio": {
+        "cost_additions": {
+          "true": 0,
+          "false": 0
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-08-25 11:39:19.990166+08:00",
+    "updated_at": "2026-08-25 11:39:54.499207+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "member",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 98,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 100,
+    "model_key": "ai-character-swap-3erd",
+    "name": "AI Character Swap",
+    "description": "AI Character Swap",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-05 17:11:19.666434+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/BlwJqXvKAgqT53SHupxUdNW18Hej.mp4",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/0VjUYJzF0RBU68VLHWRZXqHuLLzB.mp4",
+        "after_prompt": null,
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 75,
+    "icon_url": null,
+    "badge": "new"
+  },
+  {
+    "id": 59,
+    "model_key": "ai-teacher-generator-op7y",
+    "name": "AI Teacher Generator",
+    "description": "AI Teacher Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 10,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/N9kItig5xVUDNLfyRzx2FfgrVIz6.jpeg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-25 22:20:59.288153+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/N9kItig5xVUDNLfyRzx2FfgrVIz6.jpeg",
+        "before_prompt": "Cinematic photorealistic still, 8K high resolution. A beautiful Western woman with three-dimensional facial features, deep contours, and distinct bone structure stands in a clean, bright setting with a natural, relaxed posture. She has a gentle, approachable expression. Soft natural lighting highlights her facial features and clothing textures, with subtle shadows enhancing depth. The background is simple and slightly blurred (shallow depth of field), keeping the focus entirely on her. The overall tone is fresh and calm, perfect as the opening frame for a transformation sequence.",
+        "after_url": "https://cdn.vidgenerator.ai/yElLL5Q4saH51bSIce3ARQ9xhfpi.mp4",
+        "after_prompt": "Cinematic transformation video. A flurry of realistic paper sheets falls naturally through the air, creating a dynamic curtain of debris. As the papers drift past the camera, the background character undergoes a seamless, silky-smooth morph into a sexy teacher persona. New Appearance: She wears a form-fitting, low-cut white button-down shirt, a tight grey pencil skirt uniform, and glasses. She holds a stack of textbooks in one arm and a pointer stick in the other. Performance: A gentle breeze tousles her hair softly. She strikes a confident, alluring pose for the camera. Ensure the facial expression is natural and captivating, with fluid, graceful body movements throughout the transition. Negative Prompt: Disfigured, blurry, low resolution, stiff movements, unnatural transformation, extra limbs, bad anatomy, watermark, text.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 11,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 60,
+    "model_key": "ai-hug-generator-xdkd",
+    "name": "AI Hug Generator",
+    "description": "AI Hug Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 9,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/0jnrPJNhlSedV6Jq2SPqsb88iRim.jpeg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-25 22:45:54.622586+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/0jnrPJNhlSedV6Jq2SPqsb88iRim.jpeg",
+        "before_prompt": "Portrait photography based on the uploaded character. Cinematic verité style, a medium shot capturing a man and woman walking side by side along a bridge during the Golden Hour sunset.\nLighting & Atmosphere: The sky is painted with warm pink and orange hues, casting a soft, romantic glow on their faces. Gentle street lamps flicker in the background, creating a bokeh effect. The lighting is realistic and flattering, highlighting the intimacy of the moment.\nSubjects & Interaction: They walk casually, engaged in natural conversation. The man is dressed in a white shirt with a mustard-yellow tie, casually draping a brown jacket over his arm. The woman wears a coral-pink sleeveless dress and holds a small beige clutch. A soft breeze gently tousles her hair as they exchange subtle, affectionate smiles and gestures.\nCamera Work: The shot is captured with a subtle handheld camera movement, providing a sense of realism and immersion. The camera smoothly tracks their movement, slightly swaying with their gait. The focus transitions seamlessly between expressive close-ups of their faces and wider shots of their figures against the city backdrop. A slightly soft lens creates a beautiful, gentle depth of field (bokeh), isolating the subjects from the background.\nTechnical Details: Soft natural motion blur, smooth tracking shot, high resolution, 8k, realistic textures, warm color grading, intimate mood.",
+        "after_url": "https://cdn.vidgenerator.ai/fYfBUEUQoGFtNi1FqQ5qLuoxoQHX.mp4",
+        "after_prompt": "Cinematic emotional video still based on uploaded character. Horizontal. Two characters walk toward each other from opposite sides; environment subtly slows as they near. Soft wind moves hair/clothes naturally. Eyes meet in a brief, tender hesitation, then they step forward and embrace—arms wrapping with genuine emotion, a soft but powerful hug. Shoulders relax, faces close, slight head movement, breathing visible. Cinematic lighting blooms softly around them; background gently blurred (shallow DOF). Time feels paused, deep emotional connection, intimate but clean, high realism, smooth motion, movie-like atmosphere. Designed to trigger curiosity and emotional click-through.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 12,
+    "icon_url": null,
+    "badge": "hot"
+  },
+  {
+    "id": 96,
+    "model_key": "ai-skinny-filter-ler7",
+    "name": "AI Skinny Filter",
+    "description": "AI Skinny Filter",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 4,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/LF78IsHweuJ2hQaUUSdRujlzC5oX.webp"
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-30 18:45:55.897553+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/LF78IsHweuJ2hQaUUSdRujlzC5oX.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/SsVigrzSGAo4oISmvSRpz9N6iJK6.webp",
+        "after_prompt": "Please display the uploaded photo in a slim figure, maintain consistency of the character, and ensure that the body shape does not deform.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Hot Image effects|Popular",
+    "work_type": "image-effects",
+    "is_featured": false,
+    "workflow_id": 69,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 104,
+    "model_key": "seedance-2-0-pro-xkyd",
+    "name": "Seedance 2.0",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-13 11:59:48.833419+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 80,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 85,
+    "model_key": "vidgen-x5ij",
+    "name": "VidGen",
+    "description": "High-quality, low-cost Image-to-Video tools.",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 5,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 13:50:39.286188+08:00",
+    "updated_at": "2026-04-15 11:11:59.864891+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 57,
+    "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
+    "badge": "hot"
+  },
+  {
+    "id": 110,
+    "model_key": "nano-banana-2-t2i",
+    "name": "Nano Banana 2",
+    "description": "Nano Banana 2",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {
+      "safety_filter_level": {},
+      "output_format": {},
+      "resolution": {
+        "cost_additions": {
+          "1K": 0,
+          "2K": 0,
+          "4K": 5
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-28 13:29:53.071402+08:00",
+    "updated_at": "2026-08-22 06:24:41.075038+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 86,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": null
+  },
+  {
+    "id": 70,
+    "model_key": "ai-girlfriend-generator-0kir",
+    "name": "AI Girlfriend Generator",
+    "description": "AI Girlfriend Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/WD1orHoPEbYK5Pxb8lhRqJb93WXE.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 16:57:23.786356+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/WD1orHoPEbYK5Pxb8lhRqJb93WXE.webp",
+        "before_prompt": "A stunning elegant woman with long wavy brunette hair, wearing a deep emerald green floor-length silk gown, V-neckline, high thigh-high slit, cinched waist, flowing fabric. Pose: Standing gracefully on a sunlit terrace, hands gently clasped, confident expression, full body shot. Environment: Luxurious modern coastal architecture, large white pillars, glass windows reflecting the city skyline, blurry tropical palm trees and ocean in the background, golden hour lighting. Style: High-end fashion photography, cinematic lighting, soft shadows, 8k resolution, highly detailed skin texture, vibrant colors.",
+        "after_url": "https://cdn.vidgenerator.ai/3D3vsiqzwsK0QaXNKsgXh30F4LeJ.mp4",
+        "after_prompt": "A stunning woman in an elegant emerald green deep-V neck evening gown with a high slit, standing on a sunny Mediterranean terrace with white pillars and palm trees in the background. Cinematic zoom-in from full-body to close-up. Initially, she poses gracefully with a sophisticated smile. As the camera gets closer, she suddenly makes a funny face, sticking out her tongue and widening her eyes, then finishes with a playful blowing kiss. High-end fashion photography style, soft natural sunlight, 4k, highly detailed.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 18,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 72,
+    "model_key": "cat-cooking-generator-06sk",
+    "name": "Cat Cooking Generator",
+    "description": "AI Cat Cooking Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 14,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/1pl8L5eddHXmq2hbbxre4bOo3e4g.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 18:20:59.937869+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/1pl8L5eddHXmq2hbbxre4bOo3e4g.webp",
+        "before_prompt": "A hyper-realistic close-up of a fluffy long-haired cat with blue eyes, wearing a beige apron, standing in a professional kitchen and skillfully sprinkling spices into a sizzling pan. Steam rising from the stove, fresh chopped vegetables and herbs on a wooden cutting board in the foreground. Professional food photography style, cinematic lighting, shallow depth of field, stainless steel kitchen background, 8k resolution, highly detailed fur --ar 3:2",
+        "after_url": "https://cdn.vidgenerator.ai/i1aaCTjacgxV3rG1Pu1OuR8fOpiG.mp4",
+        "after_prompt": "A hyper-realistic cinematic shot of a fluffy Ragdoll cat acting as a professional chef in a high-end kitchen. The cat is wearing a tiny, custom-fit canvas apron and stands on its hind legs at a stainless steel counter. It carefully reaches out with its paw to season a sizzling steak in a frying pan. On the cutting board nearby are chopped vegetables and herbs. Warm, professional kitchen lighting with soft steam rising from the pan, shallow depth of field, 4k resolution, highly detailed fur texture, whimsical and charming atmosphere.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 23,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 97,
+    "model_key": "ai-swimwear-generator-327h",
+    "name": "AI Swimwear Generator",
+    "description": "AI Swimwear Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/nR6cItctcMHEMrb4lscv7e9FDt43.webp"
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-30 19:08:33.583385+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/nR6cItctcMHEMrb4lscv7e9FDt43.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/IywDJ22V7cseFXOq5ZPafkiGWzBW.webp",
+        "after_prompt": "Please maintain character consistency for the uploaded images and change into swimwear",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Hot Image effects|Popular",
+    "work_type": "image-effects",
+    "is_featured": false,
+    "workflow_id": 70,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 86,
+    "model_key": "vidgen-imno",
+    "name": "VidGen",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 14:11:00.007747+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 59,
+    "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
+    "badge": null
+  },
+  {
+    "id": 101,
+    "model_key": "custom-dance-generator-09kb",
+    "name": "Custom Dance Generator",
+    "description": "Custom Dance Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-05 18:04:51.650388+08:00",
+    "updated_at": "2026-02-28 12:13:26.723386+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/5IBh25oLwOkH3DdrGeapW4FVLl8R.mp4",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/rDzQMw2nWWED8RwFytYzDGMzd3Ps.mp4",
+        "after_prompt": null,
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 76,
+    "icon_url": null,
+    "badge": "new"
+  },
+  {
+    "id": 81,
+    "model_key": "seedance-1-5-pro-irm6",
+    "name": "Seedance 1.5 Pro",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 4,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 12:37:00.405622+08:00",
+    "updated_at": "2026-04-15 11:11:51.166205+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 57,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 111,
+    "model_key": "s-jvfs",
+    "name": "Seedream 5.0",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-28 13:55:48.502380+08:00",
+    "updated_at": "2026-04-15 11:17:07.465518+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 87,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 76,
+    "model_key": "flux2-klein-a8su",
+    "name": "Flux2 klein",
+    "description": "Elite visuals, zero cost",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 12:27:42.651233+08:00",
+    "updated_at": "2026-04-22 14:59:59.037974+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 54,
+    "icon_url": "https://cdn.vidgenerator.ai/pSE7xPJHDKWuoD5MgWUf9noqRnzC.png",
+    "badge": "hot"
+  },
+  {
+    "id": 71,
+    "model_key": "princess-carry-generator-0u8d",
+    "name": "Princess Carry​ Generator",
+    "description": "Princess Carry​ Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 6,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/7dPUrLIexmP3BD9BT4rxV9aqHjTV.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 17:39:40.593720+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/7dPUrLIexmP3BD9BT4rxV9aqHjTV.webp",
+        "before_prompt": "Full-body shot of a male and female fashion model standing side by side, wearing beige trench coats and premium wool blazers, monochromatic camel outfit, minimalist studio background, soft cinematic side lighting, analog film grain, muted tones, fashion editorial look, shot on Sony A7R IV, 8k, highly detailed.",
+        "after_url": "https://cdn.vidgenerator.ai/cgnu3rrp44YN72ssyGtud2CPQPmq.mp4",
+        "after_prompt": "A high-fashion studio shoot of a smiling couple. A woman with long straight black hair wearing a classic beige trench coat, and a handsome man with reddish-brown hair in a tan double-breasted suit. They start by standing side-by-side, laughing warmly. The man then gracefully picks the woman up in a bridal carry (princess carry). She wraps her arms around his neck, and they both look at the camera with joyful, radiant expressions. Clean cream-colored background, soft professional studio lighting, high-end editorial style, 4k, realistic textures, smooth motion.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 19,
+    "icon_url": null,
+    "badge": "new"
+  },
+  {
+    "id": 77,
+    "model_key": "qwen-image-eh68",
+    "name": "Qwen Image",
+    "description": "",
+    "cost": 10,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 12:29:44.009304+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 63,
+    "icon_url": "https://cdn.vidgenerator.ai/idYfyviejDv8qGH84McHZMnrPMKW.webp",
+    "badge": null
+  },
+  {
+    "id": 87,
+    "model_key": "vidgen-4pan",
+    "name": "VidGen",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 5,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 14:11:38.395357+08:00",
+    "updated_at": "2026-04-15 11:12:36.710246+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-video",
+    "is_featured": false,
+    "workflow_id": 60,
+    "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
+    "badge": null
+  },
+  {
+    "id": 112,
+    "model_key": "s-f0f5",
+    "name": "Seedream 5.0",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 1,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-02-28 13:58:15.029815+08:00",
+    "updated_at": "2026-04-22 15:07:54.803705+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-image",
+    "is_featured": false,
+    "workflow_id": 85,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 78,
+    "model_key": "nano-banana-pro-geug",
+    "name": "Nano banana pro",
+    "description": "Pro AI imaging, totally free",
+    "cost": 1,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-01-29 12:31:35.357935+08:00",
+    "updated_at": "2026-05-09 15:01:52.857825+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 52,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": "free"
+  },
+  {
+    "id": 63,
+    "model_key": "couple-vlog-generator-r3cj",
+    "name": "Couple Vlog Generator",
+    "description": "Couple Vlog Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 4,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/XDOJ7soUYZfhDBmk4GKtO2dK9EV6.jpeg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-26 15:23:49.238891+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/XDOJ7soUYZfhDBmk4GKtO2dK9EV6.jpeg",
+        "before_prompt": "A realistic selfie of a European couple sitting face-to-face in a bright, modern private restaurant. The woman has a fair complexion and is holding the phone for a selfie while clinking a wine glass with her partner. Both are smiling at the lens. The table is set with gourmet food and red wine. Bright, clean, and airy atmosphere. Only two people in the scene, blending naturally with the high-end interior. 4:3 ratio.",
+        "after_url": "https://cdn.vidgenerator.ai/GYmvkwAZoavLolMLRFI6l6rFTdjL.mp4",
+        "after_prompt": "Continuing from the previous scene, the man's hand subtly lowers his wine glass. With a big, excited grin, he pulls out a huge, beautifully wrapped bouquet of roses from behind him, presenting it to the woman. He looks at her warmly and exclaims, \"Surprise!\" The woman's eyes widen, and she turns to the flowers, delightedly saying, \"Wow!\" They both break into hearty, joyful laughter, looking genuinely thrilled. The selfie vlog POV captures their genuine reactions. Warm, romantic lighting, crisp audio cues implied, cinematic yet raw video quality, 4k, authentic and heartwarming moment.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 30,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 74,
+    "model_key": "ai-flying-kiss-generator-le72",
+    "name": "AI flying kiss Generator",
+    "description": "AI flying kiss Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 8,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/JmDwYTp6ksFyuQ9AO1VMNnMWhyTn.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 18:57:41.246200+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/JmDwYTp6ksFyuQ9AO1VMNnMWhyTn.webp",
+        "before_prompt": "A photorealistic low-angle shot of a stunning woman walking forward in a narrow vintage hallway, fish-eye lens effect with barrel distortion, wearing a white tank top and denim shorts with a brown belt, symmetrical composition, overhead warm light, cinematic lighting, 8k, highly detailed, retro aesthetic.",
+        "after_url": "https://cdn.vidgenerator.ai/jo3YWwGHtGOcB3QQ7ht6bLjApHz6.mp4",
+        "after_prompt": "Hyper-realistic cinematic sequence shot on 55mm film with subtle fisheye distortion, high-budget Hollywood style, dramatic lighting with neon reflections and glossy highlights. A confident, striking woman in stylish outfit walks directly toward the camera, maintaining intense, unbroken eye contact the entire time.\nThe camera dynamically pushes in and out with sharp, fast zooms and sudden wide pull-backs, creating high-energy rhythm and intensity. Rapid angle changes: extreme tight close-up on her piercing eyes and face → sweeping wide shot capturing her full confident stride → low-angle tracking from her long legs and heels stepping powerfully forward → back to intense facial close-up.\nFluid, seamless motion throughout. At the climax, she slows slightly, gently raises her hand to her lips, softly kisses her fingertips with a subtle, knowing smile, then extends her hand forward and blows the kiss directly toward the lens. The blown kiss manifests as a burst of glowing, shimmering red energy ripple — surreal, glossy, semi-transparent, with vibrant neon reflections dancing across it — floating playfully yet purposefully straight toward the camera in elegant slow motion. It grows larger, collides gently with the lens in a vivid explosion of crimson and golden light flares, briefly overwhelming the frame before fading.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 31,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 64,
+    "model_key": "ai-walk-generator-ymet",
+    "name": "AI Walk Generator",
+    "description": "AI Waik Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 5,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/G0wp1IqtMzC0SASRJ73mUfv52UOB.jpeg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-26 16:02:54.919234+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/G0wp1IqtMzC0SASRJ73mUfv52UOB.jpeg",
+        "before_prompt": "Candid high-end street photography of a stunning Caucasian woman walking in a luxury metropolitan fashion district. She is wearing a sophisticated outfit: a long creamy white wool overcoat draped over a Sensibility black silk slip dress with a deep V-neck and a high thigh slit, revealing delicate black lace stockings and thigh-high leather boots. She carries a metallic clutch and wears layered gold necklaces. Modern urban background with blurred architectural lines and pedestrians, creating a deep perspective and professional bokeh effect. Soft, overcast daylight, neutral and cinematic color grading with muted tones. Sharp focus on her confident expression, ultra-realistic fabric textures (silk, wool, leather, lace), 8k resolution, fashion editorial style, shot on 50mm lens, f/1.8.",
+        "after_url": "https://cdn.vidgenerator.ai/VqDELH2Ph45H4aMYinryqvk0MF1x.mp4",
+        "after_prompt": "Continue the video from the previous shot, maintaining consistent character appearance and scene continuity. The subject remains in the same high-end international urban commercial district, walking naturally forward with a brisk, realistic pace. The body exhibits natural, noticeable up-and-down movement as she walks. The upper body and chest display exaggerated yet physically plausible bounce and jiggle, driven by realistic inertia, gravity, and clothing dynamics. The motion should feel authentic and unposed.\nThe street remains modern and bustling, with glass facades and contemporary architecture extending into the distance. Shallow depth of field keeps the background softly blurred, emphasizing the character. Natural daylight, cinematic color grading, photorealistic textures, high-fashion street documentary style. The footage stays clean, stable, and ultra-high definition. Dynamic background music continues.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 34,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 90,
+    "model_key": "seedance-1-5-pro-uyfh",
+    "name": "Seedance 1.5 Pro",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      },
+      "resolution": {},
+      "aspect_ratio": {},
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 14:15:22.668708+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-video",
+    "is_featured": false,
+    "workflow_id": 60,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 80,
+    "model_key": "hailuo-2-3-n1c5",
+    "name": "Hailuo 2.3",
+    "description": "",
+    "cost": 60,
+    "is_active": true,
+    "sort_order": 6,
+    "params_config": {
+      "duration": {
+        "cost_additions": {
+          "6": 0,
+          "10": 65
+        }
+      },
+      "resolution": {
+        "cost_additions": {
+          "768p": 0,
+          "1080p": 45
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 12:35:13.183759+08:00",
+    "updated_at": "2026-04-15 11:12:17.432036+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 56,
+    "icon_url": "https://cdn.vidgenerator.ai/Rk7bLn3KXBNYxduluolGz394781K.png",
+    "badge": null
+  },
+  {
+    "id": 127,
+    "model_key": "seedance-2-5",
+    "name": "Seedance 2.5 Unrestricted",
+    "description": "The build is expected to take 2-3 minutes, you can leave the page first, and you can view it in your history when you are done.",
+    "cost": 30,
+    "is_active": false,
+    "sort_order": 1,
+    "params_config": {
+      "duration": {
+        "cost_additions": {
+          "5": 0,
+          "10": 30,
+          "15": 55
+        }
+      },
+      "resolution": {
+        "cost_additions": {
+          "480p": 0,
+          "720p": 0,
+          "1080p": 35
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-04-15 06:09:24.907626+08:00",
+    "updated_at": "2026-08-25 11:36:26.207441+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "member",
+    "category": "",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 75,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": "new"
+  },
+  {
+    "id": 108,
+    "model_key": "seedance-2-0-etvr",
+    "name": "Seedance 2.0",
+    "description": "",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-02-25 17:56:58.828966+08:00",
+    "updated_at": "2026-08-22 06:24:30.640288+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-video",
+    "is_featured": true,
+    "workflow_id": 60,
+    "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
+    "badge": null
+  },
+  {
+    "id": 56,
+    "model_key": "ai-muscle-generator-z3bo",
+    "name": "AI Muscle Generator",
+    "description": "AI Muscle Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 3,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/ozVpiRd1FhaULdmHItiZjkbJAQ2G.jpg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      },
+      "aspect_ratio": {},
+      "resolution": {}
+    },
+    "notes": "",
+    "created_at": "2026-01-25 21:08:59.093394+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/ozVpiRd1FhaULdmHItiZjkbJAQ2G.jpg",
+        "before_prompt": "A hyper-realistic medium shot of a handsome middle-aged man with styled silver hair and a groomed beard, wearing a tailored black suit over a crisp white shirt (unbuttoned at the collar). He is standing on a modern city street with blurred skyscrapers in the background. Bright daylight, cinematic lighting, sharp focus, 8k resolution, professional photography.",
+        "after_url": "https://cdn.vidgenerator.ai/QabVmXa4pB2IMxqveOdhiq2nVSc0.mp4",
+        "after_prompt": "Violently tearing off he clothes, he revealed a toned and powerful figure, each muscle defined by strength and grace. The movement was both fierce and fluid, as if the very act of shedding he attire was a declaration of raw, unbridled energy. He body, sculpted by discipline and passion, spoke of resilience and confidence, drawing eyes with every motion.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 5,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 69,
+    "model_key": "ai-post-war-girl-generator-tgsc",
+    "name": "AI Post War Girl Generator",
+    "description": "AI Post War Girl Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 12,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/UhvDG7AvDfnEakZ7N3Y4VV0NXnIQ.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 16:23:43.968167+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/UhvDG7AvDfnEakZ7N3Y4VV0NXnIQ.webp",
+        "before_prompt": "A cinematic close-up of a young woman with long, messy curly red hair and freckles, looking down with a somber and exhausted expression. She is wearing a rugged grey tactical vest and pants. In the background, a massive fire blazes, creating a soft bokeh effect. Dramatic orange embers and warm firelight reflect on her skin and hair. High detail, photorealistic, 8k, emotional atmosphere, post-apocalyptic survivor style.",
+        "after_url": "https://cdn.vidgenerator.ai/rct6dY8OuUx4wwCpmGS86DtH6kU6.mp4",
+        "after_prompt": "Cinematic close-up of a weary young woman with long messy red hair, sitting in a desolate wasteland. She looks exhausted and devastated, holding her head with her hands. In the background, a large bonfire blazes, casting a warm orange glow on her skin. Post-apocalyptic atmosphere, sunset lighting, shallow depth of field, hyper-realistic, 4k resolution, high emotional tension.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 7,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 91,
+    "model_key": "google-veo-3-1-hdol",
+    "name": "Google Veo 3.1",
+    "description": "",
+    "cost": 30,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "generate_audio": {
+        "cost_additions": {
+          "true": 15,
+          "false": 0
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "4": 0,
+          "6": 15,
+          "8": 30
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 14:16:26.222387+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "image-to-video",
+    "is_featured": false,
+    "workflow_id": 61,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": null
+  },
+  {
+    "id": 128,
+    "model_key": "nano-banana-pro-unrestricted-tc2m",
+    "name": "Nano Banana Pro Unrestricted",
+    "description": "The build is expected to take 2-3 minutes, you can leave the page first, and you can view it in your history when you are done.",
+    "cost": 50,
+    "is_active": false,
+    "sort_order": 0,
+    "params_config": {},
+    "notes": "",
+    "created_at": "2026-04-15 06:10:25.489709+08:00",
+    "updated_at": "2026-04-16 09:34:48.183435+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "member",
+    "category": "",
+    "work_type": "text-to-image",
+    "is_featured": false,
+    "workflow_id": 90,
+    "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
+    "badge": "new"
+  },
+  {
+    "id": 65,
+    "model_key": "ai-dance-generator-i2tv",
+    "name": "AI Dance Generator",
+    "description": "AI Dance Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 15,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/UETJGKjoSR6dHSdaLccDjiyPWiPN.jpeg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-26 17:00:07.030529+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/UETJGKjoSR6dHSdaLccDjiyPWiPN.jpeg",
+        "before_prompt": "Image-Based Action Customization:\nRetain the original 【scene/background】. All human subjects are Westerners with three-dimensional facial features, deep facial contours, and refined bone structures. They wear high-fashion ensembles—tailored silhouettes, sleek statement accessories, and on-trend pieces that complement their identities and the scene’s vibe. Preserve their exact hairstyles, clothing textures, and body proportions as depicted.\nMandatory Twerking Movement:\nTransition their current poses (【original action, e.g., standing, conversing, leaning】) to twerking. Key choreography: Raise both hands to rest behind the head, fingers interlaced or gently grazing the neck/nape. Drive the dance with powerful, rhythmic hip sways, moving hips expressively side-to-side in sync with an implicit beat.",
+        "after_url": "https://cdn.vidgenerator.ai/2qSEnxcgyD9zrYvmIkud0UZuc9iT.mp4",
+        "after_prompt": "Generate video from uploaded image: retain original scene/background, Western subjects in high-fashion outfits (tailored silhouettes, sleek accessories), 3D facial contours, hairstyles & body proportions exactly. Transition their original poses to fluid twerking: hands behind head (fingers interlaced/grazing neck), hips sway powerfully rhythmically side-to-side in beat. Realistic fabric dynamics—clothes move naturally with body. 4K 60fps, cinematic, smooth tracking, shallow depth of field (blur background), soft natural lighting, stable camera.\nNegative Prompt: Stiff movements, distorted limbs, clothing clipping, blurry footage, off-beat sways, hands mispositioned, unnatural expressions",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": true,
+    "workflow_id": 36,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 73,
+    "model_key": "ai-girl-generator-xvof",
+    "name": "AI Girl Generator",
+    "description": "AI Girl Generator",
+    "cost": 20,
+    "is_active": true,
+    "sort_order": 7,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/1Jki7zsYGhLTQIm8GmylrmLaUIjW.webp"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-27 18:34:28.593116+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/1Jki7zsYGhLTQIm8GmylrmLaUIjW.webp",
+        "before_prompt": "A stunning medium shot of an elegant woman with a slender build, wearing a minimalist black halter dress with a criss-cross neckline and a keyhole cutout. She has medium-length brown hair tied in a low ponytail with wispy strands blowing in the breeze. Soft natural daylight, bokeh background of a clean European street with urban architecture, high fashion photography, photorealistic, 8k, soft shadows, cinematic lighting.",
+        "after_url": "https://cdn.vidgenerator.ai/B45fbvGoyrfdXk4XbWiPCJHPuLdU.mp4",
+        "after_prompt": "Mulher elegante usando vestido preto, movimento suave do corpo, cabelo levemente ao vento, pose natural, iluminação realista, estilo fashion, vídeo curto e fluido",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 14,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 92,
+    "model_key": "hailuo-2-3-pzdp",
+    "name": "Hailuo 2.3",
+    "description": "",
+    "cost": 60,
+    "is_active": true,
+    "sort_order": 2,
+    "params_config": {
+      "resolution": {
+        "cost_additions": {
+          "768p": 0,
+          "1080p": 45
+        }
+      },
+      "duration": {
+        "cost_additions": {
+          "6": 0,
+          "10": 65
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-29 14:17:59.411854+08:00",
+    "updated_at": "2026-04-15 06:25:17.151214+08:00",
+    "created_by": 1,
+    "example_galleries": [],
+    "model_level": "",
+    "category": "",
+    "work_type": "text-to-video",
+    "is_featured": false,
+    "workflow_id": 62,
+    "icon_url": "https://cdn.vidgenerator.ai/Rk7bLn3KXBNYxduluolGz394781K.png",
+    "badge": null
+  },
+  {
+    "id": 57,
+    "model_key": "ai-apocalypse-generator-54o8",
+    "name": "AI Apocalypse Generator",
+    "description": "AI Apocalypse Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 11,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/KGljjGcKYTxF0ojceHYijHX56nBj.jpg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "Excellent for image variations and reference-based generation. Supports up to 14 input images.",
+    "created_at": "2026-01-25 22:07:39.630745+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/KGljjGcKYTxF0ojceHYijHX56nBj.jpg",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/8NZmPkWYGwEahZwRSWGdUC7p2tqe.mp4",
+        "after_prompt": "A brave Asian female survivor with a neon blue top knot bun and glasses, wearing a distressed crop top and ripped denim shorts, paired with combat boots and silver wrist cuffs. She is depicted in a dynamic action pose, aiming and firing an unseen handgun at a group of approaching terrifying, decaying zombies. Her expression is fierce and focused.  Setting: A post-apocalyptic, sun-drenched urban ruin. The background features destroyed, crumbling buildings under a bright sky. The foreground shows dry, cracked earth and rubble.  Style: Cinematic, photorealistic, high contrast lighting, action shot, vertical video format, dramatic atmosphere.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 9,
+    "icon_url": null,
+    "badge": null
+  },
+  {
+    "id": 93,
+    "model_key": "ai-ghibli-generator-3o6h",
+    "name": "AI Ghibli Generator",
+    "description": "AI Ghibli Generator",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 0,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/rZarvTh9JdkWVQNQTWsqnxbTni3E.webp"
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-30 18:00:48.813085+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/rZarvTh9JdkWVQNQTWsqnxbTni3E.webp",
+        "before_prompt": null,
+        "after_url": "https://cdn.vidgenerator.ai/LHefc05R0VpkXEtqUYIAAktOMP1A.webp",
+        "after_prompt": "Transform the provided person image into a Studio Ghibli anime style. Maintain the original subject's pose, hairstyle, and outfit. Apply hand-drawn 2D aesthetic, clean line art, and soft watercolor-like shading. The background should be simplified into a lush, vibrant Ghibli-esque landscape. High quality, nostalgic 90s retro anime vibe.",
+        "notes": null
+      }
+    ],
+    "model_level": "",
+    "category": "Hot Image effects|Popular",
+    "work_type": "image-effects",
+    "is_featured": false,
+    "workflow_id": 66,
+    "icon_url": null,
+    "badge": "hot"
+  },
+  {
+    "id": 54,
+    "model_key": "ai-catch-the-train-6jmq",
+    "name": "AI Catch The Train",
+    "description": "AI Catch The Train",
+    "cost": 15,
+    "is_active": true,
+    "sort_order": 13,
+    "params_config": {
+      "image_input": {
+        "default": "https://cdn.vidgenerator.ai/LOehbcADg447bdaA35YM33FqfO0L.jpg"
+      },
+      "duration": {
+        "cost_additions": {
+          "_ranges": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              6,
+              9,
+              10
+            ],
+            [
+              10,
+              12,
+              20
+            ]
+          ]
+        }
+      }
+    },
+    "notes": "",
+    "created_at": "2026-01-23 19:31:39.970257+08:00",
+    "updated_at": "2026-02-27 18:57:28.244191+08:00",
+    "created_by": 1,
+    "example_galleries": [
+      {
+        "before_url": "https://cdn.vidgenerator.ai/LOehbcADg447bdaA35YM33FqfO0L.jpg",
+        "before_prompt": "A cinematic action shot of a young man in a tan trench coat and suit running fast through a London underground subway station, holding a briefcase, messy hair, sense of urgency, train arriving in the background with glowing lights, teal and green color palette, 35mm film style, high motion blur, photorealistic, 8k, moody lighting.",
+        "after_url": "https://cdn.vidgenerator.ai/4tIr1JLlmZfa3bC9IRd5fLXjkJ5V.mp4",
+        "after_prompt": "The subject remains completely still as its entire body disintegrates into a massive cloud of gray ash, filling every corner of its form. Slowly, the wind rises, carrying both the subject and its fragments away. One by one, they vanish into the void, leaving behind only an eerie silence and an overwhelming sense of absence. The space once occupied by the body is now empty, echoing the silence of its loss.",
+        "notes": null
+      }
+    ],
+    "model_level": "basic",
+    "category": "Recommended Template|Hot",
+    "work_type": "video-effects",
+    "is_featured": false,
+    "workflow_id": 49,
+    "icon_url": null,
+    "badge": null
+  }
+]

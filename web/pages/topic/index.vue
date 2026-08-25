@@ -94,8 +94,8 @@ const config = useRuntimeConfig()
 const { data: pageStatus } = await useAsyncData('topics-page-status', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/seo/page-status/topics`)
@@ -122,8 +122,8 @@ if (pageStatus.value && pageStatus.value.exists && !pageStatus.value.is_enabled)
 const { data: pageSeoData } = await useAsyncData('topics-page-seo', async () => {
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
     
     const response = await $fetch<any>(`${baseUrl}/api/seo/page-configs`)

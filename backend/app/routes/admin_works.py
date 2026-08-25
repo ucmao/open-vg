@@ -1,7 +1,7 @@
 """
 Admin routes for managing all works.
 """
-from fastapi import APIRouter, Depends, Query, status, Body
+from fastapi import APIRouter, Depends, Query, status as http_status, Body
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, and_
 from datetime import datetime, timezone
@@ -304,7 +304,7 @@ def get_all_works(
         logger.error(f"Error getting all works: {str(e)}")
         return error_response(
             message="Failed to retrieve works",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -323,7 +323,7 @@ def get_work_detail(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         work_dict = work.to_dict(include_user=True, include_prompt=True, db=db)
@@ -340,7 +340,7 @@ def get_work_detail(
         logger.error(f"Error getting work detail: {str(e)}")
         return error_response(
             message="Failed to retrieve work details",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -365,13 +365,13 @@ def ban_work(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         if work.is_banned:
             return error_response(
                 message="Work is already banned",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=http_status.HTTP_400_BAD_REQUEST
             )
         
         # Ban the work
@@ -405,7 +405,7 @@ def ban_work(
         logger.error(f"Error banning work: {str(e)}")
         return error_response(
             message="Failed to ban work",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -424,13 +424,13 @@ def unban_work(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         if not work.is_banned:
             return error_response(
                 message="Work is not banned",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=http_status.HTTP_400_BAD_REQUEST
             )
         
         # Unban the work
@@ -464,7 +464,7 @@ def unban_work(
         logger.error(f"Error unbanning work: {str(e)}")
         return error_response(
             message="Failed to unban work",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -483,13 +483,13 @@ def restore_work(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         if not work.deleted_at:
             return error_response(
                 message="Work is not deleted",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=http_status.HTTP_400_BAD_REQUEST
             )
         
         # Restore the work
@@ -522,7 +522,7 @@ def restore_work(
         logger.error(f"Error restoring work: {str(e)}")
         return error_response(
             message="Failed to restore work",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -542,7 +542,7 @@ def toggle_work_visibility(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Toggle visibility
@@ -577,7 +577,7 @@ def toggle_work_visibility(
         logger.error(f"Error toggling work visibility: {str(e)}")
         return error_response(
             message="Failed to toggle work visibility",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -599,7 +599,7 @@ def soft_delete_work(
         if not work:
             return error_response(
                 message="Work not found or already deleted",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Soft delete the work
@@ -632,7 +632,7 @@ def soft_delete_work(
         logger.error(f"Error soft deleting work: {str(e)}")
         return error_response(
             message="Failed to soft delete work",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -699,7 +699,7 @@ def delete_work(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Store file URLs before deletion for R2 cleanup
@@ -779,7 +779,7 @@ def delete_work(
         logger.error(f"Delete error traceback:\n{traceback.format_exc()}")
         return error_response(
             message="Failed to delete work",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -825,7 +825,7 @@ def search_users(
         logger.error(f"Error searching users: {str(e)}")
         return error_response(
             message="Failed to search users",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -845,7 +845,7 @@ def toggle_featured(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Toggle featured status
@@ -881,7 +881,7 @@ def toggle_featured(
         logger.error(f"Error toggling featured status: {str(e)}")
         return error_response(
             message="Failed to toggle featured status",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -907,7 +907,7 @@ def update_work_category(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # If category is None or empty, clear the category
@@ -930,7 +930,7 @@ def update_work_category(
             if len(parts) != 2:
                 return error_response(
                     message="Invalid category format. Expected 'Level1|Level2'",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
             
             level1_name = parts[0].strip()
@@ -945,7 +945,7 @@ def update_work_category(
             if not level1_cat:
                 return error_response(
                     message=f"Level 1 category '{level1_name}' does not exist",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
             
             # Check if level 2 category exists and is a child of level 1
@@ -958,7 +958,7 @@ def update_work_category(
             if not level2_cat:
                 return error_response(
                     message=f"Level 2 category '{level2_name}' does not exist under '{level1_name}'",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
         else:
             # Single level category: "Level1"
@@ -970,7 +970,7 @@ def update_work_category(
             if not level1_cat:
                 return error_response(
                     message=f"Category '{category}' does not exist",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
         
         # Update the work category
@@ -991,7 +991,7 @@ def update_work_category(
         logger.error(f"Error updating work category: {str(e)}")
         return error_response(
             message="Failed to update work category",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1032,7 +1032,7 @@ def get_work_categories(
         logger.error(f"Error getting work categories: {str(e)}")
         return error_response(
             message="Failed to retrieve categories",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1091,7 +1091,7 @@ def update_work_title_description(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Update title if provided
@@ -1119,7 +1119,7 @@ def update_work_title_description(
             if not work.short_code:
                 return error_response(
                     message="Work does not have a short_code, cannot update URL slug",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
             
             from ..utils.url_slug import slugify, extract_short_code_from_slug
@@ -1143,7 +1143,7 @@ def update_work_title_description(
             if existing_work:
                 return error_response(
                     message=f"URL slug '{new_url_slug}' already exists for another work",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
             
             work.url_slug = new_url_slug
@@ -1169,7 +1169,7 @@ def update_work_title_description(
         logger.error(f"Error updating work title/description/url_slug: {str(e)}")
         return error_response(
             message="Failed to update work title, description, and URL slug",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1189,7 +1189,7 @@ def update_work_tags(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Update tags if provided
@@ -1216,7 +1216,7 @@ def update_work_tags(
         logger.error(f"Error updating work tags: {str(e)}")
         return error_response(
             message="Failed to update work tags",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1237,13 +1237,13 @@ def generate_work_seo(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         if not work.prompt:
             return error_response(
                 message="Work has no prompt content",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=http_status.HTTP_400_BAD_REQUEST
             )
         
         # Get all categories
@@ -1266,13 +1266,13 @@ def generate_work_seo(
         # API key not configured
         return error_response(
             message=f"Gemini API not configured: {str(e)}. Please configure it in admin panel.",
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE
+            status_code=http_status.HTTP_503_SERVICE_UNAVAILABLE
         )
     except Exception as e:
         logger.error(f"Error generating SEO content: {str(e)}")
         return error_response(
             message=f"Failed to generate SEO content: {str(e)}",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1292,7 +1292,7 @@ def apply_generated_seo(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         # Update fields if provided
@@ -1366,7 +1366,7 @@ def apply_generated_seo(
         logger.error(f"Error applying SEO content: {str(e)}")
         return error_response(
             message="Failed to apply SEO content",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1387,13 +1387,13 @@ def block_work_nsfw(
         if not work:
             return error_response(
                 message="Work not found",
-                status_code=status.HTTP_404_NOT_FOUND
+                status_code=http_status.HTTP_404_NOT_FOUND
             )
         
         if work.deleted_at:
             return error_response(
                 message="Cannot block a deleted work",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=http_status.HTTP_400_BAD_REQUEST
             )
         
         block_reason = request.get('reason', '') or "Work blocked by admin"
@@ -1469,7 +1469,7 @@ def block_work_nsfw(
         logger.error(f"Error blocking work NSFW: {str(e)}")
         return error_response(
             message=f"Failed to block work: {str(e)}",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -1768,7 +1768,7 @@ def batch_hide_works(
             if not request.work_ids:
                 return error_response(
                     message="No work IDs provided",
-                    status_code=status.HTTP_400_BAD_REQUEST
+                    status_code=http_status.HTTP_400_BAD_REQUEST
                 )
                 
             # Update specific works
@@ -1791,5 +1791,5 @@ def batch_hide_works(
         logger.error(f"Error in batch hide works: {str(e)}")
         return error_response(
             message="Failed to update works",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR
         )

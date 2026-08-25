@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "type": "banner",
+    "config": {
+      "title": "<span style=\"font-size: 18px;\">⏰ Hurry! Nano Banana Pro. Unbeatable Value.</span>",
+      "content": "",
+      "end_time": "2026-07-01T16:00:00+00:00",
+      "link_url": "https://example.com/generate?type=text2img&model=Nano+banana+pro",
+      "image_url": "",
+      "link_text": "<font color=\"#ffffff\">Try Now</font>",
+      "start_time": "2026-02-01T22:43:00+00:00",
+      "text_color": "#5c2aa2",
+      "layout_config": {
+        "textAlign": "center",
+        "bannerHeight": "short",
+        "content_carousel_enabled": true,
+        "content_scroll_interval_seconds": 3,
+        "content_scroll_direction": "up",
+        "click_background_to_link": false,
+        "countdown": {
+          "style": "cards",
+          "position": "right",
+          "fontSize": "small",
+          "color": "",
+          "visible": false
+        },
+        "buttons": {
+          "position": "center",
+          "linkButton": {
+            "visible": true,
+            "bgColor": "#eb4969",
+            "borderRadius": "full",
+            "border": {
+              "enabled": false,
+              "width": "2",
+              "color": "rgba(255,255,255,0.8)"
+            },
+            "paddingX": "medium",
+            "paddingY": "medium",
+            "shadow": "none",
+            "backgroundType": "solid"
+          },
+          "closeButton": {
+            "visible": true
+          }
+        }
+      },
+      "background_color": "#FF6B6B",
+      "background_gradient": "linear-gradient(90deg, #A1EDFC 0%, #BCB7FF 100%)",
+      "background_image_url": "",
+      "content_items": [
+        {
+          "title": "<span style=\"font-size: 18px;\">⏰ Hurry! Nano Banana Pro. Unbeatable Value.</span>",
+          "content": "",
+          "image_url": "",
+          "trailing_image_url": ""
+        },
+        {
+          "title": "<span style=\"font-size: 18px;\">🚀 Now available for an all-time low of 1 Point. Limited time only.</span>",
+          "content": "",
+          "image_url": "",
+          "trailing_image_url": ""
+        }
+      ]
+    },
+    "sort_order": 0,
+    "is_enabled": false,
+    "created_at": "2026-02-04 00:00:44.791215+08:00",
+    "updated_at": "2026-04-08 10:35:39.649992+08:00"
+  },
+  {
+    "id": 2,
+    "type": "carousel",
+    "config": {
+      "slides": [
+        {
+          "id": "2",
+          "title": "<h1>\n  2026 Leading AI Video &amp; Image\n  <br>\n  Creation Platform\n</h1>\n<h4>\n  Empowering creators with one-click AI generation and an unlimited,\n  <br>\n  boundless creative ecosystem for high-efficiency production.\n</h4>",
+          "end_time": null,
+          "link_url": "https://example.com/generate/image-to-video/wan-2-6-uncensored-bt1y",
+          "image_url": "",
+          "link_text": "Free Generate ",
+          "video_url": "https://cdn.vidgenerator.ai/6FysMwTO34JJnyfBhYtQVg2NUwNl.mp4",
+          "is_enabled": true,
+          "sort_order": 3,
+          "start_time": null,
+          "text_align": "center",
+          "button_style": "outline",
+          "text_position": "center",
+          "overlay_opacity": 31
+        },
+        {
+          "id": "16a8a682-0e92-4abb-844b-2f8a342379b6",
+          "title": "<h1>\n  2026 Leading AI Video &amp; Image\n  <br>\n  Creation Platform\n</h1>\n<h4>\n  Empowering creators with one-click AI generation and an unlimited,\n  <br>\n  boundless creative ecosystem for high-efficiency production.\n</h4>",
+          "image_url": "",
+          "video_url": "https://cdn.vidgenerator.ai/XwzpyodxVfycjnR3qkhORYWT6xO3.webm",
+          "link_url": "https://example.com/generate/image-to-video/wan-2-6-uncensored-bt1y",
+          "link_text": "Free Generate ",
+          "button_style": "outline",
+          "overlay_opacity": 30,
+          "text_position": "center",
+          "text_align": "center",
+          "is_enabled": true,
+          "sort_order": 2,
+          "start_time": null,
+          "end_time": null
+        },
+        {
+          "id": "c9e06da4-73b1-4b4a-a1c6-c0431a27692c",
+          "title": "<h1>\n  2026 Leading AI Video &amp; Image\n  <br>\n  Creation Platform\n</h1>\n<h4>\n  Empowering creators with one-click AI generation and an unlimited,\n  <br>\n  boundless creative ecosystem for high-efficiency production.\n</h4>",
+          "image_url": "",
+          "video_url": "https://cdn.vidgenerator.ai/MtMbGc1GffW9lhiot6LiKrJisEJ7.mp4",
+          "link_url": "https://example.com/generate/image-to-video/wan-2-6-uncensored-bt1y",
+          "link_text": "Free Generate ",
+          "button_style": "outline",
+          "overlay_opacity": 31,
+          "text_position": "center",
+          "text_align": "center",
+          "is_enabled": true,
+          "sort_order": 1,
+          "start_time": null,
+          "end_time": null
+        }
+      ],
+      "autoplay": true,
+      "interval": 5000,
+      "show_arrows": false,
+      "show_indicators": false
+    },
+    "sort_order": 0,
+    "is_enabled": true,
+    "created_at": "2026-02-05 05:10:41.745719+08:00",
+    "updated_at": "2026-04-17 14:04:33.769396+08:00"
+  },
+  {
+    "id": 4,
+    "type": "banner",
+    "config": {
+      "title": "<p style=\"font-size: 18px;\">Create Romantic AI Videos &amp; Win Up to <font color=\"#fa05ac\">500 Credits!</font><!--EndFragment--></p>",
+      "content": "",
+      "image_url": "https://cdn.vidgenerator.ai/Hdy3R3MXJ93uFuLRUgWeAGsut8wH.png",
+      "link_url": "https://example.com/topic/love-in-motion",
+      "link_text": "<p><b style=\"font-size: 16px;\">Join Soon</b></p>",
+      "background_color": "#FF6B6B",
+      "background_gradient": "linear-gradient(90deg, #F094CE 0%, #F4CEA5 17.2%, #E95BA9 47%, #F4CEA5 85.2%, #F094CE 100%)",
+      "background_image_url": "",
+      "text_color": "#FFFFFF",
+      "start_time": "2026-02-28T00:51:00+00:00",
+      "end_time": "2026-03-08T15:59:00+00:00",
+      "show_countdown": false,
+      "layout_config": {
+        "textAlign": "center",
+        "bannerHeight": "short",
+        "content_carousel_enabled": false,
+        "content_scroll_interval_seconds": 5,
+        "content_scroll_direction": "up",
+        "click_background_to_link": true,
+        "countdown": {
+          "style": "cards",
+          "position": "right",
+          "fontSize": "small",
+          "color": "#FFFFFF",
+          "visible": false
+        },
+        "buttons": {
+          "position": "center",
+          "linkButton": {
+            "visible": true,
+            "bgColor": "#FF8E53",
+            "borderRadius": "full",
+            "border": {
+              "enabled": false,
+              "width": "2",
+              "color": "rgba(255,255,255,0.8)"
+            },
+            "paddingX": "large",
+            "paddingY": "large",
+            "shadow": "none",
+            "backgroundType": "solid"
+          },
+          "closeButton": {
+            "visible": true
+          }
+        }
+      },
+      "content_items": [
+        {
+          "title": "<p style=\"font-size: 18px;\">Create Romantic AI Videos &amp; Win Up to <font color=\"#fa05ac\">500 Credits!</font><!--EndFragment--></p>",
+          "content": "",
+          "image_url": "https://cdn.vidgenerator.ai/Hdy3R3MXJ93uFuLRUgWeAGsut8wH.png",
+          "trailing_image_url": "https://cdn.vidgenerator.ai/gq5erljpQNx7jLaRE1UAE9seIz87.png"
+        }
+      ]
+    },
+    "sort_order": 0,
+    "is_enabled": false,
+    "created_at": "2026-02-09 18:52:14.822863+08:00",
+    "updated_at": "2026-03-10 16:11:22.948977+08:00"
+  },
+  {
+    "id": 6,
+    "type": "banner",
+    "config": {
+      "title": "<span style=\"font-size: 18px;\">Uncensored AI Just Dropped — Ready to Go Wild?</span>",
+      "content": "",
+      "image_url": "",
+      "link_url": "https://example.com/generate/image-to-video/wan-2-6-uncensored-bt1y",
+      "link_text": "<font color=\"#ffffff\"><span style=\"font-size: 16px;\">Try Now</span></font>",
+      "background_color": "#FF6B6B",
+      "background_gradient": "linear-gradient(90deg, #BFBFF2 0%, #F2E6F5 50%, #A2EDFA 100%)",
+      "background_image_url": "",
+      "text_color": "#5c2aa2",
+      "start_time": "2026-04-14T22:43:00+00:00",
+      "end_time": "2026-07-30T16:00:00+00:00",
+      "show_countdown": false,
+      "layout_config": {
+        "textAlign": "center",
+        "bannerHeight": "short",
+        "content_carousel_enabled": true,
+        "content_scroll_interval_seconds": 5,
+        "content_scroll_direction": "up",
+        "click_background_to_link": true,
+        "countdown": {
+          "style": "cards",
+          "position": "right",
+          "fontSize": "small",
+          "color": "",
+          "visible": false
+        },
+        "buttons": {
+          "position": "center",
+          "linkButton": {
+            "visible": true,
+            "bgColor": "#FF8E53",
+            "borderRadius": "full",
+            "border": {
+              "enabled": false,
+              "width": "2",
+              "color": "rgba(255,255,255,0.8)"
+            },
+            "paddingX": "medium",
+            "paddingY": "medium",
+            "shadow": "none",
+            "backgroundType": "solid"
+          },
+          "closeButton": {
+            "visible": true
+          }
+        }
+      },
+      "content_items": [
+        {
+          "title": "<span style=\"font-size: 18px;\">Uncensored AI Just Dropped — Ready to Go Wild?</span>",
+          "content": "",
+          "image_url": "",
+          "trailing_image_url": ""
+        },
+        {
+          "title": "<span style=\"font-size: 18px;\">The ultimate uncensored AI generator is here. Create anything</span>",
+          "content": "",
+          "image_url": "",
+          "trailing_image_url": ""
+        }
+      ]
+    },
+    "sort_order": 1,
+    "is_enabled": false,
+    "created_at": "2026-04-15 06:43:09.335004+08:00",
+    "updated_at": "2026-04-29 09:36:32.181247+08:00"
+  }
+]

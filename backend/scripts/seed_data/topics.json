@@ -1,0 +1,2288 @@
+[
+  {
+    "id": 7,
+    "slug": "ai-dance-generator",
+    "title": "AI Dance Generator",
+    "excerpt": "Step onto the digital stage! Our AI Dance Generator brings any style to life, crafting dynamic poses, fluid sequences, and captivating performances with unparalleled precision and artistry.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/l4ejCL8AYKL1UbjKOqKicq57yWbK.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1770262223212.686,
+          "type": "carousel",
+          "items": [
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/RlZk8vUVIytBNi3SvnCgMS2CFsUS.mp4",
+              "poster_url": "",
+              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/nyMtGXCZvsqJv3DdC0kR8IhePGEX.mp4",
+              "poster_url": "",
+              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/fhCgqgyz5bil7KeMPNj7nHSU2hLv.mp4",
+              "poster_url": "",
+              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+            }
+          ],
+          "interval": 3
+        },
+        {
+          "id": 1770262446387.7085,
+          "type": "heading",
+          "text": "Where every beat meets every pixel",
+          "level": 2
+        },
+        {
+          "id": 1770262486707.6296,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment-->AI has long struggled with complex human motion. Our AI Dance Generator is specifically trained to understand the intricacies of choreography, bringing your visions to life with fluidity and grace.<!--EndFragment--></p>"
+        },
+        {
+          "id": 1770262523267.5847,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/7PqzT5xIDM0XCf8AC5NL1cDRwV4h.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Fluid & Dynamic Poses",
+          "content": "Beyond static figures, our AI captures the kinetic energy of dance, rendering every leap, spin, and gesture with natural balance and power.",
+          "layout": "left",
+          "aspect_ratio": "4/3",
+          "media_shadow": "2xl",
+          "media_glow": "purple",
+          "link": ""
+        },
+        {
+          "id": 1770262526403.9216,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/CnPYvCMqogZtPFdeoG2BlKdJ3pRE.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Master of Diverse Styles",
+          "content": "From the raw energy of Hip-Hop and the elegance of Ballet to the passion of Salsa or the precision of Robotics, define your genre and watch it move.",
+          "layout": "right",
+          "aspect_ratio": "4/3",
+          "media_shadow": "2xl",
+          "media_glow": "blue",
+          "link": ""
+        },
+        {
+          "id": 1770262528826.7004,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/ha3AqF91EPVyzopBgUXIY0aLfEP2.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Emotion in Every Step",
+          "content": "Convey the story behind the movement. Our generator understands emotional cues, infusing joy, intensity, vulnerability, or defiance into each pose.",
+          "layout": "left",
+          "aspect_ratio": "4/3",
+          "media_shadow": "2xl",
+          "media_glow": "purple",
+          "link": ""
+        },
+        {
+          "id": 1770262530579.91,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/XoFuH7hn7AyCXKO2YC0iMJgxfpn0.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Seamless Sequence Generation",
+          "content": "Describe a movement, and our AI can generate a series of poses that flow naturally from one to the next, perfect for animation inspiration.",
+          "layout": "right",
+          "aspect_ratio": "4/3",
+          "media_shadow": "2xl",
+          "media_glow": "blue",
+          "link": ""
+        },
+        {
+          "id": 1770262798169.2578,
+          "type": "button",
+          "text": "Free Try Now",
+          "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+          "style": "remix",
+          "target": "_self",
+          "size": "medium",
+          "align": "center",
+          "width": "auto",
+          "offset_x": 0,
+          "offset_y": 0
+        },
+        {
+          "id": 1770262842138.9937,
+          "type": "heading",
+          "text": "Command the Stage - Explore Dance Styles",
+          "level": 2
+        },
+        {
+          "id": 1770262884209.26,
+          "type": "table",
+          "headers": [
+            "Dance Style",
+            "Visual Vibe",
+            "Best For"
+          ],
+          "rows": [
+            [
+              "Hip-Hop / Street Dance",
+              "Dynamic, urban, energetic, powerful freezes and breaking.",
+              "Music Videos, Character Animation"
+            ],
+            [
+              "Ballet / Contemporary",
+              "Elegant, graceful, fluid lines, expressive leaps and turns.",
+              "Artistic Concepts, Storytelling"
+            ],
+            [
+              "Salsa / Latin Dance",
+              "Passionate, sensual, rhythmic, close partner work, vibrant costumes.",
+              "Dance Event Promotion, Romantic Scenes"
+            ],
+            [
+              "K-Pop Choreography",
+              "Synchronized, sharp, trendy outfits, iconic formations.",
+              "Fan Art, Performance Pre-visualization"
+            ],
+            [
+              "Martial Arts / Acro",
+              "Precise, powerful, acrobatic, dynamic kicks and jumps.",
+              "Action Scenes, Game Concepts"
+            ]
+          ]
+        },
+        {
+          "id": 1770263067576.4927,
+          "type": "heading",
+          "text": "Pro Prompting: Your Choreographer's Toolkit",
+          "level": 2
+        },
+        {
+          "id": 1770263144848.6453,
+          "type": "rich_text",
+          "content": "<li><p data-path-to-node=\"21,0,0\"><b data-path-to-node=\"21,0,0\" data-index-in-node=\"0\">The Action:</b>&nbsp;<font color=\"#1552d5\">Dynamic leap, powerful pirouette, hip-hop freeze, fluid body roll, intricate footwork, synchronized move.</font></p></li><li><p data-path-to-node=\"21,1,0\"><b data-path-to-node=\"21,1,0\" data-index-in-node=\"0\">The Style:</b>&nbsp;<font color=\"#e83b97\">Breakdancing, contemporary dance, flamenco intensity, ballet elegance, popping and locking.</font></p></li><li><p data-path-to-node=\"21,2,0\"><b data-path-to-node=\"21,2,0\" data-index-in-node=\"0\">The Emotion:</b>&nbsp;<font color=\"#ea7d34\">Joyful expression, fierce determination, melancholy grace, seductive gaze.</font></p></li><p><!--StartFragment--><!--EndFragment--></p><li><p data-path-to-node=\"21,3,0\"><b data-path-to-node=\"21,3,0\" data-index-in-node=\"0\">The Scene:</b>&nbsp;<font color=\"#3ae445\">Spotlit stage, urban street at night, ancient temple ruins,futuristic dance floor,motion blur trails.</font></p></li>"
+        },
+        {
+          "id": 1770263317897.4941,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 3553,
+              "file_url": "https://cdn.vidgenerator.ai/n8URjuBIX0MjbwhdEnfEFgMXhAJU.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/n8URjuBIX0MjbwhdEnfEFgMXhAJU-elegant-dancer-city-night-penthouse-luxury-cinematic-visuals_thumb.webp",
+              "title": "Elegant Dancer City Night Penthouse Luxury Cinematic Visuals",
+              "url_slug": "1LK3nrApkUm-elegant-dancer-city-night-penthouse-luxury-cinematic-visuals",
+              "short_code": "1LK3nrApkUm",
+              "type": "text2img"
+            },
+            {
+              "id": 3524,
+              "file_url": "https://cdn.vidgenerator.ai/AkxwA3ywB93Ck2Y0gQZXXAgMe8Vm.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/AkxwA3ywB93Ck2Y0gQZXXAgMe8Vm-sensual-female-dancer-luxury-penthouse-night-skyline-cinematic-video.jpg",
+              "title": "Luxury Penthouse Dance | City Skyline Night Performance",
+              "url_slug": "3VIHqZihQQ2-luxury-penthouse-dance-city-skyline-night-performance",
+              "short_code": "3VIHqZihQQ2",
+              "type": "text2img"
+            },
+            {
+              "id": 3523,
+              "file_url": "https://cdn.vidgenerator.ai/lAUul33Cu93FHSrwpXXMixaKAApx.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/lAUul33Cu93FHSrwpXXMixaKAApx-sensual-club-dance-stylish-female-dancer-neon-lighting-cinematic-video.jpg",
+              "title": "Club Dance Performance | Neon Lighting Choreography Video",
+              "url_slug": "lh4XIyP78uR-club-dance-performance-neon-lighting-choreography-video",
+              "short_code": "lh4XIyP78uR",
+              "type": "text2img"
+            },
+            {
+              "id": 3522,
+              "file_url": "https://cdn.vidgenerator.ai/D1DERe52qnWrQyhQfMD8kvyhrGsE.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/D1DERe52qnWrQyhQfMD8kvyhrGsE-smooth-hip-hop-dance-young-woman-urban-background-cinematic-video.mp4",
+              "title": "Hip Hop Dance Video | Urban Street Dance Choreography",
+              "url_slug": "GEXWnXFWRPG-hip-hop-dance-video-urban-street-dance-choreography",
+              "short_code": "GEXWnXFWRPG",
+              "type": "text2video"
+            }
+          ],
+          "columns": 4
+        },
+        {
+          "id": 1770263405566.746,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Can I specify multiple dancers or group choreography?",
+              "answer": "A: Yes! You can prompt for \"two dancers in a synchronized duet,\" \"a dance group performing a formation,\" or \"a solo dancer.\""
+            },
+            {
+              "question": "Does it generate actual animated sequences, or just still images?",
+              "answer": "A: Currently, the AI generates dynamic still images of dancers in various poses and stages of movement, perfect for conceptualizing and visualizing choreography."
+            },
+            {
+              "question": "Can I dictate the gender, ethnicity, or body type of the dancer?",
+              "answer": "A: Absolutely. You have full control to describe your dancer, ensuring inclusivity and diversity in your creations."
+            },
+            {
+              "question": "Is the AI Dance Generator free to use?",
+              "answer": "A: Yes, it's completely free! Dive into the world of digital choreography without any cost."
+            },
+            {
+              "question": "How does the AI handle complex or unconventional dance moves?",
+              "answer": "A: Our AI is trained on a vast library of dance forms. For very complex or unique moves, use descriptive action verbs and reference body parts"
+            }
+          ]
+        },
+        {
+          "id": 1770263501704.1646,
+          "type": "cta",
+          "title": "The Stage Awaits Your Vision",
+          "description": "From raw power to delicate grace—design your next masterpiece of motion. Start generating now.",
+          "button_text": "Unleash My Dance Vision ✨",
+          "button_link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Start Your Dance Creation",
+      "hero_button_link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+      "hero_button_style": "remix",
+      "featured_image_focus": "50,36"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 143,
+    "created_at": "2026-02-05 13:39:40.297961+08:00",
+    "updated_at": "2026-08-20 15:39:59.272356+08:00",
+    "sort_order": 0,
+    "meta_title": "AI Dance Generator: Create Dynamic Dance Moves & Styles",
+    "meta_description": "Generate mesmerizing dance sequences for free. From Hip-Hop to Ballet, define styles, emotions, and dynamic poses with our advanced AI.",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-04 03:27:00+08:00",
+    "category_id": 1,
+    "generation_model_id": 65
+  },
+  {
+    "id": 8,
+    "slug": "ai-kiss-anime-generator",
+    "title": "AI Kiss Anime Generator - Create Your Iconic Romance",
+    "excerpt": "Unleash your creativity with our AI Anime Kiss Generator! Craft romantic scenes in any style, from 90s retro to Shinkai. Bring your characters to life!",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/w22YspmEhgWUiLSytoLH8jMyGoWE.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1770868412376.6985,
+          "type": "carousel",
+          "items": [
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/4kMk2uTUDNqhVcMOPQBTKQ3K37ZE.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/4kMk2uTUDNqhVcMOPQBTKQ3K37ZE_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/MEk0DWvYNbdVfwZmURZAJt4Z8K0u.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/MEk0DWvYNbdVfwZmURZAJt4Z8K0u_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/idpV28VlVfrKgWVqfdMngFZAIClO.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/idpV28VlVfrKgWVqfdMngFZAIClO_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/C6Sv5FC2XkWr8qmKsW2DDJuhba6S.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/C6Sv5FC2XkWr8qmKsW2DDJuhba6S_thumb.webp",
+              "link": ""
+            }
+          ],
+          "interval": 3
+        },
+        {
+          "id": 1770868584311.8364,
+          "type": "heading",
+          "text": "Why our AI is the ultimate choice for anime fans and creators.",
+          "level": 2
+        },
+        {
+          "id": 1770868775069.282,
+          "type": "features",
+          "items": [
+            {
+              "title": "Authentic Art Style Replication",
+              "description": "Whether you crave the soft aesthetics of Studio Ghibli, the intricate detail of modern KyoAni, or the raw energy of 90s Cyberpunk, our AI masters the \"DNA\" of every era.",
+              "icon": "✓"
+            },
+            {
+              "title": "The \"Blush & Bloom\" Logic",
+              "description": "It’s more than just a pose. Our engine automatically adds iconic anime emotional cues—subtle blushes, shimmering eyes, and environmental \"sparkles\" that define the genre.",
+              "icon": "✓"
+            },
+            {
+              "title": "Flawless Side-Profiles",
+              "description": "The \"Anime Kiss\" profile is notoriously hard to get right. We’ve perfected the jawline and nose-bridge geometry to ensure clean, beautiful silhouettes every time.",
+              "icon": "✓"
+            },
+            {
+              "title": "Dynamic Storytelling Backgrounds",
+              "description": "Instantly place your characters on a school rooftop at sunset, under a firework-filled sky, or at a rain-slicked train station.",
+              "icon": "✓"
+            }
+          ],
+          "columns": 3,
+          "style": "default"
+        },
+        {
+          "id": 1770868879813.4038,
+          "type": "button",
+          "text": "GENERATE MY ANIME MOMENT ✨",
+          "link": "https://example.com/generate?type=text2img",
+          "style": "remix",
+          "target": "_self",
+          "size": "medium",
+          "align": "center",
+          "width": "auto",
+          "offset_x": 0,
+          "offset_y": 0
+        },
+        {
+          "id": 1770868916615.44,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 4071,
+              "file_url": "https://cdn.vidgenerator.ai/4KLpECW1Q8rOfg8VOxekH4920c6m.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/4KLpECW1Q8rOfg8VOxekH4920c6m-winter-kiss-under-snowfall-anime-couple-in-coats-and.jpg",
+              "title": "Winter Kiss Under Snowfall, Anime Couple In Coats And...",
+              "url_slug": "NXkVECW5Idd-winter-kiss-under-snowfall-anime-couple-in-coats-and",
+              "short_code": "NXkVECW5Idd",
+              "type": "text2img"
+            },
+            {
+              "id": 4070,
+              "file_url": "https://cdn.vidgenerator.ai/bXqlj0lxHuE0x6DnVNKqep5wKoQh.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/bXqlj0lxHuE0x6DnVNKqep5wKoQh-romantic-kiss-between-a-beautiful-anime-girl-with-long.jpg",
+              "title": "Romantic Kiss Between A Beautiful Anime Girl With Long...",
+              "url_slug": "BgCcihJvwCV-romantic-kiss-between-a-beautiful-anime-girl-with-long",
+              "short_code": "BgCcihJvwCV",
+              "type": "text2img"
+            },
+            {
+              "id": 4069,
+              "file_url": "https://cdn.vidgenerator.ai/G1MNfLPwwWCjICIpxIEJB29IeZKy.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/G1MNfLPwwWCjICIpxIEJB29IeZKy-underwater-kiss-mermaid-anime-girl-with-flowing-teal.jpg",
+              "title": "Underwater Kiss, Mermaid Anime Girl With Flowing Teal...",
+              "url_slug": "IyjRZ6PKPTN-underwater-kiss-mermaid-anime-girl-with-flowing-teal",
+              "short_code": "IyjRZ6PKPTN",
+              "type": "text2img"
+            },
+            {
+              "id": 4067,
+              "file_url": "https://cdn.vidgenerator.ai/hRnS1OImbkG4cdUg8OeooETGSIdi.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/hRnS1OImbkG4cdUg8OeooETGSIdi-passionate-kiss-in-the-rain-anime-couple-girl-with.jpg",
+              "title": "Passionate Kiss In The Rain, Anime Couple, Girl With...",
+              "url_slug": "wjChgW5Vxfk-passionate-kiss-in-the-rain-anime-couple-girl-with",
+              "short_code": "wjChgW5Vxfk",
+              "type": "text2img"
+            }
+          ],
+          "columns": 4
+        },
+        {
+          "id": 1770877966970.6526,
+          "type": "heading",
+          "text": "One kiss, a thousand different art styles.",
+          "level": 2
+        },
+        {
+          "id": 1770877993479.7937,
+          "type": "table",
+          "headers": [
+            "Anime Genre",
+            "Visual Aesthetic",
+            "Emotional Vibe"
+          ],
+          "rows": [
+            [
+              "Shojo Romance",
+              "Pastel palettes, flower petals, soft lines, large expressive eyes.",
+              "Pure, Sweet, & Heart-fluttering"
+            ],
+            [
+              "90s Retro",
+              "VHS grain, high saturation, classic cel-shaded look, nostalgic shadows.",
+              "Cool, Vintage, & Moody"
+            ],
+            [
+              "Shinkai Inspired",
+              "Hyper-realistic clouds, lens flares, intense lighting, 4K sky details.",
+              "Epic, Grand, & Breathtaking"
+            ],
+            [
+              "Cyberpunk / Edgy",
+              "Neon highlights, dark cityscapes, futuristic fashion, raw emotion.",
+              "Intense, Deep, & Electric"
+            ]
+          ]
+        },
+        {
+          "id": 1770878190888.2183,
+          "type": "heading",
+          "text": "The Anime Prompt Bible",
+          "level": 2
+        },
+        {
+          "id": 1770878196138.5046,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment-->Master the \"Anime Vibe\" with these specialized keywords:<!--EndFragment--></p>"
+        },
+        {
+          "id": 1770878258398.8918,
+          "type": "list",
+          "items": [
+            "The Style: Makoto Shinkai style, 90s retro anime aesthetic, Studio Ghibli inspired, high-quality cel-shading.",
+            "The Emotion: heavy blush, tears of joy, surprised expression, closed eyes with detailed lashes.",
+            "The Composition: close-up side profile, waist-up shot, cherry blossoms blowing in wind, sunset silhouette."
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1770878301758.3843,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q: Can I generate kisses for my own Original Characters",
+              "answer": "A: Absolutely! Just describe your OCs' features (hair color, style, eyes) in the prompt, and our AI will seamlessly integrate them into the anime kissing scene."
+            },
+            {
+              "question": "Q: How do I get that specific \"Classic 90s\" look?",
+              "answer": "A: Use keywords like \"90s anime style, VHS aesthetic, hand-drawn look.\" The AI will automatically adjust the line weight and color saturation to match the era."
+            },
+            {
+              "question": "Q: Can I capture the \"Almost Kissing\" tension?",
+              "answer": "A: Yes. Use prompts like \"near kiss,\" \"forehead touch,\" or \"inches away from a kiss\" to generate those high-tension, heart-stopping moments."
+            },
+            {
+              "question": "Q: Does it support different character pairings?",
+              "answer": "A: Yes. Our generator is fully inclusive. You can create any character pairing with the same high level of artistic quality and anatomical accuracy."
+            },
+            {
+              "question": "Q: Are the images high-resolution enough for printing?",
+              "answer": "A: Yes, all generations are provided in high-definition formats, making them perfect for posters, wallpapers, or social media avatars."
+            }
+          ]
+        },
+        {
+          "id": 1770878397007.735,
+          "type": "cta",
+          "title": "Turn Your \"Ship\" Into High-Art",
+          "description": "Stop waiting for a new episode. Create the iconic romantic scenes you’ve always imagined today.",
+          "button_text": "START MY STORY NOW ❤️",
+          "button_link": "https://example.com/generate?type=text2img",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "GENERATE MY ANIME MOMENT ✨",
+      "hero_button_link": "https://example.com/generate?type=text2img",
+      "hero_button_style": "remix",
+      "featured_image_focus": "46,47"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 199,
+    "created_at": "2026-02-12 12:03:13.009055+08:00",
+    "updated_at": "2026-08-24 19:00:07.968018+08:00",
+    "sort_order": 0,
+    "meta_title": "AI Anime Kiss Generator: Create Romance Art",
+    "meta_description": "Generate stunning AI anime kiss art! Explore diverse styles from 90s retro to Shinkai. Perfect for fan art & OCs. Try our Anime AI Engine today!",
+    "category": null,
+    "tags": [
+      "AI anime",
+      "kiss art",
+      "romance art",
+      "anime generator",
+      "AI art"
+    ],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-11 14:44:00+08:00",
+    "category_id": null,
+    "generation_model_id": 102
+  },
+  {
+    "id": 3,
+    "slug": "free-nano-banana-pro",
+    "title": "365 Days Of Unlimited Free Nano Banana Pro",
+    "excerpt": "Unlock 365 days of limitless creativity with Nano Banana Pro. Get unlimited access to premium AI features and exclusive tools for a full year. Stop counting credits and start building. Sign up now to supercharge your workflow!",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/7iul1LIZQhYKnNMsfUryWJQYZpFS.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1769914196327.8394,
+          "type": "carousel",
+          "items": [
+            {
+              "image_url": "https://cdn.vidgenerator.ai/pqIFIM2nbpkeYIfCXn7zbx8LKe2b.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/3dedit5D5xj1Vac1Y2xTTH8spkg2.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/4nhXnjNZzW2cubAm8TfzEufctKLl.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/zo4evAkvQihFprIU7XmgN2OmFdQ5.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/6FdjvRmShT4kQd2whxFgQngPJy3l.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/TjkrpeGiULeNyZ2g8hZhtBU3G5ve.webp",
+              "link": ""
+            }
+          ]
+        },
+        {
+          "id": 1769918814030.496,
+          "type": "heading",
+          "text": "How To Use Free Nano Banana Pro",
+          "level": 2
+        },
+        {
+          "id": 1769918938157.7537,
+          "type": "list",
+          "items": [
+            "Enter the Workspace: Click the Create button to navigate to the image generation page.",
+            "Select the Model: Choose Nano Banana Pro from the model selection menu.",
+            "Draft Your Prompt: Type your description into the prompt box, or click Expand Prompt to let the AI enhance your ideas with more detail.",
+            "Generate: Click the Generate button to create your image."
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1769919361192.647,
+          "type": "button",
+          "text": "Try Free Nano Banana Pro Now",
+          "link": "https://example.com/generate",
+          "style": "primary",
+          "target": "_self",
+          "size": "medium",
+          "align": "center",
+          "width": "auto"
+        },
+        {
+          "id": 1769919462944.927,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 3643,
+              "file_url": "https://cdn.vidgenerator.ai/jbPe8VFthKg3FnimYn0ZqDjY2SZ3.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/jbPe8VFthKg3FnimYn0ZqDjY2SZ3-magical-chronomancer-vibrant-forest-light-effects.jpg",
+              "title": "Magical Chronomancer: Vibrant Forest & Light Effects",
+              "url_slug": "TVyXMfinG97-magical-forest-scenery-chronomancera-female-a",
+              "short_code": "TVyXMfinG97",
+              "type": "text2img"
+            },
+            {
+              "id": 3265,
+              "file_url": "https://cdn.vidgenerator.ai/GZvy9dSgf9azAEDU9up3oHc0ehuI.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/VHYJFBl92Lt0BtZDwlD5vHtAVkND-selfie-of-a-girl-at-a-gym_thumb.webp",
+              "title": "Gym Selfie of a Girl: Fitness - Related Image Idea",
+              "url_slug": "bPq5bMKyyRe-selfie-of-a-girl-at-a-gym",
+              "short_code": "bPq5bMKyyRe",
+              "type": "text2img"
+            },
+            {
+              "id": 3644,
+              "file_url": "https://cdn.vidgenerator.ai/ee347VckDuN4uNdMEHDnYhehbmLu.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/ee347VckDuN4uNdMEHDnYhehbmLu-dreamlike-harley-quinn-ethereal-beauty-manga-style.jpg",
+              "title": "Dreamlike Harley Quinn: Ethereal Beauty & Manga Style",
+              "url_slug": "7qmo82xaYaw-a-stunning-masterpiece-showing-a-harley-quinn",
+              "short_code": "7qmo82xaYaw",
+              "type": "text2img"
+            },
+            {
+              "id": 3629,
+              "file_url": "https://cdn.vidgenerator.ai/H466H3yeQuVCyE5ncZIKQ1Zw9Kbx.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/H466H3yeQuVCyE5ncZIKQ1Zw9Kbx-electric-guitar-girl-hyperrealistic-art-dynamic-action_thumb.webp",
+              "title": "Electric Guitar Girl: Hyperrealistic Art & Dynamic Action",
+              "url_slug": "cU8yN2Xfj9l-electric-guitar-girl-hyperrealistic-art-dynamic-action",
+              "short_code": "cU8yN2Xfj9l",
+              "type": "text2img"
+            },
+            {
+              "id": 3630,
+              "file_url": "https://cdn.vidgenerator.ai/yWCWYPq2rGDcTYhkjxeGpOwH1kIp.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/yWCWYPq2rGDcTYhkjxeGpOwH1kIp-untitled-work_thumb.webp",
+              "title": "Untitled Work",
+              "url_slug": "eMt6gmeQnHe-untitled-work",
+              "short_code": "eMt6gmeQnHe",
+              "type": "img_effects"
+            },
+            {
+              "id": 4171,
+              "file_url": "https://cdn.vidgenerator.ai/eggTYnhX2W1x5wvdKgW91YapSRMr.webp",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/eggTYnhX2W1x5wvdKgW91YapSRMr-handsome-vascular-shirtless-man-grappler-in-a-bearhug_thumb.webp",
+              "title": "Handsome Vascular Shirtless Man Grappler In A Bearhug...",
+              "url_slug": "0KOq4kz3pPu-handsome-vascular-shirtless-man-grappler-in-a-bearhug",
+              "short_code": "0KOq4kz3pPu",
+              "type": "text2img"
+            },
+            {
+              "id": 4102,
+              "file_url": "https://cdn.vidgenerator.ai/SNN791No55Xckzo62rjbJbmQjHIG.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/SNN791No55Xckzo62rjbJbmQjHIG-girl-with-bikni_thumb.webp",
+              "title": "Girl With Bikni",
+              "url_slug": "U9jld6gHvws-girl-with-bikni",
+              "short_code": "U9jld6gHvws",
+              "type": "text2img"
+            },
+            {
+              "id": 4101,
+              "file_url": "https://cdn.vidgenerator.ai/DqxpD6pMKV3dFellMVGpY5O1bW4E.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/DqxpD6pMKV3dFellMVGpY5O1bW4E-girl-with-bikni_thumb.webp",
+              "title": "Girl With Bikni",
+              "url_slug": "6LLRHsbVW9B-girl-with-bikni",
+              "short_code": "6LLRHsbVW9B",
+              "type": "text2img"
+            }
+          ],
+          "columns": 4
+        },
+        {
+          "id": 1769920372438.8892,
+          "type": "heading",
+          "text": "Explore Google Nano Banana AI's Models",
+          "level": 2
+        },
+        {
+          "id": 1769920381945.0208,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/B97PYc9jGV1Ue6eajTJi1qsoe3VP.webp",
+          "title": "State-of-the-art to Image Generation",
+          "content": "Google Nano Banana AI (Gemini 2.5 Flash) delivers industry-leading accuracy and consistency across any art style—high-end visual creation, now accessible for free.",
+          "layout": "left"
+        },
+        {
+          "id": 1769920389374.7915,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/Z0YgdokLWKJ4YBzfLco6gDbko573.webp",
+          "title": "Perfect Character Consistency",
+          "content": "Unmatched Character Consistency: Modify backgrounds, lighting, or perspectives while keeping your subject perfectly intact. Nano Banana AI ensures identity and style remain seamless across every revision—all for free.",
+          "layout": "right"
+        },
+        {
+          "id": 1769920391308.434,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/wAcE76owIXG4Yy6YmYWHggRb553l.webp",
+          "title": "Natural Language Image Refinement",
+          "content": "Beyond Manual Editing: Nano Banana AI auto-detects regions for pinpoint modifications. Blur, remove, or restyle any element with plain language. High-end precision, 100% free.",
+          "layout": "left"
+        },
+        {
+          "id": 1769920629443.5503,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/MasVao37WHgenkGkmVRMMNl3NUNK.webp",
+          "title": "Seamless Multi-Image Fusion",
+          "content": "Smart Composition, Zero Effort: Blend multiple images or overhaul textures instantly. Experience elite AI image merging, unlocked for free.",
+          "layout": "right"
+        },
+        {
+          "id": 1769920682121.3264,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/Xiwn4I27Uh6sQ8CWSathYOoMcErb.webp",
+          "title": "Ultra-Fast Image Processing",
+          "content": "nstant Creation: While others take minutes, Nano Banana delivers in seconds. Rapidly ideate, experiment, and refine your projects with the fastest free AI image engine available.",
+          "layout": "left"
+        },
+        {
+          "id": 1769923333288.5708,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q1:I s the \"Free\" version of Nano Banana Pro lower in quality?",
+              "answer": "A: Not at all. We believe quality shouldn't be a privilege. Even with free credits, you are accessing the full Nano Banana Pro engine. You get the same high-resolution output, advanced prompt adherence, and artistic fidelity as any power user. No blurred watermarks, no downgraded pixels."
+            },
+            {
+              "question": "Q2: How do I get started without paying a dime?",
+              "answer": "A: It’s simple: Register and Create. Every new account is instantly credited with 10 Free Credits. Since each image generation costs exactly 1 credit, you can start bringing your imagination to life the moment you sign up. No credit card required."
+            },
+            {
+              "question": "Q3: Why do you use a \"1 Credit per Image\" system instead of unlimited access?",
+              "answer": "A: To ensure a fair and lightning-fast experience for everyone. \"Unlimited\" plans often attract bot abuse, which slows down the server for real creators. By using a 1-credit-per-image gate, we keep the lanes clear, ensuring your prompts are processed in seconds rather than minutes."
+            },
+            {
+              "question": "Q4: What happens if the AI generates something I didn't want?",
+              "answer": "A: We want your credits to feel valuable. If a generation fails due to a system error or network glitch, your credit is automatically refunded. We are also constantly optimizing our \"Preview\" features so you can refine your prompts and ensure every credit spent results in a masterpiece."
+            },
+            {
+              "question": "Q5: Can I use the images for my YouTube, Shopify, or commercial projects?",
+              "answer": "A: Yes, 100%. Any image created with Nano Banana Pro credits comes with a Commercial Usage License. Whether you used a free gift credit or a purchased one, the art is yours to use for branding, social media ads, or product designs without any hidden royalties."
+            }
+          ]
+        },
+        {
+          "id": 1769923221982.7385,
+          "type": "cta",
+          "title": "Try Google Free Nano Banana AI on Pollo AI Now!",
+          "description": "EXPERIENCE PERFECTION with Nano Banana Pro",
+          "button_text": "Try Nano Banana for Free",
+          "button_link": "https://example.com/generate",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Try Free Nano Banana Pro Now",
+      "hero_button_link": "https://example.com/generate",
+      "hero_button_style": "remix",
+      "featured_image_focus": "50,50"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 237,
+    "created_at": "2026-02-01 10:55:54.862972+08:00",
+    "updated_at": "2026-08-25 15:58:19.264384+08:00",
+    "sort_order": 0,
+    "meta_title": "365 Days Of Unlimited Free Nano Banana Pro",
+    "meta_description": "Unlock 365 days of limitless creativity with Nano Banana Pro. Get unlimited access to premium AI features and exclusive tools for a full year. Stop counting credits and start building. Sign up now to supercharge your workflow!",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-01-27 18:07:00+08:00",
+    "category_id": null,
+    "generation_model_id": 78
+  },
+  {
+    "id": 9,
+    "slug": "seedance-2-0-the-future-of-ai-motion-synthesis",
+    "title": "Seedance 2.0 — The Future of AI Motion Synthesis",
+    "excerpt": "Seedance 2.0 revolutionizes AI motion synthesis with hyper-fluid dance, gravity-aware movement, and seamless style blending. Transform static characters into dynamic performers.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/jO9Gb014fVgUfZJOQIbg6vQzTFbH.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1772089194250.7737,
+          "type": "carousel",
+          "items": [
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/FEF6fGyXEHL08A6nRjY838MSUjNw.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/FEF6fGyXEHL08A6nRjY838MSUjNw_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/MtMbGc1GffW9lhiot6LiKrJisEJ7.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/MtMbGc1GffW9lhiot6LiKrJisEJ7_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/Zyj5qiQp93mgOg0SJipEX5zC65Ft.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/Zyj5qiQp93mgOg0SJipEX5zC65Ft_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/6FysMwTO34JJnyfBhYtQVg2NUwNl.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/6FysMwTO34JJnyfBhYtQVg2NUwNl_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/laJT5iXLJAsbUnYmpFWGrnaqDcCA.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/laJT5iXLJAsbUnYmpFWGrnaqDcCA_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/ASDdebgH3UvMsWH6PLXxe95n0Hr9.mp4",
+              "poster_url": "https://cdn.vidgenerator.ai/ASDdebgH3UvMsWH6PLXxe95n0Hr9_thumb.webp",
+              "link": ""
+            }
+          ],
+          "interval": 3
+        },
+        {
+          "id": 1772089401834.944,
+          "type": "heading",
+          "text": "What makes Seedance 2.0 a breakthrough in AI Motion?",
+          "level": 2
+        },
+        {
+          "id": 1772089416552.9055,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/2ml9etMtOTH3gFrmXqWOmXFAL961.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Next-Gen Kinetic Physics",
+          "content": "Seedance 2.0 understands gravity and momentum. Say goodbye to floating feet—our AI ensures every step has weight, balance, and realistic impact.",
+          "layout": "left",
+          "text_align": "left",
+          "media_width_percent": 100,
+          "aspect_ratio": "1/1",
+          "media_shadow": "2xl",
+          "media_glow": "amber",
+          "link": ""
+        },
+        {
+          "id": 1772089418969.636,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/CE54TJD0xsrvJTiPmEhEwDZ8bTtn.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Temporal Consistency (No Flickering)",
+          "content": "Engineered for creators. Our new algorithm maintains consistent character features and clothing textures across every frame of movement.",
+          "layout": "right",
+          "text_align": "left",
+          "media_width_percent": 100,
+          "aspect_ratio": "1/1",
+          "media_shadow": "2xl",
+          "media_glow": "blue",
+          "link": ""
+        },
+        {
+          "id": 1772089421512.2134,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/tI1cDsrml8nEGHEyoWSWwRATMevo.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Multi-Style Fusion",
+          "content": "Why choose one? Mix styles like \"Cyber-Pop meets Contemporary\" or \"Classical Ballet with Hip-Hop energy.\" 2.0 blends genres with seamless transitions.",
+          "layout": "left",
+          "text_align": "left",
+          "media_width_percent": 100,
+          "aspect_ratio": "1/1",
+          "media_shadow": "2xl",
+          "media_glow": "orange",
+          "link": ""
+        },
+        {
+          "id": 1772089422927.7627,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/qocWdZCjg2ogqmvdMxmGWJyi6RGZ.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "title": "Pro-Level Lighting Integration",
+          "content": "Dynamic stage lighting that reacts to the dancer. Volumetric fog, strobe effects, and spotlight tracking are now built directly into the render engine.",
+          "layout": "right",
+          "text_align": "left",
+          "media_width_percent": 100,
+          "aspect_ratio": "1/1",
+          "media_shadow": "2xl",
+          "media_glow": "cyan",
+          "link": ""
+        },
+        {
+          "id": 1772089662470.4346,
+          "type": "button",
+          "text": "TRY SEEDANCE 2.0 NOW — FREE 🚀",
+          "link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+          "style": "remix",
+          "target": "_self",
+          "size": "medium",
+          "align": "center",
+          "width": "auto",
+          "offset_x": 0,
+          "offset_y": 0
+        },
+        {
+          "id": 1772089729214.247,
+          "type": "heading",
+          "text": "Engineered for artists, animators, and dreamers.",
+          "level": 2
+        },
+        {
+          "id": 1772089737797.228,
+          "type": "table",
+          "headers": [
+            "Feature",
+            "What’s New in 2.0",
+            "Best For"
+          ],
+          "rows": [
+            [
+              "Motion Clarity",
+              "4K resolution at 60fps aesthetic quality.",
+              "High-End Video Production"
+            ],
+            [
+              "Complex Posing",
+              "Support for floorwork, inversions, and high-speed spins.",
+              "Dynamic Action Scenes"
+            ],
+            [
+              "Fabric Physics",
+              "Realistic draping and flow of clothing during movement.",
+              "Digital Fashion & Design"
+            ],
+            [
+              "Environment Sync",
+              "Dancers interact with floor reflections and shadows.",
+              "Immersive 3D Visualization"
+            ]
+          ]
+        },
+        {
+          "id": 1772089923389.1978,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 4254,
+              "file_url": "https://cdn.vidgenerator.ai/2SfFDgqiFc3FiFFpP2NRjOMn0ESh.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/2SfFDgqiFc3FiFFpP2NRjOMn0ESh-subject-a-sleek-glossy-red-lamborghini-aventador.mp4",
+              "title": "Subject: A Sleek, Glossy Red Lamborghini Aventador...",
+              "url_slug": "7WqQCgY0lsK-subject-a-sleek-glossy-red-lamborghini-aventador",
+              "short_code": "7WqQCgY0lsK",
+              "type": "text2video"
+            },
+            {
+              "id": 4253,
+              "file_url": "https://cdn.vidgenerator.ai/fUUD7eMDBRX8xEEUSDU2Ovk2Cx3W.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/fUUD7eMDBRX8xEEUSDU2Ovk2Cx3W-a-heartwarming-cinematic-scene-in-a-cozy-european.mp4",
+              "title": "A Heartwarming Cinematic Scene In A Cozy European...",
+              "url_slug": "HmuB2mEsoIM-a-heartwarming-cinematic-scene-in-a-cozy-european",
+              "short_code": "HmuB2mEsoIM",
+              "type": "text2video"
+            },
+            {
+              "id": 4252,
+              "file_url": "https://cdn.vidgenerator.ai/yetMfqBkDKlANX6qa110MfBrn6Oi.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/yetMfqBkDKlANX6qa110MfBrn6Oi-a-high-quality-comic-book-style-animation-of-a-young.mp4",
+              "title": "A High-quality Comic Book Style Animation Of A Young...",
+              "url_slug": "DwywNgiYYIi-a-high-quality-comic-book-style-animation-of-a-young",
+              "short_code": "DwywNgiYYIi",
+              "type": "text2video"
+            },
+            {
+              "id": 4251,
+              "file_url": "https://cdn.vidgenerator.ai/MH8w8iqpSXY3xcLjHcjA9rMJPKY9.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/MH8w8iqpSXY3xcLjHcjA9rMJPKY9-medium-close-up-to-wide-shot-a-stressed-man-in-a.mp4",
+              "title": "Medium Close-up To Wide Shot. A Stressed Man In A...",
+              "url_slug": "vkOssY4t79W-medium-close-up-to-wide-shot-a-stressed-man-in-a",
+              "short_code": "vkOssY4t79W",
+              "type": "text2video"
+            },
+            {
+              "id": 4250,
+              "file_url": "https://cdn.vidgenerator.ai/AU0J4umQyHTadN76IIM3fDFAK1L7.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/AU0J4umQyHTadN76IIM3fDFAK1L7-a-cinematic-film-sequence-in-paris-a-stylish-woman.mp4",
+              "title": "A Cinematic Film Sequence In Paris. A Stylish Woman...",
+              "url_slug": "LOzdOmmPiat-a-cinematic-film-sequence-in-paris-a-stylish-woman",
+              "short_code": "LOzdOmmPiat",
+              "type": "text2video"
+            },
+            {
+              "id": 4249,
+              "file_url": "https://cdn.vidgenerator.ai/bAY6YLNcJ5C166PoJdDqp3XfcB2S.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/bAY6YLNcJ5C166PoJdDqp3XfcB2S-a-high-quality-cinematic-shot-of-a-graceful-young.mp4",
+              "title": "A High-quality Cinematic Shot Of A Graceful Young...",
+              "url_slug": "tnBWXpYDMZ0-a-high-quality-cinematic-shot-of-a-graceful-young",
+              "short_code": "tnBWXpYDMZ0",
+              "type": "text2video"
+            }
+          ],
+          "columns": 3
+        },
+        {
+          "id": 1772089966567.3777,
+          "type": "heading",
+          "text": "Seedance 2.0 Pro Prompting",
+          "level": 2
+        },
+        {
+          "id": 1772089983029.0054,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment-->Unlock the full power of the 2.0 engine with these technical descriptors:<!--EndFragment--></p>"
+        },
+        {
+          "id": 1772090011365.8347,
+          "type": "list",
+          "items": [
+            "Motion Tags: ultra-fluid transition, weight-aware movement, high-momentum spin, rhythmic precision.",
+            "Visual Tech: volumetric stage lighting, motion blur trails, 8k octane render, subsurface skin scattering.",
+            "The \"Vibe\": K-Pop idol energy, avant-garde choreography, raw street power, ethereal flow."
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1772090061748.0225,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q: How is Seedance 2.0 different from the original version?",
+              "answer": "A: 2.0 introduces a completely redesigned motion engine. It significantly improves anatomical accuracy during high-speed moves and adds realistic fabric-to-body interaction that wasn't possible before."
+            },
+            {
+              "question": "Q: Can I use Seedance 2.0 for commercial music videos?",
+              "answer": "A: Yes! The 2.0 engine produces studio-quality visuals that are perfect for professional content creation, social media marketing, and music video concept art."
+            },
+            {
+              "question": "Q: Does it support custom character uploads?",
+              "answer": "A: Seedance 2.0 is optimized to work with your specific character descriptions (OCs). Simply input your character's traits, and the engine will apply the 2.0 motion logic to their unique frame."
+            },
+            {
+              "question": "Q: Is there a limit to the length of the dance sequence?",
+              "answer": "A: Seedance 2.0 is designed for high-impact sequences. You can generate multiple keyframes to build out a complete, consistent choreographic story."
+            },
+            {
+              "question": "Q: Is the upgrade to 2.0 free?",
+              "answer": "A: Yes. We believe in empowering the creative community. Seedance 2.0 is available to all users for free, starting today."
+            }
+          ]
+        },
+        {
+          "id": 1772090146157.531,
+          "type": "cta",
+          "title": "The Stage is Yours. The AI is Ready",
+          "description": "Don't just watch the future—create it. Step into the next era of digital performance with Seedance 2.0.",
+          "button_text": "TRY SEEDANCE 2.0 NOW — FREE 🚀",
+          "button_link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "UPGRADE TO SEEDANCE 2.0 — START GENERATING",
+      "hero_button_link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+      "hero_button_style": "remix",
+      "featured_image_focus": "48,55"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 141,
+    "created_at": "2026-02-26 15:17:50.848433+08:00",
+    "updated_at": "2026-08-21 01:50:14.207931+08:00",
+    "sort_order": 0,
+    "meta_title": "Seedance 2.0: AI Motion Synthesis Reimagined",
+    "meta_description": "Discover Seedance 2.0, the future of AI motion synthesis. Experience hyper-fluid dance, zero-glitch tracking, and professional choreography for your characters.",
+    "category": null,
+    "tags": [
+      "AI motion synthesis",
+      "Seedance 2.0",
+      "character animation",
+      "dance generation",
+      "3D animation"
+    ],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-26 07:17:00+08:00",
+    "category_id": null,
+    "generation_model_id": 108
+  },
+  {
+    "id": 10,
+    "slug": "love-in-motion",
+    "title": "Love in Motion\" – A Romantic Film Challenge",
+    "excerpt": "Win up to 500 Credits in the \"Love in Motion\" AI video challenge! Create romantic themed videos on example.com from March 2nd-8th. Share & earn more!",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/KE62N019E1DrnzVWbyWunnnkwy1o.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1772260267208.9182,
+          "type": "carousel",
+          "items": [
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/hDMxqIytFX0GOZfDKZbc6JsSBO0u.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/hDMxqIytFX0GOZfDKZbc6JsSBO0u_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/2trVGnDF6ya8JZ6dE1MroLHkl1y7.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/2trVGnDF6ya8JZ6dE1MroLHkl1y7_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/yhCFgtoMgBhhTwLYEfuukVGmWw7j.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/yhCFgtoMgBhhTwLYEfuukVGmWw7j_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/OLq4JRsFVeJzw5zMPOOgyQsSss1b.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/OLq4JRsFVeJzw5zMPOOgyQsSss1b_thumb.webp",
+              "link": ""
+            },
+            {
+              "type": "video",
+              "image_url": "",
+              "video_url": "https://cdn.vidgenerator.ai/PjvKCLnoMgdM3JiOCSFJDPKZK0fm.webm",
+              "poster_url": "https://cdn.vidgenerator.ai/PjvKCLnoMgdM3JiOCSFJDPKZK0fm_thumb.webp",
+              "link": ""
+            }
+          ],
+          "interval": 3
+        },
+        {
+          "id": 1772260272647.9897,
+          "type": "heading",
+          "text": "I. Campaign Overview",
+          "level": 2
+        },
+        {
+          "id": 1772260334953.4424,
+          "type": "list",
+          "items": [
+            "Theme: \"Love in Motion\" – Capture the essence of romance, from cinematic sunsets to intimate whispers.",
+            "Objective: To showcase the emotional depth and cinematic quality of AI video creation while rewarding our most creative users.",
+            "Campaign Period: March 2nd — March 8th, 2026 (23:59 GMT+8)",
+            "Reward Distribution: All credits will be distributed within 48 hours after the event ends (by March 10th, 24:00)."
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1772265111241.8035,
+          "type": "heading",
+          "text": "II. How to Participate",
+          "level": 2
+        },
+        {
+          "id": 1772265156068.836,
+          "type": "rich_text",
+          "content": "<h3><b>Create:</b></h3><p><!--StartFragment-->Use example.com to create a romantic-themed video (think cinematic couples, rainy dates, or sunset proposals).<!--EndFragment--></p>"
+        },
+        {
+          "id": 1772265273672.0095,
+          "type": "rich_text",
+          "content": "<h3>Go Public:</h3><p><!--StartFragment--><b>1.From your Personal Works List:</b>&nbsp;</p><p>Go to your profile and select \"Public\" for any video generated during the event in your works list to participate.<!--EndFragment--></p>"
+        },
+        {
+          "id": 1772265298675.9028,
+          "type": "single_image",
+          "image_url": "https://cdn.vidgenerator.ai/Gn4DMcYRXtgyPV3f35spEuFvaCCU.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "alt": "",
+          "link": "",
+          "aspect_ratio": "auto",
+          "media_shadow": "2xl",
+          "media_glow": "none",
+          "media_size": "full"
+        },
+        {
+          "id": 1772265315674.3718,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment--><b>2.From the Video Details Page:</b>&nbsp;</p><p>Immediately after generating a video during the event, simply select the \"Public\" option on the details page to enter.<!--EndFragment--></p>"
+        },
+        {
+          "id": 1772265344280.074,
+          "type": "single_image",
+          "image_url": "https://cdn.vidgenerator.ai/HDJY5FoG8rEjdJ2wOkLiVF6OU5W8.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "alt": "",
+          "link": "",
+          "aspect_ratio": "auto",
+          "media_shadow": "2xl",
+          "media_glow": "none",
+          "media_size": "full"
+        },
+        {
+          "id": 1772265353952.5847,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment--><b>3.From your Creation History:</b>&nbsp;</p><p>Browse your history, select your favorite romantic videos created between <b>March 2nd and March 8th</b>, and set them to \"Public\" to join.<!--EndFragment--></p>"
+        },
+        {
+          "id": 1772265371482.9048,
+          "type": "single_image",
+          "image_url": "https://cdn.vidgenerator.ai/Io7QN67zqzgWLNUJzVYDcgHFp85w.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "alt": "",
+          "link": "",
+          "aspect_ratio": "auto",
+          "media_shadow": "2xl",
+          "media_glow": "none",
+          "media_size": "full"
+        },
+        {
+          "id": 1772260670205.7659,
+          "type": "heading",
+          "text": "III. Reward System (Credits)",
+          "level": 2
+        },
+        {
+          "id": 1772260693461.4756,
+          "type": "heading",
+          "text": "🏆1. Official Selection: The \"Romantic Visionaries\" TOP 5",
+          "level": 3
+        },
+        {
+          "id": 1772260739165.2275,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment-->Our judges will select the 5 most breathtaking romantic videos based on <b>visual storytelling, cinematic lighting, and emotional impact</b>:<!--EndFragment--></p><p><!--StartFragment--><!--EndFragment--></p><ul><li><p><b>1st Place:</b> 500 Credits</p></li><li><p><b>2nd Place:</b> 400 Credits</p></li><li><p><b>3rd Place:</b> 300 Credits</p></li><li><p><b>4th Place:</b> 200 Credits</p></li><li><p><b>5th Place:</b> 100 Credits</p></li></ul>"
+        },
+        {
+          "id": 1772260751837.4019,
+          "type": "heading",
+          "text": "📢 2. Social Bonus: Share the Love",
+          "level": 3
+        },
+        {
+          "id": 1772260764255.7786,
+          "type": "rich_text",
+          "content": "<p>Earn guaranteed credits by spreading your art across social media:</p><p><!--StartFragment--><!--EndFragment--></p><ul><li><p><b>Reward:</b> <b>10 Credits / per valid share</b></p></li><li><p><b>Supported Platforms:</b> Twitter (X), Discord, Facebook.</p></li><li><p><b>How to Claim:</b> 1. Share your public video link to your social profile.\n2. <b>Crucial Step:</b> Copy your <b>Social Post URL</b> and paste it as a <b>Comment</b> under your original video on our website.</p></li></ul>"
+        },
+        {
+          "id": 1772266337465.1333,
+          "type": "single_image",
+          "image_url": "https://cdn.vidgenerator.ai/gUCfCPK4w8WAPQvq39lJjXhp6xxL.webp",
+          "video_url": "",
+          "poster_url": "",
+          "media_type": "image",
+          "alt": "",
+          "link": "",
+          "aspect_ratio": "auto",
+          "media_shadow": "2xl",
+          "media_glow": "none",
+          "media_size": "full"
+        },
+        {
+          "id": 1772260872999.6985,
+          "type": "heading",
+          "text": "IV. Official Rules & Terms",
+          "level": 2
+        },
+        {
+          "id": 1772260884365.693,
+          "type": "list",
+          "items": [
+            "Originality: Entries must be generated using the example.com platform.",
+            "Community Guidelines: Any content violating our safety or community standards will be disqualified.",
+            "Verification: Shared social links must be set to \"Public\" for verification. Invalid or broken links will not be eligible for credits.",
+            "Credit Validity: All rewards will be deposited by March 10th. "
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1772261016692.818,
+          "type": "heading",
+          "text": "V. Social Media Promo Copy",
+          "level": 2
+        },
+        {
+          "id": 1772261050380.7275,
+          "type": "rich_text",
+          "content": "<h3>🐦 1. Twitter (X) - Viral &amp; Cinematic</h3><p><i>Best for: High engagement and quick scrolling.</i></p><blockquote><p><b>Post Caption:</b>\nCaptured a moment of pure cinematic romance with @VidGeneratorAI. 🌹</p><p>I’m entering the <b>#LoveInMotion</b> challenge to win up to 500 Credits! What do you think of this AI-generated magic? ✨</p><p>Create your own love story here: [Link to your video]</p><p>#AI #VidGenerator #AIAnimation #RomanticVibes #CinematicAI</p></blockquote><hr><h3>👥 2. Facebook - Emotional &amp; Story-driven</h3><p><i>Best for: Personal storytelling and reaching a broader audience.</i></p><blockquote><p><b>Post Caption:</b>\nLove is better in motion. ❤️</p><p>I just used example.com to turn a romantic dream into this cinematic reality. From the golden hour glow to the subtle emotions of the characters, AI is truly changing the way we tell stories.</p><p>I’ve officially joined the <b>\"Love in Motion\"</b> Challenge. Check out my creation and start yours to win a share of the Credit prize pool! 🎁</p><p>Watch the full video: [Link to your video]</p><p>#DigitalArt #AIVideo #RomanceInMotion #VidGeneratorAI #WesternAesthetics</p></blockquote><hr><h3>💬 3. Discord - Community &amp; Creator-focused</h3><p><i>Best for: Sharing in \"Art Showcase\" or \"AI-Video\" channels.</i></p><p><!--StartFragment--><!--EndFragment--></p><blockquote><p><b>Message:</b>\n🎬 <b>New Entry: \"Love in Motion\" Challenge</b></p><p>Just dropped a new romantic short generated on <b>example.com</b>. The lighting and character consistency for this Western-style couple are insane!</p><p>They are currently running a <b>Credit Giveaway</b> (Top 5 win up to 500 Credits!). If you want to grab some free credits, just make your video public and share it.</p><p>Check out my entry: [Link to your video]\nLet’s see who can create the most romantic shot! 🌹</p></blockquote>"
+        },
+        {
+          "id": 1772531908632.8787,
+          "type": "heading",
+          "text": "Contest Entries Overview",
+          "level": 2
+        },
+        {
+          "id": 1772531942369.4333,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 4323,
+              "file_url": "https://cdn.vidgenerator.ai/5FZiwgyPoju7oSu6CvU2CUAv7Zfr.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/5FZiwgyPoju7oSu6CvU2CUAv7Zfr-a-personal-video-of-my-love-and-i-in-a-dark.mp4",
+              "title": "A Personal Video Of My Love And I In A Dark...",
+              "url_slug": "1qOHDa1NDX4-a-personal-video-of-my-love-and-i-in-a-dark",
+              "short_code": "1qOHDa1NDX4",
+              "type": "text-to-video"
+            },
+            {
+              "id": 4357,
+              "file_url": "https://cdn.vidgenerator.ai/MF4wN8ONzZiNvMKacqe2mYQemz3T.mp4",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/MF4wN8ONzZiNvMKacqe2mYQemz3T-a-cinematic-photograph-of-a-deeply-in-love-couple.mp4",
+              "title": "A Cinematic Photograph Of A Deeply In-love Couple...",
+              "url_slug": "ysRrNOL887E-a-cinematic-photograph-of-a-deeply-in-love-couple",
+              "short_code": "ysRrNOL887E",
+              "type": "text-to-video"
+            }
+          ],
+          "columns": 4
+        }
+      ],
+      "hero_button_text": "Generate Now",
+      "hero_button_link": "https://example.com/generate/image-to-video",
+      "hero_button_style": "remix",
+      "featured_image_focus": "53,52"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 358,
+    "created_at": "2026-02-28 14:45:28.248922+08:00",
+    "updated_at": "2026-08-22 00:52:26.087949+08:00",
+    "sort_order": 0,
+    "meta_title": "Love in Motion: AI Video Challenge & Prizes",
+    "meta_description": "Join example.com's \"Love in Motion\" film challenge! Create romantic AI videos, share on social media, and win up to 500 Credits. Contest ends March 8th!",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-25 06:45:00+08:00",
+    "category_id": null,
+    "generation_model_id": null
+  },
+  {
+    "id": 4,
+    "slug": "free-flux-2-klein-the-future-of-real-time-creative-intelligence",
+    "title": "Free Flux.2 Klein: The Future of Real-Time Creative Intelligence",
+    "excerpt": "Experience the power of the 4B-parameter masterpiece. Lightning-fast inference, professional-grade composition, and unmatched prompt adherence—all for free.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/lRVJFpqoSvjlGZkpfabHp5sQyH1c.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1769924726743.3833,
+          "type": "carousel",
+          "items": [
+            {
+              "image_url": "https://cdn.vidgenerator.ai/k5pGmPiUedYB0ALuD4AWptGYY4gE.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/lyVwgOoXAToGWypZsbeJqbzAzXtc.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/Z9dkhsYBnEm33vQDZ2l81yLQAi4M.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/u3Ytvfw4ipGnvCj6Ar475jWeGjQI.webp",
+              "link": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/zn1nztPStWBy2JqkH8jQn5nx2wOp.webp",
+              "link": ""
+            }
+          ]
+        },
+        {
+          "id": 1769925237162.1143,
+          "type": "heading",
+          "text": "Why Choose FLUX.2 Klein?",
+          "level": 2
+        },
+        {
+          "id": 1769925305631.6882,
+          "type": "list",
+          "items": [
+            "Sub-Second Generation Powered by a streamlined 4B architecture, Klein delivers high-fidelity images in under a second, making it the king of real-time iteration.",
+            "Superior Semantic Understanding Built on the latest FLUX.2 foundation, it interprets complex, long-form prompts with surgical precision. What you type is exactly what you see.",
+            "Native Image Editing Go beyond simple generation. FLUX.2 Klein is natively optimized for inpainting and image-to-image tasks, allowing for seamless modifications.",
+            "Artistic Composition Mastery From cinematic lighting to architectural symmetry, Klein understands the \"rules of art\" to ensure every output is portfolio-ready."
+          ],
+          "list_type": "bullet"
+        },
+        {
+          "id": 1769925473490.675,
+          "type": "button",
+          "text": "Start Free Generating Now",
+          "link": "https://example.com/generate",
+          "style": "primary",
+          "target": "_self",
+          "size": "medium",
+          "align": "center",
+          "width": "auto"
+        },
+        {
+          "id": 1769926896264.7893,
+          "type": "heading",
+          "text": "Use Cases & Gallery",
+          "level": 2
+        },
+        {
+          "id": 1769925670013.593,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 3649,
+              "file_url": "https://cdn.vidgenerator.ai/MZucXeTkYucMCPKeiGQcQBpA1sFX.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/MZucXeTkYucMCPKeiGQcQBpA1sFX-iphone-photo-sexy-woman-long-curly-ginger-hair.jpg",
+              "title": "Iphone Photo Sexy Woman, Long Curly Ginger Hair,...",
+              "url_slug": "KMMVfA2L4pJ-iphone-photo-sexy-woman-long-curly-ginger-hair",
+              "short_code": "KMMVfA2L4pJ",
+              "type": "text2img"
+            },
+            {
+              "id": 3650,
+              "file_url": "https://cdn.vidgenerator.ai/tK7utmxt8ltPkDxrA7sAqMBbAkZh.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/tK7utmxt8ltPkDxrA7sAqMBbAkZh-a-lively-medieval-tavern-glows-with-firelight-and.jpg",
+              "title": "A Lively Medieval Tavern Glows With Firelight And...",
+              "url_slug": "hTTCdzD03Mq-a-lively-medieval-tavern-glows-with-firelight-and",
+              "short_code": "hTTCdzD03Mq",
+              "type": "text2img"
+            },
+            {
+              "id": 3651,
+              "file_url": "https://cdn.vidgenerator.ai/QtHDqzMouLJ7nopk9A6hmnewTAtk.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/QtHDqzMouLJ7nopk9A6hmnewTAtk-a-glamorous-christmas-party-glows-with-candlelight-and.jpg",
+              "title": "A Glamorous Christmas Party Glows With Candlelight And...",
+              "url_slug": "n1ObPCwAhRB-a-glamorous-christmas-party-glows-with-candlelight-and",
+              "short_code": "n1ObPCwAhRB",
+              "type": "text2img"
+            },
+            {
+              "id": 3652,
+              "file_url": "https://cdn.vidgenerator.ai/8egGF4nKd43VCoCH4w29QEZZFILz.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/8egGF4nKd43VCoCH4w29QEZZFILz-the-girl-is-a-light-shadow-magician-magical.jpg",
+              "title": "The Girl Is A Light Shadow Magician, Magical...",
+              "url_slug": "TdNj74kb103-the-girl-is-a-light-shadow-magician-magical",
+              "short_code": "TdNj74kb103",
+              "type": "text2img"
+            },
+            {
+              "id": 3653,
+              "file_url": "https://cdn.vidgenerator.ai/bNefdV0QUSd6yKcw2sd9cPkfiYDV.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/bNefdV0QUSd6yKcw2sd9cPkfiYDV-the-photo-is-taken-in-a-beach-house-the-girl-is.jpg",
+              "title": "The Photo Is Taken In A Beach House. The Girl Is...",
+              "url_slug": "mLgyBqCKdMX-the-photo-is-taken-in-a-beach-house-the-girl-is",
+              "short_code": "mLgyBqCKdMX",
+              "type": "text2img"
+            },
+            {
+              "id": 3654,
+              "file_url": "https://cdn.vidgenerator.ai/er9Sb5sgd78S04rzbfZ0een8x5Y1.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/er9Sb5sgd78S04rzbfZ0een8x5Y1-8k-pinup-of-the-most-beautiful-fitness-girl-in-the.jpg",
+              "title": "8k Pinup Of The Most Beautiful Fitness Girl In The...",
+              "url_slug": "K2SOG61TonS-8k-pinup-of-the-most-beautiful-fitness-girl-in-the",
+              "short_code": "K2SOG61TonS",
+              "type": "text2img"
+            },
+            {
+              "id": 1002,
+              "file_url": "https://cdn.vidgenerator.ai/paHKeCOFS3cHZsfqox1Z5unD6seg.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/UCw9RWoKgMp5hV7BxIvbYnfcEDU0-masterpiece-raw-photo-best-quality-a-gorgeous_thumb.webp",
+              "title": "Beach Volleyball Cinematic Portrait",
+              "url_slug": "FTuV1NhScNy-masterpiece-raw-photo-best-quality-a-gorgeous",
+              "short_code": "FTuV1NhScNy",
+              "type": "text2img"
+            },
+            {
+              "id": 3655,
+              "file_url": "https://cdn.vidgenerator.ai/DqkpsK9C9OBekLKRlYwLJXrYJDiE.jpg",
+              "thumbnail_url": "https://cdn.vidgenerator.ai/DqkpsK9C9OBekLKRlYwLJXrYJDiE-jessica-rabbit-beautiful-charismatic-girl-athletic.jpg",
+              "title": "Jessica Rabbit Beautiful Charismatic Girl, Athletic...",
+              "url_slug": "FIJL6Mg4Qq2-jessica-rabbit-beautiful-charismatic-girl-athletic",
+              "short_code": "FIJL6Mg4Qq2",
+              "type": "text2img"
+            }
+          ],
+          "columns": 4
+        },
+        {
+          "id": 1769926918299.6726,
+          "type": "prompts",
+          "items": [
+            {
+              "label": "Professional Photography",
+              "prompt": "A high-fashion editorial portrait, soft studio lighting, sharp focus on eyes, Klein-blue silk background.",
+              "model": "flux-1"
+            },
+            {
+              "label": "Graphic & UI Design",
+              "prompt": "A minimalist mobile app UI landing page for a travel agency, vibrant colors, vector style.",
+              "model": ""
+            },
+            {
+              "label": "Concept Art",
+              "prompt": "Cyberpunk cityscape at dusk, rain-slicked streets, neon reflections in puddles, cinematic wide shot.",
+              "model": ""
+            }
+          ]
+        },
+        {
+          "id": 1769927172500.775,
+          "type": "heading",
+          "text": "FLUX.2 Klein vs. Nano Banana Pro",
+          "level": 2
+        },
+        {
+          "id": 1769927138462.7412,
+          "type": "table",
+          "headers": [
+            "Feature",
+            "FLUX.2 Klein (Free)",
+            "Nano Banana Pro (Free)"
+          ],
+          "rows": [
+            [
+              "Core Philosophy",
+              "Technical Precision & Real-time",
+              "Artistic Flair & Vivid Detail"
+            ],
+            [
+              "Architecture",
+              "Optimized 4B Parameter ",
+              "Advanced Multi-stage Nano-Architecture"
+            ],
+            [
+              "Generation Speed",
+              "Sub-second / Real-time",
+              "Fast (2-4 seconds)"
+            ],
+            [
+              "Prompt Accuracy",
+              "Elite (Follows complex instructions perfectly)",
+              "High (Optimized for creative keywords)"
+            ],
+            [
+              "Text Rendering",
+              "Industry-leading (Sharp, accurate text)",
+              "Good (Best for stylized typography)"
+            ],
+            [
+              "Visual Style",
+              "Neutral, Realistic, Cinematic",
+              "Vibrant, Saturated, Dreamy"
+            ],
+            [
+              "Best For",
+              "Prototyping, UI Design, Complex Scenes",
+              "Social Media, Portraits, Digital Art"
+            ],
+            [
+              "Editing Power",
+              "High (Excellent for Inpainting/Edits)",
+              "Standard (Best for initial generation)"
+            ],
+            [
+              "Memory Efficiency",
+              "Ultra-efficient (~8GB VRAM)",
+              "Balanced"
+            ]
+          ]
+        },
+        {
+          "id": 1769927501730.9832,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q: Is FLUX.2 Klein really free to use?",
+              "answer": "A: Yes! Our platform provides free access to the FLUX.2 Klein model to empower creators worldwide."
+            },
+            {
+              "question": "Q: Can I use the images for commercial projects?",
+              "answer": "A: Absolutely. FLUX.2 Klein is built on open-weights architecture (Apache 2.0), making it ideal for both personal and commercial use."
+            },
+            {
+              "question": "Q: Does it support high-resolution upscaling?",
+              "answer": "A: While Klein generates images at lightning speed, you can use our built-in AI Upscaler to bring your creations to 4K resolution."
+            }
+          ]
+        },
+        {
+          "id": 1769927589287.5369,
+          "type": "cta",
+          "title": "Create Your First Image - It's Free",
+          "description": "Ready to witness the speed of thought? Join thousands of creators using FLUX.2 Klein to bring their visions to life.",
+          "button_text": "Create Your First Image - It's Free",
+          "button_link": "https://example.com/generate",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Start Generating Now",
+      "hero_button_link": "https://example.com/generate",
+      "hero_button_style": "remix",
+      "featured_image_focus": "50,50"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 155,
+    "created_at": "2026-02-01 14:18:37.630835+08:00",
+    "updated_at": "2026-08-20 15:42:19.916378+08:00",
+    "sort_order": 0,
+    "meta_title": "Free Flux.2 Klein: The Future of Real-Time Creative Intelligence",
+    "meta_description": "Experience the power of the 4B-parameter masterpiece. Lightning-fast inference, professional-grade composition, and unmatched prompt adherence—all for free.",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-01-30 13:44:00+08:00",
+    "category_id": null,
+    "generation_model_id": 76
+  },
+  {
+    "id": 5,
+    "slug": "princess-carry-generator",
+    "title": "Princess Carry Generator",
+    "excerpt": "Advanced AI crafts the classic \"Princess Carry\"—with perfect anatomy, vivid emotion and stunning realism. Your fairytale starts now.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/cIaakwgh8NspJgwtryZAzVVPPCws.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1770023269586.3745,
+          "type": "video",
+          "video_url": "https://cdn.vidgenerator.ai/JHIbuNiMzibfW3RBL7zfPnuw3rRw.mp4",
+          "poster_url": "https://cdn.vidgenerator.ai/W8CDR2ScuFq8ktbmAyBw4z4sqXKh.webp",
+          "autoplay": true,
+          "media_shadow": "2xl",
+          "media_glow": "purple",
+          "media_size": "full"
+        },
+        {
+          "id": 1770023543098.8145,
+          "type": "heading",
+          "text": "Why our Princess Carry Generator is in a league of its own.",
+          "level": 2
+        },
+        {
+          "id": 1770023552649.32,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment-->AI-generated images often stumble with complex human interactions. Hands become contorted, proportions distort, and emotions fall flat. Our&nbsp;<a href=\"https://example.com/generate?type=video_effects&amp;model=princess-carry-generator-0u8d\">Princess Carry Generator</a>, however, is painstakingly fine-tuned to excel where others fail, ensuring every embrace is flawless.<!--EndFragment--></p>"
+        },
+        {
+          "id": 1770023614201.5847,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/7TtsWWTobV7bWPehgIZAlDMPBCvG.webp",
+          "title": "Flawless Anatomy & Realistic Physics",
+          "content": "Say goodbye to 'AI hands' and unnatural poses. We guarantee anatomically correct figures and believable weight distribution, making every carry look effortless and authentic.",
+          "layout": "left"
+        },
+        {
+          "id": 1770023618079.5857,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/n3gdufO0wLkr9JnTWo8NEhVhVEqw.webp",
+          "title": "Dynamic Emotional Connection",
+          "content": "It's more than just a pose; it's a story. Our AI captures the genuine emotion—be it tender affection, heroic determination, or joyful abandon—between the two characters.",
+          "layout": "right"
+        },
+        {
+          "id": 1770023618744.9487,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/79pDBdUokNev3pFsYBzRJjynPzpu.webp",
+          "title": "Versatile Character & Outfit Handling",
+          "content": "From flowing wedding gowns and intricate armor to modern street fashion, the model expertly renders fabrics and details, adapting to any style you envision.",
+          "layout": "left"
+        },
+        {
+          "id": 1770023619263.1396,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/foklKJ0O74l51QL9RV8hTRCFEhwV.webp",
+          "title": "Diverse Storytelling Potential",
+          "content": "Craft anything from epic fantasy rescues and heartwarming romantic scenes to personal fan art or humorous, role-reversed memes.",
+          "layout": "right"
+        },
+        {
+          "id": 1770024221927.2039,
+          "type": "heading",
+          "text": "Unveil Your Vision - Explore Endless Styles",
+          "level": 2
+        },
+        {
+          "id": 1770024293888.2375,
+          "type": "table",
+          "headers": [
+            "Style",
+            "Description",
+            "Ideal For"
+          ],
+          "rows": [
+            [
+              "Enchanted Fairytale",
+              "Dreamy castles, starlit forests, flowing medieval attire, and magical auras.",
+              "Fan Art, Romantic Novels, Fantasy Games"
+            ],
+            [
+              "Modern Romance",
+              "Elegant weddings, urban settings, cozy home scenes, with contemporary fashion.",
+              "Anniversary Gifts, Personalized Art, Invitations"
+            ],
+            [
+              "Action & Heroic Saga",
+              "Dramatic rescues, battlefields, superhero aesthetics, dynamic motion blur.",
+              "Concept Art, Comic Book Covers, Movie Posters"
+            ],
+            [
+              "Anime & Manga Dream",
+              "Iconic art styles, expressive characters, vibrant colors, and dynamic compositions.",
+              "OC Art, Fandom Creations, Profile Pictures"
+            ],
+            [
+              "Whimsical & Humorous",
+              "Unexpected characters (e.g., animals carrying humans), funny expressions, absurd scenarios.",
+              "Memes, Birthday Cards, Lighthearted Content"
+            ]
+          ]
+        },
+        {
+          "id": 1770024583828.2085,
+          "type": "heading",
+          "text": "Master the Magic: Pro Prompting Tips",
+          "level": 2
+        },
+        {
+          "id": 1770024584323.7976,
+          "type": "rich_text",
+          "content": "<p data-path-to-node=\"17\"><i data-path-to-node=\"17\" data-index-in-node=\"0\">Unlock unparalleled results with these insider keywords.</i></p><p><!--StartFragment--><!--EndFragment--></p><p data-path-to-node=\"18\">Getting the perfect princess carry is all about precise language. Use these specialized terms to guide the AI to your desired outcome:</p>"
+        },
+        {
+          "id": 1770024758075.1367,
+          "type": "accordion",
+          "items": [
+            {
+              "title": "The Pose",
+              "content": "\"elegant bridal carry,\" \"heroic strong carry,\" \"cradling carefully,\" \"lifted effortlessly,\" \"swept off her feet.\""
+            },
+            {
+              "title": "The Emotion",
+              "content": "\"loving gaze,\" \"tender embrace,\" \"determined expression,\" \"joyful laughter,\" \"blushing shyly.\""
+            },
+            {
+              "title": "Key Details",
+              "content": "\"flowing dress over arm,\" \"hand supporting back,\" \"muscles tensed slightly,\" \"intertwined fingers.\""
+            },
+            {
+              "title": "Environment & Lighting",
+              "content": "\"golden hour glow,\" \"starlight twinkle,\" \"rain-slicked city,\" \"spotlight effect.\""
+            }
+          ],
+          "style": "default"
+        },
+        {
+          "id": 1770024984506.9053,
+          "type": "prompts",
+          "items": [
+            {
+              "label": "",
+              "prompt": "Cinematic wide shot, golden hour lighting, a tall athletic Caucasian man performing a strong yet tender princess carry for a blonde woman on a pristine beach. Her light blue chiffon dress is caught in the ocean breeze, flowing beautifully. They are walking along the shoreline with gentle waves lapping at their feet. Intense eye contact, backlighting creating a glowing halo effect around their hair. 8k resolution, romantic aesthetic, masterpiece, sunset colors of orange and pink."
+            },
+            {
+              "label": "",
+              "prompt": "Photorealistic, high-end lifestyle photography. A handsome European man in a white linen shirt carrying his partner in his arms (princess carry) on a sunny Mediterranean beach. Both are barefoot, laughter and genuine smiles, messy wind-swept hair. Clear turquoise water in the background, soft white sand. Natural skin textures, sunlight reflecting off the water. Shot on Sony A7R IV, 50mm lens, shallow depth of field, bright and airy."
+            },
+            {
+              "label": "",
+              "prompt": "Epic fantasy romance, oil painting style but realistic details. An athletic Caucasian knight or prince carrying a blonde princess in an ornate, heavy velvet dress. Setting is a grand baroque ballroom with golden chandeliers. Dramatic lighting, dust motes dancing in the sunbeams. The way he holds her shows both strength and extreme gentleness. Deep emotional connection, rich color palette (gold, crimson, emerald), highly detailed embroidery."
+            },
+            {
+              "label": "",
+              "prompt": "Candid photography, soft natural morning light. A fit Caucasian couple in a sun-drenched modern loft. The man is tenderly carrying her (princess carry) towards a large floor-to-ceiling window. He is wearing a white linen shirt, she is in a soft knitted sweater. Intimate gaze, messy hair, genuine smiles. High-end lifestyle photography, soft shadows, airy and bright aesthetic, shot on 35mm lens."
+            },
+            {
+              "label": "",
+              "prompt": "Extreme detail, medium shot. A Caucasian couple at the beach during twilight. The man is holding her in a protective princess carry. She has her arms wrapped tightly around his neck, forehead leaning against his. Emotional intimacy, focus on their expressions of love. The woman's silk dress is slightly damp from the sea spray. Cool blue tones of the ocean contrasting with the warm skin tones. Moody atmosphere, soft bokeh, ultra-detailed textures."
+            }
+          ]
+        },
+        {
+          "id": 1770025162308.1177,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q: Can I create a \"Heroine Carry\" or customize who is carrying whom?",
+              "answer": "A: Absolutely! Our generator is flexible. Simply describe the roles in your prompt"
+            },
+            {
+              "question": "Q: Does it support different body types and sizes?",
+              "answer": "A: Yes, we've trained our AI on a diverse dataset to ensure princess carries look natural and respectful across various body proportions and styles."
+            },
+            {
+              "question": "Q: Is there a cost to use the Princess Carry Generator?",
+              "answer": "A: No, this specialized tool, like many others on our platform, is completely free to use. Unleash your creativity without any barriers!"
+            },
+            {
+              "question": "Q: How do I ensure the best possible quality?",
+              "answer": "A: Start with a clear, detailed prompt. Experiment with the style keywords from Section 3, and don't hesitate to iterate!"
+            }
+          ]
+        },
+        {
+          "id": 1770025250036.4026,
+          "type": "cta",
+          "title": "Your Fairytale Awaits. Create Your Perfect Moment Now.",
+          "description": "The ultimate romantic gesture, reimagined by AI. Start generating breathtaking Princess Carry scenes",
+          "button_text": "Bring Our Romance to Life ❤️",
+          "button_link": "https://example.com/generate?type=video_effects&model=princess-carry-generator-0u8d",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Capture This Moment Foreve",
+      "hero_button_link": "https://example.com/generate?type=video_effects&model=princess-carry-generator-0u8d",
+      "hero_button_style": "remix",
+      "featured_image_focus": "50,39"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 142,
+    "created_at": "2026-02-02 18:13:54.328689+08:00",
+    "updated_at": "2026-08-20 15:42:22.327982+08:00",
+    "sort_order": 0,
+    "meta_title": "Princess Carry Generator - Create Your Perfect Romantic Masterpiece",
+    "meta_description": "Design the perfect princess carry scene! Customize poses, characters, and styles to create your own romantic digital art in just a few clicks.",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-01 00:41:00+08:00",
+    "category_id": null,
+    "generation_model_id": 71
+  },
+  {
+    "id": 6,
+    "slug": "ai-muscle-generator",
+    "title": "AI Muscle Generator - Sculpt Your Peak Physique",
+    "excerpt": "The world’s most advanced AI for anatomical precision. From shredded aesthetics to massive powerlifter frames, generate hyper-realistic muscle structures with studio-quality lighting.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/usJnQdxlXaEAwvA0dZjzLO0yi932.webp",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1770023269586.3745,
+          "type": "video",
+          "video_url": "https://cdn.vidgenerator.ai/plsztMna2McRlk5JC5zA9sG5Rfy7.mp4",
+          "poster_url": "https://cdn.vidgenerator.ai/i3tx4TaX1SxjDFQgsRqyysHWVLLx.webp",
+          "autoplay": true,
+          "media_shadow": "2xl",
+          "media_glow": "purple",
+          "media_size": "full"
+        },
+        {
+          "id": 1770023543098.8145,
+          "type": "heading",
+          "text": "Why our Muscle Generator leads the industry",
+          "level": 2
+        },
+        {
+          "id": 1770023614201.5847,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/v4AyZ5IowguMytIjxRe3qw9XXSem.webp",
+          "title": "True Anatomical Precision",
+          "content": "No more \"random bumps.\" Our AI understands muscle insertion points, vascularity, and how muscle groups interact under tension.",
+          "layout": "left"
+        },
+        {
+          "id": 1770023618079.5857,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/BXgtxomOBEv4petRYU401of6QHYu.webp",
+          "title": "Realistic Skin & Vascularity",
+          "content": "Capture the fine details: micro-textures of the skin, realistic veins (vascularity), and the authentic sheen of sweat under gym lights.",
+          "layout": "right"
+        },
+        {
+          "id": 1770023618744.9487,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/oggp28wdir6WCmPeqc4yt0jjboFx.webp",
+          "title": "Dynamic Lighting & Shadow",
+          "content": "Hard-shadow \"cellar\" lighting or soft-box \"fitness magazine\" aesthetics. Our engine masters the lighting that makes muscles pop.",
+          "layout": "left"
+        },
+        {
+          "id": 1770023619263.1396,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/b0o7N1aeib18DPSQYtPwn9YPgFpC.webp",
+          "title": "Proportion Mastery",
+          "content": "Maintain the \"Golden Ratio.\" Whether you want a lean \"Ottermode\" or a massive \"Mass Monster,\" the AI preserves natural body proportions.",
+          "layout": "right"
+        },
+        {
+          "id": 1770024221927.2039,
+          "type": "heading",
+          "text": "Tailor the intensity to your vision",
+          "level": 2
+        },
+        {
+          "id": 1770024293888.2375,
+          "type": "table",
+          "headers": [
+            "Physique Type",
+            "Visual Style",
+            "Best For"
+          ],
+          "rows": [
+            [
+              "Aesthetic Lean",
+              "High definition, visible abs, \"beach body\" look.",
+              "Fitness Modeling, Fashion"
+            ],
+            [
+              "Classic Physique",
+              "V-taper, small waist, flowing muscle lines.",
+              "Golden Era Art, Bodybuilding"
+            ],
+            [
+              "Mass Monster",
+              "Extreme volume, thick muscle density, powerful aura.",
+              "Fantasy Warriors, Powerlifting"
+            ],
+            [
+              "Functional Athlete",
+              "Lean, wiry strength, explosive movement feel.",
+              "Sports Concept Art, Action Scenes"
+            ]
+          ]
+        },
+        {
+          "id": 1770024583828.2085,
+          "type": "heading",
+          "text": "Pro Prompting: The \"Gym\" Vocabulary",
+          "level": 2
+        },
+        {
+          "id": 1770024584323.7976,
+          "type": "rich_text",
+          "content": "<p data-path-to-node=\"17\"><!--StartFragment-->Use these \"power keywords\" to maximize your results:<!--EndFragment--></p>"
+        },
+        {
+          "id": 1770024758075.1367,
+          "type": "accordion",
+          "items": [
+            {
+              "title": "Muscle Detail",
+              "content": "\"Striated quads,\" \"feathered triceps,\" \"serratus clarity,\" \"roadmap vascularity.\""
+            },
+            {
+              "title": "The Pump",
+              "content": "\"Muscle engorgement,\" \"post-workout pump,\" \"tensed muscles,\" \"flexing.\""
+            },
+            {
+              "title": "The Atmosphere",
+              "content": "\"Gritty garage gym,\" \"overhead spotlights,\" \"magnesium chalk dust,\" \"dramatic chiaroscuro lighting.\""
+            }
+          ],
+          "style": "default"
+        },
+        {
+          "id": 1770024984506.9053,
+          "type": "prompts",
+          "items": [
+            {
+              "label": "Hardcore Gym Realism",
+              "prompt": "A hyper-realistic close-up of a massive Caucasian male bodybuilder performing a heavy deadlift in a gritty, industrial-style gym. Detailed sweat dripping down his forehead, skin texture showing visible pores and bulging veins (vascularity). Cinematic moody lighting, dust particles dancing in the backlight, 4k, high frame rate, slow motion as the muscles contract."
+            },
+            {
+              "label": "Female Power & Aesthetics",
+              "prompt": "A powerful Western athletic woman with defined abdominal muscles and toned arms training at an outdoor beachfront gym. Golden hour sunlight highlighting her muscle definition. Her hair tied back, wearing sleek professional sportswear. The camera pans around her as she performs a pull-up, showing intense back muscle engagement. Photorealistic, vibrant colors, 8k resolution."
+            },
+            {
+              "label": "Classical Statue Aesthetic",
+              "prompt": "Cinematic shot of a muscular Western male posing like a Greek god, minimalist black background. Dramatic chiaroscuro lighting (rim lighting) emphasizing the peak of the biceps and the depth of the chest muscles. High contrast, monochrome aesthetic, smooth skin texture with a subtle oily sheen. Extremely detailed muscle anatomy, 4k, masterpiece."
+            },
+            {
+              "label": "Action Movie Hero",
+              "prompt": "An intense action sequence featuring a muscular Western man in a tactical vest, running through an urban environment. Forearm muscles rippling as he climbs over an obstacle. Hyper-detailed skin, sweat, and realistic movement physics. Shallow depth of field with a blurred city background. High-octane energy, cinematic motion blur, 4k."
+            }
+          ]
+        },
+        {
+          "id": 1770025162308.1177,
+          "type": "faq",
+          "items": [
+            {
+              "question": "Q: Can I control the level of muscle definition and body fat?",
+              "answer": "A: Absolutely. You can fine-tune the look by using keywords like \"shredded\" or \"ripped\" for low body fat, or \"off-season\" and \"bulky\" for a high-mass, powerful look."
+            },
+            {
+              "question": "Q: Does the generator support both male and female physiques?",
+              "answer": "A: Yes. Our AI is trained on a wide range of muscular structures, from the lean, toned lines of bikini-fitness athletes to the extreme muscularity of professional female and male bodybuilders."
+            },
+            {
+              "question": "Q: Can I generate muscles on specific characters or in different art styles?",
+              "answer": "A: Definitely. Whether you want a hyper-realistic gym photo, a 3D superhero render, or a classic Greek marble statue aesthetic, the AI adapts to your chosen style while maintaining anatomical integrity."
+            },
+            {
+              "question": "Is it suitable for female fitness art?",
+              "answer": "A: Absolutely. Our generator is trained on diverse muscular structures for all genders, from bikini-fitness to high-level bodybuilding."
+            },
+            {
+              "question": "Q: Can I adjust the body fat percentage?",
+              "answer": "A: Yes! By using keywords like \"shredded,\" \"dry,\" or \"bulking,\" you can control the level of definition and body fat."
+            }
+          ]
+        },
+        {
+          "id": 1770025250036.4026,
+          "type": "cta",
+          "title": "Stop Dreaming. Start Sculpting",
+          "description": "Unleash the power of the most advanced AI muscle engine today.",
+          "button_text": "Transform My Vision ⚡",
+          "button_link": "https://example.com/generate?type=video_effects&model=ai-muscle-generator-z3bo",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Sculpt My Physique Now 🔥",
+      "hero_button_link": "https://example.com/generate?type=video_effects&model=ai-muscle-generator-z3bo",
+      "hero_button_style": "remix"
+    },
+    "status": "PUBLISHED",
+    "is_featured": false,
+    "view_count": 403,
+    "created_at": "2026-02-02 18:32:01.078372+08:00",
+    "updated_at": "2026-08-25 14:15:45.194726+08:00",
+    "sort_order": 1,
+    "meta_title": "AI Muscle Generator: Create Realistic Physiques & Anatomy",
+    "meta_description": "Generate hyper-realistic muscle art for free. Experience anatomical precision, shredded definition, and professional gym lighting in seconds.",
+    "category": null,
+    "tags": [],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-02-02 10:34:00+08:00",
+    "category_id": null,
+    "generation_model_id": 56
+  },
+  {
+    "id": 2,
+    "slug": "ai-girl-girlfriend",
+    "title": "AI Girl & Girlfriend Video Generator",
+    "excerpt": "Customize your ideal AI girlfriend and generate stunning, lifelike videos in seconds. Experience realistic interactions with our advanced AI video creator.",
+    "content": "",
+    "featured_image": "https://cdn.vidgenerator.ai/paYwBYpBEF60NXva8k7O7c00Xbua.png",
+    "icon": "🚀",
+    "config": {
+      "components": [
+        {
+          "id": 1769483163526.5908,
+          "type": "heading",
+          "text": "AI Girl Generator: See the Possibilities",
+          "level": 2
+        },
+        {
+          "id": 1769483196480.6138,
+          "type": "multi_image",
+          "images": [
+            {
+              "image_url": "https://cdn.vidgenerator.ai/Sa1bYVRwsuhGEUBgJiHEJX7Zwfbc.webp",
+              "caption": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/D6p3JgsKf7cxI8tQQaswAdkImRbh.webp",
+              "caption": ""
+            },
+            {
+              "image_url": "https://cdn.vidgenerator.ai/SrpTGwHl9HcmkXJEeIJtemGCTIGL.webp",
+              "caption": ""
+            }
+          ],
+          "columns": 3
+        },
+        {
+          "id": 1769483350525.3052,
+          "type": "heading",
+          "text": "Which AI Girlfriend Moment Do You Want Create?",
+          "level": 2
+        },
+        {
+          "id": 1769483363876.3196,
+          "type": "rich_text",
+          "content": "<p style=\"text-align: left; \"><!--StartFragment--><span style=\"color: rgb(255, 0, 0); font-family: sans-serif; font-size: 16px;\">See how the AI girlfriend video generator lets you design lifelike, interactive girlfriend experiences for content, entertainment, or just for fun.</span><!--EndFragment--></p>"
+        },
+        {
+          "id": 1769484017275.273,
+          "type": "video",
+          "video_url": "https://cdn.vidgenerator.ai/LojdZwK76dUVdITyMdaawz4GWOtO-stunning-blonde-woman-blows-golden-confetti-studio-shot.mp4",
+          "poster_url": "https://cdn.vidgenerator.ai/XiTDBiCWeaOqvP9vzx6uqsDP8fPJ.webp",
+          "autoplay": true
+        },
+        {
+          "id": 1769485008694.1738,
+          "type": "heading",
+          "text": "How to Create AI Girl & Girlfriend Artwork in Minutes",
+          "level": 2
+        },
+        {
+          "id": 1769485041238.298,
+          "type": "rich_text",
+          "content": "<p><!--StartFragment--><span style=\"color: rgb(255, 0, 0); font-family: &quot;Roboto Flex&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif; font-size: 16px; text-align: center;\">Making your dream AI girl or girlfriend artwork is easier than ever! Follow these simple steps and start creating unique, high-quality videos &amp; images in no time—no editing skills required.</span><!--EndFragment--><!--EndFragment--></p>"
+        },
+        {
+          "id": 1769485064085.0967,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/N9kItig5xVUDNLfyRzx2FfgrVIz6.jpeg",
+          "title": "Step 1: Pick a Template or Feature",
+          "content": "Browse 300+ styles! Select the AI video generator for action (dancing, hugging) or the AI image generator for beautiful snapshots.",
+          "layout": "left"
+        },
+        {
+          "id": 1769485128468.4492,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/G0wp1IqtMzC0SASRJ73mUfv52UOB.jpeg",
+          "title": "Step 2: Upload or Describe Your Vision",
+          "content": "Upload a reference photo to base your character on, or simply type in a text prompt describing her appearance, personality, and setting.",
+          "layout": "right"
+        },
+        {
+          "id": 1769485172253.7131,
+          "type": "image_text",
+          "image_url": "https://cdn.vidgenerator.ai/Wq5UfUGNZSAMyw1AejCKotEf1wYC.webp",
+          "title": " Step 3: Generate & Enjoy",
+          "content": "Press the \"Create\" button and receive your custom artwork instantly. Save your AI girl art and use it for social media, storytelling, or fun.",
+          "layout": "left"
+        },
+        {
+          "id": 1769764114983.2266,
+          "type": "gallery",
+          "works": [
+            {
+              "id": 3517,
+              "file_url": "https://cdn.vidgenerator.ai/6uE63ki5NNbvJeXLviVWjiSHTxPb.jpg",
+              "title": "Female Professor Portrait | Academic Classroom Photography",
+              "url_slug": "C1IeK9eCpc9-female-professor-portrait-academic-classroom-photography",
+              "short_code": "C1IeK9eCpc9",
+              "type": null
+            },
+            {
+              "id": 3516,
+              "file_url": "https://cdn.vidgenerator.ai/dPu54mNeP7EenWVoWG29oMlpGoRf.jpg",
+              "title": "Winter Night Portrait | Snowy Landscape Cinematic Video",
+              "url_slug": "SKU566kVNWC-winter-night-portrait-snowy-landscape-cinematic-video",
+              "short_code": "SKU566kVNWC",
+              "type": null
+            },
+            {
+              "id": 3456,
+              "file_url": "https://cdn.vidgenerator.ai/ZN45UGrXfd7VlaSHdkSKtICix4gc.jpg",
+              "title": "Woman Sunbathing on Balcony: Serenity in an Old Town",
+              "url_slug": "7SMH0CZC6cc-a-woman-sunbathes-on-a-tiny-balcony-the-warm-sunlight",
+              "short_code": "7SMH0CZC6cc",
+              "type": null
+            },
+            {
+              "id": 3452,
+              "file_url": "https://cdn.vidgenerator.ai/IobIhl36jahHJRGEFingUzANiZlI.jpg",
+              "title": "Hawaiian Woman in Desolate Cityscape: Stylized Fashion",
+              "url_slug": "K5GAJLP7Uhs-hawaiian-woman-in-desolate-cityscape-stylized-fashion",
+              "short_code": "K5GAJLP7Uhs",
+              "type": null
+            },
+            {
+              "id": 3551,
+              "file_url": "https://cdn.vidgenerator.ai/EQDDLWdvkErG5f7aRqjNxhY5UDoU.jpg",
+              "title": "Ballerina Dance Photography: Bold Intimacy & Catwoman Style",
+              "url_slug": "chRR6lN0XBH-ballerina-dance-photography-bold-intimacy-catwoman-style",
+              "short_code": "chRR6lN0XBH",
+              "type": null
+            },
+            {
+              "id": 3514,
+              "file_url": "https://cdn.vidgenerator.ai/DExEj0HEyTXLwAcG6SvnEpEvDj8A.jpg",
+              "title": "Japanese Model Portrait | Full Body Fashion Photography",
+              "url_slug": "OTAdZCzqTCh-japanese-model-portrait-full-body-fashion-photography",
+              "short_code": "OTAdZCzqTCh",
+              "type": null
+            },
+            {
+              "id": 1950,
+              "file_url": "https://cdn.vidgenerator.ai/aDpSkft7ITSwC4or0lvKl05iDNUw.jpg",
+              "title": "Minimalist Outdoor Fashion Portrait",
+              "url_slug": "elMblaQCkmc-minimalist-outdoor-fashion-portrait",
+              "short_code": "elMblaQCkmc",
+              "type": null
+            },
+            {
+              "id": 3335,
+              "file_url": "https://cdn.vidgenerator.ai/ypZsG16RF1iabYbu1RIjyJmmkaJg.jpg",
+              "title": "Hyper - Realistic Full - Body of Brunette Woman with Neutral Background",
+              "url_slug": "T4RrXhoOIZi-hyper-realistic-full-body-of-brunette-woman-with-neutral-background",
+              "short_code": "T4RrXhoOIZi",
+              "type": null
+            }
+          ],
+          "columns": 4
+        },
+        {
+          "id": 1769764942025.006,
+          "type": "button",
+          "text": "Create Girlfriend Video Now",
+          "link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+          "style": "primary",
+          "target": "_blank"
+        },
+        {
+          "id": 1769485549891.1843,
+          "type": "heading",
+          "text": "FAQs of VidGen AI Girl & Girlfriend Generator",
+          "level": 2
+        },
+        {
+          "id": 1769485629844.1226,
+          "type": "rich_text",
+          "content": "<h4 data-path-to-node=\"4\"><b data-path-to-node=\"4\" data-index-in-node=\"0\">1. How do I stop my character's face from changing between clips?</b></h4><p data-path-to-node=\"5\">Character drift is a common issue in AI generation. To maintain a consistent look, it is best to use a two-step workflow: first, use <b data-path-to-node=\"5\" data-index-in-node=\"133\">VidGen AI</b> to generate a high-quality static image of your character. Once you are happy with the features, upload that specific image into our <b data-path-to-node=\"5\" data-index-in-node=\"276\">Image-to-Video</b> tool. This ensures the engine uses your original character as the \"DNA\" for the motion, keeping her face identical across every video you create.</p><h4 data-path-to-node=\"6\"><b data-path-to-node=\"6\" data-index-in-node=\"0\">2. Why do the movements in my AI videos sometimes look unnatural?</b></h4><p data-path-to-node=\"7\">If a video looks \"glitchy,\" it’s often because the prompt is too chaotic or the motion setting is too high. For natural-looking AI girlfriend content—like a gentle smile or a head tilt—try lowering the motion intensity. In <b data-path-to-node=\"7\" data-index-in-node=\"223\">VidGen AI</b>, keeping the motion scale moderate allows the model to prioritize facial skin textures and realistic eye movements, preventing the \"melting\" effect often seen in high-action AI clips.</p><h4 data-path-to-node=\"8\"><b data-path-to-node=\"8\" data-index-in-node=\"0\">3. What’s the secret to getting photorealistic results instead of \"AI-looking\" art?</b></h4><p data-path-to-node=\"9\">The key lies in the lighting and camera technicals. Instead of just describing the girl, describe the \"shot.\" Using keywords like <i data-path-to-node=\"9\" data-index-in-node=\"130\">85mm lens, depth of field, cinematic lighting,</i> or <i data-path-to-node=\"9\" data-index-in-node=\"180\">shot on 35mm film</i> within <b data-path-to-node=\"9\" data-index-in-node=\"205\">VidGen AI</b> signals the model to mimic professional photography. This moves the output away from a \"digital\" feel and toward a more lifelike, grounded aesthetic.</p><h4 data-path-to-node=\"10\"><b data-path-to-node=\"10\" data-index-in-node=\"0\">4. Can I turn a simple text description directly into a video?</b></h4><p data-path-to-node=\"11\">Yes, you can use the <b data-path-to-node=\"11\" data-index-in-node=\"21\">Text-to-Video</b> feature for quick results. However, for users who want maximum control over the character's appearance (like specific hair color or clothing), we recommend the <b data-path-to-node=\"11\" data-index-in-node=\"195\">Text-to-Image</b> route first. By generating the perfect frame in <b data-path-to-node=\"11\" data-index-in-node=\"257\">VidGen AI</b> before animating it, you save time and credits by ensuring the visual foundation is exactly what you envisioned before the AI starts rendering motion.</p><h4 data-path-to-node=\"12\"><b data-path-to-node=\"12\" data-index-in-node=\"0\">5. How do I fix distorted hands or facial features in my generated images?</b></h4><p><!--StartFragment--><!--EndFragment--></p><p data-path-to-node=\"13\">Even the best models can occasionally struggle with complex details like fingers. If your result isn't perfect, use the <b data-path-to-node=\"13\" data-index-in-node=\"120\">Negative Prompt</b> field. By adding terms like <i data-path-to-node=\"13\" data-index-in-node=\"164\">deformed, extra fingers, or blurry</i> to your <b data-path-to-node=\"13\" data-index-in-node=\"207\">VidGen AI</b> settings, you instruct the AI to actively avoid those common pitfalls. Additionally, using a higher resolution setting at the start helps the engine map out fine details more accurately.</p>"
+        },
+        {
+          "id": 1770082541788.1082,
+          "type": "cta",
+          "title": "Ready to meet her?",
+          "description": "The only limit is your imagination. Start designing your perfect AI companion now for free.",
+          "button_text": "Create Girlfriend Video Now",
+          "button_link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+          "style": "gradient"
+        }
+      ],
+      "hero_button_text": "Create Girlfriend Video Now",
+      "hero_button_link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+      "hero_button_style": "remix",
+      "featured_image_focus": "50,50"
+    },
+    "status": "PUBLISHED",
+    "is_featured": true,
+    "view_count": 337,
+    "created_at": "2026-01-27 11:51:20.275137+08:00",
+    "updated_at": "2026-08-25 19:42:06.283016+08:00",
+    "sort_order": 0,
+    "meta_title": "AI Girl & Girlfriend Video Generator",
+    "meta_description": "Customize your ideal AI girlfriend and generate stunning, lifelike videos in seconds. Experience realistic interactions with our advanced AI video creator.",
+    "category": null,
+    "tags": [
+      "AI girlfriend",
+      "AI video generator",
+      "virtual girlfriend",
+      "AI art",
+      "character creation"
+    ],
+    "meta_keywords": null,
+    "og_image": null,
+    "published_at": "2026-01-25 03:51:00+08:00",
+    "category_id": null,
+    "generation_model_id": 70
+  }
+]

@@ -148,7 +148,7 @@ docker compose up -d
 - 🔧 **Admin Panel**: `http://localhost:3001` (Default Admin: `admin` / Password: `admin123`)
 - 🐍 **Backend API (Swagger Docs)**: `http://localhost:8000/docs`
 
-> 💡 **Automated Master Seed Data**: On container startup, `scripts/seed_all.py` runs automatically to migrate the database schema, create the initial superadmin, import pre-configured AI generation models, credit recharge packages, and SEO settings within 1 minute!
+> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and demo works referencing public CDN media. If CDN media is unavailable, the frontend automatically displays its bundled placeholder. Production API credentials and analytics identifiers are intentionally excluded; analytics templates are imported disabled and must be configured separately.
 
 ---
 
@@ -183,15 +183,15 @@ cp .env.example .env
 #### Initialize Database & Seed Data
 
 ```bash
-# Run Alembic migrations
-alembic upgrade head
+# Optional: configure the initial admin (development defaults are used otherwise)
+export INITIAL_ADMIN_USERNAME=admin
+export INITIAL_ADMIN_PASSWORD=replace-with-a-secure-password
 
-# Run CLI initialization scripts
-python scripts/init_database.py
-python scripts/create_first_admin.py
-python scripts/init_seo_config.py
-python scripts/init_recharge_packages.py
+# Apply migrations, create the admin, and import the complete demo dataset
+python scripts/seed_all.py
 ```
+
+The command is safe to run repeatedly. A failed migration or initialization step exits with a non-zero status instead of continuing with a partial setup.
 
 #### Run FastAPI Development Server
 

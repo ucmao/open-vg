@@ -4,9 +4,7 @@ Unified Master Database Seed & Initialization Script
 This script initializes the database tables and populates all initial required data:
 1. Runs Alembic database migrations (`alembic upgrade head`)
 2. Creates the initial Super Admin account (default: admin / admin123)
-3. Imports AI Generation Models & API Library definitions
-4. Initializes Recharge Packages (Starter, Basic, Popular, Pro)
-5. Initializes SEO System Configurations
+3. Imports full system configurations, page SEOs (Explore, Magic, Create, Blog, Topics enabled), models, workflows, categories, recharge packages, blogs, and sample demo works using public CDN media URLs.
 
 Usage:
     python scripts/seed_all.py
@@ -21,8 +19,6 @@ backend_path = str(backend_dir)
 if backend_path not in sys.path:
     sys.path.insert(0, backend_path)
 
-# Child seed scripts are invoked by file path, so propagate the backend root
-# explicitly instead of relying on the caller's current working directory.
 existing_pythonpath = os.environ.get("PYTHONPATH")
 os.environ["PYTHONPATH"] = (
     f"{backend_path}{os.pathsep}{existing_pythonpath}"
@@ -40,20 +36,30 @@ from app.utils.logger import logger
 
 
 def run_command(cmd_list, description):
-    """Run a sub-script command safely."""
+    """Run a sub-script command with real-time streaming output."""
     logger.info(f"👉 Step: {description}...")
     try:
         python_exe = sys.executable
         full_cmd = [python_exe] + cmd_list
-        result = subprocess.run(full_cmd, capture_output=True, text=True, cwd=backend_dir)
-        if result.returncode == 0:
+        proc = subprocess.Popen(
+            full_cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            cwd=backend_dir,
+            bufsize=1
+        )
+        if proc.stdout:
+            for line in proc.stdout:
+                line_str = line.strip()
+                if line_str:
+                    print(f"   {line_str}", flush=True)
+        proc.wait()
+        if proc.returncode == 0:
             logger.info(f"✅ {description} completed.")
-            if result.stdout.strip():
-                for line in result.stdout.strip().split('\n'):
-                    print(f"   {line}")
             return True
         else:
-            logger.error(f"❌ {description} failed:\n{result.stderr}")
+            logger.error(f"❌ {description} failed (exit code {proc.returncode}).")
             return False
     except Exception as e:
         logger.error(f"❌ Execution error during {description}: {str(e)}")
@@ -61,10 +67,10 @@ def run_command(cmd_list, description):
 
 
 def main():
-    print("=" * 60)
-    print("🚀 VidGen Master Seed & Database Initialization")
-    print("=" * 60)
-    print()
+    print("=" * 65, flush=True)
+    print("🚀 VidGen Master Seed & Database Initialization", flush=True)
+    print("=" * 65, flush=True)
+    print(flush=True)
 
     # Step 1: Migrations
     logger.info("👉 Step 1: Running Alembic Migrations...")
@@ -78,45 +84,34 @@ def main():
         if result.returncode == 0:
             logger.info("✅ Database schema migrated to latest (head).")
         else:
-            logger.error(f"❌ Alembic migration failed:\n{result.stderr}")
+            logger.error(f"❌ Alembic migration failed:\n{result.stderr.strip()}")
             return False
     except Exception as e:
         logger.error(f"❌ Migration exception: {str(e)}")
         return False
 
-    print()
+    print(flush=True)
 
     # Step 2: Create Super Admin
     if not run_command(["scripts/create_first_admin.py"], "Creating Initial Super Admin"):
         return False
 
-    print()
+    print(flush=True)
 
-    # Step 3: Import AI Models
-    if not run_command(["scripts/import_models.py"], "Importing AI Models & API Libraries"):
+    # Step 3: Import Complete Seed Dataset (Configs, Pages, Models, Workflows, Sample Works & Assets)
+    if not run_command(["scripts/import_seed_dataset.py"], "Importing Full Configurations, Pages & Demo Dataset"):
         return False
 
-    print()
-
-    # Step 4: Recharge Packages
-    if not run_command(["scripts/init_recharge_packages.py"], "Initializing Credit Recharge Packages"):
-        return False
-
-    print()
-
-    # Step 5: SEO Configs
-    if not run_command(["scripts/init_seo_config.py"], "Initializing System SEO Configurations"):
-        return False
-
-    print()
-    print("=" * 60)
-    print("🎉 ALL SEED & INITIALIZATION STEPS COMPLETED SUCCESSFULLY!")
-    print("=" * 60)
-    print("  🔑 Admin Login: http://localhost:3001")
-    print("     Username: " + os.getenv("INITIAL_ADMIN_USERNAME", "admin"))
-    print("     Password: [Configured via INITIAL_ADMIN_PASSWORD env variable]")
-    print("=" * 60)
-    print()
+    print(flush=True)
+    print("=" * 65, flush=True)
+    print("🎉 ALL SEED & INITIALIZATION STEPS COMPLETED SUCCESSFULLY!", flush=True)
+    print("=" * 65, flush=True)
+    print("  🔑 Admin Login: http://localhost:3001", flush=True)
+    print("     Username: " + os.getenv("INITIAL_ADMIN_USERNAME", "admin"), flush=True)
+    print("     Password: [Configured via INITIAL_ADMIN_PASSWORD env variable, default: admin123]", flush=True)
+    print("  🌐 Web Frontend: http://localhost:3000 (All pages & demo data enabled)", flush=True)
+    print("=" * 65, flush=True)
+    print(flush=True)
     return True
 
 

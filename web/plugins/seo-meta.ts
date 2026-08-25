@@ -11,8 +11,8 @@ export default defineNuxtPlugin(async () => {
 
   // Determine the base URL for SSR vs Client
   let baseUrl = apiBaseUrl
-  if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-    baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+  if (process.server) {
+    baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
   }
 
   try {

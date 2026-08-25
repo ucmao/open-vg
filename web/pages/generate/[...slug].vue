@@ -27,8 +27,8 @@ if (slugArray.length === 0) {
   const { data: pageStatus } = await useAsyncData('generate-page-status', async () => {
     try {
       let baseUrl = configRuntime.public.apiBaseUrl as string
-      if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-        baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+      if (process.server) {
+        baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
       }
 
       const response = await $fetch<any>(`${baseUrl}/api/seo/page-status/generate`)
@@ -58,8 +58,8 @@ const { data: generatePageData } = await useAsyncData(`generate-page-${categoryP
   if (slugArray.length === 0) return null
   try {
     let baseUrl = config.public.apiBaseUrl as string
-    if (process.server && (!baseUrl || baseUrl.startsWith('/'))) {
-      baseUrl = process.env.NUXT_PUBLIC_INTERNAL_API_URL || 'http://localhost:8000'
+    if (process.server) {
+      baseUrl = process.env.NUXT_INTERNAL_API_URL || process.env.NUXT_PUBLIC_INTERNAL_API_URL || baseUrl || 'http://localhost:8000'
     }
 
     const response = await $fetch<any>(`${baseUrl}/api/admin/generate-pages/by-path${categoryPath}`)

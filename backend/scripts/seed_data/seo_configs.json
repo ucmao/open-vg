@@ -1,0 +1,119 @@
+[
+  {
+    "id": 17,
+    "config_key": "custom_code_head_1768468415668",
+    "config_value": "<script type=\"text/javascript\">\n    (function(c,l,a,r,i,t,y){\n        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n        t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;\n        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, \"clarity\", \"script\", \"YOUR_CLARITY_PROJECT_ID\");\n</script>",
+    "is_enabled": false,
+    "description": "Clarity",
+    "created_at": "2026-01-15 17:13:36.052152+08:00",
+    "updated_at": "2026-01-19 20:58:59.724296+08:00"
+  },
+  {
+    "id": 1,
+    "config_key": "base_url",
+    "config_value": "https://example.com",
+    "is_enabled": true,
+    "description": "网站基础域名（用于生成站点地图及 robots.txt 文件）",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-01-15 15:00:20.669787+08:00"
+  },
+  {
+    "id": 3,
+    "config_key": "sitemap_include_blogs",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含博客文章页",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-01-20 13:25:51.333905+08:00"
+  },
+  {
+    "id": 18,
+    "config_key": "custom_code_head_1768468779955",
+    "config_value": "<meta name=\"google-site-verification\" content=\"YOUR_GOOGLE_SITE_VERIFICATION_TOKEN\" />",
+    "is_enabled": false,
+    "description": "Google Search Console ",
+    "created_at": "2026-01-15 17:19:40.527832+08:00",
+    "updated_at": "2026-01-15 17:27:17.237690+08:00"
+  },
+  {
+    "id": 19,
+    "config_key": "custom_code_head_1768469211769",
+    "config_value": "<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-XXXXXXXXXX');\n</script>",
+    "is_enabled": false,
+    "description": "Google Analytics",
+    "created_at": "2026-01-15 17:26:52.158104+08:00",
+    "updated_at": "2026-01-15 17:35:25.036839+08:00"
+  },
+  {
+    "id": 20,
+    "config_key": "sitemap_include_categories",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含作品分类页面 (/category/...)",
+    "created_at": "2026-01-23 19:27:12.716985+08:00",
+    "updated_at": null
+  },
+  {
+    "id": 4,
+    "config_key": "sitemap_include_topics",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含专题页",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-02-03 11:36:31.091164+08:00"
+  },
+  {
+    "id": 5,
+    "config_key": "sitemap_include_users",
+    "config_value": "false",
+    "is_enabled": true,
+    "description": "在站点地图中包含用户主页",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-03-05 22:49:46.310725+08:00"
+  },
+  {
+    "id": 6,
+    "config_key": "robots_txt_custom",
+    "config_value": "User-agent: *\nContent-Signal: search=yes,ai-train=no\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /auth/\nDisallow: /payment/\n\nSitemap: https://example.com/sitemap.xml",
+    "is_enabled": true,
+    "description": "自定义 robots.txt 内容（留空则使用默认配置）",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-03-05 22:50:05.003922+08:00"
+  },
+  {
+    "id": 21,
+    "config_key": "sitemap_include_effects",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含特效分类页面 (/effects/...)",
+    "created_at": "2026-01-23 19:27:12.716985+08:00",
+    "updated_at": "2026-03-05 22:50:55.284132+08:00"
+  },
+  {
+    "id": 22,
+    "config_key": "sitemap_include_generate",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含生成分类页面 (/generate/...)",
+    "created_at": "2026-03-05 23:28:54.394789+08:00",
+    "updated_at": "2026-03-05 23:29:48.126697+08:00"
+  },
+  {
+    "id": 23,
+    "config_key": "custom_code_head_1774746275695",
+    "config_value": "<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-00000000000\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'AW-00000000000');\n</script>",
+    "is_enabled": false,
+    "description": "Google Ads",
+    "created_at": "2026-03-29 09:04:36.235423+08:00",
+    "updated_at": null
+  },
+  {
+    "id": 2,
+    "config_key": "sitemap_include_works",
+    "config_value": "true",
+    "is_enabled": true,
+    "description": "在站点地图中包含作品页",
+    "created_at": "2026-01-10 00:52:54.486752+08:00",
+    "updated_at": "2026-07-15 09:44:59.855853+08:00"
+  }
+]

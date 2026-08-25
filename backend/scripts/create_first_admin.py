@@ -42,6 +42,7 @@ def main():
     except Exception as e:
         db.rollback()
         print(f"❌ Error creating initial admin: {str(e)}")
+        raise
     finally:
         db.close()
 
