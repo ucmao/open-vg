@@ -161,7 +161,7 @@
         <section>
           <h2 class="text-2xl font-semibold text-white">Data Deletion Requests (How to Delete Your Data)</h2>
           <p>
-            You may request deletion of your personal data at any time. To submit a deletion request, please email us at <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a> with the subject line "Data Deletion Request". In your request, please include the email address you used with VidGen (if applicable) and any relevant details that help us verify and locate your data (e.g., order/transaction reference).
+            You may request deletion of your personal data at any time. To submit a deletion request, please email us at <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a> with the subject line "Data Deletion Request". In your request, please include the email address you used with VidGen (if applicable) and any relevant details that help us verify and locate your data (e.g., order/transaction reference).
           </p>
           <p>
             We may ask for additional information to verify your identity before processing the request. Once verified, we will delete or anonymize the personal data associated with your use of our Website/Software/Mobile app within 30 days, unless we are required to retain certain information to comply with legal, contractual, tax, or security obligations.
@@ -198,9 +198,9 @@
             If you have any questions about this Privacy Notice, please contact us:
           </p>
           <div class="mt-4 space-y-2">
-            <p><strong class="text-white">Company Name:</strong> VIDGEN TECHNOLOGY LIMITED</p>
-            <p><strong class="text-white">Business Address:</strong> Room 1001, Cloud End, 111 Tung Chau Street, Tai Kok Tsui, Hong Kong</p>
-            <p><strong class="text-white">Email:</strong> <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a></p>
+            <p><strong class="text-white">Company Name:</strong> {{ config.public.companyName }}</p>
+            <p><strong class="text-white">Business Address:</strong> {{ config.public.companyAddress }}</p>
+            <p><strong class="text-white">Email:</strong> <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a></p>
           </div>
         </section>
       </div>
@@ -209,6 +209,8 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+
 useHead({
   title: 'Privacy Policy - VidGen',
   meta: [

@@ -6,42 +6,48 @@
       <p class="text-gray-600 mt-1">{{ $adminT("Manage all registered users and view their detailed information and statistics", "管理所有注册用户，查看其详细信息和统计数据") }}</p>
     </div>
 
-    <!-- Filters:  + ， -->
-    <div class="bg-white border rounded-lg shadow-sm mb-6 overflow-hidden">
-      <div class="p-4 flex flex-wrap items-center gap-3">
-        <div class="flex flex-wrap items-center gap-3 flex-1">
-          <div class="flex items-center gap-2" style="min-width: 140px;">
-            <span class="text-sm text-gray-500 whitespace-nowrap w-12">ID</span>
-            <input
-              v-model="filters.search_id"
-              type="text"
-              :placeholder="$adminT('User ID', '用户 ID')"
-              class="w-24 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              @keyup.enter="applySearch"
-            />
-          </div>
-          <div class="flex items-center gap-2" style="min-width: 140px;">
-            <span class="text-sm text-gray-500 whitespace-nowrap w-12">{{ $adminT("Nick", "昵称") }}</span>
-            <input
-              v-model="filters.search_nickname"
-              type="text"
-              :placeholder="$adminT('Search nicknames', '搜索昵称')"
-              class="w-28 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              @keyup.enter="applySearch"
-            />
-          </div>
-          <div class="flex items-center gap-2" style="min-width: 140px;">
-            <span class="text-sm text-gray-500 whitespace-nowrap w-12">Handle</span>
-            <input
-              v-model="filters.search_handle"
-              type="text"
-              :placeholder="$adminT('Search handle', '搜索 handle')"
-              class="w-28 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              @keyup.enter="applySearch"
-            />
-          </div>
+    <!-- Filters -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-4">
+      <!-- Main Filter Bar -->
+      <div class="flex flex-wrap items-center gap-4">
+        <!-- ID Filter -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500 whitespace-nowrap">ID</span>
+          <input
+            v-model="filters.search_id"
+            type="text"
+            :placeholder="$adminT('User ID', '用户 ID')"
+            class="w-28 border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            @keyup.enter="applySearch"
+          />
         </div>
-        <div class="flex items-center gap-2" style="min-width: 280px;">
+
+        <!-- Nickname Filter -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Nick", "昵称") }}</span>
+          <input
+            v-model="filters.search_nickname"
+            type="text"
+            :placeholder="$adminT('Search nicknames', '搜索昵称')"
+            class="w-36 border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            @keyup.enter="applySearch"
+          />
+        </div>
+
+        <!-- Handle Filter -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500 whitespace-nowrap">Handle</span>
+          <input
+            v-model="filters.search_handle"
+            type="text"
+            :placeholder="$adminT('Search handle', '搜索 handle')"
+            class="w-36 border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            @keyup.enter="applySearch"
+          />
+        </div>
+
+        <!-- Registration Time Presets -->
+        <div class="flex items-center gap-2">
           <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Registration time", "注册时间") }}</span>
           <div class="flex items-center gap-1 flex-wrap">
             <button
@@ -49,8 +55,8 @@
               :key="preset.key"
               type="button"
               :class="[
-                'px-2 py-1 text-xs font-medium border rounded transition-colors',
-                activeTimePreset === preset.key ? 'bg-blue-100 text-blue-700 border-blue-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                'px-2.5 py-1 text-xs font-medium border rounded-md transition-colors whitespace-nowrap',
+                activeTimePreset === preset.key ? 'bg-blue-50 text-blue-600 border-blue-200 font-semibold' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
               ]"
               @click="applyTimePreset(preset.key)"
             >
@@ -58,48 +64,57 @@
             </button>
           </div>
         </div>
-        <div class="flex items-center gap-2 flex-shrink-0">
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 ml-auto">
           <button
             @click="loadUsers"
-            class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-          > {{ $adminT("Filter", "筛选") }} </button>
+            class="px-3.5 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+          >
+            {{ $adminT("Filter", "筛选") }}
+          </button>
           <button
             @click="resetFilters"
-            class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
-          > {{ $adminT("Reset", "重置") }} </button>
+            class="px-3.5 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            {{ $adminT("Reset", "重置") }}
+          </button>
           <button
             type="button"
             @click="showMoreFilters = !showMoreFilters"
-            class="px-3 py-1.5 text-sm rounded border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-1"
+            class="px-3 py-1.5 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
           >
-
-            <ChevronDown class="w-4 h-4 transition-transform" :class="showMoreFilters ? 'rotate-180' : ''" />
+            <span class="whitespace-nowrap">{{ showMoreFilters ? $adminT("Collapse", "收起") : $adminT("More", "更多") }}</span>
+            <ChevronDown class="w-4 h-4 transition-transform duration-200" :class="showMoreFilters ? 'rotate-180' : ''" />
           </button>
         </div>
       </div>
 
-      <!-- Filter： +  +  -->
-      <div v-show="showMoreFilters" class="border-t border-gray-100 bg-gray-50/60 px-4 py-4">
-        <div class="flex flex-wrap items-end gap-x-6 gap-y-3">
+      <!-- More Filters Panel -->
+      <div v-show="showMoreFilters" class="mt-4 pt-4 border-t border-gray-100 bg-gray-50/50 -mx-4 -mb-4 p-4 rounded-b-xl">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <!-- Start & End Time -->
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20">{{ $adminT("Start and end time", "起止时间") }}</span>
+            <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Start and end time", "起止时间") }}</span>
             <input
               v-model="filters.created_after"
               type="datetime-local"
-              class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white"
             />
-            <span class="text-gray-400">{{ $adminT("to", "至") }}</span>
+            <span class="text-gray-400 text-sm whitespace-nowrap">{{ $adminT("to", "至") }}</span>
             <input
               v-model="filters.created_before"
               type="datetime-local"
-              class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white"
             />
           </div>
+
+          <!-- Client Source -->
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20">{{ $adminT("Client source", "客户来源") }}</span>
+            <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Client source", "客户来源") }}</span>
             <select
               v-model="filters.source"
-              class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[100px]"
+              class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[130px] bg-white"
               @change="loadUsers"
             >
               <option value="">{{ $adminT("All", "全部") }}</option>
@@ -107,16 +122,18 @@
               <option value="VIRTUAL">{{ $adminT("Virtual users", "虚拟用户") }}</option>
             </select>
           </div>
+
+          <!-- Registration Method -->
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20">{{ $adminT("Registration", "注册方式") }}</span>
+            <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Registration", "注册方式") }}</span>
             <select
               v-model="filters.registration_method"
-              class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[110px]"
+              class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[150px] bg-white"
               @change="loadUsers"
             >
               <option value="">{{ $adminT("All", "全部") }}</option>
               <option value="REGISTER">{{ $adminT("Mailbox Registration", "邮箱注册") }}</option>
-              <option value="GOOGLE">{{ $adminT("Google", "Google 登录") }} </option>
+              <option value="GOOGLE">{{ $adminT("Google", "Google 登录") }}</option>
               <option value="ADMIN_CREATED">{{ $adminT("Administrator Create", "管理员创建") }}</option>
               <option value="IMPORT">{{ $adminT("Import creation", "导入创建") }}</option>
             </select>
@@ -134,7 +151,7 @@
           class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
           @click="setStatusFilter('')"
         >
-
+          {{ $adminT("All", "全部") }}
           <span v-if="statusCounts.all !== null" class="ml-1 text-gray-500">({{ statusCounts.all }})</span>
         </button>
         <button
@@ -143,7 +160,7 @@
           class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
           @click="setStatusFilter('true')"
         >
-
+          {{ $adminT("Normal", "正常") }}
           <span v-if="statusCounts.active !== null" class="ml-1 text-gray-500">({{ statusCounts.active }})</span>
         </button>
         <button
@@ -152,7 +169,7 @@
           class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
           @click="setStatusFilter('false')"
         >
-
+          {{ $adminT("Disabled", "已禁用") }}
           <span v-if="statusCounts.inactive !== null" class="ml-1 text-gray-500">({{ statusCounts.inactive }})</span>
         </button>
       </div>
@@ -435,11 +452,19 @@ function applyTimePreset(key) {
   filters.value.created_before = end
 }
 
-// Status Tab （ /  / ）
+// Status Tab (All / Normal / Disabled)
 const statusCounts = ref({ all: null, active: null, inactive: null })
 async function fetchStatusCounts() {
   try {
     const base = { page: 1, page_size: 1 }
+    if (filters.value.search_id) base.search_id = filters.value.search_id
+    if (filters.value.search_nickname) base.search_nickname = filters.value.search_nickname
+    if (filters.value.search_handle) base.search_handle = filters.value.search_handle
+    if (filters.value.source) base.source = filters.value.source
+    if (filters.value.registration_method) base.registration_method = filters.value.registration_method
+    if (filters.value.created_after) base.created_after = new Date(filters.value.created_after).toISOString()
+    if (filters.value.created_before) base.created_before = new Date(filters.value.created_before).toISOString()
+
     const [rAll, rActive, rInactive] = await Promise.all([
       adminApi.get('/api/admin/users', { params: base }),
       adminApi.get('/api/admin/users', { params: { ...base, is_active: true } }),
@@ -511,7 +536,7 @@ const filters = ref({
   search_nickname: '',
   search_handle: '',
   is_active: '',
-  source: 'REAL',
+  source: '',
   registration_method: '',
   created_after: '',
   created_before: ''
@@ -549,6 +574,7 @@ const loadUsers = async () => {
   } finally {
     loading.value = false
   }
+  fetchStatusCounts()
 }
 
 const loadPage = (newPage) => {
@@ -571,7 +597,7 @@ const resetFilters = () => {
     search_nickname: '',
     search_handle: '',
     is_active: '',
-    source: 'REAL',
+    source: '',
     registration_method: '',
     created_after: '',
     created_before: ''

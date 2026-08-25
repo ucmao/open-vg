@@ -259,7 +259,7 @@
               :class="selectedCategory === category ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
               class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all"
             >
-              {{ category }}
+              {{ getCategoryLabel(category) }}
             </button>
           </div>
           
@@ -267,8 +267,8 @@
           <div class="space-y-6 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
             <div v-for="category in componentCategories" :key="category">
               <div v-if="selectedCategory === category || selectedCategory === ''" class="space-y-3">
-                <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest sticky top-0 bg-white py-2 z-10">
-                  {{ category }}
+                <h4 v-if="category" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest sticky top-0 bg-white py-2 z-10">
+                  {{ getCategoryLabel(category) }}
                 </h4>
                 <div class="grid grid-cols-3 gap-3">
                   <button
@@ -2425,6 +2425,18 @@ const componentCategories = computed(() => {
   const categories = ['', ...new Set(availableComponents.map(c => c.category).filter(Boolean))]
   return categories
 })
+
+const getCategoryLabel = (category: string) => {
+  const map: Record<string, string> = {
+    '': adminT("All", "全部"),
+    '基础内容': adminT("Basic Content", "基础内容"),
+    '媒体': adminT("Media", "媒体"),
+    '交互': adminT("Interactive", "交互"),
+    '展示': adminT("Display", "展示"),
+    '特殊': adminT("Special", "特殊")
+  }
+  return map[category] || category
+}
 
 const getComponentsByCategory = (category: string) => {
   return availableComponents.filter(c => c.category === category)

@@ -80,7 +80,7 @@
         <section>
           <h2 class="text-2xl font-semibold text-white">How to Contact Us</h2>
           <p>
-            If you have any questions about this Cookie Policy, please contact us at <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a>.
+            If you have any questions about this Cookie Policy, please contact us at <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a>.
           </p>
           <p class="mt-4">
             For more information about how we collect and use your personal information, please see our <NuxtLink to="/privacy" class="text-violet-400 hover:text-violet-300">Privacy Policy</NuxtLink>.
@@ -92,6 +92,8 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+
 useHead({
   title: 'Cookie Policy - VidGen',
   meta: [

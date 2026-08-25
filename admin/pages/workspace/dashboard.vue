@@ -66,7 +66,7 @@
     </section>
 
     <!-- Layer 2:  -  -->
-    <section class="mb-6 flex flex-wrap items-center gap-3">
+    <section class="mb-6 flex flex-wrap items-center gap-3 relative z-30">
       <span class="text-sm font-medium text-gray-700">{{ $adminT("Time frame", "时间范围") }}</span>
       <div class="flex flex-wrap items-center gap-2">
         <button
@@ -91,15 +91,15 @@
           </button>
           <div
             v-show="showMoreDropdown"
-            class="absolute left-0 top-full mt-1 py-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[120px]"
+            class="absolute left-0 top-full mt-1 py-1 bg-white border border-gray-200 rounded-xl shadow-xl z-50 min-w-[140px] w-40 whitespace-nowrap overflow-hidden"
           >
             <button
               v-for="opt in moreTimeOptions"
               :key="opt.value"
               type="button"
               @click="setRange(opt.value); showMoreDropdown = false"
-              class="w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
-              :class="timeRange === opt.value ? 'text-blue-600 font-medium' : 'text-gray-700'"
+              class="w-full px-4 py-2 text-left text-sm transition-colors block"
+              :class="timeRange === opt.value ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700 hover:bg-gray-50'"
             >
               {{ opt.label }}
             </button>

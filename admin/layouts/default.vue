@@ -7,14 +7,15 @@
       @click="isSidebarOpen = false"
     ></div>
 
-    <!-- Sidebar: full on mobile (translate), desktop expanded w-52 / collapsed w-16 -->
+    <!-- Sidebar: full on mobile (translate), desktop expanded (custom resizable width) / collapsed w-16 -->
     <aside 
-      class="fixed left-0 top-0 h-full bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 w-52 md:shrink-0"
+      class="fixed left-0 top-0 h-full bg-white border-r border-gray-200 flex flex-col z-50 md:shrink-0"
       :class="[
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'md:translate-x-0',
-        sidebarCollapsed ? 'md:w-16' : 'md:w-52'
+        isResizing ? '!transition-none' : 'transition-[width] duration-300'
       ]"
+      :style="sidebarStyle"
     >
       <!-- Logo / Collapse toggle -->
       <div 
@@ -26,7 +27,7 @@
           class="flex items-center gap-2 min-w-0 overflow-hidden"
           :class="sidebarCollapsed ? 'md:w-0 md:opacity-0 md:pointer-events-none md:overflow-hidden md:invisible' : ''"
         >
-          <img src="/vidgen-logo.png" alt="VidGen Logo" class="h-7 w-auto object-contain shrink-0" />
+          <img src="/vidgen-logo-solid.png" alt="VidGen Logo" class="h-7 w-auto object-contain shrink-0" />
         </NuxtLink>
         <div class="flex items-center shrink-0 gap-1" :class="sidebarCollapsed ? 'md:absolute md:left-1/2 md:-translate-x-1/2' : ''">
           <!-- Desktop: collapse / expand -->
@@ -91,34 +92,34 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('workspace')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('workspace') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <Home class="w-4 h-4 shrink-0" />
-              {{ t('nav.workspace', 'Workspace') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.workspace', 'Workspace')">{{ t('nav.workspace', 'Workspace') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.workspace }"
             />
           </button>
-          <div v-show="expandedGroups.workspace" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.workspace" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/workspace/dashboard"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/workspace/dashboard')"
             >
               <LayoutDashboard class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.dashboard', 'Dashboard') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.dashboard', 'Dashboard')">{{ t('nav.dashboard', 'Dashboard') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/workspace/analytics"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/workspace/analytics')"
             >
               <BarChart3 class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.analytics', 'Analytics') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.analytics', 'Analytics')">{{ t('nav.analytics', 'Analytics') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -127,50 +128,50 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('userCenter')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('userCenter') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <Users class="w-4 h-4 shrink-0" />
-              {{ t('nav.user_management', 'User Management') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.user_management', 'User Management')">{{ t('nav.user_management', 'User Management') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.userCenter }"
             />
           </button>
-          <div v-show="expandedGroups.userCenter" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.userCenter" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/users/list"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/users/list')"
             >
               <UserCircle class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.user_list', 'User List') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.user_list', 'User List')">{{ t('nav.user_list', 'User List') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/users/works"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/users/works')"
             >
               <Image class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.works_list', 'Works Management') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.works_list', 'Works Management')">{{ t('nav.works_list', 'Works Management') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/users/comments"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/users/comments')"
             >
               <MessageSquare class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.comments', 'Comments') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.comments', 'Comments')">{{ t('nav.comments', 'Comments') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/users/sockpuppets"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/users/sockpuppets')"
             >
               <UsersRound class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.sockpuppets', 'Sockpuppets') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.sockpuppets', 'Sockpuppets')">{{ t('nav.sockpuppets', 'Sockpuppets') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -179,50 +180,50 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('moderation')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('moderation') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <ShieldAlert class="w-4 h-4 shrink-0" />
-              {{ t('nav.moderation', 'Content Moderation') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.moderation', 'Content Moderation')">{{ t('nav.moderation', 'Content Moderation') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.moderation }"
             />
           </button>
-          <div v-show="expandedGroups.moderation" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.moderation" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/moderation/reports"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/moderation/reports')"
             >
               <Flag class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.reports', 'Reports') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.reports', 'Reports')">{{ t('nav.reports', 'Reports') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/moderation/nsfw"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/moderation/nsfw')"
             >
               <TriangleAlert class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.nsfw', 'NSFW Moderation') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.nsfw', 'NSFW Moderation')">{{ t('nav.nsfw', 'NSFW Moderation') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/moderation/lexicons"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/moderation/lexicons')"
             >
               <BookMarked class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.lexicon', 'Sensitive Lexicon') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.lexicon', 'Sensitive Lexicon')">{{ t('nav.lexicon', 'Sensitive Lexicon') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/moderation/hidden"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/moderation/hidden')"
             >
               <EyeOff class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.hidden_config', 'Hidden Config') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.hidden_config', 'Hidden Config')">{{ t('nav.hidden_config', 'Hidden Config') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -231,50 +232,50 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('content')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('content') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <BookOpen class="w-4 h-4 shrink-0" />
-              {{ t('nav.content_management', 'Content Operations') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.content_management', 'Content Operations')">{{ t('nav.content_management', 'Content Operations') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.content }"
             />
           </button>
-          <div v-show="expandedGroups.content" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.content" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/content/blog"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/content/blog', false)"
             >
               <FileText class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.blog', 'Blog Posts') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.blog', 'Blog Posts')">{{ t('nav.blog', 'Blog Posts') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/content/topics"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/content/topics')"
             >
               <LayoutGrid class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.topics', 'Topics & Specials') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.topics', 'Topics & Specials')">{{ t('nav.topics', 'Topics & Specials') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/content/taxonomy"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/content/taxonomy')"
             >
               <Tags class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.taxonomy', 'Taxonomy & Tags') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.taxonomy', 'Taxonomy & Tags')">{{ t('nav.taxonomy', 'Taxonomy & Tags') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/content/media"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/content/media')"
             >
               <Package class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.media', 'Media Assets') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.media', 'Media Assets')">{{ t('nav.media', 'Media Assets') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -283,51 +284,51 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('modelDriven')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('modelDriven') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <Lightbulb class="w-4 h-4 shrink-0" />
-              {{ t('nav.model_management', 'Model Management') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.model_management', 'Model Management')">{{ t('nav.model_management', 'Model Management') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.modelDriven }"
             />
           </button>
-          <div v-show="expandedGroups.modelDriven" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.modelDriven" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/models/pricing"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/models/pricing')"
             >
               <BadgeDollarSign class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.pricing', 'Model Pricing') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.pricing', 'Model Pricing')">{{ t('nav.pricing', 'Model Pricing') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/models/list"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/models/list')"
               @click="isSidebarOpen = false"
             >
               <Cpu class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.models_list', 'Models List') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.models_list', 'Models List')">{{ t('nav.models_list', 'Models List') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/models/workflows"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/models/workflows', false)"
             >
               <Workflow class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.workflows', 'Workflows') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.workflows', 'Workflows')">{{ t('nav.workflows', 'Workflows') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/models/api-config"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/models/api-config')"
             >
               <Code class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.api_library', 'API Providers') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.api_library', 'API Providers')">{{ t('nav.api_library', 'API Providers') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -336,50 +337,50 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('assets')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('assets') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <CircleDollarSign class="w-4 h-4 shrink-0" />
-              {{ t('nav.finance', 'Finance & Billing') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.finance', 'Finance & Billing')">{{ t('nav.finance', 'Finance & Billing') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.assets }"
             />
           </button>
-          <div v-show="expandedGroups.assets" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.assets" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/finance/recharge-discount"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/finance/recharge-discount')"
             >
               <Percent class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.discounts', 'Discounts & Offers') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.discounts', 'Discounts & Offers')">{{ t('nav.discounts', 'Discounts & Offers') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/finance/recharges"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/finance/recharges')"
             >
               <CreditCard class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.recharges', 'Recharge Records') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.recharges', 'Recharge Records')">{{ t('nav.recharges', 'Recharge Records') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/finance/credits"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/finance/credits')"
             >
               <TrendingUp class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.credits_log', 'Credits Log') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.credits_log', 'Credits Log')">{{ t('nav.credits_log', 'Credits Log') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/finance/packages"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/finance/packages')"
             >
               <ShoppingBag class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.packages', 'Packages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.packages', 'Packages')">{{ t('nav.packages', 'Packages') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -388,58 +389,58 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('system')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('system') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <Settings class="w-4 h-4 shrink-0" />
-              {{ t('nav.page_management', 'Page Management') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.page_management', 'Page Management')">{{ t('nav.page_management', 'Page Management') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.system }"
             />
           </button>
-          <div v-show="expandedGroups.system" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.system" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/system/page-seo"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/page-seo')"
             >
               <Search class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.primary_pages', 'Primary Pages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.primary_pages', 'Primary Pages')">{{ t('nav.primary_pages', 'Primary Pages') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/system/category-pages"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/category-pages')"
             >
               <Layers class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.category_pages', 'Category Pages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.category_pages', 'Category Pages')">{{ t('nav.category_pages', 'Category Pages') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/system/effects-pages"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/effects-pages')"
             >
               <Zap class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.effects_pages', 'Effects Pages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.effects_pages', 'Effects Pages')">{{ t('nav.effects_pages', 'Effects Pages') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/system/generate-pages"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/generate-pages')"
             >
               <Wand2 class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.generate_pages', 'Generate Pages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.generate_pages', 'Generate Pages')">{{ t('nav.generate_pages', 'Generate Pages') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/system/prompt-settings"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/prompt-settings')"
             >
               <ScrollText class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.prompt_settings', 'Work Detail Pages') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.prompt_settings', 'Work Detail Pages')">{{ t('nav.prompt_settings', 'Work Detail Pages') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -448,34 +449,34 @@
         <div class="nav-group">
           <button
             @click="toggleGroup('website')"
-            class="w-full flex items-center justify-between px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
             :class="isGroupActive('website') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
           >
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
               <Globe class="w-4 h-4 shrink-0" />
-              {{ t('nav.site_management', 'Site Settings') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.site_management', 'Site Settings')">{{ t('nav.site_management', 'Site Settings') }}</span>
             </span>
             <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0"
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
               :class="{ 'rotate-180': expandedGroups.website }"
             />
           </button>
-          <div v-show="expandedGroups.website" class="space-y-0.5 mt-1 pl-5">
+          <div v-show="expandedGroups.website" class="space-y-0.5 mt-1 pl-4">
             <NuxtLink
               to="/system/homepage-management"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/homepage-management')"
             >
               <Sparkles class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.homepage', 'Homepage Activity') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.homepage', 'Homepage Activity')">{{ t('nav.homepage', 'Homepage Activity') }}</span>
             </NuxtLink>
             <NuxtLink
               to="/system/website-settings"
-              class="flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
               :class="isActive('/system/website-settings')"
             >
               <SlidersHorizontal class="w-4 h-4 mr-2.5 shrink-0" />
-              {{ t('nav.general_settings', 'General Settings') }}
+              <span class="truncate whitespace-nowrap" :title="t('nav.general_settings', 'General Settings')">{{ t('nav.general_settings', 'General Settings') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -483,19 +484,19 @@
 
       <!-- User Menu -->
       <div 
-        class="p-4 border-t border-gray-200 transition-[padding] duration-300"
+        class="p-4 border-t border-gray-200 transition-[padding] duration-300 min-w-0"
         :class="sidebarCollapsed ? 'md:py-3 md:px-2' : ''"
       >
         <div 
-          class="flex items-center justify-between"
+          class="flex items-center justify-between min-w-0"
           :class="sidebarCollapsed ? 'md:justify-center' : ''"
         >
-          <div class="flex items-center space-x-3" :class="sidebarCollapsed ? 'md:space-x-0' : ''">
+          <div class="flex items-center space-x-3 min-w-0" :class="sidebarCollapsed ? 'md:space-x-0' : ''">
             <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
               <span class="text-sm font-semibold text-blue-700">A</span>
             </div>
             <div class="flex-1 min-w-0" :class="sidebarCollapsed ? 'md:w-0 md:overflow-hidden md:opacity-0' : ''">
-              <p class="text-sm font-medium text-gray-900 truncate">{{ t('role.admin', 'Administrator') }}</p>
+              <p class="text-sm font-medium text-gray-900 truncate whitespace-nowrap" :title="t('role.admin', 'Administrator')">{{ t('role.admin', 'Administrator') }}</p>
             </div>
           </div>
           <button
@@ -508,12 +509,24 @@
           </button>
         </div>
       </div>
+
+      <!-- Desktop Drag Resizing Handle -->
+      <div 
+        v-if="!isMobile && !sidebarCollapsed"
+        class="hidden md:block absolute top-0 -right-1 w-2.5 h-full cursor-col-resize hover:bg-blue-500/20 transition-colors z-50 group"
+        :class="{ 'bg-blue-500/30': isResizing }"
+        @mousedown.prevent="startResize"
+        title="Drag to resize sidebar"
+      >
+        <div class="w-0.5 h-full mx-auto group-hover:bg-blue-500 transition-colors" :class="{ 'bg-blue-500': isResizing }" />
+      </div>
     </aside>
 
     <!-- Main Content -->
     <div 
-      class="flex-1 flex flex-col min-w-0 transition-[padding] duration-300"
-      :class="sidebarCollapsed ? 'md:pl-16' : 'md:pl-52'"
+      class="flex-1 flex flex-col min-w-0"
+      :class="isResizing ? '!transition-none' : 'transition-[padding] duration-300'"
+      :style="mainStyle"
     >
       <!-- Top Bar -->
       <header class="sticky top-0 z-40 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6">
@@ -616,6 +629,66 @@ const isSidebarOpen = ref(false)
 const SIDEBAR_COLLAPSED_KEY = 'admin_sidebar_collapsed'
 const sidebarCollapsed = ref(false)
 
+// Desktop sidebar width & resizable state
+const DEFAULT_SIDEBAR_WIDTH = 256
+const MIN_SIDEBAR_WIDTH = 200
+const MAX_SIDEBAR_WIDTH = 380
+const SIDEBAR_WIDTH_KEY = 'admin_sidebar_width'
+
+const sidebarWidth = ref(DEFAULT_SIDEBAR_WIDTH)
+const isResizing = ref(false)
+
+const sidebarStyle = computed(() => {
+  if (isMobile.value) return {}
+  const w = sidebarCollapsed.value ? 64 : sidebarWidth.value
+  return {
+    width: `${w}px`
+  }
+})
+
+const mainStyle = computed(() => {
+  if (isMobile.value) return {}
+  const w = sidebarCollapsed.value ? 64 : sidebarWidth.value
+  return {
+    paddingLeft: `${w}px`
+  }
+})
+
+function startResize(e: MouseEvent) {
+  if (isMobile.value || sidebarCollapsed.value) return
+  isResizing.value = true
+  document.body.style.cursor = 'col-resize'
+  document.body.style.userSelect = 'none'
+
+  const startX = e.clientX
+  const startWidth = sidebarWidth.value
+
+  const onMouseMove = (moveEvent: MouseEvent) => {
+    if (!isResizing.value) return
+    const deltaX = moveEvent.clientX - startX
+    let newWidth = startWidth + deltaX
+    if (newWidth < MIN_SIDEBAR_WIDTH) newWidth = MIN_SIDEBAR_WIDTH
+    if (newWidth > MAX_SIDEBAR_WIDTH) newWidth = MAX_SIDEBAR_WIDTH
+    sidebarWidth.value = newWidth
+  }
+
+  const onMouseUp = () => {
+    if (isResizing.value) {
+      isResizing.value = false
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      if (import.meta.client) {
+        localStorage.setItem(SIDEBAR_WIDTH_KEY, String(sidebarWidth.value))
+      }
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }
+
+  window.addEventListener('mousemove', onMouseMove)
+  window.addEventListener('mouseup', onMouseUp)
+}
+
 // Navigation group expansion state
 const EXPANDED_GROUPS_KEY = 'admin_sidebar_expanded_groups'
 const hasCustomExpandedState = ref(false)
@@ -676,6 +749,14 @@ function saveExpandedGroups() {
 
 onMounted(() => {
   if (import.meta.client) {
+    const storedWidth = localStorage.getItem(SIDEBAR_WIDTH_KEY)
+    if (storedWidth) {
+      const parsed = parseInt(storedWidth, 10)
+      if (!isNaN(parsed) && parsed >= MIN_SIDEBAR_WIDTH && parsed <= MAX_SIDEBAR_WIDTH) {
+        sidebarWidth.value = parsed
+      }
+    }
+
     const storedCollapsed = localStorage.getItem(SIDEBAR_COLLAPSED_KEY)
     if (storedCollapsed !== null) {
       sidebarCollapsed.value = storedCollapsed === 'true'

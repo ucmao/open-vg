@@ -122,10 +122,18 @@ def get_carousel_slides(
 ):
     try:
         block = _get_carousel_block(db)
+        if not block:
+            return paginated_response(
+                items=[],
+                total=0,
+                page=page,
+                page_size=page_size,
+                message="Carousel slides retrieved successfully",
+            )
         slides: List[dict] = (block.config or {}).get("slides") or []
         if is_enabled is not None:
             slides = [s for s in slides if s.get("is_enabled", True) == is_enabled]
-        slides = sorted(slides, key=lambda x: (x.get("sort_order", 0), 0))
+        slides = sorted(slides, key=lambda x: (x.get("sort_order") if x.get("sort_order") is not None else 0, 0))
         total = len(slides)
         start = (page - 1) * page_size
         items = [_slide_to_dict(s) for s in slides[start : start + page_size]]

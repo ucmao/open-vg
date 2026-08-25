@@ -15,7 +15,7 @@
     <div class="w-full max-w-md">
       <!-- Logo/Title -->
       <div class="text-center mb-8">
-        <img src="/vidgen-logo.png" alt="VidGen Logo" class="h-10 w-auto mx-auto mb-4 object-contain" />
+        <img src="/vidgen-logo-solid.png" alt="VidGen Logo" class="h-10 w-auto mx-auto mb-4 object-contain" />
         <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ t('login.title', 'Admin Panel') }}</h1>
         <p class="text-gray-600">{{ t('login.subtitle', 'System Administrator Authentication') }}</p>
       </div>

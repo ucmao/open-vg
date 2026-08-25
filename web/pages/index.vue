@@ -422,12 +422,12 @@
               <div class="mt-auto flex flex-col sm:flex-row items-end gap-6 pt-6 border-t border-white/5">
                 <!-- VidGen Highlight -->
                 <div class="flex-shrink-0 flex flex-col items-center group/vidgen">
-                  <div class="w-32 h-32 md:w-40 md:h-40 relative flex items-center justify-center bg-gradient-to-br from-violet-500/10 to-transparent rounded-3xl border border-white/5 p-4 group-hover/vidgen:border-violet-500/20 transition-all">
+                  <div class="w-32 h-32 md:w-40 md:h-40 relative flex items-center justify-center bg-gradient-to-br from-violet-500/5 to-transparent rounded-3xl border border-white/5 p-4 group-hover/vidgen:border-violet-500/20 transition-all">
                     <!-- Fake VidGen Logo Icon -->
                     <div class="relative w-20 h-20 md:w-24 md:h-24">
-                       <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-                         <path d="M50,5 L90,27.5 L90,72.5 L50,95 L10,72.5 L10,27.5 Z" fill="none" stroke="currentColor" stroke-width="8" class="text-violet-500" />
-                         <text x="50" y="65" text-anchor="middle" font-size="40" font-weight="900" fill="currentColor" class="text-white">V</text>
+                       <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_8px_rgba(139,92,246,0.15)]">
+                         <path d="M50,5 L90,27.5 L90,72.5 L50,95 L10,72.5 L10,27.5 Z" fill="none" stroke="currentColor" stroke-width="6" class="text-violet-400/60" />
+                         <text x="50" y="64" text-anchor="middle" font-size="38" font-weight="800" fill="currentColor" class="text-white/80">V</text>
                        </svg>
                     </div>
                   </div>
@@ -488,12 +488,12 @@
               <div class="mt-auto flex flex-col sm:flex-row items-end gap-6 pt-6 border-t border-white/5">
                 <!-- SORE Highlight -->
                 <div class="flex-shrink-0 flex flex-col items-center group/sore">
-                  <div class="w-32 h-32 md:w-40 md:h-40 relative flex items-center justify-center bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl border border-white/5 p-4 group-hover/sore:border-cyan-500/20 transition-all">
+                  <div class="w-32 h-32 md:w-40 md:h-40 relative flex items-center justify-center bg-gradient-to-br from-cyan-500/5 to-transparent rounded-3xl border border-white/5 p-4 group-hover/sore:border-cyan-500/20 transition-all">
                     <!-- Fake SORE Logo Icon -->
                     <div class="relative w-20 h-20 md:w-24 md:h-24">
-                       <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                         <path d="M50,5 L95,50 L50,95 L5,50 Z" fill="none" stroke="currentColor" stroke-width="8" class="text-cyan-500" />
-                         <text x="50" y="65" text-anchor="middle" font-size="40" font-weight="900" fill="currentColor" class="text-white">S</text>
+                       <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_8px_rgba(6,182,212,0.15)]">
+                         <path d="M50,5 L95,50 L50,95 L5,50 Z" fill="none" stroke="currentColor" stroke-width="6" class="text-cyan-400/60" />
+                         <text x="50" y="64" text-anchor="middle" font-size="38" font-weight="800" fill="currentColor" class="text-white/80">S</text>
                        </svg>
                     </div>
                   </div>
@@ -628,7 +628,7 @@ useHead({
         name: 'VidGen',
         url: `${baseUrl}${route.path}`,
         description: pageSeoData.value?.description || 'AI content generation platform - Create images and videos with AI',
-        logo: `${baseUrl}/logo.png`,
+        logo: `${baseUrl}/vidgen-logo-outline.png`,
         sameAs: []
       })
     }
@@ -712,7 +712,7 @@ interface FaqItem {
   linkText?: string
 }
 
-const faqItems: FaqItem[] = [
+const faqItems = computed<FaqItem[]>(() => [
   {
     question: 'What is VidGen?',
     answer: 'VidGen is an AI creative platform for generating images and videos. You can create art with various AI models, use Magic effects, and share your creations in the community gallery.'
@@ -739,9 +739,9 @@ const faqItems: FaqItem[] = [
   },
   {
     question: 'How do I contact support?',
-    answer: 'Email us at support@vidgenerator.ai for technical support or questions. We typically respond within 24–48 hours.'
+    answer: `Email us at ${config.public.companyEmail} for technical support or questions. We typically respond within 24–48 hours.`
   }
-]
+])
 
 const openFaqIndex = ref<number | null>(null)
 const toggleFaq = (index: number) => {

@@ -106,11 +106,11 @@ def get_active_carousel_slides(db: Session = Depends(get_db)):
                 "text_position": s.get("text_position") or "center",
                 "text_align": s.get("text_align") or "center",
                 "is_enabled": s.get("is_enabled", True),
-                "sort_order": s.get("sort_order", 0),
+                "sort_order": s.get("sort_order") if s.get("sort_order") is not None else 0,
                 "start_time": s.get("start_time"),
                 "end_time": s.get("end_time"),
             })
-        out.sort(key=lambda x: (x.get("sort_order", 0), 0))
+        out.sort(key=lambda x: (x.get("sort_order") if x.get("sort_order") is not None else 0, 0))
         return success_response(
             data=out,
             message="Active carousel slides retrieved successfully",

@@ -23,7 +23,7 @@
               class="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded hover:bg-green-700 transition-colors flex items-center gap-1"
             >
               <Upload class="w-4 h-4" />
-
+              {{ $adminT("Batch import", "批量导入") }}
             </button>
           </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="flex justify-between items-center">
           <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
             <div class="w-1 h-5 bg-purple-600 rounded-full"></div>
-
+            {{ $adminT("Tag management", "标签管理") }}
           </h3>
           <div class="flex items-center gap-2">
             <button
@@ -76,7 +76,7 @@
               class="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded hover:bg-green-700 transition-colors flex items-center gap-1"
             >
               <Upload class="w-4 h-4" />
-
+              {{ $adminT("Batch import", "批量导入") }}
             </button>
           </div>
         </div>

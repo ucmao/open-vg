@@ -11,7 +11,7 @@
       <div class="text-center mb-8">
         <NuxtLink to="/" class="inline-flex items-center justify-center mb-6">
           <img 
-            src="/vidgen-logo.png" 
+            src="/vidgen-logo-outline.png" 
             alt="VidGen Logo" 
             class="w-24 h-24 object-contain"
           />

@@ -105,7 +105,7 @@
             <div>
               <h3 class="text-lg font-medium text-white mb-2">Can I delete my account?</h3>
               <p class="text-gray-400">
-                Currently, account deletion is not available through the interface. Please contact us at <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a> if you need to delete your account.
+                Currently, account deletion is not available through the interface. Please contact us at <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a> if you need to delete your account.
               </p>
             </div>
           </div>
@@ -130,7 +130,7 @@
             <div>
               <h3 class="text-lg font-medium text-white mb-2">How do I contact support?</h3>
               <p class="text-gray-400">
-                For technical support or questions, please email us at <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a>. We typically respond within 24-48 hours.
+                For technical support or questions, please email us at <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a>. We typically respond within 24-48 hours.
               </p>
             </div>
           </div>
@@ -143,11 +143,11 @@
             Can't find what you're looking for? We're here to help!
           </p>
           <div class="space-y-3">
-            <a href="mailto:support@vidgenerator.ai" class="inline-block px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-xl transition-colors">
+            <a :href="'mailto:' + config.public.companyEmail" class="inline-block px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-xl transition-colors">
               Contact Support
             </a>
             <p class="text-sm text-gray-500 mt-4">
-              Email: <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a>
+              Email: <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a>
             </p>
           </div>
         </section>
@@ -157,6 +157,8 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+
 useHead({
   title: 'Help Center — VidGen',
   meta: [

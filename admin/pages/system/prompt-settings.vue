@@ -8,12 +8,13 @@
       </div>
       <div class="flex items-center gap-2">
         <button
-          @click="loadPromptWorks"
+          @click="loadPromptWorks(true)"
           :disabled="loadingPromptWorks"
           class="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded border border-gray-300 transition-colors flex items-center gap-1.5"
         >
-          <Loader2 v-if="loadingPromptWorks" class="w-4 h-4 animate-spin" />
-
+          <RotateCw v-if="!loadingPromptWorks" class="w-4 h-4" />
+          <Loader2 v-else class="w-4 h-4 animate-spin" />
+          {{ $adminT("Refresh", "刷新") }}
         </button>
         <button
           @click="exportPromptWorksToCSV('current')"
@@ -22,7 +23,7 @@
         >
           <Download v-if="!exportingPromptWorks" class="w-4 h-4" />
           <Loader2 v-else class="w-4 h-4 animate-spin" />
-
+          {{ $adminT("Export CSV", "导出 CSV") }}
         </button>
       </div>
     </div>
@@ -482,7 +483,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick, watch } from 'vue'
-import { Eye, Download, Loader2, Zap, Copy, PencilLine, X, ImageIcon } from '@lucide/vue'
+import { Eye, Download, Loader2, Zap, Copy, PencilLine, X, ImageIcon, RotateCw } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'

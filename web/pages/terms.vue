@@ -156,7 +156,7 @@
         <section>
           <h2 class="text-2xl font-semibold text-white">Complaints and Appeals</h2>
           <p>
-            If you believe that your rights have been violated or find illegal information, you can file a complaint to VidGen via email at <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a>.
+            If you believe that your rights have been violated or find illegal information, you can file a complaint to VidGen via email at <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a>.
           </p>
           <p>
             You can submit relevant materials for appeal, and VidGen will respond within 5 working days after receiving the appeal.
@@ -173,10 +173,10 @@
         <section>
           <h2 class="text-2xl font-semibold text-white">Company</h2>
           <p>
-            VidGen is operated by VIDGEN TECHNOLOGY LIMITED.
+            VidGen is operated by {{ config.public.companyName }}.
           </p>
           <p class="mt-2">
-            <strong class="text-white">HK office:</strong> Room 1001, Cloud End, 111 Tung Chau Street, Tai Kok Tsui, Hong Kong
+            <strong class="text-white">Office:</strong> {{ config.public.companyAddress }}
           </p>
         </section>
 
@@ -186,9 +186,9 @@
             If you have any questions or comments about these Terms & Conditions, please contact us:
           </p>
           <div class="mt-4 space-y-2">
-            <p><strong class="text-white">Company Name:</strong> VIDGEN TECHNOLOGY LIMITED</p>
-            <p><strong class="text-white">Business Address:</strong> Room 1001, Cloud End, 111 Tung Chau Street, Tai Kok Tsui, Hong Kong</p>
-            <p><strong class="text-white">Email:</strong> <a href="mailto:support@vidgenerator.ai" class="text-violet-400 hover:text-violet-300">support@vidgenerator.ai</a></p>
+            <p><strong class="text-white">Company Name:</strong> {{ config.public.companyName }}</p>
+            <p><strong class="text-white">Business Address:</strong> {{ config.public.companyAddress }}</p>
+            <p><strong class="text-white">Email:</strong> <a :href="'mailto:' + config.public.companyEmail" class="text-violet-400 hover:text-violet-300">{{ config.public.companyEmail }}</a></p>
           </div>
         </section>
       </div>
@@ -197,6 +197,8 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+
 useHead({
   title: 'Terms & Conditions - VidGen',
   meta: [

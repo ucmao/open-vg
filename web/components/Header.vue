@@ -14,9 +14,9 @@
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center group">
           <img 
-            src="/vidgen-logo.png" 
+            src="/vidgen-logo-outline.png" 
             alt="VidGen Logo" 
-            class="h-8 w-auto object-contain transform group-hover:scale-105 transition-transform duration-300"
+            class="h-7 md:h-8 w-auto object-contain transform group-hover:scale-105 transition-transform duration-300"
           />
         </NuxtLink>
 

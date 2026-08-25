@@ -38,6 +38,21 @@ export default defineNuxtConfig({
       wsUrl: process.env.NUXT_PUBLIC_WS_URL ?? 'ws://localhost:8000/ws',
       cdnUrl: process.env.NUXT_PUBLIC_CDN_URL ?? process.env.STORAGE_CDN_URL ?? '',
 
+      // Company info & Contact config
+      companyName: process.env.NUXT_PUBLIC_COMPANY_NAME ?? 'VIDGEN TECHNOLOGY LIMITED',
+      companyAddress: process.env.NUXT_PUBLIC_COMPANY_ADDRESS ?? '100 Enterprise Boulevard, Suite 500, Innovation District',
+      companyEmail: process.env.NUXT_PUBLIC_COMPANY_EMAIL ?? 'support@example.com',
+
+      // Social Media Links (desensitized defaults)
+      socialLinks: {
+        pinterest: process.env.NUXT_PUBLIC_SOCIAL_PINTEREST ?? '#',
+        facebook: process.env.NUXT_PUBLIC_SOCIAL_FACEBOOK ?? '#',
+        youtube: process.env.NUXT_PUBLIC_SOCIAL_YOUTUBE ?? '#',
+        linkedin: process.env.NUXT_PUBLIC_SOCIAL_LINKEDIN ?? '#',
+        github: process.env.NUXT_PUBLIC_SOCIAL_GITHUB ?? '#',
+        discord: process.env.NUXT_PUBLIC_SOCIAL_DISCORD ?? '#'
+      },
+
       // Rewards page ad slot: NUXT_PUBLIC_REWARDS_ADS JSON array [{ imageUrl, url? }, ...]
       rewardsAds: (() => {
         const raw = process.env.NUXT_PUBLIC_REWARDS_ADS
