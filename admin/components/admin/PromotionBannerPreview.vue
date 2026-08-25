@@ -125,6 +125,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 const props = defineProps<{
   banner: any
   /** Type， */
@@ -204,7 +207,7 @@ const countdownText = (banner: any) => {
 
 const displayLinkText = (banner: any) => {
   const t = banner?.link_text?.trim()
-  return t ? t : ''
+  return t ? t : adminT("More.", "了解更多")
 }
 
 // ：「」，（ link_url ）
@@ -310,6 +313,6 @@ const getBannerStyle = (banner: any) => {
 
 const handleImageError = (e: Event) => {
   const img = e.target as HTMLImageElement
-  if (img) img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext fill="%23999" font-family="sans-serif" font-size="14" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3Efailed%3C/text%3E%3C/svg%3E'
+  if (img) img.src = adminT("data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Crect fill=\"%23ddd\" width=\"200\" height=\"200\"/%3E%3Ctext fill=\"%23999\" font-family=\"sans-serif\" font-size=\"14\" x=\"50%25\" y=\"50%25\" text-anchor=\"middle\" dy=\".3em\"%3Efailed%3C/text%3E%3C/svg%3E", "data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Crect fill=\"%23ddd\" width=\"200\" height=\"200\"/%3E%3Ctext fill=\"%23999\" font-family=\"sans-serif\" font-size=\"14\" x=\"50%25\" y=\"50%25\" text-anchor=\"middle\" dy=\".3em\"%3E图片加载失败%3C/text%3E%3C/svg%3E")
 }
 </script>

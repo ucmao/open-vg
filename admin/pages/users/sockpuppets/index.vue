@@ -3,26 +3,24 @@
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900"></h1>
-        <p class="text-gray-600 mt-1">（），</p>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Malacca District", "马甲专区") }}</h1>
+        <p class="text-gray-600 mt-1">{{ $adminT("Create and manage virtual users (sockpuppet accounts); the email address is also the login password", "创建和管理虚拟用户（马甲账号），邮箱即登录密码") }}</p>
       </div>
       <button
         @click="showCreateModal = true"
         class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-      >
-        +
-      </button>
+      > {{ $adminT("+ Create Virtual User", "+ 创建虚拟用户") }} </button>
     </div>
 
     <!-- Filters -->
     <div class="bg-white border rounded-lg p-6 mb-6 shadow-sm">
       <div class="flex items-end gap-4">
         <div class="flex-1">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search", "搜索虚拟用户") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            placeholder="、Handle  Email..."
+            :placeholder="$adminT('Nick, Handle or Email...', '昵称、Handle 或 Email...')"
             class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             @keyup.enter="loadUsers"
           />
@@ -30,15 +28,11 @@
         <button
           @click="loadUsers"
           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-        >
-          Filter
-        </button>
+        > {{ $adminT("Filter", "筛选") }} </button>
         <button
           @click="resetFilters"
           class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-        >
-          Reset
-        </button>
+        > {{ $adminT("Reset", "重置") }} </button>
       </div>
     </div>
 
@@ -51,17 +45,13 @@
         <button
           @click="clearAllSelection"
           class="text-xs text-blue-600 hover:text-blue-800 underline"
-        >
-          Clear
-        </button>
+        > {{ $adminT("Clear", "清空选择") }} </button>
       </div>
       <div class="flex gap-2">
         <button
           @click="openBatchEngageModal"
           class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors text-sm font-medium"
-        >
-          ⚡
-        </button>
+        > {{ $adminT("Batch interaction active", "⚡ 批量互动活跃") }} </button>
 
       </div>
     </div>
@@ -69,7 +59,7 @@
     <!-- Loading -->
     <div v-if="loading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">List...</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Fetching virtual user list...", "正在获取虚拟用户列表...") }}</p>
     </div>
 
     <!-- Users Table：，Action -->
@@ -86,12 +76,12 @@
                   class="cursor-pointer"
                 />
               </th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("User Information", "用户信息") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Handle</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Contact details", "联系方式") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Statistics", "统计") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Created", "创建时间") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
@@ -134,11 +124,11 @@
               <td class="px-6 py-4">
                 <div class="text-xs space-y-1">
                   <div class="flex items-center gap-1">
-                    <span class="text-gray-400">:</span>
+                    <span class="text-gray-400">{{ $adminT("Works:", "作品:") }}</span>
                     <span class="font-medium text-gray-700">{{ user.total_works_count || 0 }}</span>
                   </div>
                   <div class="flex items-center gap-1">
-                    <span class="text-gray-400">:</span>
+                    <span class="text-gray-400">{{ $adminT("Score:", "积分:") }}</span>
                     <span class="font-medium text-amber-600">{{ user.total_credits || 0 }}</span>
                   </div>
                 </div>
@@ -151,21 +141,15 @@
                   <button
                     @click="openEngageModal(user)"
                     class="px-3 py-1.5 text-xs font-medium bg-purple-50 text-purple-600 rounded hover:bg-purple-100 transition-colors"
-                  >
-
-                  </button>
+                  >{{ $adminT("Interaction", "互动") }}</button>
                   <button
                     @click="openImportModal(user)"
                     class="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-600 rounded hover:bg-green-100 transition-colors"
-                  >
-
-                  </button>
+                  >{{ $adminT("Organisation", "导入作品") }}</button>
                   <button
                     @click="deleteUser(user)"
                     class="px-3 py-1.5 text-xs font-medium bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors"
-                  >
-                    Delete
-                  </button>
+                  > {{ $adminT("Delete", "删除") }} </button>
                 </div>
               </td>
             </tr>
@@ -177,12 +161,10 @@
       <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} virtual users', '显示第 {from}–{to} 条，共 {total} 名虚拟用户', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; loadUsers()"
@@ -200,7 +182,7 @@
             @click="loadPage(1)"
             :disabled="page === 1 || loading"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -208,11 +190,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1 || loading"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="page"
               @keyup.enter="loadPage(page)"
@@ -222,20 +202,18 @@
               :max="Math.ceil(total / pageSize)"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize) || loading"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize) || loading"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -246,21 +224,19 @@
     <!-- Empty State -->
     <div v-else class="text-center py-20 bg-white border rounded-lg">
       <Users class="w-16 h-16 text-gray-300 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900"></h3>
-      <p class="text-gray-500 mb-4"></p>
+      <h3 class="text-lg font-medium text-gray-900">{{ $adminT("No virtual user available", "还没有虚拟用户") }}</h3>
+      <p class="text-gray-500 mb-4">{{ $adminT("Click the top button to create the first virtual user", "点击上方按钮创建第一个虚拟用户") }}</p>
       <button
         @click="showCreateModal = true"
         class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-      >
-
-      </button>
+      >{{ $adminT("Create Virtual User", "创建虚拟用户") }}</button>
     </div>
 
     <!-- Create Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="closeCreateModal">
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div class="px-6 py-4 border-b">
-          <h2 class="text-xl font-bold text-gray-900"></h2>
+          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Create Virtual User", "创建虚拟用户") }}</h2>
         </div>
         
         <div class="px-6 py-4">
@@ -278,47 +254,47 @@
                 placeholder="1-20"
                 class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              <p class="mt-1 text-xs text-gray-500">20</p>
+              <p class="mt-1 text-xs text-gray-500">{{ $adminT("Create up to 20 virtual users at a time", "一次最多创建20个虚拟用户") }}</p>
             </div>
 
             <!-- Gender (only shown when count=1) -->
             <div v-if="createForm.count === 1">
-              <label class="block text-sm font-medium text-gray-700 mb-2"></label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Gender", "性别") }}</label>
               <select v-model="createForm.gender" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
-                <option value=""></option>
-                <option value="male"></option>
-                <option value="female"></option>
+                <option value="">{{ $adminT("Random", "随机") }}</option>
+                <option value="male">{{ $adminT("Men", "男") }}</option>
+                <option value="female">{{ $adminT("Women", "女") }}</option>
               </select>
             </div>
 
             <!-- Custom fields (only shown when count=1) -->
             <template v-if="createForm.count === 1">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">（）</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Nickname (optional)", "昵称（可选）") }}</label>
                 <input
                   v-model="createForm.nickname"
                   type="text"
-                  placeholder=""
+                  :placeholder="$adminT('Leave empty is automatically generated', '留空则自动生成')"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">（）</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Personal profiles (optional)", "个人简介（可选）") }}</label>
                 <textarea
                   v-model="createForm.bio"
                   rows="3"
-                  placeholder=""
+                  :placeholder="$adminT('Leave empty is automatically generated', '留空则自动生成')"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 ></textarea>
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">（）</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Location (optional)", "所在地（可选）") }}</label>
                 <input
                   v-model="createForm.location"
                   type="text"
-                  placeholder=""
+                  :placeholder="$adminT('Leave empty is automatically generated', '留空则自动生成')"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
@@ -330,15 +306,13 @@
           <button
             @click="closeCreateModal"
             class="px-4 py-2 border rounded bg-white text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="createUsers"
             :disabled="creating || !createForm.count || createForm.count < 1 || createForm.count > 20"
             class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
           >
-            {{ creating ? '...' : '' }}
+            {{ creating ? $adminT('Creating...', '创建中...') : $adminT('Create', '创建') }}
           </button>
         </div>
       </div>
@@ -349,7 +323,7 @@
       <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <!-- Header -->
         <div class="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
-          <h2 class="text-xl font-bold text-gray-900"></h2>
+          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Organisation", "导入作品") }}</h2>
           <button @click="closeImportModal" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -366,9 +340,7 @@
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               ]"
-            >
-
-            </button>
+            >{{ $adminT("Individual input", "单独输入") }}</button>
             <button
               @click="importTab = 'batch'"
               :class="[
@@ -377,9 +349,7 @@
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               ]"
-            >
-
-            </button>
+            >{{ $adminT("Batch Upload", "批量上传") }}</button>
           </div>
         </div>
 
@@ -393,7 +363,7 @@
                  <span class="text-red-500">*</span>
               </label>
               <select v-model="singleImportConfig.userId" class="w-full border rounded px-3 py-2">
-                <option value="">Please select</option>
+                <option value="">{{ $adminT("Please select", "请选择虚拟用户") }}</option>
                 <option v-for="user in users" :key="user.id" :value="user.id.toString()">
                   {{ user.nickname }} (@{{ user.handle }})
                 </option>
@@ -404,14 +374,13 @@
             <div class="grid grid-cols-2 gap-4">
               <!-- Work Type -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Type <span class="text-red-500">*</span>
+                <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Type", "类型") }} <span class="text-red-500">*</span>
                 </label>
                 <select v-model="singleImportConfig.workType" @change="onWorkTypeChange" class="w-full border rounded px-3 py-2">
-                  <option value="text-to-image">→</option>
-                  <option value="image-to-image">→</option>
-                  <option value="text-to-video">→</option>
-                  <option value="image-to-video">→</option>
+                  <option value="text-to-image">{{ $adminT("Text & Picture", "文本→图片") }}</option>
+                  <option value="image-to-image">{{ $adminT("Pictures", "图片→图片") }}</option>
+                  <option value="text-to-video">{{ $adminT("Text to Video", "文本→视频") }}</option>
+                  <option value="image-to-video">{{ $adminT("Images and videos", "图片→视频") }}</option>
                 </select>
               </div>
 
@@ -425,13 +394,13 @@
                   :disabled="!singleImportConfig.workType || filteredModels.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择模型") }}</option>
                   <option v-for="model in filteredModels" :key="model.id" :value="model.name">
                     {{ model.name }}
                   </option>
                 </select>
-                <p v-if="!singleImportConfig.workType" class="mt-1 text-xs text-gray-500">Type</p>
-                <p v-else-if="filteredModels.length === 0" class="mt-1 text-xs text-amber-600">Type</p>
+                <p v-if="!singleImportConfig.workType" class="mt-1 text-xs text-gray-500">{{ $adminT("Type", "请先选择类型") }}</p>
+                <p v-else-if="filteredModels.length === 0" class="mt-1 text-xs text-amber-600">{{ $adminT("Type", "该类型暂无可用模型") }}</p>
               </div>
             </div>
 
@@ -439,15 +408,13 @@
             <div class="grid grid-cols-2 gap-4">
               <!-- Category Level 1 -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-
-                </label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Level 1 directory", "一级目录") }}</label>
                 <select
                   v-model="singleImportConfig.categoryLevel1"
                   @change="onCategoryLevel1Change"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择一级目录") }}</option>
                   <option v-for="cat in level1Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -456,21 +423,19 @@
 
               <!-- Category Level 2 -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-
-                </label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Second Directory", "二级目录") }}</label>
                 <select
                   v-model="singleImportConfig.categoryLevel2"
                   :disabled="!singleImportConfig.categoryLevel1 || level2Categories.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择二级目录") }}</option>
                   <option v-for="cat in level2Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
                 </select>
-                <p v-if="!singleImportConfig.categoryLevel1" class="mt-1 text-xs text-gray-500"></p>
-                <p v-else-if="level2Categories.length === 0" class="mt-1 text-xs text-gray-500"></p>
+                <p v-if="!singleImportConfig.categoryLevel1" class="mt-1 text-xs text-gray-500">{{ $adminT("Please select the first level of directory", "请先选择一级目录") }}</p>
+                <p v-else-if="level2Categories.length === 0" class="mt-1 text-xs text-gray-500">{{ $adminT("No secondary directory at this level", "该一级目录下暂无二级目录") }}</p>
               </div>
             </div>
 
@@ -482,15 +447,14 @@
               <textarea
                 v-model="singleImportConfig.prompt"
                 rows="3"
-                placeholder="Notice"
+                :placeholder="$adminT('Notice', '输入作品提示词')"
                 class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               ></textarea>
             </div>
 
             <!-- URL Address -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                URL <span class="text-red-500">*</span>
+              <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("URL", "URL地址") }} <span class="text-red-500">*</span>
               </label>
               <input
                 v-model="singleImportConfig.url"
@@ -509,7 +473,7 @@
                  <span class="text-red-500">*</span>
               </label>
               <select v-model="batchFileImportConfig.userId" class="w-full border rounded px-3 py-2">
-                <option value="">Please select</option>
+                <option value="">{{ $adminT("Please select", "请选择虚拟用户") }}</option>
                 <option v-for="user in users" :key="user.id" :value="user.id.toString()">
                   {{ user.nickname }} (@{{ user.handle }})
                 </option>
@@ -520,15 +484,13 @@
             <div class="grid grid-cols-2 gap-4">
               <!-- Category Level 1 -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-
-                </label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Level 1 directory", "一级目录") }}</label>
                 <select
                   v-model="batchFileImportConfig.categoryLevel1"
                   @change="onBatchFileCategoryLevel1Change"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择一级目录") }}</option>
                   <option v-for="cat in level1Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -537,21 +499,19 @@
 
               <!-- Category Level 2 -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-
-                </label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Second Directory", "二级目录") }}</label>
                 <select
                   v-model="batchFileImportConfig.categoryLevel2"
                   :disabled="!batchFileImportConfig.categoryLevel1 || batchFileLevel2Categories.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择二级目录") }}</option>
                   <option v-for="cat in batchFileLevel2Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
                 </select>
-                <p v-if="!batchFileImportConfig.categoryLevel1" class="mt-1 text-xs text-gray-500"></p>
-                <p v-else-if="batchFileLevel2Categories.length === 0" class="mt-1 text-xs text-gray-500"></p>
+                <p v-if="!batchFileImportConfig.categoryLevel1" class="mt-1 text-xs text-gray-500">{{ $adminT("Please select the first level of directory", "请先选择一级目录") }}</p>
+                <p v-else-if="batchFileLevel2Categories.length === 0" class="mt-1 text-xs text-gray-500">{{ $adminT("No secondary directory at this level", "该一级目录下暂无二级目录") }}</p>
               </div>
             </div>
 
@@ -560,7 +520,7 @@
               <div class="flex items-center justify-between mb-2">
                 <label class="block text-sm font-medium text-gray-700">
                    <span class="text-red-500">*</span>
-                  <span class="text-gray-500 text-xs font-normal">( CSV/Excel )</span>
+                  <span class="text-gray-500 text-xs font-normal">{{ $adminT("( CSV/Excel )", "(支持 CSV/Excel 文件)") }}</span>
                 </label>
                 <button
                   @click="downloadTemplate"
@@ -584,8 +544,8 @@
                 >
                   <div v-if="!batchFileImportConfig.file" class="text-center">
                     <CloudUpload class="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                    <p class="text-sm text-gray-600"></p>
-                    <p class="text-xs text-gray-400 mt-1"> CSV、XLSX、XLS </p>
+                    <p class="text-sm text-gray-600">{{ $adminT("Click to select file or drag file here", "点击选择文件或拖拽文件到此处") }}</p>
+                    <p class="text-xs text-gray-400 mt-1"> {{ $adminT("Supported CIV, XIX, XIX", "支持 CSV、XLSX、XLS 格式") }} </p>
                   </div>
                   <div v-else class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -595,17 +555,15 @@
                     <button
                       @click.stop="clearFile"
                       class="text-red-500 hover:text-red-700 text-sm"
-                    >
-
-                    </button>
+                    >{{ $adminT("Remove", "移除") }}</button>
                   </div>
                 </button>
               </div>
               <div v-if="batchFileImportConfig.file" class="mt-2 p-3 bg-blue-50 rounded text-xs text-blue-800">
-                <p class="font-medium mb-1">：</p>
+                <p class="font-medium mb-1">{{ $adminT("Document format requirements:", "文件格式要求：") }}</p>
                 <ul class="list-disc list-inside space-y-1">
-                  <li>CSV/Excel ：、Prompt、Type、URL</li>
-                  <li>Type：text-to-image（→）、image-to-image（→）、text-to-video（→）、image-to-video（→）</li>
+                  <li>{{ $adminT("The SV/Excel file needs to contain columns: model name, Prompt, type, URL", "CSV/Excel 文件需包含列：模型名称、Prompt、类型、URL地址") }}</li>
+                  <li>{{ $adminT("_Other Organiser", "类型可选值：text-to-image（文本→图片）、image-to-image（图片→图片）、text-to-video（文本→视频）、image-to-video（图片→视频）") }}</li>
                 </ul>
               </div>
             </div>
@@ -617,16 +575,14 @@
           <button
             @click="closeImportModal"
             class="px-4 py-2 border rounded bg-white text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             v-if="importTab === 'single'"
             @click="doSingleImport"
             :disabled="importing || !singleImportConfig.userId || !singleImportConfig.modelName || !singleImportConfig.prompt || !singleImportConfig.workType || !singleImportConfig.url"
             class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
           >
-            {{ importing ? '...' : '' }}
+            {{ importing ? $adminT('Importing...', '导入中...') : $adminT('Import works', '导入作品') }}
           </button>
           <button
             v-if="importTab === 'batch'"
@@ -634,7 +590,7 @@
             :disabled="importing || !batchFileImportConfig.userId || !batchFileImportConfig.file"
             class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
           >
-            {{ importing ? '...' : '' }}
+            {{ importing ? $adminT('Importing...', '导入中...') : $adminT('Batch import', '批量导入') }}
           </button>
         </div>
       </div>
@@ -645,7 +601,7 @@
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
         <!-- Header -->
         <div class="px-6 py-4 border-b flex items-center justify-between">
-          <h2 class="text-xl font-bold text-gray-900"></h2>
+          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Collection Importing Works", "采集库导入作品") }}</h2>
           <button @click="closeEngageModal" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -734,9 +690,7 @@
           <button
             @click="closeEngageModal"
             class="px-4 py-2 border rounded bg-white text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="doEngage"
             :disabled="engaging || (!engageConfig.viewCount && !engageConfig.favoriteCount && !engageConfig.likeCount && !engageConfig.commentCount) || (engageConfig.commentCount > 0 && !engageConfig.commentContents.trim())"
@@ -753,7 +707,7 @@
       <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
         <!-- Header -->
         <div class="px-6 py-4 border-b flex items-center justify-between">
-          <h2 class="text-xl font-bold text-gray-900"></h2>
+          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Interactively active", "互动活跃") }}</h2>
           <button @click="closeBatchEngageModal" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -845,9 +799,7 @@
           <button
             @click="closeBatchEngageModal"
             class="px-4 py-2 border rounded bg-white text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="doBatchEngage"
             :disabled="batchEngaging || (!batchEngageConfig.viewCount && !batchEngageConfig.favoriteCount && !batchEngageConfig.likeCount && !batchEngageConfig.commentCount) || (batchEngageConfig.commentCount > 0 && !batchEngageConfig.commentContents.trim())"
@@ -868,6 +820,8 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+
+const { translateText: adminT, localeTag } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -992,7 +946,7 @@ const loadUsers = async () => {
       }
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT("failed", "加载虚拟用户失败"))
     console.error('Failed to load users:', error)
   } finally {
     loading.value = false
@@ -1033,7 +987,7 @@ const closeCreateModal = () => {
 
 const createUsers = async () => {
   if (!createForm.value.count || createForm.value.count < 1 || createForm.value.count > 20) {
-    toast.error('1-20')
+    toast.error(adminT("Creation must be between 1 and 20", "创建数量必须在1-20之间"))
     return
   }
 
@@ -1057,16 +1011,16 @@ const createUsers = async () => {
       const failedCount = response.data.failed_count || 0
       
       if (failedCount > 0) {
-        toast.warning(`successful ${createdCount} ，${failedCount} failed`)
+        toast.warning(adminT('Created {ok} virtual users, {fail} failed', '成功创建 {ok} 个虚拟用户，{fail} 个创建失败', { ok: createdCount, fail: failedCount }))
       } else {
-        toast.success(`successful ${createdCount} `)
+        toast.success(adminT('Created {ok} virtual users', '成功创建 {ok} 个虚拟用户', { ok: createdCount }))
       }
       
       closeCreateModal()
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT("failed", "创建虚拟用户失败"))
     console.error('Failed to create users:', error)
   } finally {
     creating.value = false
@@ -1075,8 +1029,8 @@ const createUsers = async () => {
 
 const deleteUser = async (user) => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete "${user.nickname}" (@${user.handle}) ？Action。`,
+    title: adminT("Delete", "删除虚拟用户"),
+    message: adminT('Delete "{name}" (@{handle})? This action cannot be undone.', '确定删除“{name}”（@{handle}）吗？此操作不可撤销。', { name: user.nickname, handle: user.handle }),
     type: 'danger'
   })
 
@@ -1085,18 +1039,18 @@ const deleteUser = async (user) => {
   try {
     const response = await adminApi.delete(`/api/admin/sockpuppets/${user.id}`)
     if (response.success) {
-      toast.success('Delete')
+      toast.success(adminT("Delete", "虚拟用户已删除"))
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || 'Deletefailed')
+    toast.error(error.message || adminT("Delete failed", "删除失败"))
     console.error('Failed to delete user:', error)
   }
 }
 
 const formatDate = (dateString) => {
   if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString('zh-CN', {
+  return new Date(dateString).toLocaleDateString(localeTag.value, {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -1108,33 +1062,33 @@ const formatDate = (dateString) => {
 // Import works methods
 const doSingleImport = async () => {
   if (!singleImportConfig.value.userId) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择目标虚拟用户"))
     return
   }
   
   if (!singleImportConfig.value.modelName.trim()) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择模型名称"))
     return
   }
   
   if (!singleImportConfig.value.prompt.trim()) {
-    toast.error('Please enterPrompt')
+    toast.error(adminT("Please enter Prompt", "请输入Prompt"))
     return
   }
   
   if (!singleImportConfig.value.workType) {
-    toast.error('Please selectType')
+    toast.error(adminT("Please select Type", "请选择类型"))
     return
   }
   
   if (!singleImportConfig.value.url.trim()) {
-    toast.error('Please enterURL')
+    toast.error(adminT("Please enter URL", "请输入URL地址"))
     return
   }
 
   const confirmed = await confirm({
-    title: 'Confirm',
-    message: 'Confirm？',
+    title: adminT("Confirm", "确认导入"),
+    message: adminT("Are you sure you want to import this work to a virtual user?", "确定要导入这个作品到虚拟用户吗？"),
     type: 'info'
   })
 
@@ -1163,12 +1117,12 @@ const doSingleImport = async () => {
     const response = await adminApi.upload('/api/admin/sockpuppets/create-work', formData)
 
     if (response.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "作品导入成功"))
       closeImportModal()
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT("failed", "导入失败"))
     console.error('Failed to import work:', error)
   } finally {
     importing.value = false
@@ -1177,18 +1131,18 @@ const doSingleImport = async () => {
 
 const doBatchFileImport = async () => {
   if (!batchFileImportConfig.value.userId) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择目标虚拟用户"))
     return
   }
   
   if (!batchFileImportConfig.value.file) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择要上传的文件"))
     return
   }
 
   const confirmed = await confirm({
-    title: 'Confirm',
-    message: 'Confirm？',
+    title: adminT("Confirm", "确认批量导入"),
+    message: adminT("Confirm？", "确定要批量导入作品吗？"),
     type: 'info'
   })
 
@@ -1218,16 +1172,16 @@ const doBatchFileImport = async () => {
       const failedCount = response.data.failed_count || 0
       
       if (failedCount > 0) {
-        toast.warning(`successful ${successCount} ，${failedCount} failed`)
+        toast.warning(adminT('Imported {ok} works, {fail} failed', '成功导入 {ok} 个作品，{fail} 个失败', { ok: successCount, fail: failedCount }))
       } else {
-        toast.success(`successful ${successCount} `)
+        toast.success(adminT('Imported {ok} works', '成功导入 {ok} 个作品', { ok: successCount }))
       }
       
       closeImportModal()
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT("failed", "批量导入失败"))
     console.error('Failed to batch import works:', error)
   } finally {
     importing.value = false
@@ -1297,7 +1251,7 @@ Stable Diffusion 3,A futuristic city at night,text-to-video,https://example.com/
   const url = URL.createObjectURL(blob)
   
   link.setAttribute('href', url)
-  link.setAttribute('download', '.csv')
+  link.setAttribute('download', adminT("csv", "批量导入作品模板.csv"))
   link.style.visibility = 'hidden'
   
   document.body.appendChild(link)
@@ -1353,18 +1307,18 @@ const closeEngageModal = () => {
 
 const doEngage = async () => {
   if (!engageConfig.value.userId) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请先选择虚拟用户"))
     return
   }
   
   if (!engageConfig.value.viewCount && !engageConfig.value.favoriteCount && 
       !engageConfig.value.likeCount && !engageConfig.value.commentCount) {
-    toast.error('')
+    toast.error(adminT("Please select the number of imports (1-10)", "请选择导入数量（1-10）"))
     return
   }
   
   if (engageConfig.value.commentCount > 0 && !engageConfig.value.commentContents.trim()) {
-    toast.error('0，List')
+    toast.error(adminT("Please select the type", "请选择类型"))
     return
   }
 
@@ -1379,8 +1333,8 @@ const doEngage = async () => {
   }
 
   const confirmed = await confirm({
-    title: 'Confirm',
-    message: `ConfirmAction？`,
+    title: adminT('Confirm', '确认'),
+    message: adminT('Run the engagement action for this virtual user?', '确定要为该虚拟用户执行互动操作吗？'),
     type: 'info'
   })
 
@@ -1402,8 +1356,12 @@ const doEngage = async () => {
       if (result && result.success) {
         const details = result.details || {}
         toast.success(
-          `：+${details.views_added || 0}，+${details.favorites_added || 0}，` +
-          `+${details.likes_added || 0}，+${details.comments_added || 0}`
+          adminT('Engagement finished: views +{views}, favorites +{favorites}, likes +{likes}, comments +{comments}', '互动完成：浏览量+{views}，收藏量+{favorites}，点赞量+{likes}，评论量+{comments}', {
+            views: details.views_added || 0,
+            favorites: details.favorites_added || 0,
+            likes: details.likes_added || 0,
+            comments: details.comments_added || 0
+          })
         )
       } else {
         toast.error(result?.message || 'failed')
@@ -1422,7 +1380,7 @@ const doEngage = async () => {
 
 const openBatchEngageModal = () => {
   if (selectedUserIds.value.size === 0) {
-    toast.error('')
+    toast.error(adminT('Select virtual users first', '请先选择虚拟用户'))
     return
   }
   batchEngageConfig.value.viewCount = 0
@@ -1446,13 +1404,13 @@ const closeBatchEngageModal = () => {
 
 const doBatchEngage = async () => {
   if (selectedUserIds.value.size === 0) {
-    toast.error('')
+    toast.error(adminT('Select virtual users first', '请先选择虚拟用户'))
     return
   }
   
   if (!batchEngageConfig.value.viewCount && !batchEngageConfig.value.favoriteCount && 
       !batchEngageConfig.value.likeCount && !batchEngageConfig.value.commentCount) {
-    toast.error('')
+    toast.error(adminT('Select at least one engagement action', '请至少选择一种互动方式'))
     return
   }
   
@@ -1472,8 +1430,8 @@ const doBatchEngage = async () => {
   }
 
   const confirmed = await confirm({
-    title: 'Confirm',
-    message: `Confirm ${selectedUserIds.value.size} Action？`,
+    title: adminT('Confirm', '确认'),
+    message: adminT('Run the batch engagement action for {n} virtual users?', '确定要为 {n} 个虚拟用户执行批量互动操作吗？', { n: selectedUserIds.value.size }),
     type: 'info'
   })
 
@@ -1495,9 +1453,9 @@ const doBatchEngage = async () => {
       const failedCount = response.data.failed_count || 0
       
       if (failedCount > 0) {
-        toast.warning(`：successful ${successCount} ，failed ${failedCount} `)
+        toast.warning(adminT('Batch engagement finished: {ok} succeeded, {fail} failed', '批量互动完成：成功 {ok} 个，失败 {fail} 个', { ok: successCount, fail: failedCount }))
       } else {
-        toast.success(`：successful ${successCount} `)
+        toast.success(adminT('Batch engagement finished: {ok} succeeded', '批量互动完成：成功 {ok} 个', { ok: successCount }))
       }
       
       closeBatchEngageModal()

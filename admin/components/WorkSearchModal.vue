@@ -11,8 +11,8 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-lg font-semibold text-gray-900">Search</h2>
-            <p class="text-xs text-gray-500">Search</p>
+            <h2 class="text-lg font-semibold text-gray-900">{{ $adminT("Search", "搜索并添加作品") }}</h2>
+            <p class="text-xs text-gray-500">{{ $adminT("Search for work inside the site and add bulk to the gallery", "搜索站内作品并批量添加到画廊") }}</p>
           </div>
         </div>
         <button type="button" @click="handleClose" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all">
@@ -28,7 +28,7 @@
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Search（Title、Description、Prompt）"
+              :placeholder="$adminT('Search for works by keyword (title, description, Prompt)', '按关键词搜索作品（标题、描述、Prompt）')"
               class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               @keyup.enter="handleEnterSearch"
               @compositionstart="isComposing = true"
@@ -57,16 +57,14 @@
           <button
             @click="clearSelection"
             class="text-xs text-blue-600 hover:text-blue-800 font-medium"
-          >
-
-          </button>
+          >{{ $adminT("Clear Selection", "清除选择") }}</button>
         </div>
 
         <!-- Results Grid -->
         <div class="flex-1 overflow-y-auto p-6">
           <div v-if="loading && works.length === 0" class="flex items-center justify-center py-20 text-gray-500">
             <div class="w-5 h-5 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin mr-3"></div>
-            <span class="text-sm">Loading......</span>
+            <span class="text-sm">{{ $adminT("Loading", "加载中...") }}</span>
           </div>
 
           <div v-else-if="works.length === 0" class="flex flex-col items-center justify-center py-20 text-center px-6 space-y-3">
@@ -75,8 +73,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <div class="text-gray-700 font-medium">Search</div>
-            <p class="text-xs text-gray-500">Search</p>
+            <div class="text-gray-700 font-medium">{{ $adminT("Search", "暂无搜索结果") }}</div>
+            <p class="text-xs text-gray-500">{{ $adminT("Search", "尝试换个关键词搜索") }}</p>
           </div>
 
           <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -135,16 +133,14 @@
       <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
         <div class="text-sm text-gray-600">
           <span v-if="selectedWorks.length > 0"> {{ selectedWorks.length }} </span>
-          <span v-else class="text-gray-400">Please select</span>
+          <span v-else class="text-gray-400">{{ $adminT("Please select", "请选择要添加的作品") }}</span>
         </div>
         <div class="flex items-center gap-3">
           <button
             type="button"
             @click="handleClose"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             type="button"
             @click="handleConfirm"
@@ -153,8 +149,7 @@
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-             {{ selectedWorks.length > 0 ? selectedWorks.length : '' }}
+            </svg> {{ $adminT("Add", "添加") }} {{ selectedWorks.length > 0 ? selectedWorks.length : '' }}
           </button>
         </div>
       </div>
@@ -164,6 +159,9 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const { isVideoWork, getWorkImageUrl, getWorkVideoUrl, getWorkVideoPoster } = useWorkMedia()
 
@@ -210,7 +208,7 @@ const toggleSelection = (work: any) => {
     selectedWorks.value.splice(index, 1)
   } else {
     if (props.existingWorkIds.includes(work.id)) {
-      toast.warning('')
+      toast.warning(adminT('This work has already been added', '该作品已添加'))
       return
     }
     selectedWorks.value.push(work)
@@ -223,7 +221,7 @@ const clearSelection = () => {
 
 const loadWorks = async () => {
   if (!searchQuery.value.trim()) {
-    toast.warning('Please enterSearch')
+    toast.warning(adminT("Please enter Search", "请至少选择一个作品"))
     return
   }
 
@@ -241,15 +239,15 @@ const loadWorks = async () => {
     if (response.success) {
       works.value = response.data.items || []
       if (works.value.length === 0) {
-        toast.info('')
+        toast.info(adminT('No related works found', '未找到相关作品'))
       }
     } else {
-      toast.error(response.message || 'Searchfailed')
+      toast.error(response.message || adminT('Search failed', '搜索失败'))
       works.value = []
     }
   } catch (error: any) {
     console.error('Failed to search works:', error)
-    toast.error(error.message || 'Searchfailed')
+    toast.error(error.message || adminT('Search failed', '搜索失败'))
     works.value = []
   } finally {
     loading.value = false
@@ -258,14 +256,14 @@ const loadWorks = async () => {
 
 const handleConfirm = () => {
   if (selectedWorks.value.length === 0) {
-    toast.warning('')
+    toast.warning(adminT('Select at least one work', '请至少选择一个作品'))
     return
   }
   
   const newWorks = selectedWorks.value.filter(work => !props.existingWorkIds.includes(work.id))
   
   if (newWorks.length === 0) {
-    toast.warning('')
+    toast.warning(adminT('All selected works have already been added', '所选作品已全部添加'))
     return
   }
   

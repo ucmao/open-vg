@@ -16,7 +16,7 @@
           </h2>
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-2">
-              <label class="text-sm text-gray-700 whitespace-nowrap"></label>
+              <label class="text-sm text-gray-700 whitespace-nowrap">{{ $adminT("Sort", "排序") }}</label>
               <input
                 v-model.number="formData.sort_order"
                 type="number"
@@ -32,7 +32,7 @@
                   type="checkbox"
                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <span class="text-sm text-green-700 whitespace-nowrap"></span>
+                <span class="text-sm text-green-700 whitespace-nowrap">{{ $adminT("Enable", "启用") }}</span>
               </label>
             </div>
           </div>
@@ -41,9 +41,7 @@
       
       <!-- Real-time Preview at Top -->
       <div class="px-4 pt-4 pb-3 sm:p-4 border-b bg-gray-50" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0,0,0,0.03) 19px, rgba(0,0,0,0.03) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0,0,0,0.03) 19px, rgba(0,0,0,0.03) 20px);">
-        <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3 mb-2">
-
-        </h3>
+        <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3 mb-2">{{ $adminT("Real-time preview", "实时预览") }}</h3>
         <!-- Banner Preview（ PromotionBanner ，） -->
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
           <div class="w-full relative overflow-hidden">
@@ -57,28 +55,26 @@
           <div class="space-y-6">
             <!-- （，：、Close；） -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">
-
-              </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">{{ $adminT("Layouts and Styles", "布局与样式") }}</h3>
               <!-- ：、Close（ ON = Close） -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <label class="flex items-center gap-2 cursor-pointer">
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="formData.layout_config.content_carousel_enabled ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.content_carousel_enabled = !formData.layout_config.content_carousel_enabled">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="formData.layout_config.content_carousel_enabled ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Start the rotation.", "启动轮播") }}</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer">
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="!formData.layout_config.buttons.closeButton.visible ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.buttons.closeButton.visible = !formData.layout_config.buttons.closeButton.visible">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="!formData.layout_config.buttons.closeButton.visible ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">Close</span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Close", "隐藏关闭按钮") }}</span>
                 </label>
               </div>
               <!-- ：Banner 、、（） -->
               <div class="grid grid-cols-3 gap-4">
                 <div class="min-w-0 flex flex-col gap-1">
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">Banner </span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Banner", "Banner 高度") }} </span>
                   <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                     <button
                       type="button"
@@ -89,9 +85,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("High", "高") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.bannerHeight = 'medium'"
@@ -101,9 +95,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Medium", "中") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.bannerHeight = 'short'"
@@ -113,13 +105,11 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Low", "低") }}</button>
                   </div>
                 </div>
                 <div v-if="formData.layout_config.content_carousel_enabled" class="min-w-0 flex flex-col gap-1">
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Scroll Direction", "滚动方向") }}</span>
                   <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                     <button
                       type="button"
@@ -130,9 +120,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Let's go!", "上") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.content_scroll_direction = 'down'"
@@ -142,13 +130,11 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Down", "下") }}</button>
                   </div>
                 </div>
                 <div v-if="formData.layout_config.content_carousel_enabled" class="min-w-0 flex flex-col gap-1">
-                  <label class="text-sm font-medium text-gray-700 whitespace-nowrap">（）</label>
+                  <label class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Scroll interval for content (seconds)", "内容滚动间隔（秒）") }}</label>
                   <input
                     v-model.number="formData.layout_config.content_scroll_interval_seconds"
                     type="number"
@@ -165,12 +151,12 @@
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
               <h3 class="text-base font-bold text-gray-800 flex items-center gap-2 border-l-4 border-blue-600 pl-3">
 
-                <span class="text-xs font-normal text-gray-500">（，）</span>
+                <span class="text-xs font-normal text-gray-500">{{ $adminT("(A number of bars may be added and the front desk will be rolling up at set intervals)", "（可添加多条，前台将按设定间隔向上滚动）") }}</span>
               </h3>
               <!-- ：（Title/Title、） -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <div class="flex items-center gap-2">
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Content Alignment", "内容对齐") }}</span>
                   <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                     <button
                       type="button"
@@ -181,9 +167,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Left", "居左") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.textAlign = 'center'"
@@ -193,9 +177,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Centred", "居中") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.textAlign = 'right'"
@@ -205,9 +187,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >
-
-                    </button>
+                    >{{ $adminT("Right", "居右") }}</button>
                   </div>
                 </div>
               </div>
@@ -222,7 +202,7 @@
                     @click="formData.content_items.splice(idx, 1)"
                     :disabled="formData.content_items.length <= 1"
                     class="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    title="Delete"
+                    :title="$adminT('Delete', '删除本条')"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -230,14 +210,14 @@
                   </button>
                   <!--  / ：、， -->
                   <div class="flex-shrink-0 flex flex-col gap-1.5">
-                    <span class="text-xs font-medium text-gray-500"></span>
+                    <span class="text-xs font-medium text-gray-500">{{ $adminT("Picture", "图片") }}</span>
                     <div class="flex gap-2">
                       <div class="flex flex-col gap-1">
-                        <span class="text-xs text-gray-600"></span>
+                        <span class="text-xs text-gray-600">{{ $adminT("First", "首图") }}</span>
                         <div
                           @click="openMediaSelectorForContentItem(idx)"
                           class="relative w-20 h-20 rounded-lg border border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-gray-200/80 transition-all aspect-square"
-                          title=""
+                          :title="$adminT('Click to select the first diagram', '点击选择首图')"
                         >
                           <img
                             v-if="item.image_url"
@@ -256,8 +236,8 @@
                             type="button"
                             @click.stop="item.image_url = ''"
                             class="absolute top-0.5 right-0.5 p-1 rounded-full bg-black/50 text-white hover:bg-red-500 transition-colors"
-                            title="Delete"
-                            aria-label="Delete"
+                            :title="$adminT('Delete', '删除首图')"
+                            :aria-label="$adminT('Delete', '删除首图')"
                           >
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -266,11 +246,11 @@
                         </div>
                       </div>
                       <div class="flex flex-col gap-1">
-                        <span class="text-xs text-gray-600"></span>
+                        <span class="text-xs text-gray-600">{{ $adminT("Endchart", "尾图") }}</span>
                         <div
                           @click="openMediaSelectorForContentItemTrailing(idx)"
                           class="relative w-20 h-20 rounded-lg border border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-gray-200/80 transition-all aspect-square"
-                          title=""
+                          :title="$adminT('Click Select Endchart', '点击选择尾图')"
                         >
                           <img
                             v-if="item.trailing_image_url"
@@ -289,8 +269,8 @@
                             type="button"
                             @click.stop="item.trailing_image_url = ''"
                             class="absolute top-0.5 right-0.5 p-1 rounded-full bg-black/50 text-white hover:bg-red-500 transition-colors"
-                            title="Delete"
-                            aria-label="Delete"
+                            :title="$adminT('Delete', '删除尾图')"
+                            :aria-label="$adminT('Delete', '删除尾图')"
                           >
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -302,7 +282,7 @@
                   </div>
                   <div class="flex-1 min-w-0 space-y-2 pr-8">
                     <div>
-                      <label class="block text-xs text-gray-500 mb-0.5">Title *（：、、、， HTML Edit）</label>
+                      <label class="block text-xs text-gray-500 mb-0.5">{{ $adminT("Title * (rich text: fonts, thicker text, links, colours, etc., toggle / / / / / / / / / / / / / /", "标题 *（富文本：字号、加粗、链接、颜色等，可切换 HTML 源码编辑）") }}</label>
                       <ClientOnly>
                         <RichTextEditor
                           v-model="item.title"
@@ -312,7 +292,7 @@
                           <textarea
                             v-model="item.title"
                             class="block w-full min-h-[80px] border border-gray-200 rounded-md shadow-sm px-3 py-2 text-sm"
-                            placeholder="Title（）"
+                            :placeholder="$adminT('Title of article (rich text)', '本条标题（富文本）')"
                           />
                         </template>
                       </ClientOnly>
@@ -327,9 +307,7 @@
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    +
-                  </button>
+                    </svg> {{ $adminT("+Add new entry", "+ 添加新项") }} </button>
                 </div>
               </div>
             </div>
@@ -337,13 +315,11 @@
 
             <!--  -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">
-
-              </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">{{ $adminT("Background Style", "背景样式") }}</h3>
               
               <!-- Type（） -->
               <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Background", "背景") }}</span>
                 <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                   <button
                     type="button"
@@ -354,9 +330,7 @@
                         ? 'bg-blue-600 text-white'
                         : 'text-gray-700 hover:bg-gray-100'
                     ]"
-                  >
-
-                  </button>
+                  >{{ $adminT("Picture Background", "图片背景") }}</button>
                   <button
                     type="button"
                     @click="backgroundType = 'gradient'"
@@ -366,9 +340,7 @@
                         ? 'bg-blue-600 text-white'
                         : 'text-gray-700 hover:bg-gray-100'
                     ]"
-                  >
-
-                  </button>
+                  >{{ $adminT("Gradient Colour Background", "渐变色背景") }}</button>
                 </div>
               </div>
               
@@ -376,17 +348,17 @@
               <div class="mt-3">
                 <!-- ：， URL  -->
                 <div v-show="backgroundType === 'image'" class="flex flex-col items-center">
-                  <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Picture Background", "图片背景") }}</label>
                   <div class="space-y-1.5 w-full flex flex-col items-center">
                     <div 
                       @click="openMediaSelector('background_image_url')"
                       class="w-full max-w-md aspect-[32/9] rounded-xl border border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-gray-200/80 transition-all group relative"
-                      title=""
+                      :title="$adminT('Click to select the image background', '点击选择图片背景')"
                     >
                       <img
                         v-if="formData.background_image_url"
                         :src="formData.background_image_url"
-                        alt=""
+                        :alt="$adminT('Background Preview', '背景预览')"
                         class="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
                         @error="handleImageError"
                       />
@@ -394,7 +366,7 @@
                         <svg class="w-8 h-8 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <div></div>
+                        <div>{{ $adminT("Click for background map", "点击选择背景图") }}</div>
                       </div>
                       <div v-if="formData.background_image_url" class="absolute inset-0 bg-black/0 group-hover:bg-black/20 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -402,7 +374,7 @@
                         </svg>
                       </div>
                     </div>
-                    <p class="text-xs text-gray-500 text-center">（）</p>
+                    <p class="text-xs text-gray-500 text-center">{{ $adminT("Actual display area (over-wide)", "实际显示区域（超宽比例）") }}</p>
                   </div>
                 </div>
                 
@@ -411,35 +383,35 @@
                   <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-3">
                       <div>
-                        <label class="block text-xs text-gray-500 mb-1">Type</label>
+                        <label class="block text-xs text-gray-500 mb-1">{{ $adminT("Type", "渐变类型") }}</label>
                         <select
                           v-model="gradientType"
                           class="w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                         >
-                          <option value="linear"> (Linear)</option>
-                          <option value="radial"> (Radial)</option>
+                          <option value="linear"> {{ $adminT("(Linear)", "线性渐变 (Linear)") }}</option>
+                          <option value="radial"> {{ $adminT("(Radial)", "径向渐变 (Radial)") }}</option>
                         </select>
                       </div>
                       
                       <div v-if="gradientType === 'linear'">
-                        <label class="block text-xs text-gray-500 mb-1"></label>
+                        <label class="block text-xs text-gray-500 mb-1">{{ $adminT("Gradient Direction", "渐变方向") }}</label>
                         <select
                           v-model="gradientDirection"
                           class="w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                         >
-                          <option value="90deg"> (→)</option>
-                          <option value="180deg"> (↓)</option>
-                          <option value="270deg"> (←)</option>
-                          <option value="0deg"> (↑)</option>
-                          <option value="45deg"> (↘)</option>
-                          <option value="135deg"> (↙)</option>
+                          <option value="90deg"> {{ $adminT("Left to Right ()", "从左到右 (→)") }}</option>
+                          <option value="180deg"> {{ $adminT("Top to Bottom (,)", "从上到下 (↓)") }}</option>
+                          <option value="270deg"> {{ $adminT("Right to Left (,)", "从右到左 (←)") }}</option>
+                          <option value="0deg"> {{ $adminT("Bottom to Top (,)", "从下到上 (↑)") }}</option>
+                          <option value="45deg"> {{ $adminT("Top Left to Bottom Right (,)", "左上到右下 (↘)") }}</option>
+                          <option value="135deg"> {{ $adminT("Top Right to Bottom Left (,)", "右上到左下 (↙)") }}</option>
                         </select>
                       </div>
                     </div>
                     
                     <!-- Photoshop ： +  -->
                     <div class="space-y-2">
-                      <label class="block text-xs text-gray-500">（， {{ MAX_GRADIENT_STOPS }} ）</label>
+                      <label class="block text-xs text-gray-500">{{ $adminT("Gradient bar (click anywhere on the bar to add colours, maximum", "渐变条（点击条上任意位置添加色标，最多") }} {{ MAX_GRADIENT_STOPS }} {{ $adminT("(e)", "个）") }}</label>
                       <div
                         class="relative h-10 w-full rounded-md border-2 border-gray-200 shadow-inner cursor-crosshair overflow-hidden"
                         :style="gradientBarStyle"
@@ -459,12 +431,12 @@
                             :class="selectedGradientStopId === stop.id ? 'border-blue-600 ring-1 ring-blue-300' : 'border-white hover:border-gray-300'"
                             :style="{ backgroundColor: stop.color }"
                           />
-                          <span v-if="gradientStops.length > 2" class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-xs text-gray-500 whitespace-nowrap">Delete</span>
+                          <span v-if="gradientStops.length > 2" class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-xs text-gray-500 whitespace-nowrap">{{ $adminT("Delete", "双击删除") }}</span>
                         </div>
                       </div>
                       <!-- （） -->
                       <div v-if="selectedStop" class="flex items-center gap-2">
-                        <span class="text-xs text-gray-500 w-16"> {{ selectedStop.position }}%</span>
+                        <span class="text-xs text-gray-500 w-16"> {{ selectedStop.position }}{{ $adminT("Location", "位置") }}</span>
                         <input
                           type="range"
                           min="0"
@@ -496,7 +468,7 @@
                             v-if="showGradientStopPopover"
                             class="absolute left-0 top-full mt-1 z-50 w-72 p-2.5 bg-white rounded-lg border border-gray-200 shadow-lg"
                           >
-                            <div class="text-xs font-medium text-gray-500 mb-2"></div>
+                            <div class="text-xs font-medium text-gray-500 mb-2">{{ $adminT("Preset Colour", "预设颜色") }}</div>
                             <div class="grid grid-cols-10 gap-1 mb-3">
                               <button
                                 v-for="color in textColorPresets"
@@ -513,9 +485,7 @@
                               type="button"
                               @click="openNativeGradientStopPicker"
                               class="w-full py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                            >
-
-                            </button>
+                            >{{ $adminT("Custom Colours", "自定义颜色") }}</button>
                           </div>
                         </div>
                         <input
@@ -530,11 +500,9 @@
                           type="button"
                           @click="removeGradientStop(selectedStop.id)"
                           class="px-2 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded"
-                        >
-                          Delete
-                        </button>
+                        > {{ $adminT("Delete", "删除此色标") }} </button>
                       </div>
-                      <p v-else class="text-xs text-gray-400">，Edit</p>
+                      <p v-else class="text-xs text-gray-400">{{ $adminT("Click the gradient bar above to add colours or click the already existing colours to edit", "点击上方渐变条添加色标，或点击已有色标进行编辑") }}</p>
                     </div>
                     
                     <!-- ：EditCSS（） -->
@@ -551,9 +519,7 @@
                           viewBox="0 0 24 24"
                         >
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                        ：Edit CSS
-                      </button>
+                        </svg> {{ $adminT("Advanced: Manual Edit CSS", "高级：手动编辑 CSS") }} </button>
                       <div v-show="showAdvancedGradient" class="mt-2">
                         <input
                           v-model="formData.background_gradient"
@@ -570,40 +536,38 @@
 
             <!-- Settings -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">
-                Settings
-              </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Settings", "链接设置") }} </h3>
               <!-- ：，「」 -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <label class="flex items-center gap-2 cursor-pointer">
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="formData.layout_config.buttons.linkButton.visible ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.buttons.linkButton.visible = !formData.layout_config.buttons.linkButton.visible">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="formData.layout_config.buttons.linkButton.visible ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Show Link Buttons", "显示链接按钮") }}</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer">
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="formData.layout_config.click_background_to_link ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.click_background_to_link = !formData.layout_config.click_background_to_link">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="formData.layout_config.click_background_to_link ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Click Background Jump Link", "点击背景跳转链接") }}</span>
                 </label>
               </div>
               <!-- 「」： -->
               <div v-if="!formData.layout_config.buttons.linkButton.visible && formData.layout_config.click_background_to_link" class="bg-gray-50/80 rounded-lg p-3 border border-gray-100">
-                <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Jump Link", "跳转链接") }}</label>
                 <input
                   v-model="formData.link_url"
                   type="url"
                   class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
-                  placeholder="https://example.com  /page"
+                  :placeholder="$adminT('https://example.com /page', 'https://example.com 或 /page')"
                 />
-                <p class="text-xs text-gray-500 mt-1">「」</p>
+                <p class="text-xs text-gray-500 mt-1">{{ $adminT("For Click Background Jump Link", "用于「点击背景跳转链接」") }}</p>
               </div>
               <!-- 「」： +  + // +  -->
               <div v-else-if="formData.layout_config.buttons.linkButton.visible" class="bg-gray-50/80 rounded-lg p-3 space-y-3 border border-gray-100">
                 <div class="flex flex-wrap items-end gap-x-4 gap-y-3">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("button area position", "按钮区域位置") }}</label>
                     <div class="flex rounded-lg border border-gray-200 overflow-hidden bg-white">
                       <button
                         type="button"
@@ -614,9 +578,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Left", "居左") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.buttons.position = 'center'"
@@ -626,9 +588,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Centred", "居中") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.buttons.position = 'right'"
@@ -638,87 +598,85 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Right", "居右") }}</button>
                     </div>
                   </div>
                 </div>
                 <!--  -->
                 <div class="bg-gray-50/80 rounded-lg p-3 space-y-3 border border-gray-100">
-                  <h4 class="text-sm font-semibold text-gray-800"></h4>
+                  <h4 class="text-sm font-semibold text-gray-800">{{ $adminT("Button Styles", "按钮样式") }}</h4>
                   <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <!--  -->
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Round Corner", "圆角") }}</label>
                       <select
                         v-model="formData.layout_config.buttons.linkButton.borderRadius"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="none"></option>
-                        <option value="small"></option>
-                        <option value="medium"></option>
-                        <option value="large"></option>
-                        <option value="full"></option>
+                        <option value="none">{{ $adminT("None", "无") }}</option>
+                        <option value="small">{{ $adminT("Small", "小") }}</option>
+                        <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                        <option value="large">{{ $adminT("Large", "大") }}</option>
+                        <option value="full">{{ $adminT("Full circle.", "完全圆角") }}</option>
                       </select>
                     </div>
                     <!--  -->
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Shadow", "阴影") }}</label>
                       <select
                         v-model="formData.layout_config.buttons.linkButton.shadow"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="none"></option>
-                        <option value="small"></option>
-                        <option value="medium"></option>
-                        <option value="large"></option>
+                        <option value="none">{{ $adminT("None", "无") }}</option>
+                        <option value="small">{{ $adminT("Small", "小") }}</option>
+                        <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                        <option value="large">{{ $adminT("Large", "大") }}</option>
                       </select>
                     </div>
                     <!--  -->
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Left and right inner margin", "左右内边距") }}</label>
                       <select
                         v-model="formData.layout_config.buttons.linkButton.paddingX"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="xsmall"></option>
-                        <option value="small"></option>
-                        <option value="medium"></option>
-                        <option value="large"></option>
-                        <option value="xlarge"></option>
+                        <option value="xsmall">{{ $adminT("Very Small", "极小") }}</option>
+                        <option value="small">{{ $adminT("Small", "小") }}</option>
+                        <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                        <option value="large">{{ $adminT("Large", "大") }}</option>
+                        <option value="xlarge">{{ $adminT("Large", "极大") }}</option>
                       </select>
                     </div>
                     <!--  -->
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Up and down inside", "上下内边距") }}</label>
                       <select
                         v-model="formData.layout_config.buttons.linkButton.paddingY"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="xsmall"></option>
-                        <option value="small"></option>
-                        <option value="medium"></option>
-                        <option value="large"></option>
-                        <option value="xlarge"></option>
+                        <option value="xsmall">{{ $adminT("Very Small", "极小") }}</option>
+                        <option value="small">{{ $adminT("Small", "小") }}</option>
+                        <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                        <option value="large">{{ $adminT("Large", "大") }}</option>
+                        <option value="xlarge">{{ $adminT("Large", "极大") }}</option>
                       </select>
                     </div>
                     <!-- （） -->
                     <div class="min-w-0">
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Background Effects", "背景效果") }}</label>
                       <select
                         v-model="formData.layout_config.buttons.linkButton.backgroundType"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="solid"></option>
-                        <option value="transparent"></option>
-                        <option value="gradient"></option>
-                        <option value="backdrop-blur"></option>
+                        <option value="solid">{{ $adminT("Solid", "实心") }}</option>
+                        <option value="transparent">{{ $adminT("Transparent", "透明") }}</option>
+                        <option value="gradient">{{ $adminT("Gradient", "渐变") }}</option>
+                        <option value="backdrop-blur">{{ $adminT("Furry glass.", "毛玻璃") }}</option>
                       </select>
                     </div>
                     <!-- （） -->
                     <div class="min-w-0">
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Background Colour", "背景颜色") }}</label>
                       <div ref="linkBtnBgColorPopoverRef" class="relative w-full">
                         <button
                           type="button"
@@ -728,7 +686,7 @@
                           :style="formData.layout_config.buttons.linkButton.bgColor ? { backgroundColor: formData.layout_config.buttons.linkButton.bgColor } : {}"
                           :title="formData.layout_config.buttons.linkButton.bgColor || ''"
                         >
-                          <span v-if="!formData.layout_config.buttons.linkButton.bgColor" class="text-gray-500 text-[10px]"></span>
+                          <span v-if="!formData.layout_config.buttons.linkButton.bgColor" class="text-gray-500 text-[10px]">{{ $adminT("Default", "默认") }}</span>
                         </button>
                         <input
                           ref="linkBtnBgColorInputRef"
@@ -741,7 +699,7 @@
                           v-if="showLinkBtnBgColorPopover"
                           class="absolute left-0 top-full mt-1 z-50 w-72 p-2.5 bg-white rounded-lg border border-gray-200 shadow-lg"
                         >
-                          <div class="text-xs font-medium text-gray-500 mb-2"></div>
+                          <div class="text-xs font-medium text-gray-500 mb-2">{{ $adminT("Leave empty using default background effects", "留空则使用背景效果的默认") }}</div>
                           <div class="grid grid-cols-10 gap-1 mb-2">
                             <button
                               v-for="color in buttonBgColorPresets"
@@ -759,23 +717,19 @@
                               type="button"
                               @click="linkBtnBgColorInputRef?.click()"
                               class="flex-1 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                            >
-
-                            </button>
+                            >{{ $adminT("Custom", "自定义") }}</button>
                             <button
                               type="button"
                               @click="formData.layout_config.buttons.linkButton.bgColor = ''; showLinkBtnBgColorPopover = false"
                               class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
-                            >
-
-                            </button>
+                            >{{ $adminT("Clear", "清除") }}</button>
                           </div>
                         </div>
                       </div>
                     </div>
                     <!-- （） -->
                     <div class="min-w-0">
-                      <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Side", "描边") }}</label>
                       <div class="flex items-center gap-1 min-h-8">
                         <label class="flex items-center gap-1 cursor-pointer shrink-0">
                           <input
@@ -783,7 +737,7 @@
                             type="checkbox"
                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                           />
-                          <span class="text-xs text-gray-600"></span>
+                          <span class="text-xs text-gray-600">{{ $adminT("Enable", "启用") }}</span>
                         </label>
                         <select
                           v-if="formData.layout_config.buttons.linkButton.border.enabled"
@@ -799,14 +753,14 @@
                           v-model="formData.layout_config.buttons.linkButton.border.color"
                           type="color"
                           class="shrink-0 w-7 h-7 rounded border border-gray-200 cursor-pointer"
-                          title=""
+                          :title="$adminT('Side Colour', '描边颜色')"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Button Text", "按钮文字") }}</label>
                   <ClientOnly>
                     <RichTextEditor
                       v-model="formData.link_text"
@@ -817,18 +771,18 @@
                         v-model="formData.link_text"
                         type="text"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
-                        placeholder=""
+                        :placeholder="$adminT('More.', '了解更多')"
                       />
                     </template>
                   </ClientOnly>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Jump Link", "跳转链接") }}</label>
                   <input
                     v-model="formData.link_url"
                     type="url"
                     class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
-                    placeholder="https://example.com  /page"
+                    :placeholder="$adminT('https://example.com /page', 'https://example.com 或 /page')"
                   />
                 </div>
               </div>
@@ -836,9 +790,7 @@
 
             <!-- Settings -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3">
-                Settings
-              </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Settings", "时间设置") }} </h3>
               <!-- ：、（Settings） -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <label class="flex items-center gap-2 cursor-pointer">
@@ -849,7 +801,7 @@
                   >
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="enableEffectiveTime ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Open effective time", "开启有效时间") }}</span>
                 </label>
                 <label v-if="enableEffectiveTime" class="flex items-center gap-2 cursor-pointer">
                   <span
@@ -859,14 +811,14 @@
                   >
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="formData.show_countdown ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Show Countdowns", "显示倒计时") }}</span>
                 </label>
               </div>
               <!-- ：/、 -->
               <div v-if="enableEffectiveTime" class="bg-gray-50/80 rounded-lg p-3 space-y-3 border border-gray-100">
                 <div class="flex flex-wrap items-end gap-2">
                   <div class="flex-1 min-w-[140px]">
-                    <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Start", "开始时间") }}</label>
                     <input
                       v-model="formData.start_time"
                       type="datetime-local"
@@ -877,9 +829,9 @@
                       @change="validateTimeRange"
                     />
                   </div>
-                  <span class="text-sm text-gray-500 pb-2"></span>
+                  <span class="text-sm text-gray-500 pb-2">{{ $adminT("to", "至") }}</span>
                   <div class="flex-1 min-w-[140px]">
-                    <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("End Time", "结束时间") }}</label>
                     <input
                       v-model="formData.end_time"
                       type="datetime-local"
@@ -897,10 +849,10 @@
                   </svg>
                   {{ timeError }}
                 </div>
-                <p v-if="formData.show_countdown" class="text-xs text-gray-500">Settings「」</p>
+                <p v-if="formData.show_countdown" class="text-xs text-gray-500">{{ $adminT("Show Countdowns only after setting the end time and opening", "需设置结束时间并打开「显示倒计时」后才会显示") }}</p>
                 <div v-if="formData.show_countdown" class="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Countdown position", "倒计时位置") }}</span>
                     <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                       <button
                         type="button"
@@ -911,9 +863,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Left", "居左") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.countdown.position = 'center'"
@@ -923,9 +873,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Centred", "居中") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.countdown.position = 'right'"
@@ -935,36 +883,34 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >
-
-                      </button>
+                      >{{ $adminT("Right", "居右") }}</button>
                     </div>
                   </div>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Countdown Style", "倒计时样式") }}</span>
                     <select
                       v-model="formData.layout_config.countdown.style"
                       class="h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm w-28"
                     >
-                      <option value="cards"></option>
-                      <option value="inline"></option>
-                      <option value="compact"></option>
+                      <option value="cards">{{ $adminT("Digital Card", "数字卡片") }}</option>
+                      <option value="inline">{{ $adminT("Pure Text", "纯文字") }}</option>
+                      <option value="compact">{{ $adminT("Tight tab", "紧凑标签") }}</option>
                     </select>
                   </div>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Countdown number", "倒计时字号") }}</span>
                     <select
                       v-model="formData.layout_config.countdown.fontSize"
                       class="h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm w-24"
                     >
-                      <option value="small"></option>
-                      <option value="medium"></option>
-                      <option value="large"></option>
-                      <option value="xlarge"></option>
+                      <option value="small">{{ $adminT("Small", "小") }}</option>
+                      <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                      <option value="large">{{ $adminT("Large", "大") }}</option>
+                      <option value="xlarge">{{ $adminT("Extreme", "特大") }}</option>
                     </select>
                   </div>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap"></span>
+                    <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Countdown color", "倒计时颜色") }}</span>
                     <div ref="countdownColorPopoverRef" class="relative inline-block">
                       <button
                         type="button"
@@ -974,7 +920,7 @@
                         :style="formData.layout_config.countdown.color ? { backgroundColor: effectiveCountdownColor } : {}"
                         :title="formData.layout_config.countdown.color ? effectiveCountdownColor : ''"
                       >
-                        <span v-if="!formData.layout_config.countdown.color" class="text-gray-500 text-[10px]"></span>
+                        <span v-if="!formData.layout_config.countdown.color" class="text-gray-500 text-[10px]">{{ $adminT("Global", "全局") }}</span>
                       </button>
                       <input
                         ref="countdownColorInputRef"
@@ -987,7 +933,7 @@
                         v-if="showCountdownColorPopover"
                         class="absolute left-0 top-full mt-1 z-50 w-72 p-2.5 bg-white rounded-lg border border-gray-200 shadow-lg"
                       >
-                        <div class="text-xs font-medium text-gray-500 mb-2"></div>
+                        <div class="text-xs font-medium text-gray-500 mb-2">{{ $adminT("Leave empty while using global text colour", "留空则使用全局文字颜色") }}</div>
                         <div class="grid grid-cols-10 gap-1 mb-2">
                           <button
                             v-for="color in textColorPresets"
@@ -1005,16 +951,12 @@
                             type="button"
                             @click="countdownColorInputRef?.click()"
                             class="flex-1 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                          >
-
-                          </button>
+                          >{{ $adminT("Custom", "自定义") }}</button>
                           <button
                             type="button"
                             @click="formData.layout_config.countdown.color = ''; showCountdownColorPopover = false"
                             class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
-                          >
-
-                          </button>
+                          >{{ $adminT("Clear", "清除") }}</button>
                         </div>
                       </div>
                     </div>
@@ -1041,9 +983,7 @@
         <button
           @click="handleClose"
           class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消") }} </button>
       </div>
     </div>
   </div>
@@ -1061,6 +1001,9 @@
 import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const props = defineProps<{
   banner?: any
@@ -1094,103 +1037,103 @@ const enableEffectiveTime = ref(false)
 // （、，）
 const textColorPresets = [
   // --- ：（，，） ---
-  { label: '', value: '#FFFFFF' },
-  { label: '', value: '#FDFEFE' },
-  { label: '', value: '#FEF9EF' },
-  { label: '', value: '#CCCCCC' },
-  { label: '', value: '#A8A8A8' },
-  { label: '', value: '#666666' },
-  { label: '', value: '#6E6E73' },
-  { label: '', value: '#333333' },
-  { label: '', value: '#001529' },
-  { label: '', value: '#000000' },
+  { label: adminT("White", "白色"), value: '#FFFFFF' },
+  { label: adminT("Mib.", "米白"), value: '#FDFEFE' },
+  { label: adminT("Warm white.", "暖白"), value: '#FEF9EF' },
+  { label: adminT("Ash.", "浅灰"), value: '#CCCCCC' },
+  { label: adminT("Silver ash.", "银灰"), value: '#A8A8A8' },
+  { label: adminT("Medium Ash", "中灰"), value: '#666666' },
+  { label: adminT("Space ash", "太空灰"), value: '#6E6E73' },
+  { label: adminT("Dark Ash", "深灰"), value: '#333333' },
+  { label: adminT("Business Dark Blue", "商务深蓝"), value: '#001529' },
+  { label: adminT("Black", "黑色"), value: '#000000' },
 
   // --- ：（ Banner ，） ---
-  { label: '', value: '#D4C5A9' },
-  { label: '', value: '#CBC0AD' },
-  { label: '', value: '#A39E93' },
-  { label: '', value: '#8B8B8F' },
-  { label: '', value: '#F0F2F5' },
-  { label: '', value: '#8E9AAF' },
-  { label: '', value: '#D4E5F7' },
-  { label: '', value: '#F5D0C5' },
-  { label: '', value: '#B76E79' },
-  { label: '', value: '#9B59B6' },
+  { label: adminT("Champagne gold.", "香槟金"), value: '#D4C5A9' },
+  { label: adminT("Tama.", "亚麻"), value: '#CBC0AD' },
+  { label: adminT("Warm ash.", "暖灰"), value: '#A39E93' },
+  { label: adminT("Cold ash.", "冷灰"), value: '#8B8B8F' },
+  { label: adminT("Cold Grey Bottom", "冷灰底"), value: '#F0F2F5' },
+  { label: adminT("Gray", "灰蓝"), value: '#8E9AAF' },
+  { label: adminT("Fog Blue", "雾蓝"), value: '#D4E5F7' },
+  { label: adminT("Dou Sha.", "豆沙"), value: '#F5D0C5' },
+  { label: adminT("Rose gold.", "玫瑰金"), value: '#B76E79' },
+  { label: adminT("Purple", "紫色"), value: '#9B59B6' },
 
   // --- ：（，、Title、WarningsuccessfulStatus） ---
-  { label: '', value: '#C0392B' },
-  { label: '', value: '#E74C3C' },
-  { label: '', value: '#F1948A' },
-  { label: '', value: '#E67E22' },
-  { label: '', value: '#F1C40F' },
-  { label: '', value: '#1E8449' },
-  { label: '', value: '#27AE60' },
-  { label: '', value: '#1ABC9C' },
-  { label: '', value: '#3498DB' },
-  { label: '', value: '#2980B9' },
+  { label: adminT("Dark Red", "深红"), value: '#C0392B' },
+  { label: adminT("Red", "红色"), value: '#E74C3C' },
+  { label: adminT("Pink", "粉色"), value: '#F1948A' },
+  { label: adminT("Orange", "橙色"), value: '#E67E22' },
+  { label: adminT("Yellow", "黄色"), value: '#F1C40F' },
+  { label: adminT("Dark Green", "深绿"), value: '#1E8449' },
+  { label: adminT("Green", "绿色"), value: '#27AE60' },
+  { label: adminT("Cyan", "青色"), value: '#1ABC9C' },
+  { label: adminT("Blue", "蓝色"), value: '#3498DB' },
+  { label: adminT("Dark Blue", "深蓝"), value: '#2980B9' },
 
   // --- ：/（，） ---
-  { label: '', value: '#FFD1DC' },
-  { label: '', value: '#FFE4C4' },
-  { label: '', value: '#FFFACD' },
-  { label: '', value: '#FCF3CF' },
-  { label: '', value: '#B5EAD7' },
-  { label: '', value: '#B0E0E6' },
-  { label: '', value: '#ADD8E6' },
-  { label: '', value: '#E66EFA' },
-  { label: '', value: '#D8BFD8' },
-  { label: '', value: '#E6F7FF' },
+  { label: adminT("Cherry pollen.", "樱花粉"), value: '#FFD1DC' },
+  { label: adminT("Peaches.", "蜜桃"), value: '#FFE4C4' },
+  { label: adminT("Lemon Light", "柠檬浅"), value: '#FFFACD' },
+  { label: adminT("Cream.", "奶油"), value: '#FCF3CF' },
+  { label: adminT("Mint light.", "薄荷浅"), value: '#B5EAD7' },
+  { label: adminT("Sky Blue", "天空蓝"), value: '#B0E0E6' },
+  { label: adminT("Light Blue", "浅蓝"), value: '#ADD8E6' },
+  { label: adminT("Lavender.", "薰衣草"), value: '#E66EFA' },
+  { label: adminT("Lava", "淡紫"), value: '#D8BFD8' },
+  { label: adminT("Background Blue", "背景蓝"), value: '#E6F7FF' },
 ]
 
 // （、）
 const buttonBgColorPresets = [
   // --- ： ---
-  { label: '', value: '#FFFFFF' },
-  { label: '', value: '#E5E5E5' },
-  { label: '', value: '#000000' },
-  { label: '', value: '#333333' },
-  { label: 'iOS', value: '#007AFF' },
-  { label: '', value: '#0066CC' },
-  { label: '', value: '#1E40AF' },
-  { label: '', value: '#7C3AED' },
-  { label: '', value: '#EC4899' },
-  { label: '', value: '#EF4444' },
+  { label: adminT("White", "白色"), value: '#FFFFFF' },
+  { label: adminT("Ash.", "浅灰"), value: '#E5E5E5' },
+  { label: adminT("Black", "黑色"), value: '#000000' },
+  { label: adminT("Dark Ash", "深灰"), value: '#333333' },
+  { label: adminT("i OS", "iOS蓝"), value: '#007AFF' },
+  { label: adminT("Technology Blue", "科技蓝"), value: '#0066CC' },
+  { label: adminT("Dark Blue", "深蓝"), value: '#1E40AF' },
+  { label: adminT("Purple", "紫色"), value: '#7C3AED' },
+  { label: adminT("Pink", "粉色"), value: '#EC4899' },
+  { label: adminT("Red", "红色"), value: '#EF4444' },
 
   // --- ：（、CTA） ---
-  { label: '', value: '#FF3B30' },
-  { label: '', value: '#FF9500' },
-  { label: '', value: '#FFB800' },
-  { label: '', value: '#FFCC00' },
-  { label: '', value: '#34C759' },
-  { label: '', value: '#10B981' },
-  { label: '', value: '#00C7BE' },
-  { label: '', value: '#5AC8FA' },
-  { label: '', value: '#5856D6' },
-  { label: '', value: '#AF52DE' },
+  { label: adminT("Light red", "亮红"), value: '#FF3B30' },
+  { label: adminT("Orange", "橙色"), value: '#FF9500' },
+  { label: adminT("Gold", "金色"), value: '#FFB800' },
+  { label: adminT("Yellow", "黄色"), value: '#FFCC00' },
+  { label: adminT("A lemon.", "青柠"), value: '#34C759' },
+  { label: adminT("Green", "绿色"), value: '#10B981' },
+  { label: adminT("Green", "翠绿"), value: '#00C7BE' },
+  { label: adminT("SkyBlue", "天蓝"), value: '#5AC8FA' },
+  { label: adminT("Blu", "靛蓝"), value: '#5856D6' },
+  { label: adminT("Violet.", "紫红"), value: '#AF52DE' },
 
   // --- ：（） ---
-  { label: '', value: '#FF6B6B' },
-  { label: '', value: '#FF8E53' },
-  { label: '', value: '#FFA726' },
-  { label: '', value: '#FFD93D' },
-  { label: '', value: '#6BCF7F' },
-  { label: '', value: '#4ECDC4' },
-  { label: '', value: '#4A90E2' },
-  { label: '', value: '#9B59B6' },
-  { label: '', value: '#E91E63' },
-  { label: '', value: '#F06292' },
+  { label: adminT("Sunset Orange", "落日橙"), value: '#FF6B6B' },
+  { label: adminT("Coral red.", "珊瑚红"), value: '#FF8E53' },
+  { label: adminT("Hot orange.", "暖橙"), value: '#FFA726' },
+  { label: adminT("Sunset Gold.", "日落金"), value: '#FFD93D' },
+  { label: adminT("Mint", "薄荷"), value: '#6BCF7F' },
+  { label: adminT("Cyan", "青色"), value: '#4ECDC4' },
+  { label: adminT("Ocean blue", "海洋蓝"), value: '#4A90E2' },
+  { label: adminT("Violet.", "紫罗兰"), value: '#9B59B6' },
+  { label: adminT("Magenta", "洋红"), value: '#E91E63' },
+  { label: adminT("Rose.", "玫瑰"), value: '#F06292' },
 
   // --- ：/（、） ---
-  { label: '', value: '#2C3E50' },
-  { label: '', value: '#34495E' },
-  { label: '', value: '#16A085' },
-  { label: '', value: '#C0392B' },
-  { label: '', value: '#8E44AD' },
-  { label: '', value: 'rgba(255,255,255,0.2)' },
-  { label: '', value: 'rgba(0,0,0,0.3)' },
-  { label: '', value: 'rgba(255,255,255,0.15)' },
-  { label: '', value: 'rgba(200,200,200,0.25)' },
-  { label: '', value: 'transparent' },
+  { label: adminT("Dark Blue Grey", "深蓝灰"), value: '#2C3E50' },
+  { label: adminT("Cyan.", "靛青"), value: '#34495E' },
+  { label: adminT("InkGreen", "墨绿"), value: '#16A085' },
+  { label: adminT("Wine.", "酒红"), value: '#C0392B' },
+  { label: adminT("Dark Purple", "深紫"), value: '#8E44AD' },
+  { label: adminT("Half white.", "半透白"), value: 'rgba(255,255,255,0.2)' },
+  { label: adminT("Half black.", "半透黑"), value: 'rgba(0,0,0,0.3)' },
+  { label: adminT("Furry glass.", "毛玻璃"), value: 'rgba(255,255,255,0.15)' },
+  { label: adminT("Smoke.", "烟雾"), value: 'rgba(200,200,200,0.25)' },
+  { label: adminT("Transparent", "透明"), value: 'transparent' },
 ]
 
 const showLinkBtnBgColorPopover = ref(false)
@@ -1243,7 +1186,7 @@ const handleMediaSelect = (item: any) => {
       if (formData.value.content_items[idx]) formData.value.content_items[idx].trailing_image_url = item.file_url
       currentContentItemIndex.value = null
     }
-    toast.success('')
+    toast.success(adminT("Media File Selected", "已选择媒体文件"))
   }
   showMediaSelector.value = false
   currentMediaField.value = null
@@ -1684,15 +1627,15 @@ const save = async () => {
       toast.success(props.banner ? 'successful' : 'successful')
       emit('saved')
     } else {
-      const msg = response.message || 'Savefailed'
+      const msg = response.message || adminT('Save failed', '保存失败')
       const detail = formatValidationErrors(response.errors)
-      toast.error(detail ? `${msg}：${detail}` : msg)
+      toast.error(detail ? adminT('{msg}: {detail}', '{msg}：{detail}', { msg, detail }) : msg)
     }
   } catch (error: any) {
     const msg = error?.response?.data?.message || error.message || ''
     const errors = error?.response?.data?.errors
     const detail = formatValidationErrors(errors)
-    toast.error('Savefailed：' + (detail ? `${msg}（${detail}）` : msg))
+    toast.error(adminT('Save failed', '保存失败') + adminT(': ', '：') + (detail ? adminT('{msg} ({detail})', '{msg}（{detail}）', { msg, detail }) : msg))
   } finally {
     saving.value = false
   }

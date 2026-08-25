@@ -1,14 +1,10 @@
 import { ref, computed } from 'vue'
 import { en } from '~/locales/en'
 import { zh } from '~/locales/zh'
-import { ja } from '~/locales/ja'
-import { ko } from '~/locales/ko'
-import { es } from '~/locales/es'
-import { pt } from '~/locales/pt'
-import { de } from '~/locales/de'
-import { fr } from '~/locales/fr'
+import { uiChineseOverrides, uiEnglishOverrides, uiZh } from '~/locales/ui'
 
-export type AdminLocale = 'en' | 'zh' | 'ja' | 'ko' | 'es' | 'pt' | 'de' | 'fr'
+export type AdminLocale = 'en' | 'zh'
+export type AdminTranslateParams = Record<string, string | number>
 
 export interface LocaleOption {
   code: AdminLocale
@@ -18,13 +14,7 @@ export interface LocaleOption {
 
 export const availableLocales: LocaleOption[] = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'zh', label: '简体中文', flag: '🇨🇳' },
-  { code: 'ja', label: '日本語', flag: '🇯🇵' },
-  { code: 'ko', label: '한국어', flag: '🇰🇷' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'pt', label: 'Português', flag: '🇧🇷' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' }
+  { code: 'zh', label: '简体中文', flag: '🇨🇳' }
 ]
 
 const currentLang = ref<AdminLocale>('en')
@@ -32,13 +22,23 @@ const initialized = ref(false)
 
 const locales: Record<AdminLocale, Record<string, string>> = {
   en,
-  zh,
-  ja,
-  ko,
-  es,
-  pt,
-  de,
-  fr
+  zh
+}
+
+const localeTags: Record<AdminLocale, string> = {
+  en: 'en-US',
+  zh: 'zh-CN'
+}
+
+const applyDocumentLanguage = (lang: AdminLocale) => {
+  if (import.meta.client) document.documentElement.lang = localeTags[lang]
+}
+
+const interpolate = (message: string, params?: AdminTranslateParams) => {
+  if (!params) return message
+  return message.replace(/\{(\w+)\}/g, (placeholder, key: string) => (
+    Object.prototype.hasOwnProperty.call(params, key) ? String(params[key]) : placeholder
+  ))
 }
 
 export const useAdminI18n = () => {
@@ -51,22 +51,61 @@ export const useAdminI18n = () => {
       } else {
         currentLang.value = 'en'
       }
+      applyDocumentLanguage(currentLang.value)
       initialized.value = true
     }
   }
 
   const setLanguage = (lang: AdminLocale) => {
+    const languageChanged = currentLang.value !== lang
     currentLang.value = lang
     if (process.client) {
       localStorage.setItem('admin_lang', lang)
+      applyDocumentLanguage(lang)
+      // Some page-level option lists are created once during setup. Reloading keeps
+      // those labels in sync with the newly selected language as well.
+      if (languageChanged) window.location.reload()
     }
   }
 
-  const t = (key: string, defaultText: string = ''): string => {
+  const t = (key: string, defaultText: string = '', params?: AdminTranslateParams): string => {
     initLang()
     const dict = locales[currentLang.value] || locales.en
-    return dict[key] || defaultText || key
+    const message = dict[key] || locales.en[key] || defaultText || key
+    return interpolate(message, params)
   }
+
+  const hasTranslation = (key: string) => Boolean(locales.en[key] && locales.zh[key])
+
+  const translateText = (
+    source: string,
+    chineseOrParams?: string | AdminTranslateParams,
+    interpolationParams?: AdminTranslateParams
+  ) => {
+    initLang()
+    const explicitChinese = typeof chineseOrParams === 'string' ? chineseOrParams : undefined
+    const params = typeof chineseOrParams === 'string' ? interpolationParams : chineseOrParams
+    const english = uiEnglishOverrides[source] || source
+    const message = currentLang.value === 'zh'
+      ? (explicitChinese || uiChineseOverrides[source] || uiZh[source] || uiZh[english] || english)
+      : english
+    return interpolate(message, params)
+  }
+
+  const formatDate = (value: string | number | Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' }) => {
+    initLang()
+    return new Intl.DateTimeFormat(localeTags[currentLang.value], options).format(new Date(value))
+  }
+
+  const formatNumber = (value: number, options?: Intl.NumberFormatOptions) => {
+    initLang()
+    return new Intl.NumberFormat(localeTags[currentLang.value], options).format(value)
+  }
+
+  const formatCurrency = (value: number, currency = 'USD') => formatNumber(value, {
+    style: 'currency',
+    currency
+  })
 
   const lang = computed(() => {
     initLang()
@@ -75,7 +114,14 @@ export const useAdminI18n = () => {
 
   return {
     lang,
+    localeTag: computed(() => localeTags[lang.value]),
+    availableLocales,
     setLanguage,
-    t
+    t,
+    translateText,
+    hasTranslation,
+    formatDate,
+    formatNumber,
+    formatCurrency
   }
 }

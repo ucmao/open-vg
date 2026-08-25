@@ -2,13 +2,13 @@
   <div class="p-6 max-w-7xl mx-auto">
     <!-- Header：，「」 -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600">，「」。。</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Overview of data", "数据概览") }}</h1>
+      <p class="text-gray-600">{{ $adminT("The following is a natural day in Beijing:", "按日展示历史趋势，与仪表盘的「周期汇总」互补。以下均为北京时间自然日。") }}</p>
     </div>
 
     <!-- ： -->
     <section class="mb-6 flex flex-wrap items-center gap-3">
-      <span class="text-sm font-medium text-gray-700"></span>
+      <span class="text-sm font-medium text-gray-700">{{ $adminT("Time frame", "时间范围") }}</span>
       <div class="flex flex-wrap items-center gap-2">
         <button
           v-for="opt in primaryTimeOptions"
@@ -55,7 +55,7 @@
           type="date"
           class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <span class="text-gray-400"></span>
+        <span class="text-gray-400">{{ $adminT("to", "至") }}</span>
         <input
           v-model="customEnd"
           type="date"
@@ -65,11 +65,9 @@
           type="button"
           @click="applyCustomRange"
           class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-        >
-
-        </button>
+        >{{ $adminT("Query", "查询") }}</button>
       </div>
-      <span class="text-xs text-gray-400">：{{ summaryText }}</span>
+      <span class="text-xs text-gray-400">{{ $adminT("Current:", "当前：") }}{{ summaryText }}</span>
     </section>
 
     <div v-if="loading" class="flex justify-center items-center h-96">
@@ -82,21 +80,21 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-amber-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
-          <span class="text-xs text-gray-400 font-normal ml-2"></span>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("Core Business Watch", "核心商业看板") }}</h2>
+          <span class="text-xs text-gray-400 font-normal ml-2">{{ $adminT("Receipts and orders", "营收与订单") }}</span>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative group">
             <button
               @click="openChartModal('revenue', ' (USD)', revenueChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"> (USD)</h3>
-              <span class="text-xs text-gray-400">: ${{ totalRevenue.toFixed(2) }}</span>
+              <h3 class="font-bold text-gray-800"> {{ $adminT("(USD)", "营收趋势 (USD)") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative: ~", "累计: $") }}{{ totalRevenue.toFixed(2) }}</span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -108,13 +106,13 @@
             <button
               @click="openChartModal('recharge', '', rechargeChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: {{ totalRechargeCount }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Trends in the volume of orders", "订单量趋势") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative:", "累计:") }} {{ totalRechargeCount }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -129,21 +127,21 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-green-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
-          <span class="text-xs text-gray-400 font-normal ml-2"></span>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("User Active Viewboard", "用户活跃看板") }}</h2>
+          <span class="text-xs text-gray-400 font-normal ml-2">{{ $adminT("Real Users Register and Active Users", "真实用户注册与活跃用户") }}</span>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative group">
             <button
               @click="openChartModal('real_users', '', realUsersChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: {{ totalRealUsers }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Cumulative trends of real users", "真实用户累计趋势") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Current cumulative:", "当前累计:") }} {{ totalRealUsers }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -155,13 +153,13 @@
             <button
               @click="openChartModal('active_users', '', activeUsersChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: {{ totalActiveUsers }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Active user trends", "活跃用户趋势") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative:", "累计:") }} {{ totalActiveUsers }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -176,21 +174,21 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-blue-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
-          <span class="text-xs text-gray-400 font-normal ml-2">、</span>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("Content interactive panels", "内容互动看板") }}</h2>
+          <span class="text-xs text-gray-400 font-normal ml-2">{{ $adminT("Works, interactions and consumption", "作品、互动与消费") }}</span>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative group">
             <button
               @click="openChartModal('works', '', worksChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: {{ totalWorks }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Trends in new works", "新增作品趋势") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative:", "累计:") }} {{ totalWorks }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -202,13 +200,13 @@
             <button
               @click="openChartModal('consumes', '', consumesChartData, chartOptions)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: {{ totalConsumes }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Consumption frequency trend", "消费频次趋势") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative:", "累计:") }} {{ totalConsumes }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -220,13 +218,13 @@
             <button
               @click="openChartModal('interaction', '', interactionChartData, chartOptionsWithLegend)"
               class="absolute right-4 top-4 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-              title=""
+              :title="$adminT('Zoom in on charts', '放大图表')"
             >
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"></h3>
-              <span class="text-xs text-gray-400">: ++ {{ totalInteraction }} </span>
+              <h3 class="font-bold text-gray-800">{{ $adminT("Interactive heat", "互动热度") }}</h3>
+              <span class="text-xs text-gray-400">{{ $adminT("Cumulative: Salient + Comment + Collection", "累计: 点赞+评论+收藏") }} {{ totalInteraction }} </span>
             </div>
             <div class="h-64">
               <ClientOnly>
@@ -253,7 +251,7 @@
           <div class="flex items-center justify-between px-8 py-6 border-b border-gray-100 shrink-0">
             <div>
               <h3 class="text-xl font-bold text-gray-900">{{ expandedChart.title }}</h3>
-              <p class="text-sm text-gray-500 mt-1"> · {{ summaryText }}</p>
+              <p class="text-sm text-gray-500 mt-1"> {{ $adminT("Detailed trends by day.", "按日详细趋势图表 ·") }} {{ summaryText }}</p>
             </div>
             <button
               @click="closeChartModal"
@@ -285,7 +283,7 @@
 
           <!-- / -->
           <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center shrink-0">
-            <span class="text-xs text-gray-400 italic">Notice：PC View</span>
+            <span class="text-xs text-gray-400 italic">{{ $adminT("Hint: PCend can suspend to see point values", "提示：PC 端可悬停查看各点数值") }}</span>
           </div>
         </div>
       </div>
@@ -295,8 +293,8 @@
     <div class="mt-12 p-4 bg-blue-50 border border-blue-100 rounded-xl flex items-start gap-3">
       <Info class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
       <div>
-        <div class="text-sm font-bold text-blue-800"></div>
-        <p class="text-xs text-blue-600 mt-1">（Asia/Shanghai）。「」，「 + 」。。</p>
+        <div class="text-sm font-bold text-blue-800">{{ $adminT("Statistical notes", "统计说明") }}</div>
+        <p class="text-xs text-blue-600 mt-1">{{ $adminT("All data is measured by the natural day of Beijing time (2004/Shanghai). This page is entitled \" Trends by day \", and the dashboard is \" Real-time snapshot + cycle \".", "所有数据按北京时间（Asia/Shanghai）自然日统计。本页为「按日趋势」，仪表盘为「实时快照 + 周期汇总」。点赞与收藏以更新时间为准。") }}</p>
       </div>
     </div>
   </div>
@@ -320,6 +318,8 @@ import {
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 
+const { translateText: adminT } = useAdminI18n()
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -337,7 +337,7 @@ definePageMeta({
 })
 
 useHead({
-  title: '',
+  title: adminT("Overview of data", "数据概览"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -373,18 +373,18 @@ type TimeRangeValue = '7d' | '14d' | '30d' | 'month' | 'last_month' | 'quarter' 
 const timeRange = ref<TimeRangeValue>('14d')
 
 const primaryTimeOptions = [
-  { value: '7d', label: '7' },
-  { value: '14d', label: '14' },
-  { value: '30d', label: '30' },
+  { value: '7d', label: adminT("Almost seven days.", "近7天") },
+  { value: '14d', label: adminT("Almost 14 days.", "近14天") },
+  { value: '30d', label: adminT("Almost 30 days.", "近30天") },
 ]
 
 const moreTimeOptions = [
-  { value: 'month', label: '' },
-  { value: 'last_month', label: '' },
-  { value: 'quarter', label: '' },
-  { value: 'last_quarter', label: '' },
-  { value: 'year', label: '' },
-  { value: 'custom', label: '' },
+  { value: 'month', label: adminT("Current month", "本月") },
+  { value: 'last_month', label: adminT("Last Month", "上月") },
+  { value: 'quarter', label: adminT("This quarter", "本季度") },
+  { value: 'last_quarter', label: adminT("Last quarter", "上季度") },
+  { value: 'year', label: adminT("This year.", "今年") },
+  { value: 'custom', label: adminT("Custom", "自定义") },
 ]
 
 const showMoreDropdown = ref(false)
@@ -392,7 +392,7 @@ const moreDropdownRef = ref<HTMLElement | null>(null)
 
 const moreDropdownLabel = computed(() => {
   const opt = moreTimeOptions.find(o => o.value === timeRange.value)
-  return opt ? opt.label : ''
+  return opt ? opt.label : adminT("More", "更多")
 })
 
 const isMoreOptionActive = computed(() => moreTimeOptions.some(o => o.value === timeRange.value))
@@ -440,7 +440,7 @@ function applyCustomRange() {
 }
 
 const summaryText = computed(() => {
-  if (timeRange.value === 'custom') return ''
+  if (timeRange.value === 'custom') return adminT("Custom Scope", "自定义范围")
   const opt = [...primaryTimeOptions, ...moreTimeOptions].find(o => o.value === timeRange.value)
   return opt ? opt.label : ''
 })
@@ -499,7 +499,7 @@ const chartOptionsWithLegend = {
 const revenueChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Collection", "营收"),
     data: history.value.map(h => h.revenue),
     borderColor: '#f59e0b',
     backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -512,7 +512,7 @@ const revenueChartData = computed(() => ({
 const rechargeChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Unique", "充值单数"),
     data: history.value.map(h => h.recharge_count || 0),
     borderColor: '#3b82f6',
     backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -525,7 +525,7 @@ const rechargeChartData = computed(() => ({
 const realUsersChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Cumulative Real Users", "累计真实用户"),
     data: history.value.map(h => h.cumulative_real_users || 0),
     borderColor: '#10b981',
     backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -538,7 +538,7 @@ const realUsersChartData = computed(() => ({
 const activeUsersChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Active User", "活跃用户"),
     data: history.value.map(h => h.active_users || 0),
     borderColor: '#3b82f6',
     backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -551,7 +551,7 @@ const activeUsersChartData = computed(() => ({
 const worksChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Works", "作品"),
     data: history.value.map(h => h.new_works),
     borderColor: '#a855f7',
     backgroundColor: 'rgba(168, 85, 247, 0.1)',
@@ -564,7 +564,7 @@ const worksChartData = computed(() => ({
 const consumesChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: '',
+    label: adminT("Consumption", "消费次数"),
     data: history.value.map(h => h.consumes),
     borderColor: '#ec4899',
     backgroundColor: 'rgba(236, 72, 153, 0.1)',
@@ -578,7 +578,7 @@ const interactionChartData = computed(() => ({
   labels: labels.value,
   datasets: [
     {
-      label: '',
+      label: adminT("Cool.", "点赞"),
       data: history.value.map(h => h.new_likes || 0),
       borderColor: '#3b82f6',
       backgroundColor: 'rgba(59, 130, 246, 0.08)',
@@ -587,7 +587,7 @@ const interactionChartData = computed(() => ({
       pointRadius: 3
     },
     {
-      label: '',
+      label: adminT("Comments", "评论"),
       data: history.value.map(h => h.new_comments || 0),
       borderColor: '#10b981',
       backgroundColor: 'rgba(16, 185, 129, 0.08)',
@@ -596,7 +596,7 @@ const interactionChartData = computed(() => ({
       pointRadius: 3
     },
     {
-      label: '',
+      label: adminT("Collection", "收藏"),
       data: history.value.map(h => h.new_favorites || 0),
       borderColor: '#f59e0b',
       backgroundColor: 'rgba(245, 158, 11, 0.08)',

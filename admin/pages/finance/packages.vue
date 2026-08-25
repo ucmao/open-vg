@@ -2,44 +2,42 @@
   <div class="p-6">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600 mt-1"></p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Package Configuration", "套餐配置") }}</h1>
+      <p class="text-gray-600 mt-1">{{ $adminT("Configure the amount and integral map of front-end page", "配置前端充值页面的金额与积分映射表") }}</p>
     </div>
 
     <div class="bg-white border rounded-lg shadow-sm overflow-hidden">
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <div>
-            <h2 class="text-lg font-bold text-gray-900">List</h2>
-            <p class="mt-1 text-sm text-gray-500"></p>
+            <h2 class="text-lg font-bold text-gray-900">{{ $adminT("List", "充值套餐列表") }}</h2>
+            <p class="mt-1 text-sm text-gray-500">{{ $adminT("Configure the amount and integral map of front-end page", "配置前端充值页面的金额与积分映射表") }}</p>
           </div>
           <button
             @click="openCreatePackageModal"
             class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
           >
-            <Plus class="w-5 h-5 mr-2" />
-            Create
-          </button>
+            <Plus class="w-5 h-5 mr-2" /> {{ $adminT("Create", "新建套餐") }} </button>
         </div>
 
         <div class="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
           <table class="min-w-full divide-y divide-gray-200 text-left">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"> (USD)</th>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status/</th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Sort", "排序") }}</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Package Name", "套餐名称") }}</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"> {{ $adminT("(USD)", "金额 (USD)") }}</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Get a score", "获得积分") }}</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Status/", "状态/标签") }}</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Action", "操作") }}</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr v-if="loading">
-                <td colspan="6" class="px-6 py-10 text-center text-gray-500">Loading......</td>
+                <td colspan="6" class="px-6 py-10 text-center text-gray-500">{{ $adminT("Loading", "加载中...") }}</td>
               </tr>
               <tr v-else-if="packages.length === 0">
-                <td colspan="6" class="px-6 py-10 text-center text-gray-500"></td>
+                <td colspan="6" class="px-6 py-10 text-center text-gray-500">{{ $adminT("No package data available", "暂无套餐数据") }}</td>
               </tr>
               <tr v-for="pkg in packages" :key="pkg.id" class="hover:bg-gray-50 transition-colors">
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -63,14 +61,12 @@
                       class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium w-fit"
                       :class="pkg.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
                     >
-                      {{ pkg.is_active ? '' : '' }}
+                      {{ pkg.is_active ? $adminT('Enabled', '已启用') : $adminT('Disabled', '已禁用') }}
                     </span>
                     <span
                       v-if="pkg.is_featured"
                       class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800 w-fit"
-                    >
-
-                    </span>
+                    >{{ $adminT("Recommendations", "推荐") }}</span>
                     <span
                       v-if="pkg.tag_text"
                       class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-600 border border-blue-100 w-fit"
@@ -80,8 +76,8 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button @click="openEditPackageModal(pkg)" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
-                  <button @click="handlePackageDelete(pkg)" class="text-red-600 hover:text-red-900">Delete</button>
+                  <button @click="openEditPackageModal(pkg)" class="text-blue-600 hover:text-blue-900 mr-4">{{ $adminT("Edit", "编辑") }}</button>
+                  <button @click="handlePackageDelete(pkg)" class="text-red-600 hover:text-red-900">{{ $adminT("Delete", "删除") }}</button>
                 </td>
               </tr>
             </tbody>
@@ -103,16 +99,16 @@
             <div class="space-y-4 text-left">
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"></label>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">{{ $adminT("Package Name", "套餐名称") }}</label>
                   <input
                     v-model="packageForm.name"
                     type="text"
-                    placeholder="："
+                    :placeholder="$adminT('For example: Standard package', '如：标准套餐')"
                     class="w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"></label>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">{{ $adminT("Sort weights", "排序权重") }}</label>
                   <input
                     v-model.number="packageForm.order"
                     type="number"
@@ -123,7 +119,7 @@
 
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> (USD)</label>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> {{ $adminT("(USD)", "金额 (USD)") }}</label>
                   <input
                     v-model.number="packageForm.amount"
                     type="number"
@@ -133,7 +129,7 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"></label>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">{{ $adminT("Number of integrals", "积分数量") }}</label>
                   <input
                     v-model.number="packageForm.credits"
                     type="number"
@@ -144,21 +140,21 @@
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> ()</label>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> {{ $adminT("Active Label (optional)", "活动标签 (可选)") }}</label>
                 <input
                   v-model="packageForm.tag_text"
                   type="text"
-                  placeholder="：、20%"
+                  :placeholder="$adminT('For example: time-limited discount, 20 per cent', '如：限时优惠、赠送20%')"
                   class="w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Description (，)</label>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">{{ $adminT("Package description (rich text, to fill the page card)", "套餐描述 (富文本，用于充值页卡片)") }}</label>
                 <ClientOnly>
                   <RichTextEditor v-model="packageForm.description" class="package-description-editor" />
                   <template #fallback>
-                    <div class="border border-gray-300 rounded-lg p-4 min-h-[200px] bg-gray-50 text-gray-500 text-sm">Edit...</div>
+                    <div class="border border-gray-300 rounded-lg p-4 min-h-[200px] bg-gray-50 text-gray-500 text-sm">{{ $adminT("Edit", "加载编辑器中...") }}</div>
                   </template>
                 </ClientOnly>
               </div>
@@ -167,12 +163,12 @@
                 <label class="flex items-center cursor-pointer">
                   <input type="checkbox" v-model="packageForm.is_active" class="sr-only peer" />
                   <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 relative"></div>
-                  <span class="ml-2 text-sm font-medium text-gray-700"></span>
+                  <span class="ml-2 text-sm font-medium text-gray-700">{{ $adminT("Enable the package", "启用该套餐") }}</span>
                 </label>
                 <label class="flex items-center cursor-pointer">
                   <input type="checkbox" v-model="packageForm.is_featured" class="sr-only peer" />
                   <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600 relative"></div>
-                  <span class="ml-2 text-sm font-medium text-gray-700"></span>
+                  <span class="ml-2 text-sm font-medium text-gray-700">{{ $adminT("Set as Recommendation", "设为推荐") }}</span>
                 </label>
               </div>
             </div>
@@ -181,9 +177,7 @@
             <button
               @click="closePackageModal"
               class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Cancel
-            </button>
+            > {{ $adminT("Cancel", "取消") }} </button>
             <button
               @click="handlePackageSubmit"
               :disabled="submittingPackage"
@@ -205,6 +199,9 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import type { RechargePackage } from '~/types/domain'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 definePageMeta({
   layout: 'default',
@@ -284,7 +281,7 @@ const closePackageModal = () => {
 
 const handlePackageSubmit = async () => {
   if (!packageForm.name || packageForm.amount <= 0 || packageForm.credits <= 0) {
-    toast.error('')
+    toast.error(adminT("Enter complete and valid package information", "请填写完整有效的套餐信息"))
     return
   }
 
@@ -303,7 +300,7 @@ const handlePackageSubmit = async () => {
       fetchPackages()
     }
   } catch (err: any) {
-    toast.error(err.message || 'Actionfailed')
+    toast.error(err.message || adminT('Action failed', '操作失败'))
   } finally {
     submittingPackage.value = false
   }
@@ -312,7 +309,7 @@ const handlePackageSubmit = async () => {
 const handlePackageDelete = async (pkg: RechargePackage) => {
   const confirmed = await confirm({
     title: 'Delete',
-    message: `ConfirmDelete "${pkg.name}" (${pkg.credits}  / $${pkg.amount}) ？Action。`,
+    message: adminT('Delete "{name}" ({credits} credits / ${amount})? This action cannot be undone.', '确定删除“{name}”（{credits} 积分 / ${amount}）吗？此操作不可撤销。', { name: pkg.name, credits: pkg.credits, amount: pkg.amount }),
     type: 'danger'
   })
 
@@ -321,11 +318,11 @@ const handlePackageDelete = async (pkg: RechargePackage) => {
   try {
     const res = await adminApi.delete(`/api/admin/finance/packages/${pkg.id}`)
     if (res.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT('Deleted', '删除成功'))
       fetchPackages()
     }
   } catch (err) {
-    toast.error('Deletefailed')
+    toast.error(adminT('Delete failed', '删除失败'))
   }
 }
 

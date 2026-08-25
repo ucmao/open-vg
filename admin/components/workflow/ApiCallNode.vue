@@ -25,9 +25,7 @@
       <div class="text-xs text-gray-400 italic flex items-center gap-1">
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-         API
-      </div>
+        </svg> {{ $adminT("API", "点击节点选择 API") }} </div>
     </div>
     
     <!-- Parameter Input Handles (on left) -->
@@ -43,7 +41,7 @@
           class="relative" 
           @click.stop="(param.connected || (param.required && param.visible)) ? null : toggleParamVisibility(param.name)"
           :class="{ 'cursor-not-allowed': param.connected || (param.required && param.visible), 'cursor-pointer': !param.connected && !(param.required && param.visible) }"
-          :title="(param.required && param.visible) ? 'Required' : (param.connected ? '，。。' : '/')"
+          :title="(param.required && param.visible) ? $adminT('Required parameters cannot be hidden', '必填参数不可设为不可见') : (param.connected ? $adminT('This parameter is connected. Disconnect it or use the configuration panel before changing visibility.', '参数已连接，无法切换可见性。请先断开连接或通过配置面板修改。') : $adminT('Click to toggle between user-visible and system preset', '点击切换用户可见/系统预设'))"
         >
           <Handle
             :id="`input-${param.name}`"
@@ -85,15 +83,11 @@
         <span 
           v-if="!param.visible && param.connected && param.isConnectedFromPromptPreset" 
           class="text-[10px] px-1 py-0.5 rounded bg-orange-100 text-orange-600 font-medium shrink-0"
-        >
-          []
-        </span>
+        > {{ $adminT("[predation]", "[预埋]") }} </span>
         <span 
           v-else-if="param.connected && param.isConnectedFromApiOutput" 
           class="text-[10px] px-1 py-0.5 rounded bg-blue-100 text-blue-600 font-medium shrink-0"
-        >
-          []
-        </span>
+        > {{ $adminT("[Change]", "[传值]") }} </span>
       </div>
     </div>
     

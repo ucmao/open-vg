@@ -47,7 +47,7 @@
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+                  <h3 class="text-lg font-semibold text-gray-900">{{ resolvedTitle }}</h3>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@
                 @click="handleCancel"
                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               >
-                {{ cancelText }}
+                {{ resolvedCancelText }}
               </button>
               <button
                 @click="handleConfirm"
@@ -76,7 +76,7 @@
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 ]"
               >
-                {{ confirmText }}
+                {{ resolvedConfirmText }}
               </button>
             </div>
           </div>
@@ -87,6 +87,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 interface Props {
   show: boolean
   title?: string
@@ -97,11 +101,15 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'Confirm',
-  confirmText: 'Confirm',
-  cancelText: 'Cancel',
+  title: '',
+  confirmText: '',
+  cancelText: '',
   type: 'info'
 })
+
+const resolvedTitle = computed(() => props.title || adminT('Confirm', '确认'))
+const resolvedConfirmText = computed(() => props.confirmText || adminT('Confirm', '确认'))
+const resolvedCancelText = computed(() => props.cancelText || adminT('Cancel', '取消'))
 
 const emit = defineEmits<{
   confirm: []
@@ -116,4 +124,3 @@ const handleCancel = () => {
   emit('cancel')
 }
 </script>
-

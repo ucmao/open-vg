@@ -4,7 +4,7 @@
     <div v-if="loading" class="flex items-center justify-center min-h-[400px]">
       <div class="text-center">
         <div class="w-10 h-10 border-3 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-500">...</p>
+        <p class="text-gray-500">{{ $adminT("Loading articles...", "正在加载文章...") }}</p>
       </div>
     </div>
 
@@ -16,16 +16,14 @@
           <NuxtLink
             to="/content/blog"
             class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            title="BackList"
+            :title="$adminT('Back List', '返回列表')"
           >
             <ChevronLeft class="w-5 h-5" />
           </NuxtLink>
           <div>
-            <h1 class="text-xl font-semibold text-gray-900">Edit</h1>
+            <h1 class="text-xl font-semibold text-gray-900">{{ $adminT("Edit", "编辑文章") }}</h1>
             <p class="text-xs text-gray-500 mt-0.5 flex items-center">
-              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
-              Save
-            </p>
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span> {{ $adminT("Save", "已启用自动保存") }} </p>
           </div>
         </div>
         
@@ -39,15 +37,15 @@
               'bg-gray-100 text-gray-800': form.status === 'archived'
             }"
           >
-            {{ form.status === 'draft' ? '' : form.status === 'published' ? '' : '' }}
+            {{ form.status === 'draft' ? $adminT('Draft', '草稿') : form.status === 'published' ? $adminT('Published', '已发布') : $adminT('Archived', '已归档') }}
           </span>
           <select
             v-model="form.status"
             class="px-3 py-2 text-sm border border-gray-300 text-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
           >
-            <option value="draft">Save</option>
-            <option value="published"></option>
-            <option value="archived"></option>
+            <option value="draft">{{ $adminT("Save", "保存为草稿") }}</option>
+            <option value="published">{{ $adminT("Release", "发布") }}</option>
+            <option value="archived">{{ $adminT("Archive", "归档") }}</option>
           </select>
           <button
             type="button"
@@ -75,7 +73,7 @@
                 required
                 maxlength="200"
                 class="w-full text-3xl font-bold text-gray-900 placeholder-gray-400 border-0 border-b-2 border-transparent focus:border-blue-500 bg-transparent px-0 py-3 outline-none transition-colors"
-                placeholder="Title..."
+                :placeholder="$adminT('Title', '文章标题...')"
               />
               <!-- URL Slug Preview -->
               <div class="mt-2 flex items-center text-sm">
@@ -113,22 +111,18 @@
             <!-- Publishing Options -->
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
             <h3 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
-              <Clock class="w-4 h-4 mr-2 text-gray-500" />
-              Settings
-            </h3>
+              <Clock class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("Settings", "发布设置") }} </h3>
 
             <div class="space-y-4">
               <!-- Author Selection -->
               <div>
                 <div class="flex items-center justify-between mb-1.5">
-                  <label class="block text-xs font-medium text-gray-600"></label>
+                  <label class="block text-xs font-medium text-gray-600">{{ $adminT("Author", "作者") }}</label>
                   <button
                     type="button"
                     @click="showAuthorModal = true"
                     class="text-xs text-blue-600 hover:text-blue-700 font-medium"
-                  >
-
-                  </button>
+                  >{{ $adminT("Management", "管理") }}</button>
                 </div>
                 
                 <!-- Author Display -->
@@ -167,7 +161,7 @@
                     type="button"
                     @click="clearAuthor"
                     class="shrink-0 text-gray-400 hover:text-red-600 transition-colors"
-                    title=""
+                    :title="$adminT('Clear Author', '清除作者')"
                   >
                     <X class="w-4 h-4" />
                   </button>
@@ -182,34 +176,34 @@
                     <User class="w-5 h-5 text-gray-400" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-sm text-gray-500"></div>
-                    <div class="text-xs text-gray-400"></div>
+                    <div class="text-sm text-gray-500">{{ $adminT("No author selected", "未选择作者") }}</div>
+                    <div class="text-xs text-gray-400">{{ $adminT("The current administrator will be used", "将使用当前管理员") }}</div>
                   </div>
                 </div>
               </div>
 
               <!-- Published Date -->
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5"></label>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Organisation", "定时发布") }}</label>
                 <div class="relative">
                   <input
                     v-model="form.published_at"
                     type="datetime-local"
                     class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   />
-                  <p class="text-xs text-gray-400 mt-1"></p>
+                  <p class="text-xs text-gray-400 mt-1">{{ $adminT("Leave the space and release it immediately.", "留空则立即发布") }}</p>
                 </div>
               </div>
 
               <!-- Category -->
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5">Category</label>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Category", "分类") }}</label>
                 <div class="flex gap-2">
                   <select
                     v-model="form.category_id"
                     class="flex-1 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
                   >
-                    <option :value="null">Category</option>
+                    <option :value="null">{{ $adminT("Category", "未分类") }}</option>
                     <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                       {{ cat.name }}
                     </option>
@@ -217,7 +211,7 @@
                   <NuxtLink 
                     to="/content/taxonomy" 
                     class="p-2 text-gray-400 hover:text-blue-600 border border-gray-300 rounded-lg transition-colors"
-                    title="Category"
+                    :title="$adminT('Category', '管理分类')"
                   >
                     <Settings class="w-4 h-4" />
                   </NuxtLink>
@@ -227,17 +221,17 @@
               <!-- Tags (Chip Mode) -->
               <div>
                 <div class="flex items-center justify-between mb-1.5">
-                  <label class="block text-xs font-medium text-gray-600"></label>
+                  <label class="block text-xs font-medium text-gray-600">{{ $adminT("Label", "标签") }}</label>
                   <button
                     type="button"
                     @click="generateSEO"
                     :disabled="generatingSEO || !form.title || !form.content"
                     class="px-2.5 py-1 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-md hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1.5 shadow-sm hover:shadow-md"
-                    title="AI 、SEO"
+                    :title="$adminT('Generate tags, excerpt, and SEO with AI', 'AI 生成标签、摘要和SEO')"
                   >
                     <Loader2 v-if="generatingSEO" class="w-3.5 h-3.5 animate-spin" />
                     <Zap v-else class="w-3.5 h-3.5" />
-                    <span>{{ generatingSEO ? '' : 'AI ' }}</span>
+                    <span>{{ generatingSEO ? $adminT('Generating', '生成中') : $adminT('AI generate', 'AI 生成') }}</span>
                   </button>
                 </div>
                 <div class="relative">
@@ -261,7 +255,7 @@
                         v-model="tagInput"
                         type="text"
                         class="flex-1 min-w-[80px] text-sm outline-none bg-transparent"
-                        placeholder="..."
+                        :placeholder="$adminT('Add Tab...', '添加标签...')"
                         @input="showTagSuggestions = true"
                         @keydown.enter.prevent="addTagFromInput"
                         @keydown.comma.prevent="addTagFromInput"
@@ -290,8 +284,8 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center mt-1">
-                  <p class="text-xs text-gray-400"></p>
-                  <NuxtLink to="/content/taxonomy" class="text-xs text-blue-600 hover:underline"></NuxtLink>
+                  <p class="text-xs text-gray-400">{{ $adminT("Press Return to add", "按回车添加") }}</p>
+                  <NuxtLink to="/content/taxonomy" class="text-xs text-blue-600 hover:underline">{{ $adminT("Manage Tabs", "管理标签") }}</NuxtLink>
                 </div>
               </div>
 
@@ -307,15 +301,15 @@
                     <div class="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"></div>
-                    <div class="text-[10px] text-gray-500">。Status「」Settings，。</div>
+                    <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900">{{ $adminT("Show in front page", "在首页显示") }}</div>
+                    <div class="text-[10px] text-gray-500">{{ $adminT("To recommend this article to the first page, the first page will be displayed only if the status is \" published \" and the release time is set.", "将此文章推荐到首页。需同时将状态设为「已发布」并设置发布时间，首页才会显示。") }}</div>
                   </div>
                 </label>
               </div>
 
               <!-- Sort Order -->
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5"> <span class="text-gray-400">()</span></label>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5"> <span class="text-gray-400">{{ $adminT("The smaller the number, the more forward.", "(数字越小越靠前)") }}</span></label>
                 <input
                   v-model.number="form.sort_order"
                   type="number"
@@ -339,7 +333,7 @@
               <template v-if="form.og_image">
                 <img
                   :src="form.og_image"
-                  alt=""
+                  :alt="$adminT('Cover Picture', '封面图片')"
                   class="w-full h-full object-contain"
                   @error="handleImageError"
                 />
@@ -348,7 +342,7 @@
                     type="button"
                     @click="showMediaSelector = true"
                     class="p-2 bg-white rounded-full text-gray-700 hover:bg-gray-100 transition-colors shadow-sm"
-                    title=""
+                    :title="$adminT('Replace Picture', '更换图片')"
                   >
                     <Loader2 class="w-4 h-4 animate-spin" />
                   </button>
@@ -356,7 +350,7 @@
                     type="button"
                     @click="form.og_image = ''"
                     class="p-2 bg-white rounded-full text-red-600 hover:bg-red-50 transition-colors shadow-sm"
-                    title=""
+                    :title="$adminT('Remove Picture', '移除图片')"
                   >
                     <Trash2 class="w-4 h-4" />
                   </button>
@@ -370,7 +364,7 @@
                 class="w-full h-full border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50/50 transition-all"
               >
                 <Plus class="w-8 h-8 mb-2" />
-                <span class="text-xs font-medium"></span>
+                <span class="text-xs font-medium">{{ $adminT("Select Cover Image", "选择封面图片") }}</span>
               </button>
             </div>
             </div>
@@ -387,11 +381,11 @@
                   @click="generateSEO"
                   :disabled="generatingSEO || !form.title || !form.content"
                   class="px-2.5 py-1 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-md hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1.5 shadow-sm hover:shadow-md"
-                  title="AI 、SEO"
+                  :title="$adminT('Generate tags, excerpt, and SEO with AI', 'AI 生成标签、摘要和SEO')"
                 >
                   <Loader2 v-if="generatingSEO" class="w-3.5 h-3.5 animate-spin" />
                   <Zap v-else class="w-3.5 h-3.5" />
-                  <span>{{ generatingSEO ? '' : 'AI ' }}</span>
+                  <span>{{ generatingSEO ? $adminT('Generating', '生成中') : $adminT('AI generate', 'AI 生成') }}</span>
                 </button>
               </div>
               <textarea
@@ -399,10 +393,10 @@
                 rows="4"
                 maxlength="500"
                 class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-                placeholder="..."
+                :placeholder="$adminT('Short summary for preview...', '用于预览的简短总结...')"
               ></textarea>
               <div class="flex justify-between items-center mt-1.5">
-                <p class="text-xs text-gray-400">Search</p>
+                <p class="text-xs text-gray-400">{{ $adminT("Search", "用于搜索结果和社交分享") }}</p>
                 <span class="text-xs text-gray-400">{{ form.excerpt?.length || 0 }}/500</span>
               </div>
             </div>
@@ -411,48 +405,42 @@
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-semibold text-gray-900 flex items-center">
-                  <Search class="w-4 h-4 mr-2 text-gray-500" />
-                  SEO Settings
-                </h3>
+                  <Search class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("SEO Settings", "SEO 设置") }} </h3>
                 <button
                   type="button"
                   @click="generateSEO"
                   :disabled="generatingSEO || !form.title || !form.content"
                   class="px-2.5 py-1 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-md hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1.5 shadow-sm hover:shadow-md"
-                  title="AI 、SEO"
+                  :title="$adminT('Generate tags, excerpt, and SEO with AI', 'AI 生成标签、摘要和SEO')"
                 >
                   <Loader2 v-if="generatingSEO" class="w-3.5 h-3.5 animate-spin" />
                   <Zap v-else class="w-3.5 h-3.5" />
-                  <span>{{ generatingSEO ? '' : 'AI ' }}</span>
+                  <span>{{ generatingSEO ? $adminT('Generating', '生成中') : $adminT('AI generate', 'AI 生成') }}</span>
                 </button>
               </div>
 
               <div class="space-y-4">
                 <div>
-                  <label class="block text-xs font-medium text-gray-600 mb-1.5">
-                    Meta Title
-                    <span class="text-gray-400 font-normal ml-1">(Title)</span>
+                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Title", "Meta 标题") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Title)", "(默认为文章标题)") }}</span>
                   </label>
                   <input
                     v-model="form.meta_title"
                     type="text"
                     maxlength="200"
                     class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                    placeholder=" Meta Title..."
+                    :placeholder="$adminT('Meta Title', '自定义 Meta 标题...')"
                   />
                 </div>
 
                 <div>
-                  <label class="block text-xs font-medium text-gray-600 mb-1.5">
-                    Meta Description
-                    <span class="text-gray-400 font-normal ml-1">()</span>
+                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Description", "Meta 描述") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Default summary)", "(默认为摘要)") }}</span>
                   </label>
                   <textarea
                     v-model="form.meta_description"
                     rows="3"
                     maxlength="500"
                     class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-                    placeholder=" Meta Description..."
+                    :placeholder="$adminT('Meta Description', '自定义 Meta 描述...')"
                   ></textarea>
                 </div>
               </div>
@@ -468,9 +456,7 @@
                 type="button"
                 @click="confirmDelete"
                 class="w-full px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
-              >
-                Delete
-              </button>
+              > {{ $adminT("Delete", "删除此文章") }} </button>
             </div>
           </div>
         </div>
@@ -500,12 +486,15 @@ import { ChevronLeft, Pencil, Check, Clock, User, Settings, Loader2, Zap, ImageI
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import AuthorSelectModal from '~/components/AuthorSelectModal.vue'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 definePageMeta({
   layout: 'default'
 })
 
 useHead({
-  title: 'Edit',
+  title: adminT("Edit", "编辑文章"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -641,19 +630,19 @@ const fetchPost = async () => {
         }
       }
     } else {
-      toast.error(response.message || 'failed')
+      toast.error(response.message || adminT("failed", "加载文章失败"))
       router.push('/content/blog')
     }
   } catch (error: any) {
     console.error('Failed to fetch post:', error)
     if (error.response?.status === 403) {
-      toast.error('')
+      toast.error(adminT("Could not close temporary folder: %s", "需要管理员权限"))
       router.push('/')
     } else if (error.response?.status === 404) {
-      toast.error('')
+      toast.error(adminT("Article not found", "文章未找到"))
       router.push('/content/blog')
     } else {
-      toast.error('failed')
+      toast.error(adminT("failed", "加载文章失败"))
     }
   } finally {
     loading.value = false
@@ -698,7 +687,7 @@ const handleImageError = (event: Event) => {
 const handleMediaSelect = (item: any) => {
   form.og_image = item.file_url
   showMediaSelector.value = false
-  toast.success('')
+  toast.success(adminT("Cover image updated", "封面图片已更新"))
 }
 
 // Author selection
@@ -723,19 +712,19 @@ const handleSubmit = async () => {
     
     // Validate required fields
     if (!form.title?.trim()) {
-      toast.error('TitleRequired')
+      toast.error(adminT("Title Required", "标题是必填项"))
       saving.value = false
       return
     }
     
     if (!form.slug?.trim()) {
-      toast.error('Required')
+      toast.error(adminT("Required", "别名是必填项"))
       saving.value = false
       return
     }
     
     if (!form.content?.trim() || form.content === '<p><br></p>') {
-      toast.error('Required')
+      toast.error(adminT("Required", "内容是必填项"))
       saving.value = false
       return
     }
@@ -761,14 +750,14 @@ const handleSubmit = async () => {
     })
     
     if (response.success) {
-      toast.success('！')
+      toast.success(adminT("Articles updated!", "文章已更新！"))
       router.push('/content/blog')
     } else {
-      toast.error(response.message || '')
+      toast.error(response.message || adminT("Could not close temporary folder: %s", "无法更新文章"))
     }
   } catch (error: any) {
     console.error('Failed to update post:', error)
-    toast.error(error.message || '')
+    toast.error(error.message || adminT("Could not close temporary folder: %s", "无法更新文章"))
   } finally {
     saving.value = false
   }
@@ -776,7 +765,7 @@ const handleSubmit = async () => {
 
 const generateSEO = async () => {
   if (!form.title || !form.content) {
-    toast.error('Title')
+    toast.error(adminT("Title", "请先填写文章标题和内容"))
     return
   }
   
@@ -788,10 +777,15 @@ const generateSEO = async () => {
       
       // Confirm
       const confirmed = await confirm({
-        title: 'Confirm SEO ',
-        message: `Title: ${generated.title || '()'}\nDescription: ${generated.description || '()'}\n: ${generated.tags?.join(', ') || ''}\n: ${generated.excerpt || '()'}`,
-        confirmText: '',
-        cancelText: 'Cancel'
+        title: adminT("Confirm SEO", "确认应用生成的 SEO 内容"),
+        message: adminT('Title: {title}\nDescription: {description}\nTags: {tags}\nExcerpt: {excerpt}', '标题: {title}\n描述: {description}\n标签: {tags}\n摘要: {excerpt}', {
+          title: generated.title || adminT('(empty)', '(空)'),
+          description: generated.description || adminT('(empty)', '(空)'),
+          tags: generated.tags?.join(', ') || adminT('None', '无'),
+          excerpt: generated.excerpt || adminT('(empty)', '(空)')
+        }),
+        confirmText: adminT("Apply", "应用"),
+        cancelText: adminT("Cancel", "取消")
       })
       
       if (confirmed) {
@@ -808,29 +802,29 @@ const generateSEO = async () => {
             }
           })
         }
-        toast.success('SEO ')
+        toast.success(adminT("SEO", "SEO 内容已应用"))
       }
     } else {
-      toast.error(response.message || 'failed')
+      toast.error(response.message || adminT("failed", "生成失败"))
     }
   } catch (error: any) {
     console.error('Failed to generate SEO:', error)
     
     // Handle different error types
-    const errorMessage = error.response?.data?.message || error.message || 'failed'
+    const errorMessage = error.response?.data?.message || error.message || adminT("failed", "生成失败")
     const statusCode = error.response?.status
     
     if (statusCode === 503) {
       // Service unavailable - could be not configured or overloaded
-      if (errorMessage.includes('') || errorMessage.includes('not configured')) {
-        toast.error('Gemini API ，')
-      } else if (errorMessage.includes('') || errorMessage.includes('overloaded')) {
-        toast.error('AI ，')
+      if (errorMessage.includes(adminT("Not configured", "未配置")) || errorMessage.includes('not configured')) {
+        toast.error(adminT("Celli API not configured, please configure in management panel", "Gemini API 未配置，请在管理面板中配置"))
+      } else if (errorMessage.includes(adminT("Overload", "过载")) || errorMessage.includes('overloaded')) {
+        toast.error(adminT("The AI model is currently overloaded. Please try again later", "AI 模型当前过载，请稍后重试"))
       } else {
-        toast.error(errorMessage || 'AI ，')
+        toast.error(errorMessage || adminT("TI service is not available, please try again later", "AI 服务暂不可用，请稍后重试"))
       }
     } else if (statusCode === 429) {
-      toast.error('，')
+      toast.error(adminT("Please try again later.", "请求过于频繁，请稍后重试"))
     } else {
       toast.error(errorMessage)
     }
@@ -841,10 +835,10 @@ const generateSEO = async () => {
 
 const confirmDelete = async () => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: 'ConfirmDelete？Action，Delete。',
-    confirmText: 'Delete',
-    cancelText: 'Cancel',
+    title: adminT("Delete", "删除文章"),
+    message: adminT("Are you sure you want to delete this article? This operation cannot be revoked and all relevant data will be permanently deleted.", "您确定要删除此文章吗？此操作无法撤销，所有相关数据都将被永久删除。"),
+    confirmText: adminT("Delete", "删除"),
+    cancelText: adminT("Cancel", "取消"),
     type: 'danger'
   })
   
@@ -854,14 +848,14 @@ const confirmDelete = async () => {
     const response = await api.delete(`/api/admin/blog/posts/${route.params.id}`)
     
     if (response.success) {
-      toast.success('Delete！')
+      toast.success(adminT("Delete！", "文章已删除！"))
       router.push('/content/blog')
     } else {
-      toast.error(response.message || 'Delete')
+      toast.error(response.message || adminT("Delete", "无法删除文章"))
     }
   } catch (error: any) {
     console.error('Failed to delete post:', error)
-    toast.error(error.message || 'Delete')
+    toast.error(error.message || adminT("Delete", "无法删除文章"))
   }
 }
 </script>

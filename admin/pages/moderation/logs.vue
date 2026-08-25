@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50 flex items-center justify-center min-h-[200px]">
-    <p class="text-gray-500"> NSFW ...</p>
+    <p class="text-gray-500"> {{ $adminT("Jumping to N66W Review...", "正在跳转到 NSFW 审核...") }}</p>
   </div>
 </template>
 

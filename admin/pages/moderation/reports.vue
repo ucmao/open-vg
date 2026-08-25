@@ -4,20 +4,20 @@
     <div class="mb-6">
       <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
         <div>
-          <h2 class="text-2xl font-semibold text-gray-900"></h2>
+          <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("Reporting management", "举报管理") }}</h2>
           <p class="text-gray-600 mt-1">{{ activeTab === 'pending' ? '，' : 'View' }}</p>
         </div>
         <!-- （） -->
         <div v-if="activeTab === 'logs' && !loadingLogs" class="flex items-center gap-4 text-sm">
           <div class="px-3 py-1.5 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <span class="text-yellow-800 font-medium">：{{ statsLogs.todayPending }}</span>
+            <span class="text-yellow-800 font-medium">{{ $adminT("Pending today:", "今日待处理：") }}{{ statsLogs.todayPending }}</span>
           </div>
           <div class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg">
-            <span class="text-gray-700">：{{ statsLogs.totalPending }}</span>
+            <span class="text-gray-700">{{ $adminT("Pending:", "待处理：") }}{{ statsLogs.totalPending }}</span>
             <span class="text-gray-400 mx-2">·</span>
-            <span class="text-gray-700">：{{ statsLogs.totalResolved }}</span>
+            <span class="text-gray-700">{{ $adminT("Processed:", "已处理：") }}{{ statsLogs.totalResolved }}</span>
             <span class="text-gray-400 mx-2">·</span>
-            <span class="text-gray-700">：{{ statsLogs.totalDismissed }}</span>
+            <span class="text-gray-700">{{ $adminT("Ignored:", "已忽略：") }}{{ statsLogs.totalDismissed }}</span>
           </div>
         </div>
       </div>
@@ -28,15 +28,11 @@
         <button
           @click="handleBatchDismissLogs"
           class="px-3 py-1.5 bg-orange-600 text-white text-sm font-medium rounded hover:bg-orange-700 transition-colors"
-        >
-
-        </button>
+        >{{ $adminT("Batch Ignore", "批量忽略") }}</button>
         <button
           @click="clearLogSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消选择") }} </button>
       </div>
       <div v-if="activeTab === 'pending'" class="flex items-center gap-3 flex-wrap">
         <!-- Search -->
@@ -44,7 +40,7 @@
           <input
             v-model="keyword"
             type="text"
-            placeholder="SearchID、Title、、..."
+            :placeholder="$adminT('Search for work ID, title, whistleblower, cause...', '搜索作品ID、标题、举报人、原因...')"
             class="pl-4 pr-10 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-64"
             @keyup.enter="applySearch"
           />
@@ -52,7 +48,7 @@
             type="button"
             @click="applySearch"
             class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
-            title="Search"
+            :title="$adminT('Search', '搜索')"
           >
             <Search class="w-4 h-4" />
           </button>
@@ -62,9 +58,7 @@
           type="button"
           @click="clearSearch"
           class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
-        >
-          Search
-        </button>
+        > {{ $adminT("Search", "清除搜索") }} </button>
       </div>
       <div v-else class="flex items-center gap-3 flex-wrap">
         <!-- Search for logs tab -->
@@ -72,7 +66,7 @@
           <input
             v-model="keywordLogs"
             type="text"
-            placeholder="SearchID、Title、、..."
+            :placeholder="$adminT('Search for work ID, title, whistleblower, cause...', '搜索作品ID、标题、举报人、原因...')"
             class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             @keyup.enter="applySearchLogs"
           />
@@ -80,14 +74,14 @@
             type="button"
             @click="applySearchLogs"
             class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
-            title="Search"
+            :title="$adminT('Search', '搜索')"
           >
             <Search class="w-4 h-4" />
           </button>
         </div>
         <!-- Type -->
         <div class="flex items-center gap-2 flex-wrap">
-          <span class="text-xs text-gray-500">Filter：</span>
+          <span class="text-xs text-gray-500">{{ $adminT("Quick filter:", "快速筛选：") }}</span>
           <button
             v-for="type in reportTypeFilters"
             :key="type.value"
@@ -109,19 +103,17 @@
           @change="handleStatusChangeLogs"
           class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
         >
-          <option value="">Status</option>
-          <option value="pending"></option>
-          <option value="resolved"></option>
-          <option value="dismissed"></option>
+          <option value="">{{ $adminT("Status", "全部状态") }}</option>
+          <option value="pending">{{ $adminT("Pending", "待处理") }}</option>
+          <option value="resolved">{{ $adminT("Processed", "已处理") }}</option>
+          <option value="dismissed">{{ $adminT("Ignored", "已忽略") }}</option>
         </select>
         <button
           v-if="keywordLogs || selectedReportType"
           type="button"
           @click="clearSearchLogs"
           class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
-        >
-          Search
-        </button>
+        > {{ $adminT("Search", "清除搜索") }} </button>
       </div>
     </div>
 
@@ -134,9 +126,7 @@
           'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
           activeTab === 'pending' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
         ]"
-      >
-
-      </button>
+      >{{ $adminT("Pending audit", "待审核") }}</button>
       <button
         type="button"
         @click="setTab('logs')"
@@ -144,9 +134,7 @@
           'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
           activeTab === 'logs' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
         ]"
-      >
-
-      </button>
+      >{{ $adminT("Reporting Log", "举报日志") }}</button>
     </div>
 
     <!-- Tab:  -->
@@ -154,7 +142,7 @@
     <div v-if="activeTab === 'pending' && loading && reports.length === 0" class="flex justify-center items-center py-20">
       <div class="text-center">
         <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-600">List...</p>
+        <p class="text-gray-600">{{ $adminT("List", "正在加载举报列表...") }}</p>
       </div>
     </div>
 
@@ -223,18 +211,17 @@
                   </span>
                 </div>
                 <div class="text-sm text-gray-600 mb-3">
-                  <p class="mb-1"><span class="font-medium">：</span> {{ report.reason || '' }}</p>
+                  <p class="mb-1"><span class="font-medium">{{ $adminT("Reasons for reporting:", "举报原因：") }}</span> {{ report.reason || '' }}</p>
                   <p class="mb-1">
-                    <span class="font-medium">：</span>
+                    <span class="font-medium">{{ $adminT("Submitted by:", "举报人：") }}</span>
                     {{ report.reporter?.nickname || report.reporter?.handle || '' }}
                     <span class="text-gray-500">(ID: {{ report.reporter_id }})</span>
                   </p>
                   <p class="mb-1">
-                    <span class="font-medium">：</span>
+                    <span class="font-medium">{{ $adminT("Author of the work:", "作品作者：") }}</span>
                     {{ report.work?.user?.nickname || '' }}
                   </p>
-                  <p class="text-gray-500">
-                    ：{{ formatDate(report.created_at) }}
+                  <p class="text-gray-500"> {{ $adminT("Time of notification:", "举报时间：") }}{{ formatDate(report.created_at) }}
                   </p>
                 </div>
               </div>
@@ -271,22 +258,17 @@
                 target="_blank"
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
               >
-                <ExternalLink class="w-4 h-4" />
-                View
-              </a>
+                <ExternalLink class="w-4 h-4" /> {{ $adminT("View", "查看作品") }} </a>
             </div>
             <div v-else class="flex items-center gap-3 mt-4">
-              <span class="text-sm text-gray-500">
-                ：{{ formatDate(report.resolved_at || report.updated_at) }}
+              <span class="text-sm text-gray-500"> {{ $adminT("Processing time:", "处理时间：") }}{{ formatDate(report.resolved_at || report.updated_at) }}
               </span>
               <a
                 :href="getFrontendUrl(report.work?.url_slug ? `/prompt/${report.work.url_slug}` : (report.work?.short_code ? `/prompt/${report.work.short_code}` : '/explore'))"
                 target="_blank"
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
               >
-                <ExternalLink class="w-4 h-4" />
-                View
-              </a>
+                <ExternalLink class="w-4 h-4" /> {{ $adminT("View", "查看作品") }} </a>
             </div>
           </div>
         </div>
@@ -296,9 +278,9 @@
       <div v-if="total > 0" class="mt-6 flex flex-wrap items-center justify-between gap-4 bg-white border border-gray-200 rounded-lg px-4 py-3">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             {{ (page - 1) * pageSize + 1 }}–{{ Math.min(page * pageSize, total) }} ， {{ total }}
+             {{ $adminT('Showing {from}–{to} of {total} reports', '第 {from}–{to} 条，共 {total} 条举报', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total }) }}
           </span>
-          <span class="text-sm text-gray-500"></span>
+          <span class="text-sm text-gray-500">{{ $adminT('Per page', '每页') }}</span>
           <select
             v-model="pageSize"
             @change="page = 1; fetchReports()"
@@ -309,14 +291,14 @@
             <option :value="50">50</option>
             <option :value="100">100</option>
           </select>
-          <span class="text-sm text-gray-500"></span>
+          <span class="text-sm text-gray-500">{{ $adminT('items', '条') }}</span>
         </div>
         <div class="flex items-center gap-2">
           <button
             @click="loadPage(1)"
             :disabled="page === 1 || loading"
             class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -324,10 +306,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1 || loading"
             class="px-4 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <span class="text-sm text-gray-600">
+            {{ $adminT('Page', '第') }}
              <input
               v-model.number="pageInput"
               type="number"
@@ -336,20 +317,18 @@
               class="w-12 px-2 py-1 border border-gray-300 rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
               @keyup.enter="goToPageInput"
               @blur="goToPageInput"
-            /> / {{ totalPages }}
+            /> {{ $adminT('of {total}', '/ {total} 页', { total: totalPages }) }}
           </span>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= totalPages || loading"
             class="px-4 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(totalPages)"
             :disabled="page >= totalPages || loading"
             class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -360,8 +339,8 @@
     <!-- Empty State (Pending) -->
     <div v-else-if="activeTab === 'pending'" class="text-center py-20 bg-white border border-gray-200 rounded-lg">
       <CheckCircle class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900 mb-2"></h3>
-      <p class="text-gray-600">。</p>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No pending reports", "没有待处理的举报") }}</h3>
+      <p class="text-gray-600">{{ $adminT("There are currently no pending reports.", "当前没有待处理的举报。") }}</p>
     </div>
 
     <!-- Tab:  -->
@@ -370,7 +349,7 @@
       <div v-if="loadingLogs && reportsLogs.length === 0" class="flex justify-center items-center py-20">
         <div class="text-center">
           <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p class="text-gray-600">...</p>
+          <p class="text-gray-600">{{ $adminT("Loading reporting log...", "正在加载举报日志...") }}</p>
         </div>
       </div>
 
@@ -388,16 +367,16 @@
                     class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
                 </th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Status</th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">Type</th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider max-w-[200px]"></th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36"></th>
-                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36"></th>
-                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">Action</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Works", "作品") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">{{ $adminT("Status", "状态") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">{{ $adminT("Type", "举报类型") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider max-w-[200px]">{{ $adminT("Reasons for reporting", "举报原因") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Reporting person", "举报人") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Author of work", "作品作者") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Deal with people", "处理人") }}</th>
+                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36">{{ $adminT("Reporting time", "举报时间") }}</th>
+                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36">{{ $adminT("Processing Time", "处理时间") }}</th>
+                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">{{ $adminT("Action", "操作") }}</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -519,7 +498,7 @@
                     :href="getFrontendUrl(report.work?.url_slug ? `/prompt/${report.work.url_slug}` : (report.work?.short_code ? `/prompt/${report.work.short_code}` : '/explore'))"
                     target="_blank"
                     class="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                    title="View"
+                    :title="$adminT('View', '查看作品')"
                   >
                     <Eye class="w-5 h-5" />
                   </a>
@@ -533,9 +512,9 @@
         <div v-if="totalLogs > 0" class="mt-6 flex flex-wrap items-center justify-between gap-4 bg-white border border-gray-200 rounded-lg px-4 py-3">
           <div class="flex items-center gap-4">
             <span class="text-sm text-gray-600">
-               {{ (pageLogs - 1) * pageSizeLogs + 1 }}–{{ Math.min(pageLogs * pageSizeLogs, totalLogs) }} ， {{ totalLogs }}
+               {{ $adminT('Showing {from}–{to} of {total} logs', '第 {from}–{to} 条，共 {total} 条日志', { from: (pageLogs - 1) * pageSizeLogs + 1, to: Math.min(pageLogs * pageSizeLogs, totalLogs), total: totalLogs }) }}
             </span>
-            <span class="text-sm text-gray-500"></span>
+            <span class="text-sm text-gray-500">{{ $adminT('Per page', '每页') }}</span>
             <select
               v-model="pageSizeLogs"
               @change="pageLogs = 1; fetchReportsLogs()"
@@ -546,14 +525,14 @@
               <option :value="50">50</option>
               <option :value="100">100</option>
             </select>
-            <span class="text-sm text-gray-500"></span>
+            <span class="text-sm text-gray-500">{{ $adminT('items', '条') }}</span>
           </div>
           <div class="flex items-center gap-2">
             <button
               @click="loadPageLogs(1)"
               :disabled="pageLogs === 1 || loadingLogs"
               class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              title=""
+              :title="$adminT('Page one', '第一页')"
             >
               <ChevronsLeft class="w-4 h-4" />
             </button>
@@ -561,10 +540,9 @@
               @click="loadPageLogs(pageLogs - 1)"
               :disabled="pageLogs === 1 || loadingLogs"
               class="px-4 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-
-            </button>
+            >{{ $adminT("Previous Page", "上一页") }}</button>
             <span class="text-sm text-gray-600">
+              {{ $adminT('Page', '第') }}
                <input
                 v-model.number="pageInputLogs"
                 type="number"
@@ -573,20 +551,18 @@
                 class="w-12 px-2 py-1 border border-gray-300 rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
                 @keyup.enter="goToPageInputLogs"
                 @blur="goToPageInputLogs"
-              /> / {{ totalPagesLogs }}
+              /> {{ $adminT('of {total}', '/ {total} 页', { total: totalPagesLogs }) }}
             </span>
             <button
               @click="loadPageLogs(pageLogs + 1)"
               :disabled="pageLogs >= totalPagesLogs || loadingLogs"
               class="px-4 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-
-            </button>
+            >{{ $adminT("Next Page", "下一页") }}</button>
             <button
               @click="loadPageLogs(totalPagesLogs)"
               :disabled="pageLogs >= totalPagesLogs || loadingLogs"
               class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              title=""
+              :title="$adminT('Last Page', '最后一页')"
             >
               <ChevronsRight class="w-4 h-4" />
             </button>
@@ -597,8 +573,8 @@
       <!-- Logs Empty -->
       <div v-else class="text-center py-20 bg-white border border-gray-200 rounded-lg">
         <FileText class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <h3 class="text-lg font-medium text-gray-900 mb-2"></h3>
-        <p class="text-gray-600">。</p>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No reporting log available", "暂无举报日志") }}</h3>
+        <p class="text-gray-600">{{ $adminT("No eligible reporting records were found.", "没有找到符合条件的举报记录。") }}</p>
       </div>
     </template>
 
@@ -609,32 +585,26 @@
       @click.self="closeDismissModal"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4"></h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Ignore a report", "忽略举报") }}</h3>
         <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            （）
-          </label>
+          <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Ignore Reason (optional)", "忽略原因（可选）") }} </label>
           <textarea
             v-model="dismissReason"
             rows="3"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-            placeholder="e.g. "
+            :placeholder="$adminT('g.g. Non-compliance with the criteria for reporting', 'e.g. 举报内容不符合违规标准')"
           ></textarea>
         </div>
         <div class="flex justify-end gap-3">
           <button
             @click="closeDismissModal"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleDismiss"
             :disabled="actionLoading === dismissModalReport.id"
             class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Confirm
-          </button>
+          > {{ $adminT("Confirm", "确认忽略") }} </button>
         </div>
       </div>
     </div>
@@ -646,7 +616,7 @@
       @click.self="closeBanModal"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4"></h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Prohibition of work", "禁止作品") }}</h3>
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">
              <span class="text-red-500">*</span>
@@ -658,22 +628,18 @@
             placeholder="e.g. Violation of content policy (English only)"
           ></textarea>
           <p v-if="banReasonError" class="mt-1 text-xs text-red-500">{{ banReasonError }}</p>
-          <p v-else class="mt-1 text-xs text-gray-500"></p>
+          <p v-else class="mt-1 text-xs text-gray-500">{{ $adminT("This will be sent to users, please use English.", "此内容将发给用户，请使用英文。") }}</p>
         </div>
         <div class="flex justify-end gap-3">
           <button
             @click="closeBanModal"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleBan"
             :disabled="!banReason.trim() || actionLoading === banModalReport.id"
             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Confirm
-          </button>
+          > {{ $adminT("Confirm", "确认禁止") }} </button>
         </div>
       </div>
     </div>
@@ -686,12 +652,14 @@ import { Search, Video, ImageIcon, Check, X, Ban, ExternalLink, ChevronsLeft, Ch
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
+const { translateText: adminT, localeTag } = useAdminI18n()
+
 definePageMeta({
   layout: 'default'
 })
 
 useHead({
-  title: '',
+  title: adminT("Reporting management", "举报管理"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -748,14 +716,14 @@ const selectedLogIds = ref<number[]>([])
 const selectedReportType = ref('')
 
 const reportTypeFilters = [
-  { label: '', value: '' },
-  { label: '', value: 'pornography' },
-  { label: '', value: 'violence' },
-  { label: '', value: 'gore' },
-  { label: '', value: 'harassment' },
-  { label: '', value: 'spam' },
-  { label: '', value: 'copyright' },
-  { label: '', value: 'other' }
+  { label: adminT("All", "全部"), value: '' },
+  { label: adminT("Pornography", "色情"), value: 'pornography' },
+  { label: adminT("Violence", "暴力"), value: 'violence' },
+  { label: adminT("Bloody.", "血腥"), value: 'gore' },
+  { label: adminT("Harassment", "骚扰"), value: 'harassment' },
+  { label: adminT("Cannot initialise Evolution's mail component.", "垃圾信息"), value: 'spam' },
+  { label: adminT("Copyright", "版权"), value: 'copyright' },
+  { label: adminT("Other", "其他"), value: 'other' }
 ]
 
 const statsLogs = ref({
@@ -785,11 +753,11 @@ const fetchReports = async () => {
       total.value = response.data.pagination?.total ?? response.data.total ?? 0
       pageInput.value = page.value
     } else {
-      toast.error(response.message || 'Listfailed')
+      toast.error(response.message || adminT("Failed to load the reports list", "获取举报列表失败"))
     }
   } catch (error: any) {
     console.error('Failed to fetch reports:', error)
-    const errorMessage = error.message || error.response?.data?.message || 'Listfailed'
+    const errorMessage = error.message || error.response?.data?.message || adminT("Failed to load the reports list", "获取举报列表失败")
     toast.error(errorMessage)
     // ，Settings
     if (errorMessage.includes('table not found') || errorMessage.includes('migration')) {
@@ -820,7 +788,7 @@ const fetchReportsLogs = async () => {
       pageInputLogs.value = pageLogs.value
       await fetchStatsLogs()
     } else {
-      toast.error(response.message || 'failed')
+      toast.error(response.message || adminT("failed", "获取举报日志失败"))
       // ，Settings
       if (response.message?.includes('table not found') || response.message?.includes('migration')) {
         reportsLogs.value = []
@@ -829,7 +797,7 @@ const fetchReportsLogs = async () => {
     }
   } catch (error: any) {
     console.error('Failed to fetch reports logs:', error)
-    const errorMessage = error.message || error.response?.data?.message || 'failed'
+    const errorMessage = error.message || error.response?.data?.message || adminT("failed", "获取举报日志失败")
     toast.error(errorMessage)
     // ，Settings
     if (errorMessage.includes('table not found') || errorMessage.includes('migration')) {
@@ -893,22 +861,22 @@ const handleBatchDismissLogs = async () => {
   if (selectedLogIds.value.length === 0) return
   
   const confirmed = await confirm({
-    title: '',
-    message: `Confirm ${selectedLogIds.value.length} ？`
+    title: adminT("Batch Ignore", "批量忽略"),
+    message: adminT('Dismiss the {n} selected reports?', '确定要忽略选中的 {n} 条举报吗？', { n: selectedLogIds.value.length })
   })
   
   if (!confirmed) return
   
   try {
     const promises = selectedLogIds.value.map(id => 
-      api.post(`/api/admin/moderation/reports/${id}/dismiss`, { reason: '' })
+      api.post(`/api/admin/moderation/reports/${id}/dismiss`, { reason: adminT("Batch Ignore", "批量忽略") })
     )
     await Promise.all(promises)
     toast.success(` ${selectedLogIds.value.length} `)
     clearLogSelection()
     fetchReportsLogs()
   } catch (error: any) {
-    toast.error('failed')
+    toast.error(adminT("failed", "批量忽略失败"))
     console.error('Failed to batch dismiss:', error)
   }
 }
@@ -982,8 +950,8 @@ const clearSearchLogs = () => {
 
 const handleResolve = async (reportId: number) => {
   const confirmed = await confirm({
-    title: '',
-    message: 'Confirm？'
+    title: adminT("Mark as Processed", "标记为已处理"),
+    message: adminT("Are you sure you want to mark this report as processed?", "您确定要将此举报标记为已处理吗？")
   })
   
   if (!confirmed) {
@@ -995,18 +963,18 @@ const handleResolve = async (reportId: number) => {
     const response = await api.post(`/api/admin/moderation/reports/${reportId}/resolve`, {})
     
     if (response.success) {
-      toast.success('')
+      toast.success(adminT("Report marked as processed", "举报已标记为已处理"))
       fetchReports()
       // ，
       if (activeTab.value === 'logs') {
         fetchReportsLogs()
       }
     } else {
-      toast.error(response.message || 'Actionfailed')
+      toast.error(response.message || adminT("Action failed", "操作失败"))
     }
   } catch (error: any) {
     console.error('Failed to resolve report:', error)
-    toast.error(error.message || 'Actionfailed')
+    toast.error(error.message || adminT("Action failed", "操作失败"))
   } finally {
     actionLoading.value = null
   }
@@ -1032,7 +1000,7 @@ const handleDismiss = async () => {
     })
     
     if (response.success) {
-      toast.success('')
+      toast.success(adminT("Report ignored", "举报已忽略"))
       closeDismissModal()
       fetchReports()
       // ，
@@ -1040,11 +1008,11 @@ const handleDismiss = async () => {
         fetchReportsLogs()
       }
     } else {
-      toast.error(response.message || 'Actionfailed')
+      toast.error(response.message || adminT("Action failed", "操作失败"))
     }
   } catch (error: any) {
     console.error('Failed to dismiss report:', error)
-    toast.error(error.message || 'Actionfailed')
+    toast.error(error.message || adminT("Action failed", "操作失败"))
   } finally {
     actionLoading.value = null
   }
@@ -1066,12 +1034,12 @@ const handleBan = async () => {
   banReasonError.value = ''
   const trimmed = banReason.value.trim()
   if (!trimmed) {
-    toast.error('Please enter')
+    toast.error(adminT("Please enter", "请输入禁止原因"))
     return
   }
   const { valid, message } = validateReason(trimmed)
   if (!valid) {
-    banReasonError.value = message || ''
+    banReasonError.value = message || adminT("This will be sent to users, please use English.", "此内容将发给用户，请使用英文。")
     toast.error(banReasonError.value)
     return
   }
@@ -1085,7 +1053,7 @@ const handleBan = async () => {
     })
     
     if (response.success) {
-      toast.success('')
+      toast.success(adminT("The work is banned.", "作品已禁止"))
       closeBanModal()
       fetchReports()
       // ，
@@ -1093,11 +1061,11 @@ const handleBan = async () => {
         fetchReportsLogs()
       }
     } else {
-      toast.error(response.message || 'Actionfailed')
+      toast.error(response.message || adminT("Action failed", "操作失败"))
     }
   } catch (error: any) {
     console.error('Failed to ban work:', error)
-    toast.error(error.message || 'Actionfailed')
+    toast.error(error.message || adminT("Action failed", "操作失败"))
   } finally {
     actionLoading.value = null
   }
@@ -1105,23 +1073,23 @@ const handleBan = async () => {
 
 const getStatusLabel = (status: string) => {
   const labels: Record<string, string> = {
-    'pending': '',
-    'resolved': '',
-    'dismissed': ''
+    'pending': adminT("Pending", "待处理"),
+    'resolved': adminT("Processed", "已处理"),
+    'dismissed': adminT("Ignored", "已忽略")
   }
   return labels[status] || status
 }
 
 const getReportTypeLabel = (type: string | null | undefined) => {
-  if (!type) return ''
+  if (!type) return adminT("Unknown", "未知")
   const labels: Record<string, string> = {
-    'pornography': '',
-    'violence': '',
-    'gore': '',
-    'harassment': '',
-    'spam': '',
-    'copyright': '',
-    'other': ''
+    'pornography': adminT("Pornography", "色情"),
+    'violence': adminT("Violence", "暴力"),
+    'gore': adminT("Bloody.", "血腥"),
+    'harassment': adminT("Harassment", "骚扰"),
+    'spam': adminT("Cannot initialise Evolution's mail component.", "垃圾信息"),
+    'copyright': adminT("Copyright infringement", "版权侵犯"),
+    'other': adminT("Other", "其他")
   }
   return labels[type] || type
 }
@@ -1129,7 +1097,7 @@ const getReportTypeLabel = (type: string | null | undefined) => {
 const formatDate = (dateString: string) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleDateString('zh-CN', { 
+  return date.toLocaleDateString(localeTag.value, {
     year: 'numeric', 
     month: 'long', 
     day: 'numeric',
@@ -1139,7 +1107,7 @@ const formatDate = (dateString: string) => {
 }
 
 const formatDateShort = (dateString: string) => {
-  if (!dateString) return ''
+  if (!dateString) return adminT("Reason not provided", "未提供原因")
   const date = new Date(dateString)
   const now = new Date()
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -1160,7 +1128,7 @@ const formatDateShort = (dateString: string) => {
 }
 
 const truncateReason = (reason: string | null | undefined) => {
-  if (!reason) return ''
+  if (!reason) return adminT("Reason not provided", "未提供原因")
   if (reason.length <= 50) return reason
   return reason.slice(0, 50) + '...'
 }

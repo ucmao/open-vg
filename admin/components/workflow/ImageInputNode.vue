@@ -15,9 +15,7 @@
         </svg>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-sm font-semibold text-gray-900 truncate">
-
-        </div>
+        <div class="text-sm font-semibold text-gray-900 truncate">{{ $adminT("Presentation Picture", "演示图片") }}</div>
       </div>
     </div>
     

@@ -2,8 +2,8 @@
   <div class="p-6">
     <div class="mb-6 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Category</h1>
-        <p class="text-gray-600 mt-1">Category，Category</p>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Category", "作品分类页面") }}</h1>
+        <p class="text-gray-600 mt-1">{{ $adminT("Manage the work classification hierarchy, supporting level I and II classifications", "管理作品分类层级结构，支持一级和二级分类") }}</p>
       </div>
       <div class="flex items-center gap-2">
         <button
@@ -11,7 +11,7 @@
           :disabled="loadingCategoryTree"
           class="px-4 py-2 border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
         >
-          {{ loadingCategoryTree ? 'Loading......' : '' }}
+          {{ loadingCategoryTree ? $adminT('Loading...', '加载中...') : $adminT('Refresh', '刷新') }}
         </button>
         <button
           @click="exportCategoriesToCSV"
@@ -31,16 +31,14 @@
         <button
           @click="openCreateCategoryConfigModal(null)"
           class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm transition-colors"
-        >
-          + CreateCategory
-        </button>
+        > {{ $adminT("+ Create Category", "+ 新建一级分类") }} </button>
       </div>
     </div>
 
     <!-- Loading -->
     <div v-if="loadingCategoryTree" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">Loading......</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Loading", "加载中...") }}</p>
     </div>
 
     <!-- Category Tree (with optional batch bar) -->
@@ -55,39 +53,31 @@
           @click="batchUpdateCategoryStatus(true)"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50"
-        >
-
-        </button>
+        >{{ $adminT("Batch Enable", "批量启用") }}</button>
         <button
           @click="batchUpdateCategoryStatus(false)"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50"
-        >
-
-        </button>
+        >{{ $adminT("Bulk Disable", "批量禁用") }}</button>
         <button
           @click="batchDeleteCategories"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
-        >
-          Delete
-        </button>
+        > {{ $adminT("Delete", "批量删除") }} </button>
         <button
           @click="selectedCategoryIds = []"
           class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消选择") }} </button>
       </div>
       <!-- List header with expand/collapse -->
       <div class="flex items-center justify-start gap-4 mb-2 px-1 text-sm text-gray-500">
-        <button type="button" @click="expandAllCategoryParents" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="expandAllCategoryParents" class="hover:text-gray-700 transition-colors">{{ $adminT("Expand All", "展开全部") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="collapseAllCategoryParents" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="collapseAllCategoryParents" class="hover:text-gray-700 transition-colors">{{ $adminT("Collapse All", "折叠全部") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="selectAllCategory" class="hover:text-gray-700 transition-colors">Select All</button>
+        <button type="button" @click="selectAllCategory" class="hover:text-gray-700 transition-colors">{{ $adminT("Select All", "全选") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="invertSelectCategory" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="invertSelectCategory" class="hover:text-gray-700 transition-colors">{{ $adminT("Inverse", "反选") }}</button>
       </div>
       <div class="space-y-6">
       <div
@@ -102,7 +92,7 @@
               type="button"
               @click="toggleParentExpanded(parent.id)"
               class="p-0.5 rounded text-gray-500 hover:bg-gray-100 transition-colors shrink-0"
-              :aria-label="expandedParentIds[parent.id] !== false ? '' : ''"
+              :aria-label="expandedParentIds[parent.id] !== false ? $adminT('Collapse', '收起') : $adminT('Expand', '展开')"
             >
               <ChevronDown
                 class="w-5 h-5 transition-transform"
@@ -116,15 +106,13 @@
               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4 shrink-0"
             />
             <div class="flex items-center gap-2 flex-wrap min-w-0">
-              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                Category
-              </span>
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"> {{ $adminT("Category", "一级分类") }} </span>
               <span class="text-sm font-mono text-gray-400">[{{ parent.sort_order }}]</span>
               <a 
                 :href="getCategoryPageUrl(parent.page_path)" 
                 target="_blank" 
                 class="font-semibold text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                title="View"
+                :title="$adminT('View', '查看前台页面')"
               >
                 {{ parent.category_name }}
               </a>
@@ -146,21 +134,15 @@
             <button
               @click="openCreateCategoryConfigModal(parent)"
               class="px-2 py-1 text-xs text-green-600 border border-green-200 rounded hover:bg-green-50 transition-colors"
-            >
-              +
-            </button>
+            > {{ $adminT("+Add Level 2", "+ 添加二级") }} </button>
             <button
               @click="openEditCategoryConfigModal(parent)"
               class="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
-            >
-              Edit
-            </button>
+            > {{ $adminT("Edit", "编辑") }} </button>
             <button
               @click="deleteCategoryConfig(parent)"
               class="px-2 py-1 text-xs text-red-600 border border-red-200 rounded hover:bg-red-50 transition-colors"
-            >
-              Delete
-            </button>
+            > {{ $adminT("Delete", "删除") }} </button>
           </div>
         </div>
 
@@ -183,7 +165,7 @@
                 :href="getCategoryPageUrl(child.page_path)" 
                 target="_blank" 
                 class="font-medium text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                title="View"
+                :title="$adminT('View', '查看前台页面')"
               >
                 {{ child.category_name }}
               </a>
@@ -204,34 +186,26 @@
               <button
                 @click="openEditCategoryConfigModal(child)"
                 class="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
-              >
-                Edit
-              </button>
+              > {{ $adminT("Edit", "编辑") }} </button>
               <button
                 @click="deleteCategoryConfig(child)"
                 class="px-2 py-1 text-xs text-red-600 border border-red-200 rounded hover:bg-red-50 transition-colors"
-              >
-                Delete
-              </button>
+              > {{ $adminT("Delete", "删除") }} </button>
             </div>
           </div>
         </div>
-        <div v-show="expandedParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic">
-          Category
-        </div>
+        <div v-show="expandedParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic"> {{ $adminT("Category", "暂无二级分类") }} </div>
       </div>
       </div>
     </div>
         
     <!-- Empty state -->
     <div v-else class="text-center py-12 bg-gray-50 rounded-lg">
-      <p class="text-gray-600 mb-4">Category</p>
+      <p class="text-gray-600 mb-4">{{ $adminT("Category", "暂无分类配置") }}</p>
       <button
         @click="openCreateCategoryConfigModal(null)"
         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-      >
-        Category
-      </button>
+      > {{ $adminT("Category", "创建第一个分类") }} </button>
     </div>
 
     <!-- Category Config Create/Edit Modal -->
@@ -246,7 +220,7 @@
             {{ editingCategoryConfig.id ? 'EditCategory' : (editingCategoryConfig.parent_id ? 'CreateCategory' : 'CreateCategory') }}
           </h3>
           <div class="flex items-center gap-2 shrink-0">
-            <label class="text-sm font-medium text-gray-700"></label>
+            <label class="text-sm font-medium text-gray-700">{{ $adminT("Sort", "排序") }}</label>
             <input
               v-model.number="editingCategoryConfig.sort_order"
               type="number"
@@ -260,12 +234,12 @@
         <div class="space-y-4">
           <!-- Parent Selection (only for level 2) -->
           <div v-if="!editingCategoryConfig.id && !editingCategoryConfig.parent_id && categoryTree.length > 0">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Category（，Category）</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Parent classification (optional, leaving empty to create level 1 classification)", "父分类（可选，留空创建一级分类）") }}</label>
             <select
               v-model="editingCategoryConfig.parent_id"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
             >
-              <option :value="null">（Category）</option>
+              <option :value="null">{{ $adminT("None (create level 1 classification)", "无（创建一级分类）") }}</option>
               <option v-for="parent in categoryTree" :key="parent.id" :value="parent.id">
                 {{ parent.category_name }}
               </option>
@@ -274,66 +248,66 @@
 
           <!-- Category Name -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Category *", "分类名称 *") }}</label>
             <input
               v-model="editingCategoryConfig.category_name"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder=": 3D Renders"
+              :placeholder="$adminT('3D Renders', '例如: 3D Renders')"
             />
           </div>
             
           <!-- Page Path (Auto-generated, read-only) -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">（）</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Page Path (auto-generated)", "页面路径（自动生成）") }}</label>
             <input
               :value="computedCategoryPagePath"
               type="text"
               readonly
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-600 cursor-not-allowed"
             />
-            <p class="text-xs text-gray-500 mt-1">Category (: /category//)</p>
+            <p class="text-xs text-gray-500 mt-1">{{ $adminT("Category (: /category//)", "路径将根据分类名称自动生成 (结构: /category/一级/二级)") }}</p>
           </div>
           
           <!-- Display Description -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Description", "显示的描述") }}</label>
             <textarea
               v-model="editingCategoryConfig.display_description"
               rows="2"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="CategoryDescription"
+              :placeholder="$adminT('Category Description', '显示在作品分类页面顶部的描述文字')"
             ></textarea>
           </div>
           
           <!-- SEO Fields -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Title (Title)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Title (Title)", "页面标题 (Title)") }}</label>
             <input
               v-model="editingCategoryConfig.title"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="SEOTitle"
+              :placeholder="$adminT('SEOTitle', 'SEO标题')"
             />
           </div>
           
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description (Description)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Description (Description)", "页面描述 (Description)") }}</label>
             <textarea
               v-model="editingCategoryConfig.description"
               rows="3"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="SEODescription"
+              :placeholder="$adminT('SEODescription', 'SEO描述')"
             ></textarea>
           </div>
           
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"> (Keywords)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"> {{ $adminT("(Keywords)", "页面关键词 (Keywords)") }}</label>
             <input
               v-model="editingCategoryConfig.keywords"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder=""
+              :placeholder="$adminT('Separate with English Comma', '用英文逗号分隔')"
             />
           </div>
 
@@ -348,9 +322,9 @@
                   class="sr-only peer"
                 />
                 <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                <span class="ms-3 text-sm font-medium text-gray-700">Category</span>
+                <span class="ms-3 text-sm font-medium text-gray-700">{{ $adminT("Category", "启用此分类") }}</span>
               </label>
-              <p class="text-xs text-gray-500 mt-1.5 ml-14">， 404。</p>
+              <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("When enabled, the page is accessible.", "启用后页面可访问，不启用时 404。") }}</p>
             </div>
             <div>
               <label class="relative inline-flex items-center cursor-pointer">
@@ -360,9 +334,9 @@
                   class="sr-only peer"
                 />
                 <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                <span class="ms-3 text-sm font-medium text-gray-700"> (Explore) </span>
+                <span class="ms-3 text-sm font-medium text-gray-700"> {{ $adminT("Show in Explores", "在探索页 (Explore) 展示") }} </span>
               </label>
-              <p class="text-xs text-gray-500 mt-1.5 ml-14">Filter。</p>
+              <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("Displays the top of the search page as a quick filter.", "作为快捷筛选标签显示在探索页顶部。") }}</p>
             </div>
           </div>
           </div>
@@ -372,15 +346,11 @@
           <button
             @click="closeCategoryConfigModal"
             class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="saveCategoryConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          >
-            Save
-          </button>
+          > {{ $adminT("Save", "保存配置") }} </button>
         </div>
       </div>
     </div>
@@ -393,7 +363,7 @@
     >
       <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-gray-900">Category</h3>
+          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Category", "批量导入作品分类") }}</h3>
           <button @click="closeCategoryConfigImportModal" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -405,9 +375,7 @@
               @click="categoryConfigFileInput?.click()"
               class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
-              <CloudUpload class="w-5 h-5" />
-               CSV
-            </button>
+              <CloudUpload class="w-5 h-5" /> {{ $adminT("CSV", "选择 CSV 文件") }} </button>
             <input
               ref="categoryConfigFileInput"
               type="file"
@@ -423,9 +391,7 @@
 
             </button>
           </div>
-          <p class="text-sm text-gray-500">
-            Notice：Category。Category， SEO 。
-          </p>
+          <p class="text-sm text-gray-500"> {{ $adminT("Tip: Imported categories are matched to parents by name. Existing categories have their SEO configuration updated.", "提示：导入会自动根据分类名称匹配父级。如果分类已存在，则会更新其 SEO 配置。") }} </p>
         </div>
 
         <!-- Preview Table -->
@@ -433,10 +399,10 @@
           <table class="w-full text-left border-collapse">
             <thead class="bg-gray-50 sticky top-0">
               <tr>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">Category</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">Category</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">SEO Title</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">Explore </th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "父分类") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "分类名称") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("SEO Title", "SEO 标题") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Explore", "Explore 展示") }} </th>
               </tr>
             </thead>
             <tbody class="divide-y">
@@ -446,7 +412,7 @@
                 <td class="px-4 py-2 text-sm text-gray-500 truncate max-w-xs">{{ item.title || '-' }}</td>
                 <td class="px-4 py-2 text-sm">
                   <span :class="item.show_in_explore ? 'text-green-600' : 'text-gray-400'">
-                    {{ item.show_in_explore ? '' : '' }}
+                    {{ item.show_in_explore ? $adminT('Yes', '是') : $adminT('No', '否') }}
                   </span>
                 </td>
               </tr>
@@ -458,16 +424,13 @@
           <button
             @click="closeCategoryConfigImportModal"
             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleCategoryConfigImport"
             :disabled="categoryConfigImportPreview.length === 0 || importingCategoryConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
           >
-            <Loader2 v-if="importingCategoryConfig" class="w-5 h-5 animate-spin" />
-            Confirm {{ categoryConfigImportPreview.length }}
+            <Loader2 v-if="importingCategoryConfig" class="w-5 h-5 animate-spin" /> {{ $adminT("Confirm", "确认导入") }} {{ categoryConfigImportPreview.length }}
           </button>
         </div>
       </div>
@@ -482,6 +445,8 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+
+const { translateText: adminT } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -587,7 +552,7 @@ const loadCategoryTree = async () => {
       )
     }
   } catch (error) {
-    toast.error('Categoryfailed')
+    toast.error(adminT('Failed to load the category tree', '加载分类树失败'))
     console.error('Failed to load category tree:', error)
   } finally {
     loadingCategoryTree.value = false
@@ -685,11 +650,11 @@ const batchUpdateCategoryStatus = async (isActive: boolean) => {
       const { page_path, children, ...rest } = cat
       await adminApi.put(`/api/admin/category-pages/${id}`, { ...rest, is_active: isActive })
     }
-    toast.success(isActive ? '' : '')
+    toast.success(isActive ? adminT('Enabled in bulk', '已批量启用') : adminT('Disabled in bulk', '已批量禁用'))
     selectedCategoryIds.value = []
     await loadCategoryTree()
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'Actionfailed')
+    toast.error(error.response?.data?.message || adminT('Action failed', '操作失败'))
   } finally {
     batchActionLoading.value = false
   }
@@ -698,8 +663,8 @@ const batchUpdateCategoryStatus = async (isActive: boolean) => {
 const batchDeleteCategories = async () => {
   if (selectedCategoryIds.value.length === 0) return
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete ${selectedCategoryIds.value.length} Category？Action。`,
+    title: adminT('Delete', '删除'),
+    message: adminT('Delete {count} selected categories? This action cannot be undone.', '确定删除选中的 {count} 个分类吗？此操作不可撤销。', { count: selectedCategoryIds.value.length }),
     type: 'warning'
   })
   if (!confirmed) return
@@ -713,7 +678,7 @@ const batchDeleteCategories = async () => {
     selectedCategoryIds.value = []
     await loadCategoryTree()
   } catch (error: any) {
-    toast.error('Deletefailed')
+    toast.error(adminT('Delete failed', '删除失败'))
   } finally {
     batchActionLoading.value = false
   }
@@ -822,21 +787,25 @@ const saveCategoryConfig = async () => {
     } else {
       const response = await adminApi.post('/api/admin/category-pages', dataToSave)
       if (response.success) {
-        toast.success('Categorysuccessful')
+        toast.success(adminT('Category configuration created', '分类配置创建成功'))
         closeCategoryConfigModal()
         await loadCategoryTree()
       }
     }
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'Savefailed')
+    toast.error(error.response?.data?.message || adminT('Save failed', '保存失败'))
     console.error('Failed to save category config:', error)
   }
 }
 
 const deleteCategoryConfig = async (category: any) => {
   const confirmed = await confirm({
-    title: 'DeleteCategory',
-    message: `ConfirmDeleteCategory "${category.category_name}" ？${category.children && category.children.length > 0 ? 'DeleteCategory。' : ''}Action。`,
+    title: adminT('Delete Category', '删除分类'),
+    message: adminT(
+      category.children?.length ? 'Delete category "{name}" and all its subcategories? This action cannot be undone.' : 'Delete category "{name}"? This action cannot be undone.',
+      category.children?.length ? '确定删除分类“{name}”及其所有子分类吗？此操作不可撤销。' : '确定删除分类“{name}”吗？此操作不可撤销。',
+      { name: category.category_name }
+    ),
     type: 'warning'
   })
   if (!confirmed) return
@@ -848,7 +817,7 @@ const deleteCategoryConfig = async (category: any) => {
       await loadCategoryTree()
     }
   } catch (error) {
-    toast.error('Deletefailed')
+    toast.error(adminT('Delete failed', '删除失败'))
     console.error('Failed to delete category config:', error)
   }
 }
@@ -863,7 +832,7 @@ const handleCategoryConfigFileSelect = async (event: Event) => {
     const response = await adminApi.upload('/api/admin/category-pages/parse-excel', formData)
     if (response.success) {
       categoryConfigImportPreview.value = response.data.filter((item: any) => item.category_name)
-      toast.success(`successful ${categoryConfigImportPreview.value.length} `)
+      toast.success(adminT('Parsed {n} rows', '成功解析 {n} 条数据', { n: categoryConfigImportPreview.value.length }))
     } else {
       toast.error(response.message || 'failed')
       categoryConfigImportPreview.value = []
@@ -904,7 +873,7 @@ const closeCategoryConfigImportModal = () => {
 
 const handleCategoryConfigImport = async () => {
   if (categoryConfigImportPreview.value.length === 0) {
-    toast.error('')
+    toast.error(adminT("No disaggregated data to be exported", "没有可导出的分类数据"))
     return
   }
 
@@ -914,7 +883,7 @@ const handleCategoryConfigImport = async () => {
       categories: categoryConfigImportPreview.value
     })
     if (response.success) {
-      toast.success(`successful ${response.data.created || 0} ， ${response.data.updated || 0} `)
+      toast.success(adminT('Imported {created} rows, updated {updated} rows', '成功导入 {created} 条，更新 {updated} 条', { created: response.data.created || 0, updated: response.data.updated || 0 }))
       closeCategoryConfigImportModal()
       await loadCategoryTree()
     }
@@ -957,8 +926,8 @@ const exportCategoriesToCSV = () => {
           parent_name: parentName,
           page_path: category.page_path || '',
           sort_order: category.sort_order || 0,
-          is_active: category.is_active ? '' : '',
-          show_in_explore: category.show_in_explore ? '' : '',
+          is_active: category.is_active ? adminT('Yes', '是') : adminT('No', '否'),
+          show_in_explore: category.show_in_explore ? adminT('Yes', '是') : adminT('No', '否'),
           display_description: category.display_description || '',
           title: category.title || '',
           description: category.description || '',

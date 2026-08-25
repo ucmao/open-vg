@@ -13,7 +13,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
             </svg>
           </div>
-          <h2 class="text-base font-bold text-gray-900"></h2>
+          <h2 class="text-base font-bold text-gray-900">{{ $adminT("Insert Link", "插入链接") }}</h2>
         </div>
         <button @click="close" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,27 +44,26 @@
         <div class="space-y-1.5">
           <label class="block text-xs font-semibold text-gray-700">
 
-            <span v-if="hasSelection" class="text-gray-500 font-normal ml-1">()</span>
+            <span v-if="hasSelection" class="text-gray-500 font-normal ml-1">{{ $adminT("(Use selected text)", "(使用选中的文本)") }}</span>
           </label>
           <input
             v-model="config.text"
             type="text"
-            placeholder=""
+            :placeholder="$adminT('Click here.', '点击这里')"
             :disabled="hasSelection"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-600"
           />
-          <p class="text-xs text-gray-500"></p>
+          <p class="text-xs text-gray-500">{{ $adminT("Leave empty using the selected text or link address", "留空则使用选中的文本或链接地址") }}</p>
         </div>
 
         <!-- Title Attribute -->
         <div class="space-y-1.5">
-          <label class="block text-xs font-semibold text-gray-700">
-            Title <span class="text-gray-500 font-normal">(Notice)</span>
+          <label class="block text-xs font-semibold text-gray-700"> {{ $adminT("Title", "标题") }} <span class="text-gray-500 font-normal">{{ $adminT("(Notice)", "(提示文本)") }}</span>
           </label>
           <input
             v-model="config.title"
             type="text"
-            placeholder="Notice..."
+            :placeholder="$adminT('Notice', '悬停提示文本...')"
             maxlength="200"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -72,7 +71,7 @@
 
         <!-- Options -->
         <div class="space-y-2">
-          <label class="block text-xs font-semibold text-gray-700 mb-2"></label>
+          <label class="block text-xs font-semibold text-gray-700 mb-2">{{ $adminT("Options", "选项") }}</label>
           
           <!-- Open in new tab -->
           <label class="flex items-center space-x-2 cursor-pointer group">
@@ -82,8 +81,8 @@
               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
             />
             <div class="flex-1">
-              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"></div>
-              <div class="text-[10px] text-gray-500"> target="_blank" </div>
+              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900">{{ $adminT("Open in New Tab", "在新标签页中打开") }}</div>
+              <div class="text-[10px] text-gray-500"> {{ $adminT("target=\"_blank\"", "添加 target=\"_blank\" 属性") }} </div>
             </div>
           </label>
 
@@ -95,8 +94,8 @@
               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
             />
             <div class="flex-1">
-              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"> (NoFollow)</div>
-              <div class="text-[10px] text-gray-500"> SEO  rel="nofollow"</div>
+              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"> {{ $adminT("(No Follow)", "不追踪 (NoFollow)") }}</div>
+              <div class="text-[10px] text-gray-500"> {{ $adminT("SEO rel=\"nofollow\"", "为 SEO 添加 rel=\"nofollow\"") }}</div>
             </div>
           </label>
 
@@ -109,11 +108,9 @@
               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
             />
             <div class="flex-1">
-              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900">
-                 (NoOpener)
-                <span v-if="config.openInNewTab" class="text-gray-500 font-normal">()</span>
+              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"> {{ $adminT("(No Opener)", "不启用 (NoOpener)") }} <span v-if="config.openInNewTab" class="text-gray-500 font-normal">{{ $adminT("(auto-enable)", "(自动启用)") }}</span>
               </div>
-              <div class="text-[10px] text-gray-500"> rel="noopener"</div>
+              <div class="text-[10px] text-gray-500"> {{ $adminT("rel=\"noopener\"", "为安全添加 rel=\"noopener\"") }}</div>
             </div>
           </label>
 
@@ -125,15 +122,15 @@
               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
             />
             <div class="flex-1">
-              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"> (Sponsored)</div>
-              <div class="text-[10px] text-gray-500"> rel="sponsored"</div>
+              <div class="text-xs font-medium text-gray-700 group-hover:text-gray-900"> {{ $adminT("(Sponsored)", "赞助链接 (Sponsored)") }}</div>
+              <div class="text-[10px] text-gray-500"> {{ $adminT("rel=\"sponsored\"", "为付费链接添加 rel=\"sponsored\"") }}</div>
             </div>
           </label>
         </div>
 
         <!-- Preview -->
         <div class="space-y-1.5 pt-2 border-t border-gray-200">
-          <label class="block text-xs font-semibold text-gray-700"></label>
+          <label class="block text-xs font-semibold text-gray-700">{{ $adminT("Preview", "预览") }}</label>
           <div class="p-3 bg-gray-50 rounded border border-gray-200">
             <a
               :href="config.url || '#'"
@@ -155,17 +152,13 @@
           type="button"
           @click.stop="close"
           class="px-4 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-all"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消") }} </button>
         <button
           type="button"
           @click.stop="confirm"
           :disabled="!config.url"
           class="px-5 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 shadow-sm shadow-blue-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-
-        </button>
+        >{{ $adminT("Insert Link", "插入链接") }}</button>
       </div>
     </div>
   </div>
@@ -173,6 +166,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, watch, nextTick } from 'vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const props = defineProps<{
   isOpen: boolean
@@ -212,7 +208,7 @@ const hasSelection = computed(() => !!props.selectedText)
 const displayText = computed(() => {
   if (props.selectedText) return props.selectedText
   if (config.text) return config.text
-  return config.url || ''
+  return config.url || adminT("Link Text", "链接文本")
 })
 
 // Generate rel attribute
@@ -254,7 +250,7 @@ watch(() => props.isOpen, (isOpen) => {
 // Validate URL
 const validateUrl = () => {
   if (!config.url) {
-    urlError.value = 'Required'
+    urlError.value = adminT("Required", "链接地址是必填项")
     return false
   }
   
@@ -268,7 +264,7 @@ const validateUrl = () => {
       urlError.value = ''
       return true
     }
-    urlError.value = 'Please enter（：https://example.com）'
+    urlError.value = adminT("Please enter a valid link address (e.g. https://example.com)", "请输入有效的链接地址（例如：https://example.com）")
     return false
   }
 }

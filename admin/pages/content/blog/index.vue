@@ -3,8 +3,8 @@
     <!-- Header -->
     <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h2 class="text-2xl font-semibold text-gray-900"></h2>
-        <p class="text-gray-600 mt-1"></p>
+        <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("Blog articles", "博客文章") }}</h2>
+        <p class="text-gray-600 mt-1">{{ $adminT("Create and manage blog articles", "创建并管理博客文章") }}</p>
       </div>
 
       <!-- Batch Actions Bar -->
@@ -16,21 +16,15 @@
         <button
           @click="showBatchEditModal = true"
           class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-        >
-          Edit
-        </button>
+        > {{ $adminT("Edit", "批量编辑") }} </button>
         <button
           @click="handleBatchDelete"
           class="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-        >
-          Delete
-        </button>
+        > {{ $adminT("Delete", "批量删除") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消选择") }} </button>
       </div>
 
       <NuxtLink
@@ -39,22 +33,22 @@
         class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 shadow-sm"
       >
         <Plus class="w-5 h-5" />
-        <span>Create</span>
+        <span>{{ $adminT("Create", "新建文章") }}</span>
       </NuxtLink>
     </div>
 
     <!-- Status filter -->
     <div class="flex items-center gap-2 mb-4">
-      <span class="text-sm text-gray-600">Status：</span>
+      <span class="text-sm text-gray-600">{{ $adminT("Status:", "状态：") }}</span>
       <select
         v-model="filters.status"
         @change="page = 1; fetchPosts(true)"
         class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       >
-        <option :value="null"></option>
-        <option value="published"></option>
-        <option value="draft"></option>
-        <option value="archived"></option>
+        <option :value="null">{{ $adminT("All", "全部") }}</option>
+        <option value="published">{{ $adminT("Published", "已发布") }}</option>
+        <option value="draft">{{ $adminT("Draft", "草稿") }}</option>
+        <option value="archived">{{ $adminT("Archived", "已归档") }}</option>
       </select>
     </div>
 
@@ -86,12 +80,12 @@
                     class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
                 </th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"></th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider max-w-md"></th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"></th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"></th>
-                <th class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">{{ $adminT("Sort", "排序") }}</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider max-w-md">{{ $adminT("Articles", "文章") }}</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">{{ $adminT("Status", "状态") }}</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">{{ $adminT("Created", "创建时间") }}</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">{{ $adminT("Reading", "阅读量") }}</th>
+                <th class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -127,9 +121,7 @@
                         {{ post.title }}
                       </a>
                       <div class="text-xs text-gray-500 font-mono mt-1 truncate">/blog/{{ post.slug }}</div>
-                      <div v-if="post.is_featured" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-700 whitespace-nowrap mt-1">
-
-                      </div>
+                      <div v-if="post.is_featured" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-700 whitespace-nowrap mt-1">{{ $adminT("Home Page", "首页") }}</div>
                     </div>
                   </div>
                 </td>
@@ -159,7 +151,7 @@
                     <NuxtLink
                       :to="`/content/blog/${post.id}/edit`"
                       class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                      title="Edit"
+                      :title="$adminT('Edit', '编辑')"
                     >
                       <Pencil class="w-4 h-4" />
                     </NuxtLink>
@@ -167,14 +159,14 @@
                       @click="copyPost(post)"
                       :disabled="copyingId === post.id"
                       class="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all disabled:opacity-50"
-                      title=""
+                      :title="$adminT('Copy', '复制')"
                     >
                       <Copy class="w-4 h-4" />
                     </button>
                     <button
                       @click="handleDelete(post)"
                       class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                      title="Delete"
+                      :title="$adminT('Delete', '删除')"
                     >
                       <Trash2 class="w-4 h-4" />
                     </button>
@@ -187,26 +179,22 @@
 
         <div v-else class="p-12 text-center">
           <div class="text-6xl mb-6">📝</div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3"></h3>
-          <p class="text-gray-600 mb-6"></p>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ $adminT("Unwritten", "暂无文章") }}</h3>
+          <p class="text-gray-600 mb-6">{{ $adminT("Create your first blog article to start", "创建您的第一篇博客文章以开始") }}</p>
           <NuxtLink
             to="/content/blog/new"
             class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
-          >
-
-          </NuxtLink>
+          >{{ $adminT("Create Article", "创建文章") }}</NuxtLink>
         </div>
 
         <!-- Pagination -->
         <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
           <div class="flex items-center gap-4">
             <span class="text-sm text-gray-600">
-               <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-              <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-              <span class="font-medium text-gray-900">{{ total }}</span>
+              {{ $adminT('Showing {from}–{to} of {total} posts', '显示第 {from}–{to} 条，共 {total} 篇文章', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
             </span>
             <div class="flex items-center gap-2">
-              <span class="text-sm text-gray-500">：</span>
+              <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
               <select
                 v-model="pageSize"
                 @change="page = 1; fetchPosts(true)"
@@ -224,7 +212,7 @@
               @click="loadPage(1)"
               :disabled="page === 1 || loading"
               class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              title=""
+              :title="$adminT('Page one', '第一页')"
             >
               <ChevronsLeft class="w-4 h-4" />
             </button>
@@ -232,11 +220,9 @@
               @click="loadPage(page - 1)"
               :disabled="page === 1 || loading"
               class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-
-            </button>
+            >{{ $adminT("Previous Page", "上一页") }}</button>
             <div class="flex items-center gap-1">
-              <span class="text-sm text-gray-600"></span>
+              <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
               <input
                 v-model.number="page"
                 @keyup.enter="loadPage(page)"
@@ -246,20 +232,18 @@
                 :max="Math.ceil(total / pageSize)"
                 class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+              <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
             </div>
             <button
               @click="loadPage(page + 1)"
               :disabled="page >= Math.ceil(total / pageSize) || loading"
               class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-
-            </button>
+            >{{ $adminT("Next Page", "下一页") }}</button>
             <button
               @click="loadPage(Math.ceil(total / pageSize))"
               :disabled="page >= Math.ceil(total / pageSize) || loading"
               class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              title=""
+              :title="$adminT('Last Page', '最后一页')"
             >
               <ChevronsRight class="w-4 h-4" />
             </button>
@@ -274,49 +258,40 @@
       @click.self="showBatchEditModal = false"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Edit</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Edit", "批量编辑文章") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
-           {{ selectedIds.length }} 。
-          <br />
-          ，。
-        </p>
+           {{ selectedIds.length }} {{ $adminT("Selected", "将更新选中的") }} <br /> {{ $adminT("Articles.", "篇文章。") }} </p>
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Status
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Status", "发布状态") }} </label>
             <select
               v-model="batchEditForm.status"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value=""></option>
-              <option value="published"></option>
-              <option value="draft"></option>
-              <option value="archived"></option>
+              <option value="">{{ $adminT("No change.", "保持不变") }}</option>
+              <option value="published">{{ $adminT("Published", "已发布") }}</option>
+              <option value="draft">{{ $adminT("Draft", "草稿") }}</option>
+              <option value="archived">{{ $adminT("Archived", "已归档") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("First Page Select", "首页精选") }}</label>
             <select
               v-model="batchEditForm.is_featured"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option :value="null"></option>
-              <option :value="true"></option>
-              <option :value="false"></option>
+              <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+              <option :value="true">{{ $adminT("Yes.", "是") }}</option>
+              <option :value="false">{{ $adminT("Yes", "否") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Category
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Category", "修改分类") }} </label>
             <select
               v-model="batchEditForm.category"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value=""></option>
+              <option value="">{{ $adminT("No change.", "保持不变") }}</option>
               <option v-for="cat in categories" :key="cat.id" :value="cat.name">{{ cat.name }}</option>
             </select>
           </div>
@@ -325,9 +300,7 @@
           <button
             @click="showBatchEditModal = false"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleBatchEdit"
             :disabled="saving"
@@ -346,12 +319,15 @@ import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { Plus, Pencil, Copy, Trash2, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 definePageMeta({
   layout: 'default'
 })
 
 useHead({
-  title: '',
+  title: adminT("Blog Management", "博客管理"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -367,10 +343,10 @@ const { loadBaseUrl, getFrontendUrl } = useFrontendUrl()
 const { requireAuth } = useAdminAuth()
 
 const statusOptions = [
-  { value: 'all', label: '' },
-  { value: 'published', label: '' },
-  { value: 'draft', label: '' },
-  { value: 'archived', label: '' }
+  { value: 'all', label: adminT("All", "全部") },
+  { value: 'published', label: adminT("Published", "已发布") },
+  { value: 'draft', label: adminT("Draft", "草稿") },
+  { value: 'archived', label: adminT("Archived", "已归档") }
 ]
 
 const filters = reactive({
@@ -402,10 +378,10 @@ const isAllPageSelected = computed(() => {
 })
 
 const statsDisplay = computed(() => [
-  { label: '', value: stats.value.total.toString() },
-  { label: '', value: stats.value.published_count.toString() },
-  { label: '', value: stats.value.featured_count.toString() },
-  { label: '', value: stats.value.total_views.toLocaleString() }
+  { label: adminT("Total number of articles", "文章总数"), value: stats.value.total.toString() },
+  { label: adminT("Published", "已发布"), value: stats.value.published_count.toString() },
+  { label: adminT("Home Page", "首页"), value: stats.value.featured_count.toString() },
+  { label: adminT("General", "总浏览"), value: stats.value.total_views.toLocaleString() }
 ])
 
 const clearSelection = () => {
@@ -501,13 +477,13 @@ const fetchPosts = async (reset = false) => {
 
 const handleBatchEdit = async () => {
   if (!batchEditForm.status && batchEditForm.is_featured === null && !batchEditForm.category) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择要更新的字段"))
     return
   }
   
   const confirmed = await confirm({
-    title: 'Edit',
-    message: `Confirm ${selectedIds.value.length} ？`,
+    title: adminT("Edit", "批量编辑"),
+    message: adminT('Update the {n} selected posts?', '确定要更新选中的 {n} 篇文章吗？', { n: selectedIds.value.length }),
     type: 'info'
   })
   
@@ -524,14 +500,14 @@ const handleBatchEdit = async () => {
     
     const res = await api.post('/api/admin/blog/posts/batch-update', payload)
     if (res.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "更新成功"))
       showBatchEditModal.value = false
       clearSelection()
       fetchPosts()
       fetchStats()
     }
   } catch (err: any) {
-    toast.error(err.message || 'failed')
+    toast.error(err.message || adminT("failed", "更新失败"))
   } finally {
     saving.value = false
   }
@@ -539,10 +515,10 @@ const handleBatchEdit = async () => {
 
 const handleBatchDelete = async () => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete ${selectedIds.value.length} ？Action！`,
+    title: adminT("Delete", "批量删除"),
+    message: adminT('Delete the {n} selected posts? This cannot be undone.', '确定要删除选中的 {n} 篇文章吗？此操作不可撤销！', { n: selectedIds.value.length }),
     type: 'danger',
-    confirmText: 'Delete'
+    confirmText: adminT("Delete", "删除")
   })
   
   if (!confirmed) return
@@ -552,13 +528,13 @@ const handleBatchDelete = async () => {
       post_ids: selectedIds.value
     })
     if (res.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT("Deleted", "删除成功"))
       clearSelection()
       fetchPosts()
       fetchStats()
     }
   } catch (err: any) {
-    toast.error(err.message || 'Deletefailed')
+    toast.error(err.message || adminT("Delete failed", "删除失败"))
   }
 }
 
@@ -580,14 +556,14 @@ const copyPost = async (post: any) => {
     copyingId.value = post.id
     const detailRes = await api.get(`/api/admin/blog/posts/${post.id}`)
     if (!detailRes.success || !detailRes.data) {
-      toast.error('failed')
+      toast.error(adminT("failed", "获取详情失败"))
       return
     }
     const d = detailRes.data
     const copySlug = `${d.slug}-copy-${Date.now().toString(36)}`
     const payload = {
       slug: copySlug,
-      title: (d.title || '').trim() ? `${d.title} ()` : '',
+      title: (d.title || '').trim() ? `${d.title} ()` : adminT("Copy", "副本"),
       excerpt: d.excerpt ?? undefined,
       content: d.content ?? undefined,
       meta_title: d.meta_title ?? undefined,
@@ -603,13 +579,13 @@ const copyPost = async (post: any) => {
     }
     const res = await api.post('/api/admin/blog/posts', payload)
     if (res.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "复制成功"))
       fetchPosts()
     } else {
-      toast.error(res.message || 'failed')
+      toast.error(res.message || adminT("failed", "复制失败"))
     }
   } catch (err: any) {
-    toast.error(err.message || 'failed')
+    toast.error(err.message || adminT("failed", "复制失败"))
   } finally {
     copyingId.value = null
   }
@@ -617,10 +593,10 @@ const copyPost = async (post: any) => {
 
 const handleDelete = async (post: any) => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete "${post.title}" ？Action。`,
-    confirmText: 'Delete',
-    cancelText: 'Cancel',
+    title: adminT("Delete", "删除文章"),
+    message: adminT('Delete "{name}"? This action cannot be undone.', '确定删除“{name}”吗？此操作不可撤销。', { name: post.title }),
+    confirmText: adminT("Delete", "删除"),
+    cancelText: adminT("Cancel", "取消"),
     type: 'danger'
   })
 
@@ -628,15 +604,15 @@ const handleDelete = async (post: any) => {
     try {
       const response = await api.delete(`/api/admin/blog/posts/${post.id}`)
       if (response.success) {
-        toast.success('Deletesuccessful')
+        toast.success(adminT("Post deleted", "文章删除成功"))
         posts.value = posts.value.filter(p => p.id !== post.id)
         total.value = Math.max(0, total.value - 1)
         fetchStats()
       } else {
-        toast.error(response.message || 'Deletefailed')
+        toast.error(response.message || adminT("Failed to delete the post", "删除文章失败"))
       }
     } catch (error: any) {
-      toast.error(error.message || 'Deletefailed')
+      toast.error(error.message || adminT("Failed to delete the post", "删除文章失败"))
     }
   }
 }

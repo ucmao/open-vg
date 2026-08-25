@@ -19,7 +19,7 @@
         >
           <!-- Header -->
           <div class="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-900"></h2>
+            <h2 class="text-lg font-semibold text-gray-900">{{ $adminT("Select Author", "选择作者") }}</h2>
             <button
               type="button"
               @click="handleClose"
@@ -37,7 +37,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                placeholder="Search（、handle、）..."
+                :placeholder="$adminT('_Other Organiser', '搜索用户（昵称、handle、邮箱）...')"
                 class="w-full border border-gray-300 text-gray-900 rounded-lg px-4 py-2 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 @input="handleSearch"
               />
@@ -58,13 +58,9 @@
               <div class="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
             
-            <div v-else-if="searchResults.length === 0 && !searchQuery" class="text-center py-8 text-gray-500 text-sm">
-              Please enterSearch
-            </div>
+            <div v-else-if="searchResults.length === 0 && !searchQuery" class="text-center py-8 text-gray-500 text-sm"> {{ $adminT("Please enter Search", "请输入关键词搜索用户") }} </div>
             
-            <div v-else-if="searchResults.length === 0 && searchQuery" class="text-center py-8 text-gray-500 text-sm">
-
-            </div>
+            <div v-else-if="searchResults.length === 0 && searchQuery" class="text-center py-8 text-gray-500 text-sm">{{ $adminT("No user found", "未找到用户") }}</div>
             
             <div v-else class="space-y-2">
               <div
@@ -119,24 +115,18 @@
               @click="clearSelection"
               class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
               :disabled="!selectedUserId"
-            >
-
-            </button>
+            >{{ $adminT("Clear Selection", "清除选择") }}</button>
             <div class="flex items-center gap-2">
               <button
                 type="button"
                 @click="handleClose"
                 class="px-4 py-2 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-              >
-                Cancel
-              </button>
+              > {{ $adminT("Cancel", "取消") }} </button>
               <button
                 type="button"
                 @click="handleConfirm"
                 class="px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Confirm
-              </button>
+              > {{ $adminT("Confirm", "确认") }} </button>
             </div>
           </div>
         </div>

@@ -4,8 +4,8 @@
     <div class="mb-6">
       <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
         <div>
-          <h2 class="text-2xl font-semibold text-gray-900"></h2>
-          <p class="text-gray-600 mt-1">{{ activeTab === 'lexicons' ? 'NSFW，、' : ' lexicon_hit ，View' }}</p>
+          <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("Sensitive Thesaurus", "敏感词库") }}</h2>
+          <p class="text-gray-600 mt-1">{{ activeTab === 'lexicons' ? $adminT('Manage NSFW, sensitive, and prohibited terms', '管理 NSFW、敏感及违禁词') : $adminT('Review content matched by the lexicon', '查看命中词库的内容') }}</p>
         </div>
         <!-- Batch Actions Bar ( tab) -->
         <div v-if="activeTab === 'lexicons' && (selectedIds.length > 0 || selectAllAcrossPages)" class="flex items-center gap-3 bg-blue-50 px-4 py-2 rounded-lg border border-blue-200 shadow-sm animate-fade-in">
@@ -16,21 +16,15 @@
         <button
           @click="showBatchEditModal"
           class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-        >
-          Edit
-        </button>
+        > {{ $adminT("Edit", "批量编辑") }} </button>
         <button
           @click="handleBatchDelete"
           class="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-        >
-          Delete
-        </button>
+        > {{ $adminT("Delete", "批量删除") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消选择") }} </button>
         </div>
         <div v-if="activeTab === 'lexicons'" class="flex items-center gap-3">
           <button
@@ -53,7 +47,7 @@
           class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Download class="w-4 h-4" />
-            {{ exporting ? '...' : '' }}
+            {{ exporting ? $adminT('Exporting...', '导出中...') : $adminT('Export', '导出') }}
           </button>
         </div>
       </div>
@@ -68,9 +62,7 @@
           'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
           activeTab === 'lexicons' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
         ]"
-      >
-
-      </button>
+      >{{ $adminT("Sensitive word management", "敏感词管理") }}</button>
       <button
         type="button"
         @click="setTab('analyze')"
@@ -78,9 +70,7 @@
           'px-4 py-2 text-sm font-medium rounded-t-lg transition-colors',
           activeTab === 'analyze' ? 'bg-white border border-gray-200 border-b-0 -mb-px text-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
         ]"
-      >
-
-      </button>
+      >{{ $adminT("Hit Analysis", "命中分析") }}</button>
     </div>
 
     <!-- Tab:  -->
@@ -95,13 +85,13 @@
               @change="toggleSelectAll"
               class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
             />
-            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">Select All</span>
+            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">{{ $adminT("Select All", "全选本页") }}</span>
           </label>
 
           <!-- Select All Across Pages -->
           <div v-if="isAllPageSelected && total > lexicons.length" class="text-sm animate-fade-in">
             <template v-if="!selectAllAcrossPages">
-              <span class="text-gray-500"> {{ lexicons.length }} 。</span>
+              <span class="text-gray-500"> {{ lexicons.length }} {{ $adminT("Selected page", "已选择本页") }}</span>
               <button 
                 @click="selectAllAcrossPages = true"
                 class="ml-1 text-blue-600 font-bold hover:underline"
@@ -110,13 +100,11 @@
               </button>
             </template>
             <template v-else>
-              <span class="text-blue-700 font-bold"> {{ total }} 。</span>
+              <span class="text-blue-700 font-bold"> {{ total }} {{ $adminT("All Selected", "已选择全部") }}</span>
               <button 
                 @click="clearSelection"
                 class="ml-2 text-gray-400 hover:text-gray-600 underline"
-              >
-
-              </button>
+              >{{ $adminT("Clear Selection", "清除选择") }}</button>
             </template>
           </div>
 
@@ -131,50 +119,50 @@
     <div v-if="activeTab === 'lexicons'" class="bg-white border border-gray-200 rounded-lg p-4 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Category", "分类") }}</label>
           <select
             v-model="filters.category"
             @change="page = 1; fetchLexicons(true)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           >
-            <option value=""></option>
-            <option value="VIOLENCE"></option>
-            <option value="PORNOGRAPHY"></option>
-            <option value="ILLEGAL"></option>
-            <option value="OTHER"></option>
+            <option value="">{{ $adminT("All", "全部") }}</option>
+            <option value="VIOLENCE">{{ $adminT("Violence", "暴力") }}</option>
+            <option value="PORNOGRAPHY">{{ $adminT("Pornography", "色情") }}</option>
+            <option value="ILLEGAL">{{ $adminT("Illegal activities", "非法活动") }}</option>
+            <option value="OTHER">{{ $adminT("Other", "其他") }}</option>
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2"></label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Extent", "严重程度") }}</label>
           <select
             v-model="filters.severity"
             @change="page = 1; fetchLexicons(true)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           >
-            <option value=""></option>
-            <option value="LOW"></option>
-            <option value="MEDIUM"></option>
-            <option value="HIGH"></option>
+            <option value="">{{ $adminT("All", "全部") }}</option>
+            <option value="LOW">{{ $adminT("Low", "低") }}</option>
+            <option value="MEDIUM">{{ $adminT("Medium", "中") }}</option>
+            <option value="HIGH">{{ $adminT("High", "高") }}</option>
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Status", "状态") }}</label>
           <select
             v-model="filters.enabled"
             @change="page = 1; fetchLexicons(true)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           >
-            <option :value="null"></option>
-            <option :value="true"></option>
-            <option :value="false"></option>
+            <option :value="null">{{ $adminT("All", "全部") }}</option>
+            <option :value="true">{{ $adminT("Enable", "启用") }}</option>
+            <option :value="false">{{ $adminT("Disable", "禁用") }}</option>
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search", "搜索") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            placeholder="Search"
+            :placeholder="$adminT('Search', '搜索关键词')"
             @keyup.enter="page = 1; fetchLexicons(true)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -186,7 +174,7 @@
     <div v-if="activeTab === 'lexicons' && loading && lexicons.length === 0" class="flex justify-center items-center py-20">
       <div class="text-center">
         <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-600">...</p>
+        <p class="text-gray-600">{{ $adminT("Loading keywords...", "正在加载关键词...") }}</p>
       </div>
     </div>
 
@@ -204,13 +192,13 @@
                   class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Keywords", "关键词") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Category", "分类") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Extent", "严重程度") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Status", "状态") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Remarks", "备注") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Created", "创建时间") }}</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -261,7 +249,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                 :class="lexicon.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
               >
-                {{ lexicon.enabled ? '' : '' }}
+                {{ lexicon.enabled ? $adminT('Enabled', '启用') : $adminT('Disabled', '禁用') }}
               </span>
             </td>
             <td class="px-6 py-4">
@@ -277,15 +265,11 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               <button
                 @click="showEditModal(lexicon)"
                 class="text-blue-600 hover:text-blue-900 mr-4"
-              >
-                Edit
-              </button>
+              > {{ $adminT("Edit", "编辑") }} </button>
               <button
                 @click="handleDelete(lexicon.id)"
                 class="text-red-600 hover:text-red-900"
-              >
-                Delete
-              </button>
+              > {{ $adminT("Delete", "删除") }} </button>
             </td>
           </tr>
         </tbody>
@@ -296,12 +280,10 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} keywords', '显示第 {from}–{to} 条，共 {total} 个关键词', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; fetchLexicons(true)"
@@ -319,7 +301,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
             @click="loadPage(1)"
             :disabled="page === 1 || loading"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -327,11 +309,9 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
             @click="loadPage(page - 1)"
             :disabled="page === 1 || loading"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="pageInput"
               @keyup.enter="handlePageInput"
@@ -341,20 +321,18 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               :max="Math.ceil(total / pageSize)"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize) || loading"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize) || loading"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -365,21 +343,19 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
     <!-- Empty State () -->
     <div v-else-if="activeTab === 'lexicons'" class="text-center py-20 bg-white border border-gray-200 rounded-lg">
       <BookOpen class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900 mb-2"></h3>
-      <p class="text-gray-600 mb-4">。</p>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No keyword for the moment", "暂无关键词") }}</h3>
+      <p class="text-gray-600 mb-4">{{ $adminT("No keyword has been added.", "还没有添加任何关键词。") }}</p>
       <button
         @click="showCreateModal"
         class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-      >
-
-      </button>
+      >{{ $adminT("Add the first keyword", "添加第一个关键词") }}</button>
     </div>
 
     <!-- Tab:  -->
     <div v-if="activeTab === 'analyze'" class="bg-white border border-gray-200 rounded-lg p-6">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div class="flex items-center gap-2 flex-wrap">
-          <span class="text-sm text-gray-500"></span>
+          <span class="text-sm text-gray-500">{{ $adminT("Time frame", "时间范围") }}</span>
           <div class="flex rounded border border-gray-200 bg-gray-50 p-0.5">
             <button
               v-for="preset in analysisPeriodPresets"
@@ -396,14 +372,14 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <p class="text-sm text-gray-500"> <code class="bg-gray-200 px-1 rounded text-xs">backend/logs/</code>（ app.log  app.log.1, app.log.2...）</p>
+          <p class="text-sm text-gray-500"> <code class="bg-gray-200 px-1 rounded text-xs">backend/logs/</code>{{ $adminT("Data sources", "数据来源") }}</p>
           <button
             type="button"
             @click="fetchAnalyzeHits"
             :disabled="analysisLoading"
             class="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ analysisLoading ? 'Loading......' : '' }}
+            {{ analysisLoading ? $adminT('Loading...', '加载中...') : $adminT('Refresh', '刷新') }}
           </button>
         </div>
       </div>
@@ -415,49 +391,49 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       <div v-else-if="analysisData" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="text-sm text-gray-500"></div>
+            <div class="text-sm text-gray-500">{{ $adminT("Total hits", "总命中数") }}</div>
             <div class="text-2xl font-bold text-gray-900 mt-1">{{ analysisData.total }}</div>
           </div>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="text-sm text-gray-500 mb-2"> (outcome)</div>
+            <div class="text-sm text-gray-500 mb-2"> {{ $adminT("(outcome)", "按结果 (outcome)") }}</div>
             <div class="space-y-1 text-sm">
               <div v-for="(cnt, key) in analysisData.by_outcome" :key="key" class="flex justify-between">
                 <span>{{ key }}</span>
                 <span class="font-medium">{{ cnt }}</span>
               </div>
-              <div v-if="Object.keys(analysisData.by_outcome).length === 0" class="text-gray-400">No data available</div>
+              <div v-if="Object.keys(analysisData.by_outcome).length === 0" class="text-gray-400">{{ $adminT("No data available", "暂无数据") }}</div>
             </div>
           </div>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="text-sm text-gray-500 mb-2"></div>
+            <div class="text-sm text-gray-500 mb-2">{{ $adminT("By severity", "按严重程度") }}</div>
             <div class="space-y-1 text-sm">
               <div v-for="(cnt, key) in analysisData.by_severity" :key="key" class="flex justify-between">
                 <span>{{ key }}</span>
                 <span class="font-medium">{{ cnt }}</span>
               </div>
-              <div v-if="Object.keys(analysisData.by_severity).length === 0" class="text-gray-400">No data available</div>
+              <div v-if="Object.keys(analysisData.by_severity).length === 0" class="text-gray-400">{{ $adminT("No data available", "暂无数据") }}</div>
             </div>
           </div>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="text-sm text-gray-500 mb-2">Category</div>
+            <div class="text-sm text-gray-500 mb-2">{{ $adminT("Category", "按分类") }}</div>
             <div class="space-y-1 text-sm">
               <div v-for="(cnt, key) in analysisData.by_category" :key="key" class="flex justify-between">
                 <span>{{ key }}</span>
                 <span class="font-medium">{{ cnt }}</span>
               </div>
-              <div v-if="Object.keys(analysisData.by_category).length === 0" class="text-gray-400">No data available</div>
+              <div v-if="Object.keys(analysisData.by_category).length === 0" class="text-gray-400">{{ $adminT("No data available", "暂无数据") }}</div>
             </div>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="border border-gray-200 rounded-lg p-4">
-            <div class="text-sm font-medium text-gray-700 mb-2">Top 20 （）</div>
+            <div class="text-sm font-medium text-gray-700 mb-2">{{ $adminT("+20 Users (in Count)", "Top 20 用户（按命中数）") }}</div>
             <div class="overflow-x-auto max-h-64 overflow-y-auto">
               <table class="min-w-full text-sm">
                 <thead>
                   <tr class="border-b">
-                    <th class="text-left py-1 pr-4"> ID</th>
-                    <th class="text-right"></th>
+                    <th class="text-left py-1 pr-4"> {{ $adminT("ID", "用户 ID") }}</th>
+                    <th class="text-right">{{ $adminT("Hit", "命中数") }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -473,20 +449,20 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                     <td class="text-right font-medium">{{ item.count }}</td>
                   </tr>
                   <tr v-if="!analysisData.top_by_user?.length">
-                    <td colspan="2" class="py-2 text-gray-400">No data available</td>
+                    <td colspan="2" class="py-2 text-gray-400">{{ $adminT("No data available", "暂无数据") }}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="border border-gray-200 rounded-lg p-4">
-            <div class="text-sm font-medium text-gray-700 mb-2">Top 20 （ word ）</div>
+            <div class="text-sm font-medium text-gray-700 mb-2">{{ $adminT("+20 Keywords (polymers)", "Top 20 关键词（按 word 聚合）") }}</div>
             <div class="overflow-x-auto max-h-64 overflow-y-auto">
               <table class="min-w-full text-sm">
                 <thead>
                   <tr class="border-b">
-                    <th class="text-left py-1 pr-4"></th>
-                    <th class="text-right"></th>
+                    <th class="text-left py-1 pr-4">{{ $adminT("Keywords", "关键词") }}</th>
+                    <th class="text-right">{{ $adminT("Hit", "命中数") }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -495,7 +471,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                     <td class="text-right font-medium">{{ item.count }}</td>
                   </tr>
                   <tr v-if="!analysisData.top_by_word?.length">
-                    <td colspan="2" class="py-2 text-gray-400">No data available</td>
+                    <td colspan="2" class="py-2 text-gray-400">{{ $adminT("No data available", "暂无数据") }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -504,9 +480,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
         </div>
       </div>
 
-      <div v-else-if="!analysisLoading" class="text-sm text-gray-500 py-8 text-center">
-        「」
-      </div>
+      <div v-else-if="!analysisLoading" class="text-sm text-gray-500 py-8 text-center"> {{ $adminT("Click Refresh to load analysis data", "点击「刷新」加载分析数据") }} </div>
 
       <div v-if="analysisLoading" class="flex justify-center items-center py-12">
         <div class="w-10 h-10 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
@@ -521,7 +495,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">
-          {{ editingLexicon ? 'Edit' : '' }}
+          {{ editingLexicon ? $adminT('Edit Keyword', '编辑关键词') : $adminT('Add Keyword', '添加关键词') }}
         </h3>
         <div class="space-y-4">
           <div>
@@ -533,21 +507,20 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               type="text"
               :disabled="editingLexicon !== null"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100"
-              placeholder=""
+              :placeholder="$adminT('Enter Keywords', '输入关键词')"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Category <span class="text-red-500">*</span>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Category", "分类") }} <span class="text-red-500">*</span>
             </label>
             <select
               v-model="form.category"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value="VIOLENCE"></option>
-              <option value="PORNOGRAPHY"></option>
-              <option value="ILLEGAL"></option>
-              <option value="OTHER"></option>
+              <option value="VIOLENCE">{{ $adminT("Violence", "暴力") }}</option>
+              <option value="PORNOGRAPHY">{{ $adminT("Pornography", "色情") }}</option>
+              <option value="ILLEGAL">{{ $adminT("Illegal activities", "非法活动") }}</option>
+              <option value="OTHER">{{ $adminT("Other", "其他") }}</option>
             </select>
           </div>
           <div>
@@ -558,33 +531,29 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               v-model="form.severity"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value="LOW"></option>
-              <option value="MEDIUM"></option>
-              <option value="HIGH"></option>
+              <option value="LOW">{{ $adminT("Low", "低") }}</option>
+              <option value="MEDIUM">{{ $adminT("Medium", "中") }}</option>
+              <option value="HIGH">{{ $adminT("High", "高") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Status
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Status", "状态") }} </label>
             <label class="flex items-center">
               <input
                 v-model="form.enabled"
                 type="checkbox"
                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <span class="ml-2 text-sm text-gray-700"></span>
+              <span class="ml-2 text-sm text-gray-700">{{ $adminT("Enable", "启用") }}</span>
             </label>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Remarks", "备注") }}</label>
             <textarea
               v-model="form.notes"
               rows="3"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder=""
+              :placeholder="$adminT('Optional Note Information', '可选备注信息')"
             ></textarea>
           </div>
         </div>
@@ -592,9 +561,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
           <button
             @click="closeModal"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleSubmit"
             :disabled="!form.word.trim() || saving"
@@ -613,64 +580,53 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       @click.self="showBatchEditModalRef = false"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Edit</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Edit", "批量编辑关键词") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
-           {{ selectAllAcrossPages ? ` ${total} ` : ` ${selectedIds.length} ` }}。
-          <br />
-          ，。
-        </p>
+           {{ selectAllAcrossPages ? ` ${total} ` : ` ${selectedIds.length} ` }}{{ $adminT("To be updated", "将更新") }} <br /> {{ $adminT("Keywords.", "关键词。") }} </p>
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Category
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Category", "分类") }} </label>
             <select
               v-model="batchEditForm.category"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value=""></option>
-              <option value="VIOLENCE"></option>
-              <option value="PORNOGRAPHY"></option>
-              <option value="ILLEGAL"></option>
-              <option value="OTHER"></option>
+              <option value="">{{ $adminT("No change.", "保持不变") }}</option>
+              <option value="VIOLENCE">{{ $adminT("Violence", "暴力") }}</option>
+              <option value="PORNOGRAPHY">{{ $adminT("Pornography", "色情") }}</option>
+              <option value="ILLEGAL">{{ $adminT("Illegal activities", "非法活动") }}</option>
+              <option value="OTHER">{{ $adminT("Other", "其他") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Extent", "严重程度") }}</label>
             <select
               v-model="batchEditForm.severity"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value=""></option>
-              <option value="LOW"></option>
-              <option value="MEDIUM"></option>
-              <option value="HIGH"></option>
+              <option value="">{{ $adminT("No change.", "保持不变") }}</option>
+              <option value="LOW">{{ $adminT("Low", "低") }}</option>
+              <option value="MEDIUM">{{ $adminT("Medium", "中") }}</option>
+              <option value="HIGH">{{ $adminT("High", "高") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Status
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Status", "状态") }} </label>
             <select
               v-model="batchEditForm.enabled"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option :value="null"></option>
-              <option :value="true"></option>
-              <option :value="false"></option>
+              <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+              <option :value="true">{{ $adminT("Enable", "启用") }}</option>
+              <option :value="false">{{ $adminT("Disable", "禁用") }}</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Remarks", "备注") }}</label>
             <textarea
               v-model="batchEditForm.notes"
               rows="3"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder=""
+              :placeholder="$adminT('Leave the space.', '留空则保持不变')"
             ></textarea>
           </div>
         </div>
@@ -678,9 +634,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
           <button
             @click="showBatchEditModalRef = false"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleBatchEdit"
             :disabled="saving"
@@ -699,37 +653,33 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       @click.self="closeBatchModal"
     >
       <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4"></h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Batch Import Keys", "批量导入关键词") }}</h3>
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              ：，：,Category,
-            </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Import format: one keyword per row, format: keyword, classification, severity", "导入格式：每行一个关键词，格式：关键词,分类,严重程度") }} </label>
             <textarea
               v-model="batchText"
               rows="15"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none font-mono text-sm"
-              placeholder="：&#10;violence,violence,high&#10;pornography,pornography,medium&#10;illegal,illegal,high"
+              :placeholder="$adminT('For example: iv, iv, iv, ff, ff, ff', '例如： violence,violence,high pornography,pornography,medium illegal,illegal,high')"
             ></textarea>
           </div>
           <div class="text-sm text-gray-600">
-            <p class="mb-2">Category：VIOLENCE, PORNOGRAPHY, ILLEGAL, OTHER</p>
-            <p>：LOW, MEDIUM, HIGH</p>
+            <p class="mb-2">{{ $adminT("Categorization options: VIOLITY, PPANORORRAPHY, ILLLEGAL, 2001", "分类选项：VIOLENCE, PORNOGRAPHY, ILLEGAL, OTHER") }}</p>
+            <p>{{ $adminT("Options for severity: 60, Metrom, iom", "严重程度选项：LOW, MEDIUM, HIGH") }}</p>
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
           <button
             @click="closeBatchModal"
             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleBatchImport"
             :disabled="!batchText.trim() || batchImporting"
             class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ batchImporting ? '...' : '' }}
+            {{ batchImporting ? $adminT('Importing...', '导入中...') : $adminT('Import', '导入') }}
           </button>
         </div>
       </div>
@@ -741,13 +691,15 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
 import { ref, onMounted, reactive } from 'vue'
 import { Plus, Upload, Download, ChevronsLeft, ChevronsRight, BookOpen } from '@lucide/vue'
 
+const { translateText: adminT, localeTag } = useAdminI18n()
+
 definePageMeta({
   layout: 'default',
   middleware: 'auth'
 })
 
 useHead({
-  title: '',
+  title: adminT("Sensitive word management", "敏感词管理"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -772,11 +724,11 @@ const setTab = (tab: 'lexicons' | 'analyze') => {
 
 const analysisPeriod = ref('last7')
 const analysisPeriodPresets = [
-  { key: 'today', label: '' },
-  { key: 'yesterday', label: '' },
-  { key: 'last7', label: '7' },
-  { key: 'last30', label: '30' },
-  { key: 'all', label: '' },
+  { key: 'today', label: adminT("Today", "今日") },
+  { key: 'yesterday', label: adminT("Yesterday.", "昨日") },
+  { key: 'last7', label: adminT("The last seven days", "最近7天") },
+  { key: 'last30', label: adminT("Last 30 days", "最近30天") },
+  { key: 'all', label: adminT("All", "全部") },
 ]
 const analysisData = ref<{
   total: number
@@ -809,7 +761,7 @@ const fetchAnalyzeHits = async () => {
       analysisError.value = data.error
     }
   } catch (e: any) {
-    analysisError.value = e?.message || e?.response?.data?.message || 'failed'
+    analysisError.value = e?.message || e?.response?.data?.message || adminT("failed", "加载失败")
     analysisData.value = null
     toast.error(analysisError.value)
   } finally {
@@ -956,7 +908,7 @@ const closeBatchModal = () => {
 
 const handleSubmit = async () => {
   if (!form.word.trim()) {
-    toast.error('Please enter')
+    toast.error(adminT("Please enter", "请输入关键词"))
     return
   }
   
@@ -972,7 +924,7 @@ const handleSubmit = async () => {
       })
       
       if (response.success) {
-        toast.success('')
+        toast.success(adminT("Keyword updated", "关键词已更新"))
         closeModal()
         fetchLexicons()
       }
@@ -981,14 +933,14 @@ const handleSubmit = async () => {
       const response = await api.post('/api/admin/moderation/lexicons', form)
       
       if (response.success) {
-        toast.success('')
+        toast.success(adminT("Keyword added", "关键词已添加"))
         closeModal()
         fetchLexicons()
       }
     }
   } catch (error: any) {
     console.error('Failed to save lexicon:', error)
-    toast.error(error.message || 'Savefailed')
+    toast.error(error.message || adminT("Save failed", "保存失败"))
   } finally {
     saving.value = false
   }
@@ -996,8 +948,8 @@ const handleSubmit = async () => {
 
 const handleDelete = async (id: number) => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: 'ConfirmDelete？'
+    title: adminT("Delete", "删除关键词"),
+    message: adminT("Confirm Delete？", "您确定要删除这个关键词吗？")
   })
   
   if (!confirmed) return
@@ -1006,18 +958,18 @@ const handleDelete = async (id: number) => {
     const response = await api.delete(`/api/admin/moderation/lexicons/${id}`)
     
     if (response.success) {
-      toast.success('Delete')
+      toast.success(adminT("Delete", "关键词已删除"))
       fetchLexicons()
     }
   } catch (error: any) {
     console.error('Failed to delete lexicon:', error)
-    toast.error(error.message || 'Deletefailed')
+    toast.error(error.message || adminT("Delete failed", "删除失败"))
   }
 }
 
 const handleBatchImport = async () => {
   if (!batchText.value.trim()) {
-    toast.error('Please enter')
+    toast.error(adminT("Please enter", "请输入要导入的关键词"))
     return
   }
   
@@ -1042,17 +994,17 @@ const handleBatchImport = async () => {
       const created = result.created || 0
       const skipped = result.skipped || 0
       const errors = result.errors || []
-      const errorMsg = errors.length > 0 ? `，${errors.length} ` : ''
-      toast.success(`：${created} ，${skipped} ${errorMsg}`)
+      const errorMsg = errors.length > 0 ? adminT(', {n} errors', '，{n} 个错误', { n: errors.length }) : ''
+      toast.success(adminT('Import finished: {created} created, {skipped} skipped{errors}', '批量导入完成：{created} 个已创建，{skipped} 个已跳过{errors}', { created, skipped, errors: errorMsg }))
       if (errors.length > 0) {
-        console.warn('：', errors)
+        console.warn(adminT("Batch import error:", "批量导入错误："), errors)
       }
       closeBatchModal()
       fetchLexicons()
     }
   } catch (error: any) {
     console.error('Failed to batch import:', error)
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT("failed", "批量导入失败"))
   } finally {
     batchImporting.value = false
   }
@@ -1098,17 +1050,17 @@ const handleExport = async () => {
     }
     
     if (allLexicons.length === 0) {
-      toast.error('')
+      toast.error(adminT("No data to export", "没有数据可导出"))
       return
     }
     
     // CSV
-    const headers = ['', 'Category', '', 'Status', '', '']
+    const headers = [adminT("Keywords", "关键词"), adminT("Category", "分类"), adminT("Extent", "严重程度"), adminT("Status", "状态"), adminT("Remarks", "备注"), adminT("Created", "创建时间")]
     const rows = allLexicons.map(lexicon => [
       lexicon.word || '',
       getCategoryLabel(lexicon.category || ''),
       getSeverityLabel(lexicon.severity || ''),
-      lexicon.enabled ? '' : '',
+      lexicon.enabled ? adminT("Enable", "启用") : adminT("Disable", "禁用"),
       lexicon.notes || '',
       formatDate(lexicon.created_at || '')
     ])
@@ -1140,10 +1092,10 @@ const handleExport = async () => {
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
     
-    toast.success(`successful ${allLexicons.length} `)
+    toast.success(adminT('Exported {n} keywords', '成功导出 {n} 条关键词', { n: allLexicons.length }))
   } catch (error: any) {
     console.error('Failed to export lexicons:', error)
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT("failed", "导出失败"))
   } finally {
     exporting.value = false
   }
@@ -1151,19 +1103,19 @@ const handleExport = async () => {
 
 const getCategoryLabel = (category: string) => {
   const labels: Record<string, string> = {
-    'VIOLENCE': '',
-    'PORNOGRAPHY': '',
-    'ILLEGAL': '',
-    'OTHER': ''
+    'VIOLENCE': adminT("Violence", "暴力"),
+    'PORNOGRAPHY': adminT("Pornography", "色情"),
+    'ILLEGAL': adminT("Illegal activities", "非法活动"),
+    'OTHER': adminT("Other", "其他")
   }
   return labels[category] || category
 }
 
 const getSeverityLabel = (severity: string) => {
   const labels: Record<string, string> = {
-    'LOW': '',
-    'MEDIUM': '',
-    'HIGH': ''
+    'LOW': adminT("Low", "低"),
+    'MEDIUM': adminT("Medium", "中"),
+    'HIGH': adminT("High", "高")
   }
   return labels[severity] || severity
 }
@@ -1171,7 +1123,7 @@ const getSeverityLabel = (severity: string) => {
 const formatDate = (dateString: string) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+  return date.toLocaleDateString(localeTag.value, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 // Selection Management
@@ -1224,19 +1176,21 @@ const showBatchEditModal = () => {
 
 const handleBatchEdit = async () => {
   if (!batchEditForm.category && !batchEditForm.severity && batchEditForm.enabled === null && !batchEditForm.notes) {
-    toast.error('')
+    toast.error(adminT("Please select at least one field to update", "请至少选择一项要更新的字段"))
     return
   }
   
   const count = selectAllAcrossPages.value ? total.value : selectedIds.value.length
   if (count === 0) {
-    toast.error('Edit')
+    toast.error(adminT("Edit", "请先选择要编辑的关键词"))
     return
   }
   
   const confirmed = await confirm({
-    title: 'Edit',
-    message: `ConfirmEdit ${selectAllAcrossPages.value ? '' : ''} ${count} ？`,
+    title: adminT("Edit", "批量编辑"),
+    message: selectAllAcrossPages.value
+      ? adminT('Batch edit all {count} matching keywords?', '确定要批量编辑全部匹配的 {count} 个关键词吗？', { count })
+      : adminT('Batch edit the {count} selected keywords?', '确定要批量编辑选中的 {count} 个关键词吗？', { count }),
     type: 'info'
   })
   
@@ -1268,14 +1222,14 @@ const handleBatchEdit = async () => {
     
     if (response.success) {
       const affected = response.data?.affected_count || count
-      toast.success(`successfulEdit ${affected} `)
+      toast.success(adminT('Edited {n} keywords', '成功批量编辑 {n} 个关键词', { n: affected }))
       showBatchEditModalRef.value = false
       clearSelection()
       fetchLexicons()
     }
   } catch (error: any) {
     console.error('Failed to batch edit:', error)
-    toast.error(error.message || 'Editfailed')
+    toast.error(error.message || adminT("Batch edit failed", "批量编辑失败"))
   } finally {
     saving.value = false
   }
@@ -1284,15 +1238,17 @@ const handleBatchEdit = async () => {
 const handleBatchDelete = async () => {
   const count = selectAllAcrossPages.value ? total.value : selectedIds.value.length
   if (count === 0) {
-    toast.error('Delete')
+    toast.error(adminT("Delete", "请先选择要删除的关键词"))
     return
   }
   
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete ${selectAllAcrossPages.value ? '' : ''} ${count} ？Action！`,
+    title: adminT("Delete", "批量删除"),
+    message: selectAllAcrossPages.value
+      ? adminT('Batch delete all {count} matching keywords? This cannot be undone.', '确定要批量删除全部匹配的 {count} 个关键词吗？此操作不可撤销！', { count })
+      : adminT('Batch delete the {count} selected keywords? This cannot be undone.', '确定要批量删除选中的 {count} 个关键词吗？此操作不可撤销！', { count }),
     type: 'danger',
-    confirmText: 'ConfirmDelete'
+    confirmText: adminT("Confirm Delete", "确认删除")
   })
   
   if (!confirmed) return
@@ -1345,13 +1301,13 @@ const handleBatchDelete = async () => {
     }
     
     if (deletedCount > 0) {
-      toast.success(`successfulDelete ${deletedCount} `)
+      toast.success(adminT('Deleted {n} keywords', '成功删除 {n} 个关键词', { n: deletedCount }))
       clearSelection()
       fetchLexicons(true)
     }
   } catch (error: any) {
     console.error('Failed to batch delete:', error)
-    toast.error(error.message || 'Deletefailed')
+    toast.error(error.message || adminT("Batch delete failed", "批量删除失败"))
   }
 }
 </script>

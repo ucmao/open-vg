@@ -16,9 +16,7 @@
         <div class="text-sm font-semibold text-gray-900 truncate">
           {{ nodeLabel }}
         </div>
-        <div class="text-xs text-gray-500">
-
-        </div>
+        <div class="text-xs text-gray-500">{{ $adminT("Final Output", "最终输出") }}</div>
       </div>
     </div>
     
@@ -49,6 +47,9 @@ import { computed } from 'vue'
 import { getTypeColorClass, inferTypeFromName } from '~/composables/useWorkflowTypeColors'
 import type { WorkflowNodeData } from '~/types/domain'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 const props = defineProps<{
   id: string
   data: WorkflowNodeData
@@ -65,7 +66,7 @@ const nodeLabel = computed(() => {
 const inputParams = computed(() => {
   return props.data?.input_params || {
     result_url: { type: 'string', label: 'URL' },
-    result_image: { type: 'string', label: '' }
+    result_image: { type: 'string', label: adminT("Result Image", "结果图片") }
   }
 })
 

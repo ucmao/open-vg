@@ -9,12 +9,6 @@
       >
         <option value="en">🇬🇧 English</option>
         <option value="zh">🇨🇳 简体中文</option>
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="ko">🇰🇷 한국어</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="pt">🇧🇷 Português</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="fr">🇫🇷 Français</option>
       </select>
     </div>
 
@@ -98,7 +92,7 @@ definePageMeta({
 const { lang, setLanguage, t } = useAdminI18n()
 
 useHead({
-  title: 'Admin Sign In',
+  title: () => t('login.page_title', 'Admin Sign In'),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -145,11 +139,11 @@ const handleLogin = async () => {
       
       router.push('/workspace/dashboard')
     } else {
-      error.value = response.message || 'Login failed'
+      error.value = response.message || t('login.failed', 'Login failed')
     }
   } catch (err: any) {
     console.error('Admin login error:', err)
-    error.value = err.message || 'Login failed. Please check your credentials.'
+    error.value = err.message || t('login.failed_detail', 'Login failed. Please check your credentials.')
   } finally {
     loading.value = false
   }

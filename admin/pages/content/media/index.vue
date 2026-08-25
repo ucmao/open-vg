@@ -3,14 +3,14 @@
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-semibold text-gray-900"></h2>
-        <p class="text-gray-600 mt-1"></p>
+        <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("Material library", "素材库") }}</h2>
+        <p class="text-gray-600 mt-1">{{ $adminT("Manage your upload files", "管理您上传的文件") }}</p>
       </div>
       <div class="flex items-center space-x-4">
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Search..."
+          :placeholder="$adminT('Search', '搜索文件...')"
           class="px-4 py-2 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           @input="handleSearch"
         />
@@ -58,7 +58,7 @@
     <div v-if="loading && mediaList.length === 0" class="flex justify-center items-center py-20">
       <div class="text-center">
         <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-600">...</p>
+        <p class="text-gray-600">{{ $adminT("Loading media files...", "正在加载媒体文件...") }}</p>
       </div>
     </div>
 
@@ -106,17 +106,13 @@
             <button
               @click="copyUrl(item.file_url)"
               class="px-3 py-1.5 bg-white text-gray-900 rounded text-sm font-medium hover:bg-gray-100"
-              title=""
-            >
-
-            </button>
+              :title="$adminT('Copy Link', '复制链接')"
+            >{{ $adminT("Copy Link", "复制链接") }}</button>
             <button
               @click="handleDelete(item)"
               class="px-3 py-1.5 bg-red-600 text-white rounded text-sm font-medium hover:bg-red-700"
-              title="Delete"
-            >
-              Delete
-            </button>
+              :title="$adminT('Delete', '删除')"
+            > {{ $adminT("Delete", "删除") }} </button>
           </div>
         </div>
 
@@ -135,14 +131,12 @@
     <!-- Empty State -->
     <div v-else class="text-center py-20">
       <ImageIcon class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900 mb-2"></h3>
-      <p class="text-gray-600 mb-4"></p>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No media files available", "暂无媒体文件") }}</h3>
+      <p class="text-gray-600 mb-4">{{ $adminT("Upload your first file to start", "上传您的第一个文件以开始") }}</p>
       <button
         @click="triggerFileUpload"
         class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-      >
-
-      </button>
+      >{{ $adminT("Upload File", "上传文件") }}</button>
     </div>
 
     <!-- Load More -->
@@ -150,9 +144,7 @@
       <button
         @click="loadMore"
         class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-      >
-
-      </button>
+      >{{ $adminT("Load More", "加载更多") }}</button>
     </div>
 
     <!-- Pagination Loading -->
@@ -166,12 +158,15 @@
 import { ref, reactive, onMounted, watch } from 'vue'
 import { Loader2, Plus, Play, FileText, ImageIcon } from '@lucide/vue'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 definePageMeta({
   layout: 'default'
 })
 
 useHead({
-  title: '',
+  title: adminT("Material library", "素材库"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -201,10 +196,10 @@ const filters = reactive({
 })
 
 const filterOptions = [
-  { label: '', value: 'all' },
-  { label: '', value: 'image' },
-  { label: '', value: 'video' },
-  { label: '', value: 'document' }
+  { label: adminT("All", "全部"), value: 'all' },
+  { label: adminT("Picture", "图片"), value: 'image' },
+  { label: adminT("Video", "视频"), value: 'video' },
+  { label: adminT("Other", "其他"), value: 'document' }
 ]
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -328,12 +323,12 @@ const handleFileUpload = async (event: Event) => {
 
   if (successCount > 0) {
     if (failCount === 0) {
-      toast.success(`successful ${successCount} `)
+      toast.success(adminT('Uploaded {n} files', '已成功上传 {n} 个文件', { n: successCount }))
     } else {
-      toast.warning(`successful ${successCount} ，failed ${failCount} `)
+      toast.warning(adminT('{ok} succeeded, {fail} failed', '成功 {ok} 个，失败 {fail} 个', { ok: successCount, fail: failCount }))
     }
   } else if (failCount > 0) {
-    toast.error(`failed， ${failCount} `)
+    toast.error(adminT('Upload failed for {n} files', '上传失败，共 {n} 个文件', { n: failCount }))
   }
 
   page.value = 1
@@ -342,10 +337,10 @@ const handleFileUpload = async (event: Event) => {
 
 const handleDelete = async (item: any) => {
   const confirmed = await confirm({
-    title: 'ConfirmDelete',
-    message: `ConfirmDelete "${item.original_filename}" ？Action。`,
-    confirmText: 'Delete',
-    cancelText: 'Cancel',
+    title: adminT("Confirm Delete", "确认删除"),
+    message: adminT('Delete "{name}"? This action cannot be undone.', '确定删除“{name}”吗？此操作不可撤销。', { name: item.original_filename }),
+    confirmText: adminT("Delete", "删除"),
+    cancelText: adminT("Cancel", "取消"),
     type: 'danger'
   })
   
@@ -357,20 +352,20 @@ const handleDelete = async (item: any) => {
     const response = await api.delete(`/api/admin/media/${item.id}`)
     
     if (response.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT("File deleted", "文件删除成功"))
       mediaList.value = mediaList.value.filter(m => m.id !== item.id)
     } else {
-      toast.error(response.message || 'Delete')
+      toast.error(response.message || adminT("Delete", "无法删除文件"))
     }
   } catch (error: any) {
     console.error('Delete error:', error)
-    toast.error(error.message || 'Delete')
+    toast.error(error.message || adminT("Delete", "无法删除文件"))
   }
 }
 
 const copyUrl = (url: string) => {
   navigator.clipboard.writeText(url)
-  toast.success('')
+  toast.success(adminT("Link copied to clipboard", "链接已复制到剪贴板"))
 }
 
 const formatFileSize = (bytes: number): string => {
@@ -394,4 +389,3 @@ watch(() => filters.media_type, () => {
   fetchMedia()
 })
 </script>
-

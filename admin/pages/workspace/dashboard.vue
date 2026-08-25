@@ -2,8 +2,8 @@
   <div class="p-6 max-w-7xl mx-auto">
     <!-- Header -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600">，。，。</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Overview of management backstage", "管理后台概览") }}</h1>
+      <p class="text-gray-600">{{ $adminT("Welcome back, here's the platform's operating data. The top is a real-time snapshot and the bottom is connected over time.", "欢迎回来，以下是平台运营数据。顶部为实时快照，下方随时间范围联动。") }}</p>
     </div>
 
     <!-- Layer 1: （） -->
@@ -15,12 +15,10 @@
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5 text-xs text-gray-500">
-              <span></span>
+              <span>{{ $adminT("Current Online", "当前在线") }}</span>
               <span class="relative inline-flex cursor-help group">
                 <HelpCircle class="w-3.5 h-3.5 text-gray-400" />
-                <span class="absolute left-1/2 bottom-full -translate-x-1/2 mb-1.5 px-2 py-1.5 text-xs font-medium text-white bg-gray-800 rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-10" style="width: max-content; max-width: 200px;">
-                  5
-                </span>
+                <span class="absolute left-1/2 bottom-full -translate-x-1/2 mb-1.5 px-2 py-1.5 text-xs font-medium text-white bg-gray-800 rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-10" style="width: max-content; max-width: 200px;"> {{ $adminT("Login or page opening in almost five minutes", "近5分钟内有登录或打开页面") }} </span>
               </span>
             </div>
             <div class="text-lg font-bold text-gray-900">{{ snapshot?.online_count ?? '—' }}</div>
@@ -31,10 +29,10 @@
             <CircleDollarSign class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <div class="text-xs text-gray-500"></div>
+            <div class="text-xs text-gray-500">{{ $adminT("Today's collection.", "今日营收") }}</div>
             <div class="flex items-baseline justify-between gap-2 flex-wrap">
               <NuxtLink to="/finance/recharges" class="text-2xl font-bold text-gray-900 hover:text-blue-600 hover:underline transition-colors">${{ (snapshot?.today_revenue ?? 0).toFixed(2) }}</NuxtLink>
-              <NuxtLink to="/finance/credits" class="text-xs text-gray-500 hover:text-blue-600 hover:underline transition-colors shrink-0">: {{ snapshot?.today_credit_records_count ?? '—' }} </NuxtLink>
+              <NuxtLink to="/finance/credits" class="text-xs text-gray-500 hover:text-blue-600 hover:underline transition-colors shrink-0">{{ $adminT("Water:", "流水:") }} {{ snapshot?.today_credit_records_count ?? '—' }} </NuxtLink>
             </div>
           </div>
         </div>
@@ -43,7 +41,7 @@
             <TriangleAlert class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <div class="text-xs text-gray-500"></div>
+            <div class="text-xs text-gray-500">{{ $adminT("To-do Reminders", "待办提醒") }}</div>
             <div class="text-lg font-bold text-gray-900 flex items-center gap-2 flex-wrap">
               <NuxtLink to="/moderation/nsfw" class="text-red-800 hover:text-red-900 hover:underline">NSFW {{ snapshot?.pending_nsfw_count ?? 0 }}</NuxtLink>
               <span class="text-gray-300">|</span>
@@ -56,7 +54,7 @@
             <Database class="w-5 h-5" />
           </div>
           <div class="min-w-0">
-            <div class="text-xs text-gray-500"></div>
+            <div class="text-xs text-gray-500">{{ $adminT("Total number of stations", "全站总量") }}</div>
             <div class="text-lg font-bold text-gray-900 flex items-center gap-1.5 flex-wrap">
               <NuxtLink :to="{ path: '/users/list', query: { source: '' } }" class="hover:text-blue-600 hover:underline transition-colors cursor-pointer"> {{ snapshot?.total_users ?? '—' }}</NuxtLink>
               <span class="text-gray-300">·</span>
@@ -69,7 +67,7 @@
 
     <!-- Layer 2:  -  -->
     <section class="mb-6 flex flex-wrap items-center gap-3">
-      <span class="text-sm font-medium text-gray-700"></span>
+      <span class="text-sm font-medium text-gray-700">{{ $adminT("Time frame", "时间范围") }}</span>
       <div class="flex flex-wrap items-center gap-2">
         <button
           v-for="opt in primaryTimeOptions"
@@ -115,7 +113,7 @@
           type="date"
           class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <span class="text-gray-400"></span>
+        <span class="text-gray-400">{{ $adminT("to", "至") }}</span>
         <input
           v-model="customEnd"
           type="date"
@@ -125,11 +123,9 @@
           type="button"
           @click="applyCustomRange"
           class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-        >
-
-        </button>
+        >{{ $adminT("Query", "查询") }}</button>
       </div>
-      <span v-if="periodLabel" class="text-xs text-gray-400">：{{ periodLabel }}</span>
+      <span v-if="periodLabel" class="text-xs text-gray-400">{{ $adminT("Current:", "当前：") }}{{ periodLabel }}</span>
     </section>
 
     <div v-if="loading" class="flex justify-center items-center h-64">
@@ -142,7 +138,7 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-amber-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("Core Business Watch", "核心商业看板") }}</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!--  -->
@@ -155,30 +151,30 @@
             </div>
             <div class="relative">
               <div class="flex justify-between items-start">
-                <span class="text-sm text-white/90"></span>
+                <span class="text-sm text-white/90">{{ $adminT("Collection", "营收额") }}</span>
                 <span v-if="growthPercent('revenue') !== null" class="text-xs font-bold bg-white/20 px-2 py-0.5 rounded">{{ growthPercent('revenue')! > 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('revenue')!).toFixed(0) }}%</span>
               </div>
               <div class="text-4xl font-black mt-2">${{ period.current.revenue.toFixed(2) }}</div>
-              <div class="mt-5 text-xs text-white/90"> (USD)</div>
+              <div class="mt-5 text-xs text-white/90"> {{ $adminT("(USD)", "周期内营收 (USD)") }}</div>
             </div>
           </div>
           <!--  -->
           <div class="bg-white rounded-2xl p-10 border border-gray-100 shadow-md">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Number of orders", "订单量") }}</span>
               <span v-if="growthPercent('recharge_count') !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="growthPercent('recharge_count')! >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ growthPercent('recharge_count')! >= 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('recharge_count')!).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.recharge_count }}</div>
-            <div class="mt-5 text-xs text-gray-400">successful</div>
+            <div class="mt-5 text-xs text-gray-400">{{ $adminT("successful", "周期内成功订单数") }}</div>
           </div>
           <!-- ：/； =、successful= -->
           <div class="bg-white rounded-2xl p-10 border border-gray-100 shadow-md">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Payment rate", "付费率") }}</span>
               <span v-if="payRateGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="payRateGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ payRateGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(payRateGrowth) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ payRateText }}</div>
-            <div class="mt-2 text-xs text-gray-400">/</div>
+            <div class="mt-2 text-xs text-gray-400">{{ $adminT("Number of persons paid/active", "付费人数/活跃人数") }}</div>
             <div class="mt-4">
               <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div
@@ -188,7 +184,7 @@
               </div>
               <div class="mt-1.5 flex justify-between text-xs text-gray-500">
                 <span>{{ period.current.payment_initiated }} </span>
-                <span>{{ period.current.recharge_count }} successful</span>
+                <span>{{ period.current.recharge_count }} {{ $adminT("successful", "次成功") }}</span>
               </div>
             </div>
           </div>
@@ -199,26 +195,26 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-green-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("User Active Viewboard", "用户活跃看板") }}</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- （：+） -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Add Registration", "新增注册") }}</span>
               <span v-if="growthPercent('new_users') !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="growthPercent('new_users')! >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ growthPercent('new_users')! >= 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('new_users')!).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.new_users }}</div>
-            <div class="mt-3 text-xs text-gray-400">：{{ period.totals?.total_real_users ?? '—' }}</div>
+            <div class="mt-3 text-xs text-gray-400">{{ $adminT("Cumulative total real users:", "累计总真实用户：") }}{{ period.totals?.total_real_users ?? '—' }}</div>
           </div>
           <!--  -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Active User", "活跃用户") }}</span>
               <span v-if="growthPercent('active_users') !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="growthPercent('active_users')! >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ growthPercent('active_users')! >= 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('active_users')!).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.active_users }}</div>
-            <div class="mt-3 text-xs text-gray-400"></div>
+            <div class="mt-3 text-xs text-gray-400">{{ $adminT("User with login or page opening behaviour during the cycle", "周期内有登录或打开页面行为的用户") }}</div>
           </div>
           <!-- （） -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden">
@@ -230,11 +226,11 @@
             </div>
             <div class="relative">
               <div class="flex justify-between items-start">
-                <span class="text-sm text-gray-500"></span>
+                <span class="text-sm text-gray-500">{{ $adminT("User retention", "用户留存") }}</span>
                 <span v-if="retentionGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="retentionGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ retentionGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(retentionGrowth).toFixed(0) }}%</span>
               </div>
               <div class="text-3xl font-bold text-gray-900 mt-2">{{ retentionRateText }}</div>
-              <div class="mt-3 text-xs text-gray-400"> ·  {{ period.current.retention_cohort ?? 0 }} </div>
+              <div class="mt-3 text-xs text-gray-400"> {{ $adminT("There's a visit the following day and after.", "次日及后有回访 · 样本") }} {{ period.current.retention_cohort ?? 0 }} </div>
             </div>
           </div>
         </div>
@@ -244,35 +240,35 @@
       <section>
         <div class="flex items-center gap-2 mb-4">
           <div class="w-1 h-6 bg-blue-500 rounded-full"></div>
-          <h2 class="text-lg font-bold text-gray-800"></h2>
+          <h2 class="text-lg font-bold text-gray-800">{{ $adminT("Content interactive panels", "内容互动看板") }}</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!--  -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Add work", "新增作品") }}</span>
               <span v-if="growthPercent('new_works') !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="growthPercent('new_works')! >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ growthPercent('new_works')! >= 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('new_works')!).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.new_works }}</div>
-            <div class="mt-3 text-xs text-gray-400">：{{ period.totals?.total_works ?? '—' }}</div>
+            <div class="mt-3 text-xs text-gray-400">{{ $adminT("Cumulative total:", "累计总作品：") }}{{ period.totals?.total_works ?? '—' }}</div>
           </div>
           <!--  -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500"></span>
+              <span class="text-sm text-gray-500">{{ $adminT("Interactive heat", "互动热度") }}</span>
               <span v-if="interactionGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="interactionGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ interactionGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(interactionGrowth).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.likes + period.current.comments + period.current.favorites }}</div>
-            <div class="mt-3 text-xs text-gray-400"> +  + </div>
+            <div class="mt-3 text-xs text-gray-400"> {{ $adminT("+ Comment + Collection", "点赞 + 评论 + 收藏") }} </div>
           </div>
           <!-- Remix  -->
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="text-sm text-gray-500">Remix </span>
+              <span class="text-sm text-gray-500">{{ $adminT("Remix", "Remix 转化率") }} </span>
               <span v-if="remixRateGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="remixRateGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ remixRateGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(remixRateGrowth).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ remixRateText }}</div>
-            <div class="mt-3 text-xs text-gray-400">Remix  / （）</div>
+            <div class="mt-3 text-xs text-gray-400">{{ $adminT("Number of Remix/ Total number of works (per cycle)", "Remix 数 / 作品总数（周期内）") }}</div>
           </div>
         </div>
       </section>
@@ -284,8 +280,8 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <div>
-        <div class="text-sm font-bold text-blue-800"></div>
-        <p class="text-xs text-blue-600 mt-1">（Asia/Shanghai）。「」；「」。，。，。</p>
+        <div class="text-sm font-bold text-blue-800">{{ $adminT("Statistical notes", "统计说明") }}</div>
+        <p class="text-xs text-blue-600 mt-1">{{ $adminT("All time frames are based on Beijing time (2004/Shanghai). The top \"real-time snapshot\" does not change over time; the data below is associated with \"time horizon\".", "所有时间范围均按北京时间（Asia/Shanghai）统计。顶部「实时快照」不随时间切换；下方数据随「时间范围」联动。大数字为选定周期内总量，右上角为较上一周期环比。部分财务数据可能存在延迟，请以财务管理模块为准。") }}</p>
       </div>
     </div>
   </div>
@@ -297,13 +293,15 @@ import { useRoute, useRouter } from 'vue-router'
 import { Activity, CircleDollarSign, TriangleAlert, Database, HelpCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 
+const { translateText: adminT } = useAdminI18n()
+
 definePageMeta({
   layout: 'default',
   middleware: 'auth'
 })
 
 useHead({
-  title: '',
+  title: adminT("Backboard dashboard", "后台仪表盘"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -333,25 +331,25 @@ const timeRange = ref<TimeRangeValue>('7d')
 const loading = ref(true)
 
 const primaryTimeOptions = [
-  { value: 'today', label: '' },
-  { value: 'yesterday', label: '' },
-  { value: '7d', label: '7' },
-  { value: '30d', label: '30' },
+  { value: 'today', label: adminT("Today", "今日") },
+  { value: 'yesterday', label: adminT("Yesterday.", "昨日") },
+  { value: '7d', label: adminT("Almost seven days.", "近7天") },
+  { value: '30d', label: adminT("Almost 30 days.", "近30天") },
 ]
 
 const moreTimeOptions = [
-  { value: 'month', label: '' },
-  { value: 'last_month', label: '' },
-  { value: 'quarter', label: '' },
-  { value: 'last_quarter', label: '' },
-  { value: 'year', label: '' },
-  { value: 'custom', label: '' },
+  { value: 'month', label: adminT("Current month", "本月") },
+  { value: 'last_month', label: adminT("Last Month", "上月") },
+  { value: 'quarter', label: adminT("This quarter", "本季度") },
+  { value: 'last_quarter', label: adminT("Last quarter", "上季度") },
+  { value: 'year', label: adminT("This year.", "今年") },
+  { value: 'custom', label: adminT("Custom", "自定义") },
 ]
 
 const showMoreDropdown = ref(false)
 const moreDropdownLabel = computed(() => {
   const opt = moreTimeOptions.find(o => o.value === timeRange.value)
-  return opt ? opt.label : ''
+  return opt ? opt.label : adminT("More", "更多")
 })
 const isMoreOptionActive = computed(() => moreTimeOptions.some(o => o.value === timeRange.value))
 

@@ -2,8 +2,8 @@
   <div class="space-y-6">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h2 class="text-2xl font-bold text-gray-900">API</h2>
-        <p class="mt-1 text-sm text-gray-500"> API Settings</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ $adminT("API", "底层API库") }}</h2>
+        <p class="mt-1 text-sm text-gray-500"> {{ $adminT("API Settings", "管理 API 库配置和服务商设置") }}</p>
       </div>
 
       <div v-if="activeTab === 'api-library'" class="flex items-center gap-2">
@@ -11,17 +11,13 @@
           @click="openCreateApiModal"
           class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
         >
-          <Plus class="w-5 h-5 mr-2" />
-          CreateAPI
-        </button>
+          <Plus class="w-5 h-5 mr-2" /> {{ $adminT("Create API", "新建API") }} </button>
       </div>
       <button
         v-if="activeTab === 'providers'"
         @click="initProviderConfigs"
         class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-      >
-
-      </button>
+      >{{ $adminT("Initialize service provider configuration", "初始化服务商配置") }}</button>
     </div>
 
     <!-- Tabs Navigation -->
@@ -35,9 +31,7 @@
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
             'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-all'
           ]"
-        >
-          API
-        </button>
+        > {{ $adminT("API", "API库配置") }} </button>
         <button
           @click="activeTab = 'providers'"
           :class="[
@@ -46,9 +40,7 @@
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
             'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-all'
           ]"
-        >
-          Settings
-        </button>
+        > {{ $adminT("Settings", "服务商设置") }} </button>
       </nav>
     </div>
 
@@ -61,7 +53,7 @@
           <input
             v-model="apiLibrarySearch"
             type="text"
-            placeholder="、、IDSearch"
+            :placeholder="$adminT('Search by name, provider, model ID', '按名称、提供商、模型ID搜索')"
             class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             @keyup.enter="fetchApiLibrary(true)"
           />
@@ -71,17 +63,13 @@
           @click="fetchApiLibrary(true)"
           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
         >
-          <Search class="w-4 h-4 mr-2" />
-          Search
-        </button>
+          <Search class="w-4 h-4 mr-2" /> {{ $adminT("Search", "搜索") }} </button>
         <button
           v-if="apiLibrarySearch"
           type="button"
           @click="apiLibrarySearch = ''; fetchApiLibrary(true)"
           class="text-sm text-gray-500 hover:text-gray-700"
-        >
-          Clear
-        </button>
+        > {{ $adminT("Clear", "清空") }} </button>
       </div>
 
       <div class="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
@@ -89,22 +77,22 @@
           <table class="w-full min-w-max divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">API</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("API", "API名称") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Type", "输出类型") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Providers", "提供商") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("ID", "模型ID") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Official prices", "官方价格") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Status", "状态") }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Update Time", "更新时间") }}</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr v-if="loadingApiLibrary">
-                <td colspan="8" class="px-6 py-10 text-center text-gray-500">Loading......</td>
+                <td colspan="8" class="px-6 py-10 text-center text-gray-500">{{ $adminT("Loading", "加载中...") }}</td>
               </tr>
               <tr v-else-if="apiLibraryEntries.length === 0">
-                <td colspan="8" class="px-6 py-10 text-center text-gray-500">API</td>
+                <td colspan="8" class="px-6 py-10 text-center text-gray-500">{{ $adminT("API", "暂无API配置") }}</td>
               </tr>
               <tr
                 v-for="entry in apiLibraryEntries"
@@ -155,7 +143,7 @@
                   class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                   :class="entry.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
                 >
-                  {{ entry.is_active ? '' : '' }}
+                  {{ entry.is_active ? $adminT('Available', '可用') : $adminT('Disabled', '禁用') }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -165,8 +153,8 @@
                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium sticky right-0 z-10 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)] transition-colors"
                 :class="highlightApiId === entry.id ? 'bg-blue-50' : 'bg-white group-hover:bg-gray-50'"
               >
-                <button @click="openEditApiModal(entry)" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
-                <button @click="handleApiDelete(entry)" class="text-red-600 hover:text-red-900">Delete</button>
+                <button @click="openEditApiModal(entry)" class="text-blue-600 hover:text-blue-900 mr-4">{{ $adminT("Edit", "编辑") }}</button>
+                <button @click="handleApiDelete(entry)" class="text-red-600 hover:text-red-900">{{ $adminT("Delete", "删除") }}</button>
               </td>
             </tr>
           </tbody>
@@ -176,12 +164,10 @@
         <div v-if="apiLibraryTotal > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
           <div class="flex items-center gap-4">
             <span class="text-sm text-gray-600">
-               <span class="font-medium">{{ (apiLibraryPage - 1) * apiLibraryPageSize + 1 }}</span>
-              <span class="font-medium">{{ Math.min(apiLibraryPage * apiLibraryPageSize, apiLibraryTotal) }}</span> ，
-              <span class="font-medium text-gray-900">{{ apiLibraryTotal }}</span> API
+              {{ $adminT('Showing {from}–{to} of {total} API configs', '显示第 {from}–{to} 条，共 {total} 个 API 配置', { from: (apiLibraryPage - 1) * apiLibraryPageSize + 1, to: Math.min(apiLibraryPage * apiLibraryPageSize, apiLibraryTotal), total: apiLibraryTotal }) }}
             </span>
             <div class="flex items-center gap-2">
-              <span class="text-sm text-gray-500">：</span>
+              <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
               <select
                 v-model="apiLibraryPageSize"
                 @change="apiLibraryPage = 1; fetchApiLibrary(true)"
@@ -199,7 +185,7 @@
               @click="loadApiLibraryPage(1)"
               :disabled="apiLibraryPage === 1 || loadingApiLibrary"
               class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              title=""
+              :title="$adminT('Page one', '第一页')"
             >
               <ChevronsLeft class="w-4 h-4" />
             </button>
@@ -207,11 +193,9 @@
               @click="loadApiLibraryPage(apiLibraryPage - 1)"
               :disabled="apiLibraryPage === 1 || loadingApiLibrary"
               class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-
-            </button>
+            >{{ $adminT("Previous Page", "上一页") }}</button>
             <div class="flex items-center gap-1">
-              <span class="text-sm text-gray-600"></span>
+              <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
               <input
                 v-model.number="apiLibraryPage"
                 @keyup.enter="loadApiLibraryPage(apiLibraryPage)"
@@ -221,20 +205,18 @@
                 :max="Math.ceil(apiLibraryTotal / apiLibraryPageSize)"
                 class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <span class="text-sm text-gray-600">/ {{ Math.ceil(apiLibraryTotal / apiLibraryPageSize) }} </span>
+              <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(apiLibraryTotal / apiLibraryPageSize) }) }}</span>
             </div>
             <button
               @click="loadApiLibraryPage(apiLibraryPage + 1)"
               :disabled="apiLibraryPage >= Math.ceil(apiLibraryTotal / apiLibraryPageSize) || loadingApiLibrary"
               class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-
-            </button>
+            >{{ $adminT("Next Page", "下一页") }}</button>
             <button
               @click="loadApiLibraryPage(Math.ceil(apiLibraryTotal / apiLibraryPageSize))"
               :disabled="apiLibraryPage >= Math.ceil(apiLibraryTotal / apiLibraryPageSize) || loadingApiLibrary"
               class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              title=""
+              :title="$adminT('Last Page', '最后一页')"
             >
               <ChevronsRight class="w-4 h-4" />
             </button>
@@ -247,14 +229,12 @@
     <div v-if="activeTab === 'providers'" class="space-y-6">
       <div v-if="loadingConfigs" class="text-center py-12">
         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-        <p class="mt-2 text-gray-600">...</p>
+        <p class="mt-2 text-gray-600">{{ $adminT("Loading configuration...", "加载配置中...") }}</p>
       </div>
       
       <div v-else-if="systemConfigs.length === 0" class="bg-white p-12 text-center rounded-xl border border-dashed border-gray-300">
-        <p class="text-gray-500 mb-4">。</p>
-        <button @click="initProviderConfigs" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-
-        </button>
+        <p class="text-gray-500 mb-4">{{ $adminT("The vendor configuration has not been initialized.", "尚未初始化服务商配置。") }}</p>
+        <button @click="initProviderConfigs" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">{{ $adminT("Initialize immediately", "立即初始化") }}</button>
       </div>
 
       <div v-else class="grid grid-cols-1 gap-6">
@@ -294,9 +274,7 @@
               @click="updateSystemConfig(config)"
               :disabled="!config.editValue || config.editValue === config.config_value"
               class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-            >
-              Save
-            </button>
+            > {{ $adminT("Save", "保存修改") }} </button>
           </div>
         </div>
       </div>
@@ -307,9 +285,7 @@
             <TriangleAlert class="h-5 w-5 text-yellow-400" />
           </div>
           <div class="ml-3">
-            <p class="text-sm text-yellow-700">
-              Notice： API Key  AI 。， Key。
-            </p>
+            <p class="text-sm text-yellow-700"> {{ $adminT("Tip: API key changes take effect on the next AI generation request. If no database configuration exists, the system falls back to the environment variable.", "提示：修改后的 API Key 将在下次 AI 生成请求时生效。如果数据库中没有配置，系统将回退到使用环境变量中的 Key。") }} </p>
           </div>
           </div>
         </div>
@@ -337,7 +313,7 @@
                     required
                     class="block w-64 border border-gray-300 rounded-md shadow-sm py-1.5 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                   >
-                    <option :value="null">Please select</option>
+                    <option :value="null">{{ $adminT("Please select", "请选择工作流") }}</option>
                     <option 
                       v-for="workflow in workflowsList" 
                       :key="workflow.id" 
@@ -351,12 +327,10 @@
                     :to="`/models/workflows/${form.workflow_id}`"
                     target="_blank"
                     class="text-blue-600 hover:text-blue-800 text-sm"
-                  >
-                    Edit
-                  </NuxtLink>
+                  > {{ $adminT("Edit", "编辑工作流") }} </NuxtLink>
                 </div>
                 <div class="flex items-center gap-2">
-                  <label class="text-sm text-gray-700 whitespace-nowrap"></label>
+                  <label class="text-sm text-gray-700 whitespace-nowrap">{{ $adminT("Sort", "排序") }}</label>
                   <input
                     v-model.number="form.sort_order"
                     type="number"
@@ -372,7 +346,7 @@
                       type="checkbox"
                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
-                    <span class="text-sm text-gray-700 whitespace-nowrap"></span>
+                    <span class="text-sm text-gray-700 whitespace-nowrap">{{ $adminT("Enable", "启用") }}</span>
                   </label>
                 </div>
               </div>
@@ -384,26 +358,26 @@
                 <!-- ========== （Settings） ========== -->
                 <div class="p-4 bg-blue-50 rounded-lg space-y-4 border border-blue-200">
                   <div class="flex justify-between items-center mb-2">
-                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-widest"></h4>
-                    <span class="text-[10px] text-gray-400">，API</span>
+                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-widest">{{ $adminT("Internal Configuration", "内部配置") }}</h4>
+                    <span class="text-[10px] text-gray-400">{{ $adminT("If you want to change the base model, switch A to the top.", "若想更换底层模型，请在顶部切换API") }}</span>
                   </div>
                   <div class="grid grid-cols-2 gap-4">
                     <div>
-                      <label class="block text-sm font-medium text-blue-700"> Key (Slug) <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-blue-700"> {{ $adminT("Key (Slug)", "内部 Key (Slug)") }} <span class="text-red-500">*</span></label>
                       <input
                         v-model="form.model_key"
                         type="text"
                         :disabled="isEditing"
-                        placeholder="：kolors, flux-schnell"
+                        :placeholder="$adminT('For example:', '如：kolors, flux-schnell')"
                         class="mt-1 block w-full border border-blue-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono"
                       />
                     </div>
                     <div>
-                      <label class="block text-sm font-medium text-blue-700"></label>
+                      <label class="block text-sm font-medium text-blue-700">{{ $adminT("Internal Remarks", "内部备注") }}</label>
                       <input
                         v-model="form.notes"
                         type="text"
-                        placeholder="View"
+                        :placeholder="$adminT('View', '仅限后台查看的说明')"
                         class="mt-1 block w-full border border-blue-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       />
                     </div>
@@ -412,17 +386,17 @@
 
                 <!-- ========== （） ========== -->
                 <div class="p-4 bg-green-50 rounded-lg space-y-4 border border-green-200">
-                <h4 class="text-xs font-bold text-green-800 uppercase tracking-widest">（）</h4>
+                <h4 class="text-xs font-bold text-green-800 uppercase tracking-widest">{{ $adminT("External configuration (user visible)", "对外配置（用户可见）") }}</h4>
                 
                 <!-- ：Type、、 -->
                 <div class="grid grid-cols-3 gap-4">
                   <div>
-                    <label class="block text-sm font-medium text-green-700">Type <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-green-700">{{ $adminT("Type", "任务类型") }} <span class="text-red-500">*</span></label>
                     <select
                       v-model="form.work_type"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     >
-                      <option value="">Please selectType</option>
+                      <option value="">{{ $adminT("Please select Type", "请选择任务类型") }}</option>
                       <option v-for="opt in allWorkTypeOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                     </select>
                   </div>
@@ -431,17 +405,17 @@
                     <input
                       v-model="form.name"
                       type="text"
-                      placeholder="：Kwai Kolors"
+                      :placeholder="$adminT('e.g. Kwai hrors', '如：Kwai Kolors')"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-green-700">() <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-green-700">{{ $adminT("Model base selling price (accrual)", "模型基础售价(积分)") }} <span class="text-red-500">*</span></label>
                     <input
                       v-model.number="form.cost"
                       type="number"
                       min="0"
-                      placeholder="Please enter"
+                      :placeholder="$adminT('Please enter', '请输入积分售价')"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     />
                   </div>
@@ -450,39 +424,39 @@
                 <!-- ：、、（） -->
                 <div class="grid grid-cols-3 gap-4">
                   <div>
-                    <label class="block text-sm font-medium text-green-700"></label>
+                    <label class="block text-sm font-medium text-green-700">{{ $adminT("Model Level", "模型等级") }}</label>
                     <select
                       v-model="form.model_level"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     >
-                      <option value=""> (None)</option>
-                      <option value="basic"> (Basic)</option>
-                      <option value="pro"> (Pro)</option>
-                      <option value="advanced"> (Advanced)</option>
+                      <option value=""> {{ $adminT("(None)", "默认 (None)") }}</option>
+                      <option value="basic"> {{ $adminT("(Basic)", "基础 (Basic)") }}</option>
+                      <option value="pro"> {{ $adminT("(Pro)", "高级 (Pro)") }}</option>
+                      <option value="advanced"> {{ $adminT("(Advanced)", "专业 (Advanced)") }}</option>
                     </select>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-green-700"></label>
+                    <label class="block text-sm font-medium text-green-700">{{ $adminT("Select", "是否精选") }}</label>
                     <select
                       v-model="form.is_featured"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     >
-                      <option :value="false"></option>
-                      <option :value="true"></option>
+                      <option :value="false">{{ $adminT("Yes", "否") }}</option>
+                      <option :value="true">{{ $adminT("Yes.", "是") }}</option>
                     </select>
                   </div>
                   <div>
                     <div class="flex items-baseline space-x-2">
-                      <label class="block text-sm font-medium text-green-700"></label>
-                      <span class="text-xs text-gray-400 font-normal">（）</span>
+                      <label class="block text-sm font-medium text-green-700">{{ $adminT("Model Category", "模型类别") }}</label>
+                      <span class="text-xs text-gray-400 font-normal">{{ $adminT("(Selection for special effects models)", "（特效模型必选）") }}</span>
                     </div>
                     <select
                       v-model="form.category"
                       class="mt-1 block w-full border border-green-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     >
-                      <option value="">-- Please selectCategory --</option>
-                      <option v-if="loadingEffectsCategories" disabled>Category...</option>
-                      <option v-else-if="effectsCategories.length === 0" disabled>"Settings"Category</option>
+                      <option value="">{{ $adminT("-- Please select Category --", "-- 请选择已存在的分类 --") }}</option>
+                      <option v-if="loadingEffectsCategories" disabled>{{ $adminT("Category", "加载分类中...") }}</option>
+                      <option v-else-if="effectsCategories.length === 0" disabled>{{ $adminT("\"Settings\"Category", "请先在\"页面设置\"中创建分类") }}</option>
                       <option 
                         v-for="cat in effectsCategories" 
                         :key="cat.id" 
@@ -497,7 +471,7 @@
 
                 <!-- ：Description（） -->
                 <div>
-                  <label class="block text-sm font-medium text-green-700">Description</label>
+                  <label class="block text-sm font-medium text-green-700">{{ $adminT("Description", "对外描述") }}</label>
                   <textarea
                     v-model="form.description"
                     rows="2"
@@ -514,7 +488,7 @@
                   type="button"
                   class="flex items-center justify-between w-full mb-3 text-left"
                 >
-                  <h5 class="text-sm font-bold text-green-700"></h5>
+                  <h5 class="text-sm font-bold text-green-700">{{ $adminT("Example Gallery Management", "示例画廊管理") }}</h5>
                   <ChevronDown 
                     class="w-5 h-5 text-green-600 transition-transform"
                     :class="{ 'rotate-180': showExampleGalleries }"
@@ -537,16 +511,12 @@
                             class="text-xs px-2 py-1 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded transition-colors"
                             :disabled="!canApplyGallery(gallery)"
                             :class="{ 'opacity-50 cursor-not-allowed': !canApplyGallery(gallery) }"
-                          >
-
-                          </button>
+                          >{{ $adminT("One key application", "一键应用") }}</button>
                           <button
                             @click="removeExampleGallery(index)"
                             type="button"
                             class="text-xs text-red-600 hover:text-red-800"
-                          >
-                            Delete
-                          </button>
+                          > {{ $adminT("Delete", "删除") }} </button>
                         </div>
                       </div>
 
@@ -554,12 +524,12 @@
                         <!-- ： -->
                         <div class="space-y-3">
                           <div>
-                            <label class="block text-gray-600 mb-1"></label>
+                            <label class="block text-gray-600 mb-1">{{ $adminT("Pre-Effect Preview", "前效果预览") }}</label>
                             <div v-if="gallery.before_url" class="relative group mb-2 overflow-hidden rounded border border-gray-200 shadow-sm bg-gray-100 aspect-[4/3] flex items-center justify-center">
                               <img
                                 v-if="isImageUrl(gallery.before_url)"
                                 :src="gallery.before_url"
-                                alt=""
+                                :alt="$adminT('Previous Effects', '前效果')"
                                 class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                               />
                               <video
@@ -572,11 +542,9 @@
                                 playsinline
                               />
                             </div>
-                            <div v-else class="w-full aspect-[4/3] bg-gray-50 border border-dashed border-gray-200 rounded flex items-center justify-center text-gray-400 mb-2">
-
-                            </div>
+                            <div v-else class="w-full aspect-[4/3] bg-gray-50 border border-dashed border-gray-200 rounded flex items-center justify-center text-gray-400 mb-2">{{ $adminT("No media available", "暂无媒体") }}</div>
                             <div class="flex items-center justify-between mb-1">
-                              <label class="block text-gray-500 text-[10px]">URL</label>
+                              <label class="block text-gray-500 text-[10px]">{{ $adminT("URL", "前效果URL") }}</label>
                               <button
                                 @click="openGalleryMediaSelector(index, 'before_url')"
                                 type="button"
@@ -594,11 +562,11 @@
                             />
                           </div>
                           <div>
-                            <label class="block text-gray-600 mb-1">Notice</label>
+                            <label class="block text-gray-600 mb-1">{{ $adminT("Notice", "前效果提示词") }}</label>
                             <textarea
                               v-model="gallery.before_prompt"
                               rows="3"
-                              placeholder="Notice..."
+                              :placeholder="$adminT('Notice', '前置应用提示词...')"
                               class="w-full px-2 py-1.5 border border-green-200 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
                             ></textarea>
                           </div>
@@ -607,12 +575,12 @@
                         <!-- ： -->
                         <div class="space-y-3">
                           <div>
-                            <label class="block text-gray-600 mb-1"></label>
+                            <label class="block text-gray-600 mb-1">{{ $adminT("Post-Effect Preview", "后效果预览") }}</label>
                             <div v-if="gallery.after_url" class="relative group mb-2 overflow-hidden rounded border border-gray-200 shadow-sm bg-gray-100 aspect-[4/3] flex items-center justify-center">
                               <img
                                 v-if="isImageUrl(gallery.after_url)"
                                 :src="gallery.after_url"
-                                alt=""
+                                :alt="$adminT('Post-Effect', '后效果')"
                                 class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                               />
                               <video
@@ -625,11 +593,9 @@
                                 playsinline
                               />
                             </div>
-                            <div v-else class="w-full aspect-[4/3] bg-gray-50 border border-dashed border-gray-200 rounded flex items-center justify-center text-gray-400 mb-2">
-
-                            </div>
+                            <div v-else class="w-full aspect-[4/3] bg-gray-50 border border-dashed border-gray-200 rounded flex items-center justify-center text-gray-400 mb-2">{{ $adminT("No media available", "暂无媒体") }}</div>
                             <div class="flex items-center justify-between mb-1">
-                              <label class="block text-gray-500 text-[10px]">URL</label>
+                              <label class="block text-gray-500 text-[10px]">{{ $adminT("URL", "后效果URL") }}</label>
                               <button
                                 @click="openGalleryMediaSelector(index, 'after_url')"
                                 type="button"
@@ -647,11 +613,11 @@
                             />
                           </div>
                           <div>
-                            <label class="block text-gray-600 mb-1">Notice</label>
+                            <label class="block text-gray-600 mb-1">{{ $adminT("Notice", "后效果提示词") }}</label>
                             <textarea
                               v-model="gallery.after_prompt"
                               rows="3"
-                              placeholder="Notice..."
+                              :placeholder="$adminT('Notice', '后置应用提示词...')"
                               class="w-full px-2 py-1.5 border border-green-200 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
                             ></textarea>
                           </div>
@@ -663,9 +629,7 @@
                       @click="addExampleGallery"
                       type="button"
                       class="w-full px-4 py-2 border-2 border-dashed border-green-300 rounded-lg text-sm text-green-700 hover:bg-green-50 transition-colors"
-                    >
-                      +
-                    </button>
+                    > {{ $adminT("+ Add Example", "+ 添加示例") }} </button>
                   </div>
                 </div>
               </div>
@@ -682,7 +646,7 @@
                     type="button"
                     class="flex items-center justify-between w-full mb-3 text-left"
                   >
-                    <h5 class="text-sm font-bold text-green-700"></h5>
+                    <h5 class="text-sm font-bold text-green-700">{{ $adminT("Dynamic cost configuration", "动态成本配置") }}</h5>
                     <div class="flex items-center gap-2">
                       <ChevronDown 
                         class="w-5 h-5 text-green-600 transition-transform"
@@ -693,20 +657,18 @@
                   
                   <div v-show="showFieldManagement" class="transition-all">
                     <div v-if="fieldDisplayConfig.length === 0" class="text-xs text-gray-500 italic py-2">
-                      <span v-if="!form.workflow_id"></span>
-                      <span v-else></span>
+                      <span v-if="!form.workflow_id">{{ $adminT("Please select the workflow first.", "请先选择工作流") }}</span>
+                      <span v-else>{{ $adminT("No visible fields in workflow", "工作流中没有可见字段") }}</span>
                     </div>
                     
                     <div v-else class="max-h-96 overflow-y-auto border border-green-200 rounded-lg">
-                      <div class="text-xs text-gray-500 italic px-3 py-2 bg-green-50 border-b border-green-200">
-                        ，Settings。💡 =  +
-                      </div>
+                      <div class="text-xs text-gray-500 italic px-3 py-2 bg-green-50 border-b border-green-200"> {{ $adminT("The following fields are from the workflow configuration, the visible and default values are set in the workflow. The total integral = base integral + the extra integral of the selected parameter value", "以下字段来自工作流配置，可见性和默认值已在工作流中设置。💡总积分 = 基础积分 + 所选参数值的附加积分") }} </div>
                       <table class="min-w-full divide-y divide-green-100">
                         <thead class="bg-green-50 sticky top-0 z-10">
                           <tr>
-                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider"> / Key</th>
-                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider">Type</th>
-                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider"></th>
+                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider"> {{ $adminT("/ Key", "字段名称 / Key") }}</th>
+                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider">{{ $adminT("Type", "类型") }}</th>
+                            <th scope="col" class="px-3 py-2 text-left text-[10px] font-bold text-green-700 uppercase tracking-wider">{{ $adminT("Additional integral configuration", "附加积分配置") }}</th>
                           </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-green-50">
@@ -717,7 +679,7 @@
                                 <div class="flex flex-col">
                                   <div class="flex items-center">
                                     <span class="text-sm font-medium text-gray-900">{{ field.displayName }}</span>
-                                    <span v-if="field.required" class="ml-1.5 text-[10px] text-red-500 bg-red-50 px-1 py-0.5 rounded border border-red-100 font-bold">Required</span>
+                                    <span v-if="field.required" class="ml-1.5 text-[10px] text-red-500 bg-red-50 px-1 py-0.5 rounded border border-red-100 font-bold">{{ $adminT("Required", "必填") }}</span>
                                   </div>
                                   <code class="text-[10px] text-gray-400 font-mono mt-0.5">{{ field.key }}</code>
                                 </div>
@@ -727,8 +689,7 @@
                               <td class="px-3 py-3 whitespace-nowrap">
                                 <div class="flex flex-col gap-1">
                                   <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded font-medium uppercase w-fit">{{ field.type }}</span>
-                                  <div v-if="(field.config.min !== undefined || field.config.max !== undefined) && (field.type === 'int' || field.type === 'float')" class="text-[9px] text-gray-400 font-mono">
-                                    : [{{ field.config.min ?? '∞' }}, {{ field.config.max ?? '∞' }}]
+                                  <div v-if="(field.config.min !== undefined || field.config.max !== undefined) && (field.type === 'int' || field.type === 'float')" class="text-[9px] text-gray-400 font-mono"> {{ $adminT("Scope: [", "范围: [") }}{{ field.config.min ?? '∞' }}, {{ field.config.max ?? '∞' }}]
                                   </div>
                                 </div>
                               </td>
@@ -745,7 +706,7 @@
                                         @change="toggleCostAdditions(field)"
                                         class="h-4 w-4 text-green-600 focus:ring-green-500 border-green-300 rounded cursor-pointer"
                                       />
-                                      <span class="ml-1.5 text-xs text-gray-700"></span>
+                                      <span class="ml-1.5 text-xs text-gray-700">{{ $adminT("Enable extra credits", "启用附加积分") }}</span>
                                     </label>
                                   </div>
                                   
@@ -763,9 +724,7 @@
                                           <span 
                                             v-if="String(option) === String(field.config.default)" 
                                             class="text-[8px] text-green-600 bg-green-50 px-0.5 rounded border border-green-200"
-                                          >
-
-                                          </span>
+                                          >{{ $adminT("Default", "默认") }}</span>
                                         </label>
                                         <div class="relative flex-1 flex items-center min-w-[80px]">
                                           <input
@@ -777,7 +736,7 @@
                                             placeholder="0"
                                             class="w-full pl-2 pr-7 py-1 border border-green-200 rounded text-xs focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                           />
-                                          <span class="absolute right-1.5 text-[10px] text-gray-400"></span>
+                                          <span class="absolute right-1.5 text-[10px] text-gray-400">{{ $adminT("Score", "积分") }}</span>
                                         </div>
                                       </div>
                                     </div>
@@ -787,9 +746,7 @@
                                       <div class="flex items-center gap-2">
                                         <label class="text-xs text-gray-600 font-medium w-12 shrink-0 flex items-center gap-1">
                                           <span>true:</span>
-                                          <span v-if="field.config.default === true" class="text-[8px] text-green-600 bg-green-50 px-0.5 rounded border border-green-200">
-
-                                          </span>
+                                          <span v-if="field.config.default === true" class="text-[8px] text-green-600 bg-green-50 px-0.5 rounded border border-green-200">{{ $adminT("Default", "默认") }}</span>
                                         </label>
                                         <div class="relative flex-1 flex items-center min-w-[80px]">
                                           <input
@@ -800,15 +757,13 @@
                                             step="1"
                                             class="w-full pl-2 pr-7 py-1 border border-green-200 rounded text-xs focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                           />
-                                          <span class="absolute right-1.5 text-[10px] text-gray-400"></span>
+                                          <span class="absolute right-1.5 text-[10px] text-gray-400">{{ $adminT("Score", "积分") }}</span>
                                         </div>
                                       </div>
                                       <div class="flex items-center gap-2">
                                         <label class="text-xs text-gray-600 font-medium w-12 shrink-0 flex items-center gap-1">
                                           <span>false:</span>
-                                          <span v-if="field.config.default === false" class="text-[8px] text-green-600 bg-green-50 px-0.5 rounded border border-green-200">
-
-                                          </span>
+                                          <span v-if="field.config.default === false" class="text-[8px] text-green-600 bg-green-50 px-0.5 rounded border border-green-200">{{ $adminT("Default", "默认") }}</span>
                                         </label>
                                         <div class="relative flex-1 flex items-center min-w-[80px]">
                                           <input
@@ -819,15 +774,13 @@
                                             step="1"
                                             class="w-full pl-2 pr-7 py-1 border border-green-200 rounded text-xs focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                           />
-                                          <span class="absolute right-1.5 text-[10px] text-gray-400"></span>
+                                          <span class="absolute right-1.5 text-[10px] text-gray-400">{{ $adminT("Score", "积分") }}</span>
                                         </div>
                                       </div>
                                     </div>
                                     
                                     <!-- Type（ options ） -->
-                                    <div v-else-if="(field.config.type === 'int' || field.config.type === 'float') && (!field.config.options || !field.config.options.length)" class="p-2 bg-yellow-50 rounded border border-yellow-100 text-[10px] text-yellow-700">
-                                      Notice：。 JSON Edit "options" ，。
-                                    </div>
+                                    <div v-else-if="(field.config.type === 'int' || field.config.type === 'float') && (!field.config.options || !field.config.options.length)" class="p-2 bg-yellow-50 rounded border border-yellow-100 text-[10px] text-yellow-700"> {{ $adminT("Tip: This numeric field has no predefined options. Define them in the full-screen JSON editor before configuring credits for each value here.", "提示：该数字字段没有预设选项。请先在全屏 JSON 编辑器中通过 \"options\" 定义可选值，以便在此处配置不同数值对应的附加积分。") }} </div>
                                   </div>
                                 </div>
                                 <span v-else class="text-xs text-gray-300">-</span>
@@ -857,9 +810,7 @@
             <button
               @click="closeModal"
               class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
-            >
-              Cancel
-            </button>
+            > {{ $adminT("Cancel", "取消") }} </button>
           </div>
         </div>
       </div>
@@ -873,7 +824,7 @@
       <div class="fixed inset-0 bg-gray-900 opacity-75" @click="showJsonEditor = false"></div>
       <div class="relative bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div class="px-6 py-4 border-b flex items-center justify-between">
-          <h3 class="text-lg font-medium"> JSON Edit</h3>
+          <h3 class="text-lg font-medium"> {{ $adminT("JSON Edit", "参数配置 JSON 编辑器") }}</h3>
           <button @click="showJsonEditor = false" class="text-gray-400 hover:text-gray-600 transition-colors">
             <X class="w-6 h-6" />
           </button>
@@ -888,11 +839,11 @@
           ></textarea>
           
           <div class="mt-4 p-3 bg-blue-50 rounded text-xs text-blue-700">
-            <p class="font-semibold mb-1">：</p>
+            <p class="font-semibold mb-1">{{ $adminT("Field description:", "字段说明：") }}</p>
             <ul class="list-disc list-inside space-y-1">
-              <li><code class="bg-blue-100 px-1 rounded">required</code>: true Required，Required，Settings default </li>
-              <li><code class="bg-blue-100 px-1 rounded">visible</code>: false （ true）， required， required: true </li>
-              <li><code class="bg-blue-100 px-1 rounded">cost_additions</code>: ，: {"5": 0, "8": 10}</li>
+              <li><code class="bg-blue-100 px-1 rounded">required</code>{{ $adminT(": # is meant to be filled, and if the field is hidden and has to be filled, set the default value of", ": true 表示必填，如果字段隐藏且必填，需要设置 default 默认值") }} </li>
+              <li><code class="bg-blue-100 px-1 rounded">visible</code>{{ $adminT(":p means hiding this parameter (default ) with priority higher than pel, even if it is hidden at < < < < > >", ": false 表示隐藏该参数（默认 true），优先级高于 required，即使 required: true 也会隐藏") }} </li>
+              <li><code class="bg-blue-100 px-1 rounded">cost_additions</code>{{ $adminT(": Configure additional cost of parameter value, format: {5\": < < 8\":1", ": 配置参数值的附加成本，格式: {\"5\": 0, \"8\": 10}") }}</li>
             </ul>
           </div>
         </div>
@@ -901,15 +852,11 @@
           <button
             @click="showJsonEditor = false"
             class="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="saveJsonAndReload"
             class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors"
-          >
-            SaveList
-          </button>
+          > {{ $adminT("Save List", "保存并刷新字段列表") }} </button>
         </div>
       </div>
     </div>
@@ -933,7 +880,7 @@
                   type="checkbox"
                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <span class="text-sm text-gray-700 whitespace-nowrap"></span>
+                <span class="text-sm text-gray-700 whitespace-nowrap">{{ $adminT("Available", "可用") }}</span>
               </label>
             </div>
           </div>
@@ -946,7 +893,7 @@
                   v-model="apiForm.provider"
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择") }}</option>
                   <option value="siliconflow">SiliconFlow</option>
                   <option value="replicate">Replicate</option>
                   <option value="gemini">Google Gemini</option>
@@ -954,7 +901,7 @@
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700"> ID <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700"> {{ $adminT("ID", "提供商模型 ID") }} <span class="text-red-500">*</span></label>
                 <input
                   v-model="apiForm.provider_model_id"
                   type="text"
@@ -966,21 +913,21 @@
 
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700">API  <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700">{{ $adminT("API", "API 备注名称") }} <span class="text-red-500">*</span></label>
                 <input
                   v-model="apiForm.name"
                   type="text"
-                  placeholder="：SiliconFlow Flux.1 Schnell"
+                  :placeholder="$adminT('For example: SiliconFlowtax.1 Schell', '如：SiliconFlow Flux.1 Schnell')"
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700">Type <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700">{{ $adminT("Type", "输出类型") }} <span class="text-red-500">*</span></label>
                 <select
                   v-model="apiForm.output_type"
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
-                  <option value="">Please select</option>
+                  <option value="">{{ $adminT("Please select", "请选择") }}</option>
                   <option value="image">image</option>
                   <option value="video">video</option>
                   <option value="text">text</option>
@@ -989,18 +936,18 @@
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700"> API Key <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700"> {{ $adminT("API Key", "内部 API Key") }} <span class="text-red-500">*</span></label>
               <input
                 v-model="apiForm.api_key"
                 type="text"
                 :disabled="isEditingApi"
-                placeholder="：sf_flux_schnell"
+                :placeholder="$adminT('For example: sf_tanx_scheng', '如：sf_flux_schnell')"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono"
               />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">API </label>
+              <label class="block text-sm font-medium text-gray-700">{{ $adminT("API", "API 文档地址") }} </label>
               <input
                 v-model="apiForm.api_docs_url"
                 type="url"
@@ -1010,18 +957,18 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700"></label>
+              <label class="block text-sm font-medium text-gray-700">{{ $adminT("Record of internal comments", "内部备注记录") }}</label>
               <textarea
                 v-model="apiForm.notes"
                 rows="2"
-                placeholder=" API ，、..."
+                :placeholder="$adminT('Some descriptions of this API, such as costing, special restrictions...', '关于此 API 的一些说明，如成本计算、特殊限制等...')"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               ></textarea>
             </div>
 
             <div class="grid grid-cols-3 gap-4">
               <div>
-                <label class="block text-xs font-medium text-gray-700"></label>
+                <label class="block text-xs font-medium text-gray-700">{{ $adminT("Official prices", "官方价格") }}</label>
                 <input
                   v-model.number="apiForm.official_price"
                   type="number"
@@ -1030,32 +977,30 @@
                 />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700"></label>
+                <label class="block text-xs font-medium text-gray-700">{{ $adminT("Currency", "货币") }}</label>
                 <select v-model="apiForm.official_currency" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm">
                   <option value="USD">USD</option>
                   <option value="CNY">CNY</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700"></label>
+                <label class="block text-xs font-medium text-gray-700">{{ $adminT("Units", "单位") }}</label>
                 <select v-model="apiForm.official_unit" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm">
-                  <option value="per_request"></option>
-                  <option value="per_second"></option>
-                  <option value="per_1k_tokens">1k Tokens</option>
+                  <option value="per_request">{{ $adminT("Each request", "每请求") }}</option>
+                  <option value="per_second">{{ $adminT("Every second", "每秒") }}</option>
+                  <option value="per_1k_tokens">{{ $adminT("1k Tokens", "每1k Tokens") }}</option>
                 </select>
               </div>
             </div>
 
             <div>
               <div class="flex items-center justify-between mb-2">
-                <label class="block text-sm font-medium text-gray-700"> (JSON) *</label>
+                <label class="block text-sm font-medium text-gray-700"> {{ $adminT("Bottom Parameters Definition (Json)*", "底层参数定义 (JSON) *") }}</label>
                 <button
                   @click="showApiJsonEditor = true"
                   type="button"
                   class="text-xs text-blue-600 hover:underline"
-                >
-                  Edit
-                </button>
+                > {{ $adminT("Edit", "打开全屏编辑器") }} </button>
               </div>
               <textarea
                 v-model="apiParamsJson"
@@ -1077,9 +1022,7 @@
           <button
             @click="showApiModal = false"
             class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
         </div>
       </div>
     </div>
@@ -1091,7 +1034,7 @@
       <div class="fixed inset-0 bg-gray-900 opacity-75" @click="showApiJsonEditor = false"></div>
       <div class="relative bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div class="px-6 py-4 border-b flex items-center justify-between">
-          <h3 class="text-lg font-medium">API  JSON Edit</h3>
+          <h3 class="text-lg font-medium">{{ $adminT("API JSON Edit", "API 参数定义 JSON 编辑器") }}</h3>
           <button @click="showApiJsonEditor = false" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -1107,9 +1050,7 @@
           <button
             @click="showApiJsonEditor = false"
             class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors"
-          >
-            Confirm
-          </button>
+          > {{ $adminT("Confirm", "确定") }} </button>
         </div>
       </div>
     </div>
@@ -1129,78 +1070,77 @@
   >
     <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-2xl border border-gray-100">
       <div class="flex items-center justify-between mb-4 pb-4 border-b">
-        <h3 class="text-xl font-bold text-gray-900">Edit</h3>
+        <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Edit", "批量编辑模型") }}</h3>
         <button @click="showBatchEditModal = false" class="text-gray-400 hover:text-gray-600 transition-colors">
           <X class="w-6 h-6" />
         </button>
       </div>
       
       <p class="text-sm text-gray-600 mb-6 bg-blue-50 p-3 rounded-lg border border-blue-100">
-        <span class="font-bold text-blue-700">Notice:</span>  <span class="font-bold text-blue-700">{{ selectedIds.length }}</span> 。，。
-      </p>
+        <span class="font-bold text-blue-700">{{ $adminT("Notice", "提示:") }}</span> {{ $adminT("Selected", "将更新选中的") }} <span class="font-bold text-blue-700">{{ selectedIds.length }}</span> {{ $adminT("model configuration. Only the fields that need to be modified are filled out, leaving blanks is the status quo.", "个模型配置。只填写需要修改的字段，留空则保持现状。") }} </p>
 
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Status", "启用状态") }}</label>
           <select
             v-model="batchEditForm.is_active"
             class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
           >
-            <option :value="null"></option>
-            <option :value="true"></option>
-            <option :value="false"></option>
+            <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+            <option :value="true">{{ $adminT("Enable", "启用") }}</option>
+            <option :value="false">{{ $adminT("Disable", "禁用") }}</option>
           </select>
         </div>
 
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2"></label>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Sort Values", "排序值") }}</label>
           <input
             v-model.number="batchEditForm.sort_order"
             type="number"
             min="0"
-            placeholder=""
+            :placeholder="$adminT('No change.', '保持不变')"
             class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
           />
-          <p class="mt-1 text-xs text-gray-500"></p>
+          <p class="mt-1 text-xs text-gray-500">{{ $adminT("Leave the space.", "留空表示保持不变") }}</p>
         </div>
 
         <div class="grid grid-cols-4 gap-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2"></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Model Level", "模型等级") }}</label>
             <select
               v-model="batchEditForm.model_level"
               class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
             >
-              <option :value="null"></option>
-              <option value=""> (None)</option>
-              <option value="basic"> (Basic)</option>
-              <option value="pro"> (Pro)</option>
-              <option value="advanced"> (Advanced)</option>
+              <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+              <option value=""> {{ $adminT("(None)", "默认 (None)") }}</option>
+              <option value="basic"> {{ $adminT("(Basic)", "基础 (Basic)") }}</option>
+              <option value="pro"> {{ $adminT("(Pro)", "高级 (Pro)") }}</option>
+              <option value="advanced"> {{ $adminT("(Advanced)", "专业 (Advanced)") }}</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2"></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Select", "是否精选") }}</label>
             <select
               v-model="batchEditForm.is_featured"
               class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
             >
-              <option :value="null"></option>
-              <option :value="false"></option>
-              <option :value="true"></option>
+              <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+              <option :value="false">{{ $adminT("Yes", "否") }}</option>
+              <option :value="true">{{ $adminT("Yes.", "是") }}</option>
             </select>
           </div>
 
           <div class="col-span-2">
-            <label class="block text-sm font-semibold text-gray-700 mb-2"></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Model Category", "模型类别") }}</label>
           <select
             v-model="batchEditForm.category"
             class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
           >
-            <option :value="null"></option>
-            <option value="">-- Category --</option>
-            <option v-if="loadingEffectsCategories" disabled>Category...</option>
-            <option v-else-if="effectsCategories.length === 0" disabled>"Settings"Category</option>
+            <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
+            <option value="">{{ $adminT("-- Category --", "-- 无分类 --") }}</option>
+            <option v-if="loadingEffectsCategories" disabled>{{ $adminT("Category", "加载分类中...") }}</option>
+            <option v-else-if="effectsCategories.length === 0" disabled>{{ $adminT("\"Settings\"Category", "请先在\"页面设置\"中创建分类") }}</option>
             <option 
               v-for="cat in effectsCategories" 
               :key="cat.id" 
@@ -1218,9 +1158,7 @@
         <button
           @click="showBatchEditModal = false"
           class="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消") }} </button>
         <button
           @click="handleBatchEdit"
           :disabled="saving"
@@ -1240,6 +1178,8 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
+
+const { translateText: adminT } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -1318,7 +1258,7 @@ const fetchApiLibrary = async (reset = false) => {
       apiLibraryTotal.value = res.data?.pagination?.total ?? 0
     }
   } catch (err: any) {
-    toast.error(err.message || 'APIfailed')
+    toast.error(err.message || adminT("Failed to load the API library", "获取API库失败"))
   } finally {
     loadingApiLibrary.value = false
   }
@@ -1475,7 +1415,7 @@ const openEditApiModal = (entry: any) => {
 const handleApiSubmit = async () => {
   // Required
   if (!apiForm.output_type) {
-    toast.error('Please selectType')
+    toast.error(adminT("Please select Type", "请选择输出类型"))
     return
   }
   
@@ -1485,20 +1425,20 @@ const handleApiSubmit = async () => {
     if (isEditingApi.value) {
       const res = await api.put(`/api/admin/api-library/${apiForm.id}`, payload)
       if (res.success) {
-        toast.success('successful')
+        toast.success(adminT("successful", "更新成功"))
         showApiModal.value = false
         fetchApiLibrary()
       }
     } else {
       const res = await api.post('/api/admin/api-library', payload)
       if (res.success) {
-        toast.success('successful')
+        toast.success(adminT("successful", "创建成功"))
         showApiModal.value = false
         fetchApiLibrary()
       }
     }
   } catch (err: any) {
-    toast.error(err.message || 'Actionfailed')
+    toast.error(err.message || adminT("Action failed", "操作失败"))
   } finally {
     submitting.value = false
   }
@@ -1506,8 +1446,8 @@ const handleApiSubmit = async () => {
 
 const handleApiDelete = async (entry: any) => {
   const confirmed = await confirm({
-    title: 'ConfirmDelete',
-    message: `ConfirmDelete API "${entry.name}" ？ API，Delete。`,
+    title: adminT("Confirm Delete", "确认删除"),
+    message: adminT('Delete API "{name}"? Models using it may stop working.', '确定删除 API“{name}”吗？使用它的模型可能无法继续工作。', { name: entry.name }),
     type: 'danger'
   })
   if (!confirmed) return
@@ -1515,11 +1455,11 @@ const handleApiDelete = async (entry: any) => {
   try {
     const res = await api.delete(`/api/admin/api-library/${entry.id}`)
     if (res.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT("Deleted", "删除成功"))
       fetchApiLibrary()
     }
   } catch (err: any) {
-    toast.error(err.message || 'Deletefailed')
+    toast.error(err.message || adminT("Delete failed", "删除失败"))
   }
 }
 
@@ -1722,12 +1662,12 @@ const isAllPageSelected = computed(() => {
 
 // Type
 const allWorkTypeOptions = [
-  { value: 'text-to-image', label: '→' },
-  { value: 'image-to-image', label: '→' },
-  { value: 'text-to-video', label: '→' },
-  { value: 'image-to-video', label: '→' },
-  { value: 'video-effects', label: '' },
-  { value: 'image-effects', label: '' }
+  { value: 'text-to-image', label: adminT("Text & Picture", "文本→图片") },
+  { value: 'image-to-image', label: adminT("Pictures", "图片→图片") },
+  { value: 'text-to-video', label: adminT("Text to Video", "文本→视频") },
+  { value: 'image-to-video', label: adminT("Images and videos", "图片→视频") },
+  { value: 'video-effects', label: adminT("Video Effects Template", "视频特效模板") },
+  { value: 'image-effects', label: adminT("Picture Effects Template", "图片特效模板") }
 ]
 
 // CategoryFilterBackType
@@ -1799,10 +1739,10 @@ const toggleSelectAll = () => {
 
 const handleBatchDelete = async () => {
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete ${selectedIds.value.length} ？Action。`,
+    title: adminT("Delete", "批量删除模型"),
+    message: adminT('Delete {count} selected models? This action cannot be undone.', '确定删除选中的 {count} 个模型吗？此操作不可撤销。', { count: selectedIds.value.length }),
     type: 'danger',
-    confirmText: 'Delete'
+    confirmText: adminT("Delete", "删除")
   })
   
   if (!confirmed) return
@@ -1812,12 +1752,12 @@ const handleBatchDelete = async () => {
       model_ids: selectedIds.value
     })
     if (res.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT("Deleted", "删除成功"))
       clearSelection()
       fetchModels()
     }
   } catch (err: any) {
-    toast.error(err.message || 'Deletefailed')
+    toast.error(err.message || adminT("Delete failed", "删除失败"))
   }
 }
 
@@ -1840,13 +1780,13 @@ const handleBatchEdit = async () => {
     batchEditForm.model_level === null &&
     batchEditForm.category === null
   ) {
-    toast.error('Please select')
+    toast.error(adminT("Please select", "请选择要更新的字段"))
     return
   }
   
   const confirmed = await confirm({
-    title: 'Edit',
-    message: `Confirm ${selectedIds.value.length} ？`,
+    title: adminT("Edit", "批量编辑"),
+    message: adminT('Update the {n} selected model configs?', '确定要更新选中的 {n} 个模型配置吗？', { n: selectedIds.value.length }),
     type: 'info'
   })
   
@@ -1865,13 +1805,13 @@ const handleBatchEdit = async () => {
     
     const res = await api.post('/api/admin/models/batch-update', payload)
     if (res.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "更新成功"))
       showBatchEditModal.value = false
       clearSelection()
       fetchModels()
     }
   } catch (err: any) {
-    toast.error(err.message || 'failed')
+    toast.error(err.message || adminT("failed", "更新失败"))
   } finally {
     saving.value = false
   }
@@ -1975,7 +1915,7 @@ const updateFieldVisibility = (field: any) => {
   // Required，
   if (field.required && shouldDisableVisibilityToggle(field) && !field.visible) {
     field.visible = true // Status
-    toast.warning('Required，')
+    toast.warning(adminT("If there is no default, the field must be displayed to the user", "必填字段如果没有默认值，必须显示给用户"))
     return
   }
   
@@ -2181,9 +2121,9 @@ const saveJsonAndReload = () => {
       loadParamsFromJson()
     }
     showJsonEditor.value = false
-    toast.success('JSON Save，List')
+    toast.success(adminT("JSON Save, List", "JSON 已保存，字段列表已刷新"))
   } catch (e) {
-    toast.error('JSON ，')
+    toast.error(adminT("JSON", "JSON 格式错误，请检查"))
   }
 }
 
@@ -2270,20 +2210,20 @@ const applyGalleryToFields = (galleryIndex: number) => {
   const gallery = form.example_galleries[galleryIndex]
   
   if (!gallery || !canApplyGallery(gallery)) {
-    toast.warning('、Notice')
+    toast.warning(adminT("Please fill in the pre-effect link, the post-effect link and the post-effects hint first", "请先填写前效果链接、后效果链接和后效果提示词"))
     return
   }
   
   //  API
   if (!form.api_id) {
-    toast.warning(' API ')
+    toast.warning(adminT("API", "请先选择 API 接口"))
     return
   }
   
   //  API Library
   const selectedApi = apiLibraryEntries.value.find(a => a.id === form.api_id)
   if (!selectedApi || !selectedApi.params_schema) {
-    toast.warning(' API ')
+    toast.warning(adminT("Could not get ACI parameter configuration", "无法获取 API 参数配置"))
     return
   }
   
@@ -2292,7 +2232,7 @@ const applyGalleryToFields = (galleryIndex: number) => {
   //  params_schema
   const schemaKeys = Object.keys(paramsSchema)
   if (schemaKeys.length === 0) {
-    toast.error('API ， API ')
+    toast.error(adminT("The parameters of the API library are configured empty. Please first configure the parameters in the API library management", "API 库的参数配置为空，请先在 API 库管理中配置参数"))
     return
   }
   
@@ -2303,7 +2243,7 @@ const applyGalleryToFields = (galleryIndex: number) => {
   })
   
   if (fieldsWithoutType.length > 0) {
-    console.warn(' type （）:', fieldsWithoutType)
+    console.warn(adminT("The following fields are missing a definition of \"%\" (intelligence is attempted):", "以下字段缺少 type 定义（将尝试智能推断）:"), fieldsWithoutType)
   }
   
   let promptApplied = false
@@ -2316,7 +2256,7 @@ const applyGalleryToFields = (galleryIndex: number) => {
     const nameLower = (config.name || '').toLowerCase()
     return keyLower === 'prompt' || 
            nameLower.includes('prompt') ||
-           nameLower.includes('Notice')
+           nameLower.includes(adminT("Notice", "提示词"))
   })
   
   if (promptKey) {
@@ -2356,10 +2296,10 @@ const applyGalleryToFields = (galleryIndex: number) => {
   // （ API ）
   const currentSelectedApi = apiLibraryEntries.value.find(a => a.id === form.api_id)
   if (currentSelectedApi && currentSelectedApi.params_schema) {
-    console.log(`，API  ${Object.keys(currentSelectedApi.params_schema).length} `)
+    console.log(`Reloading fields from the API library (${Object.keys(currentSelectedApi.params_schema).length} fields)`)
     loadMergedParams(currentSelectedApi.params_schema, form.params_config)
   } else {
-    console.warn('Warning： API ， params_config')
+    console.warn(adminT("Warning: Unable to get API configuration using the current phms_brigg", "警告：无法获取 API 配置，使用当前 params_config"))
     loadParamsFromJson()
   }
   
@@ -2368,7 +2308,7 @@ const applyGalleryToFields = (galleryIndex: number) => {
   
   const messages = []
   if (promptApplied) {
-    messages.push('1Notice')
+    messages.push(adminT("1Notice", "1个提示词字段"))
   }
   if (imageAppliedCount > 0) {
     messages.push(`${imageAppliedCount}`)
@@ -2378,9 +2318,9 @@ const applyGalleryToFields = (galleryIndex: number) => {
   const totalFieldsInApi = Object.keys(paramsSchema).length
   
   if (promptApplied || imageAppliedCount > 0) {
-    toast.success(`：${messages.join('，')}（API  ${totalFieldsInApi} ）`)
+    toast.success(adminT('Applied field overrides: {messages} (the API library has {count} fields)', '已应用差异化配置：{messages}（API 库共 {count} 个字段）', { messages: messages.join(adminT(', ', '，')), count: totalFieldsInApi }))
   } else {
-    toast.warning(`（prompt  image Type）。API  ${totalFieldsInApi} ，Type`)
+    toast.warning(adminT('No applicable prompt or image fields were found. The API has {count} fields; check their types.', '未找到可应用的提示词或图片字段。该 API 共有 {count} 个字段，请检查字段类型。', { count: totalFieldsInApi }))
   }
 }
 
@@ -2439,20 +2379,20 @@ const getPriceRange = (model: any): string => {
   
   // ，；
   if (maxAdditionalCost > 0) {
-    return `${minCost}~${maxCost} `
+    return adminT('{min}~{max} credits', '{min}~{max} 积分', { min: minCost, max: maxCost })
   } else {
-    return `${baseCost} `
+    return adminT('{n} credits', '{n} 积分', { n: baseCost })
   }
 }
 
 const getWorkTypeLabel = (type: string) => {
   const labels: Record<string, string> = {
-    'text-to-image': '→',
-    'image-to-image': '→',
-    'text-to-video': '→',
-    'image-to-video': '→',
-    'video-effects': '',
-    'image-effects': ''
+    'text-to-image': adminT("Text & Picture", "文本→图片"),
+    'image-to-image': adminT("Pictures", "图片→图片"),
+    'text-to-video': adminT("Text to Video", "文本→视频"),
+    'image-to-video': adminT("Images and videos", "图片→视频"),
+    'video-effects': adminT("Video Effects Template", "视频特效模板"),
+    'image-effects': adminT("Picture Effects Template", "图片特效模板")
   }
   return labels[type] || type
 }
@@ -2626,7 +2566,7 @@ const fetchModels = async (reset = false) => {
       }
     }
   } catch (error: any) {
-    toast.error(error.message || 'Listfailed')
+    toast.error(error.message || adminT("Failed to load the configuration list", "获取配置列表失败"))
   } finally {
     loading.value = false
   }
@@ -2882,28 +2822,28 @@ const handleSubmit = async () => {
   try {
     // Required
     if (!form.work_type) {
-      toast.error('Please selectType')
+      toast.error(adminT("Please select Type", "请选择任务类型"))
       submitting.value = false
       return
     }
     if (!form.name || !form.name.trim()) {
-      toast.error('Please enter')
+      toast.error(adminT("Please enter", "请输入对外名称"))
       submitting.value = false
       return
     }
     if (!form.model_key || !form.model_key.trim()) {
-      toast.error('Please enter Key (Slug)')
+      toast.error(adminT("Please enter Key (Slug)", "请输入内部 Key (Slug)"))
       submitting.value = false
       return
     }
     // Validate: workflow_id is required
     if (!form.workflow_id) {
-      toast.error('Please select')
+      toast.error(adminT("Please select", "请选择工作流"))
       submitting.value = false
       return
     }
     if (form.cost === null || form.cost === undefined || form.cost < 0) {
-      toast.error('Please enter')
+      toast.error(adminT("Please enter", "请输入有效的模型基础售价"))
       submitting.value = false
       return
     }
@@ -2915,7 +2855,7 @@ const handleSubmit = async () => {
       //  form.params_config
       form.params_config = parsedParamsConfig
     } catch (e) {
-      toast.error(' JSON ')
+      toast.error(adminT("Parameters configuration must be valid", "参数配置必须是有效的 JSON 格式"))
       submitting.value = false
       return
     }
@@ -2940,7 +2880,7 @@ const handleSubmit = async () => {
     if (isEditing.value) {
       const modelId = form.id
       if (!modelId) {
-        toast.error('')
+        toast.error(adminT('Unable to find the configuration to update', '找不到要更新的配置'))
         submitting.value = false
         return
       }
@@ -2963,11 +2903,11 @@ const handleSubmit = async () => {
       }
     }
   } catch (error: any) {
-    console.error('Savefailed:', error)
+    console.error(adminT("Failed to save the model configuration:", "保存模型配置失败:"), error)
     const errorMessage = error.response?.data?.detail || 
                         error.response?.data?.message || 
                         error.message || 
-                        'Actionfailed'
+                        adminT("Action failed", "操作失败")
     toast.error(errorMessage)
   } finally {
     submitting.value = false
@@ -2976,10 +2916,10 @@ const handleSubmit = async () => {
 
 const handleDelete = async (model: any) => {
   const confirmed = await confirm({
-    title: 'ConfirmDelete',
-    message: `ConfirmDelete "${model.name}" ？Action。`,
-    confirmText: 'Delete',
-    cancelText: 'Cancel',
+    title: adminT("Confirm Delete", "确认删除"),
+    message: adminT('Delete "{name}"? This action cannot be undone.', '确定删除“{name}”吗？此操作不可撤销。', { name: model.name }),
+    confirmText: adminT("Delete", "删除"),
+    cancelText: adminT("Cancel", "取消"),
     type: 'danger'
   })
 
@@ -2988,11 +2928,11 @@ const handleDelete = async (model: any) => {
   try {
     const response = await api.delete(`/api/admin/models/${model.id}`)
     if (response.success) {
-      toast.success('Deletesuccessful')
+      toast.success(adminT("Deleted", "删除成功"))
       fetchModels()
     }
   } catch (error: any) {
-    toast.error(error.message || 'Deletefailed')
+    toast.error(error.message || adminT("Delete failed", "删除失败"))
   }
 }
 
@@ -3011,7 +2951,7 @@ const fetchSystemConfigs = async () => {
       }))
     }
   } catch (error: any) {
-    toast.error('failed')
+    toast.error(adminT("failed", "获取系统配置失败"))
   } finally {
     loadingConfigs.value = false
   }
@@ -3021,11 +2961,11 @@ const initProviderConfigs = async () => {
   try {
     const response = await api.post('/api/admin/system/configs/init-providers')
     if (response.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "服务商配置初始化成功"))
       fetchSystemConfigs()
     }
   } catch (error: any) {
-    toast.error('failed')
+    toast.error(adminT("failed", "初始化失败"))
   }
 }
 
@@ -3047,11 +2987,11 @@ const toggleShowConfigValue = async (config: any) => {
           config.rawValue = response.data.config_value || ''
           config.rawValueLoaded = true
         } else {
-          toast.error('failed')
+          toast.error(adminT("failed", "获取原始值失败"))
           return
         }
       } catch (error: any) {
-        toast.error('failed')
+        toast.error(adminT("failed", "获取原始值失败"))
         return
       }
     }
@@ -3074,7 +3014,7 @@ const updateSystemConfig = async (config: any) => {
       config_value: config.editValue
     })
     if (response.success) {
-      toast.success('')
+      toast.success(adminT("Configuration updated", "配置已更新"))
       config.config_value = response.data.config_value
       config.editValue = ''
       config.showValue = false
@@ -3082,7 +3022,7 @@ const updateSystemConfig = async (config: any) => {
       fetchSystemConfigs()
     }
   } catch (error: any) {
-    toast.error('failed')
+    toast.error(adminT("failed", "更新失败"))
   }
 }
 

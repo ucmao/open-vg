@@ -1,48 +1,40 @@
 <template>
   <div class="p-6">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600 mt-1">，， /recharge </p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Discount benefits", "折扣优惠") }}</h1>
+      <p class="text-gray-600 mt-1">{{ $adminT("Configure the multi-distribution percentage that can be effective for the specified user or for all users, generating /reyna links for mail marketing or public events", "配置多送积分百分比，可对指定用户或对所有用户生效，生成 /recharge 链接用于邮件营销或公开活动") }} </p>
     </div>
 
     <div v-if="loading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-blue-600"></div>
-      <p class="mt-2 text-gray-600">Loading......</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Loading", "加载中...") }}</p>
     </div>
 
     <div v-else class="bg-white border rounded-lg shadow-sm overflow-hidden">
       <!-- Filters -->
       <div class="p-6 bg-gray-50 border-b flex flex-wrap gap-4 items-end">
         <div class="w-64">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Search</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1">{{ $adminT("Search", "搜索") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            placeholder="/、「」"
+            :placeholder="$adminT('User email, nickname, note name, or all users', '用户邮箱/昵称、备注名或「所有用户」')"
             class="w-full border rounded px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             @keyup.enter="loadList"
           />
         </div>
-        <button @click="loadList" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
-          Filter
-        </button>
-        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50">
-          Reset
-        </button>
+        <button @click="loadList" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"> {{ $adminT("Filter", "筛选") }} </button>
+        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50"> {{ $adminT("Reset", "重置") }} </button>
         <div class="flex gap-3 ml-auto">
           <button
             @click="openCreateModal"
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
-          >
-            Create
-          </button>
+          > {{ $adminT("Create", "新建折扣优惠") }} </button>
           <button
             @click="loadList"
             :disabled="loading"
             class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 text-sm transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Refresh", "刷新") }}</button>
         </div>
       </div>
 
@@ -50,20 +42,20 @@
         <table class="w-full min-w-max text-left">
           <thead class="bg-gray-50 border-b">
             <tr>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"> %</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("User", "用户") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"> {{ $adminT("Multi-distribution %", "多送积分 %") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Entry into force", "生效时间") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Exclusive Link", "专属链接") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Status", "状态") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
             <tr v-for="item in items" :key="item.id" class="group hover:bg-gray-50 transition-colors">
               <td class="px-6 py-4">
                 <template v-if="item.user_id == null">
-                  <span class="text-sm font-medium text-gray-900"></span>
-                  <div class="text-xs text-gray-500"></div>
+                  <span class="text-sm font-medium text-gray-900">{{ $adminT("All Users", "所有用户") }}</span>
+                  <div class="text-xs text-gray-500">{{ $adminT("Link for any user", "链接对任意用户生效") }}</div>
                 </template>
                 <template v-else>
                   <div class="text-sm font-medium text-gray-900">{{ item.user?.nickname || item.user?.email }}</div>
@@ -75,7 +67,7 @@
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
                 <span v-if="item.valid_from">{{ formatDate(item.valid_from) }}</span>
-                <span v-else class="text-gray-400"></span>
+                <span v-else class="text-gray-400">{{ $adminT("Immediately.", "立即") }}</span>
                 <span class="mx-1">~</span>
                 <span>{{ formatDate(item.valid_until) }}</span>
               </td>
@@ -89,9 +81,7 @@
                   <button
                     @click="copyUrl(item.recharge_url)"
                     class="flex-shrink-0 px-2 py-1.5 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
-                  >
-
-                  </button>
+                  >{{ $adminT("Copy", "复制") }}</button>
                 </div>
               </td>
               <td class="px-6 py-4">
@@ -112,41 +102,31 @@
                     v-if="item.user_id != null"
                     @click="openSendEmailModal(item)"
                     class="px-3 py-1.5 text-xs font-medium rounded transition-colors bg-green-50 text-green-600 hover:bg-green-100"
-                  >
-
-                  </button>
+                  >{{ $adminT("Send Mail", "发送邮件") }}</button>
                   <button
                     @click="editItem(item)"
                     class="px-3 py-1.5 text-xs font-medium rounded transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100"
-                  >
-                    Edit
-                  </button>
+                  > {{ $adminT("Edit", "编辑") }} </button>
                   <button
                     @click="confirmDelete(item)"
                     class="px-3 py-1.5 text-xs font-medium rounded transition-colors bg-red-50 text-red-600 hover:bg-red-100"
-                  >
-                    Delete
-                  </button>
+                  > {{ $adminT("Delete", "删除") }} </button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div v-if="items.length === 0" class="text-center py-12 text-gray-500">
-        ，「Create」
-      </div>
+      <div v-if="items.length === 0" class="text-center py-12 text-gray-500"> {{ $adminT("For the time being, add a new discount.", "暂无折扣优惠，点击「新建折扣优惠」添加") }} </div>
 
       <!-- Pagination (recharges style) -->
       <div class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between flex-wrap gap-3">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ total ? (page - 1) * pageSize + 1 : 0 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} records', '显示第 {from}–{to} 条，共 {total} 条记录', { from: total ? (page - 1) * pageSize + 1 : 0, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; loadList()"
@@ -164,7 +144,7 @@
             @click="loadPage(1)"
             :disabled="page === 1"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -172,11 +152,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="page"
               @keyup.enter="loadPage(page)"
@@ -186,20 +164,18 @@
               :max="Math.ceil(total / pageSize) || 1"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) || 1 }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) || 1 }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -224,16 +200,16 @@
           <div v-if="!editingId" class="mb-4">
             <label class="flex items-center gap-2 cursor-pointer">
               <input v-model="form.applyToAllUsers" type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-              <span class="text-sm font-medium text-gray-700"></span>
+              <span class="text-sm font-medium text-gray-700">{{ $adminT("Effective for all users", "对所有用户生效") }}</span>
             </label>
-            <p class="text-xs text-gray-500 mt-1">，，。</p>
+            <p class="text-xs text-gray-500 mt-1">{{ $adminT("When ticked, the discount link is valid for any user you want to access without the need to specify the user.", "勾选后，该折扣链接对任意访问用户生效，无需指定用户。") }}</p>
             <div v-if="!form.applyToAllUsers" class="mt-3">
-              <label class="block text-sm font-medium text-gray-700 mb-2">ID</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("ID", "用户邮箱或ID") }}</label>
               <div class="relative" ref="userSearchContainer">
                 <input
                   v-model="form.userSearch"
                   type="text"
-                  placeholder="、ID"
+                  :placeholder="$adminT('Enter Mailbox, Nickname or User ID', '输入邮箱、昵称或用户ID')"
                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   @input="searchUsers"
                   @focus="showUserSuggestions = true"
@@ -271,9 +247,7 @@
                 <div
                   v-if="showUserSuggestions && userSuggestions.length === 0 && form.userSearch.length >= 2"
                   class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl px-4 py-2 text-sm text-gray-500"
-                >
-
-                </div>
+                >{{ $adminT("No user found", "未找到用户") }}</div>
                 <div v-if="form.selectedUser" class="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3 flex-1 min-w-0">
@@ -309,21 +283,21 @@
           </div>
 
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2"> % *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Multiple sending %*", "多送积分 % *") }}</label>
             <input
               v-model.number="form.extra_credits_percent"
               type="number"
               min="0"
               max="100"
               step="0.5"
-              placeholder=" 10  10%"
+              :placeholder="$adminT('For example, 10 means 10% extra.', '例如 10 表示多送 10%')"
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             />
-            <p class="text-xs text-gray-500 mt-1"> 100  110 （：10%）</p>
+            <p class="text-xs text-gray-500 mt-1"> {{ $adminT("Purchase 100 credits to account TT (example: 10%)", "购买 100 积分到账 110 积分（示例：10%）") }}</p>
           </div>
 
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">（）</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Commencement of entry into force (optional)", "生效开始（可选）") }}</label>
             <input
               v-model="form.valid_from"
               type="datetime-local"
@@ -332,7 +306,7 @@
           </div>
 
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2"> *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("End of entry into force*", "生效结束 *") }}</label>
             <input
               v-model="form.valid_until"
               type="datetime-local"
@@ -341,11 +315,11 @@
           </div>
 
           <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">（）</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Remarks (optional)", "备注名（可选）") }}</label>
             <input
               v-model="form.name"
               type="text"
-              placeholder="：2"
+              :placeholder="$adminT('For example: February mail recall', '如：2月邮件召回')"
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
@@ -354,15 +328,13 @@
             <button
               @click="closeModal"
               class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm"
-            >
-              Cancel
-            </button>
+            > {{ $adminT("Cancel", "取消") }} </button>
             <button
               @click="submitForm"
               :disabled="submitting || !canSubmit"
               class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 text-sm font-medium"
             >
-              {{ submitting ? 'Submit...' : (editingId ? 'Save' : '') }}
+              {{ submitting ? $adminT('Submitting...', '提交中...') : (editingId ? $adminT('Save', '保存') : $adminT('Create and generate link', '创建并生成链接')) }}
             </button>
           </div>
         </div>
@@ -376,10 +348,10 @@
       @click.self="deleteTarget = null"
     >
       <div class="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full mx-4">
-        <p class="text-gray-700 mb-4">ConfirmDelete？Delete。</p>
+        <p class="text-gray-700 mb-4">{{ $adminT("Are you sure that the discount benefit is deleted? The exclusive link will expire after the deletion.", "确定删除该折扣优惠？删除后专属链接将失效。") }}</p>
         <div class="flex justify-end gap-3">
-          <button @click="deleteTarget = null" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancel</button>
-          <button @click="doDelete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
+          <button @click="deleteTarget = null" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">{{ $adminT("Cancel", "取消") }}</button>
+          <button @click="doDelete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">{{ $adminT("Delete", "删除") }}</button>
         </div>
       </div>
     </div>
@@ -391,12 +363,11 @@
       @click.self="sendEmailTarget = null"
     >
       <div class="bg-white rounded-xl shadow-xl p-6 max-w-2xl w-full my-8">
-        <h3 class="text-lg font-bold text-gray-900 mb-4"></h3>
+        <h3 class="text-lg font-bold text-gray-900 mb-4">{{ $adminT("Send preferential mail", "发送优惠邮件") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
-           <strong>{{ sendEmailTarget.user?.email }}</strong> 。
-        </p>
+           <strong>{{ sendEmailTarget.user?.email }}</strong> {{ $adminT("To", "将向") }} </p>
         <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">/Title</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("/Title", "邮件理由/标题") }}</label>
           <select
             v-model="sendEmailReasonKey"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -408,14 +379,14 @@
         <!-- Confirm -->
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <label class="block text-sm font-medium text-gray-700">Confirm</label>
+            <label class="block text-sm font-medium text-gray-700">{{ $adminT("Confirm", "邮件内容确认") }}</label>
             <button
               type="button"
               @click="loadEmailPreview()"
               :disabled="loadingPreview"
               class="text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50"
             >
-              {{ loadingPreview ? 'Loading......' : (emailPreview ? '' : 'View') }}
+              {{ loadingPreview ? $adminT('Loading...', '加载中...') : (emailPreview ? $adminT('Refresh preview', '刷新预览') : $adminT('View content', '查看内容')) }}
             </button>
           </div>
           <div
@@ -423,7 +394,7 @@
             class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50"
           >
             <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 text-sm">
-              <span class="font-medium text-gray-600">：</span>
+              <span class="font-medium text-gray-600">{{ $adminT("Subject:", "主题：") }}</span>
               <span class="text-gray-900">{{ emailPreview.subject }}</span>
             </div>
             <div
@@ -431,21 +402,19 @@
               v-html="emailPreview.html_content"
             />
           </div>
-          <p v-else-if="!loadingPreview" class="text-xs text-gray-500">「View」，Confirm。</p>
+          <p v-else-if="!loadingPreview" class="text-xs text-gray-500">{{ $adminT("Select the reason to click on the \" View contents \" preview message text before sending it after confirmation.", "选择理由后点击「查看内容」预览邮件正文，确认后再发送。") }}</p>
         </div>
         <div class="flex justify-end gap-3">
           <button
             @click="sendEmailTarget = null; emailPreview = null"
             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="doSendEmail"
             :disabled="sendingEmail"
             class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium"
           >
-            {{ sendingEmail ? '...' : '' }}
+            {{ sendingEmail ? $adminT('Sending...', '发送中...') : $adminT('Send', '发送') }}
           </button>
         </div>
       </div>
@@ -456,6 +425,8 @@
 <script setup lang="ts">
 import { X, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import type { EmailPreset, EmailPreview, PaginatedData, RechargePromo, UserSummary } from '~/types/domain'
+
+const { translateText: adminT, localeTag } = useAdminI18n()
 
 definePageMeta({ layout: 'default' })
 
@@ -509,7 +480,7 @@ function formatDate (iso: string | null) {
   if (!iso) return '-'
   try {
     const d = new Date(iso)
-    return d.toLocaleString('zh-CN', { dateStyle: 'short', timeStyle: 'short' })
+    return d.toLocaleString(localeTag.value, { dateStyle: 'short', timeStyle: 'short' })
   } catch {
     return iso
   }
@@ -670,7 +641,7 @@ async function submitForm () {
       if (res.success && res.data) {
         const url = res.data.recharge_url
         await copyUrl(url)
-        toast?.success?.(url ? '' : '')
+        toast?.success?.(url ? adminT('Created, and the dedicated link was copied to the clipboard', '已创建并已复制专属链接到剪贴板') : adminT('Created', '已创建'))
         closeModal()
         loadList()
       } else {
@@ -679,7 +650,7 @@ async function submitForm () {
     }
   } catch (e: any) {
     console.error(e)
-    toast?.error?.(e?.message || 'Actionfailed')
+    toast?.error?.(e?.message || adminT('Action failed', '操作失败'))
   } finally {
     submitting.value = false
   }
@@ -709,19 +680,19 @@ async function loadEmailPresets () {
       }
     } else {
       emailPresets.value = [
-        { key: 'exclusive', label: '' },
-        { key: 'limit_time', label: '' },
-        { key: 'reserved', label: '' },
-        { key: 'surprise', label: '' },
+        { key: 'exclusive', label: adminT("Exclusive Benefit", "专属福利") },
+        { key: 'limit_time', label: adminT("Limited Time", "限时有效") },
+        { key: 'reserved', label: adminT("Reserved Benefit", "为您保留的福利") },
+        { key: 'surprise', label: adminT("Bonus Surprise", "小惊喜") },
         { key: 'payment_cancelled', label: 'Cancel' },
       ]
     }
   } catch {
     emailPresets.value = [
-      { key: 'exclusive', label: '' },
-      { key: 'limit_time', label: '' },
-      { key: 'reserved', label: '' },
-      { key: 'surprise', label: '' },
+      { key: 'exclusive', label: adminT("Exclusive Benefit", "专属福利") },
+      { key: 'limit_time', label: adminT("Limited Time", "限时有效") },
+      { key: 'reserved', label: adminT("Reserved Benefit", "为您保留的福利") },
+      { key: 'surprise', label: adminT("Bonus Surprise", "小惊喜") },
       { key: 'payment_cancelled', label: 'Cancel' },
     ]
   }
@@ -767,14 +738,14 @@ async function doSendEmail () {
       reason_key: sendEmailReasonKey.value,
     })
     if (res.success) {
-      toast?.success?.('')
+      toast?.success?.(adminT("Deleted", "已删除"))
       sendEmailTarget.value = null
       emailPreview.value = null
     } else {
-      toast?.error?.(res.message || 'failed')
+      toast?.error?.(res.message || adminT("failed", "删除失败"))
     }
   } catch (e: any) {
-    toast?.error?.(e?.message || 'failed')
+    toast?.error?.(e?.message || adminT("failed", "删除失败"))
   } finally {
     sendingEmail.value = false
   }
@@ -790,10 +761,10 @@ async function doDelete () {
       toast?.success?.('Delete')
       loadList()
     } else {
-      toast?.error?.(res.message || 'Deletefailed')
+      toast?.error?.(res.message || adminT('Delete failed', '删除失败'))
     }
   } catch (e: any) {
-    toast?.error?.(e?.message || 'Deletefailed')
+    toast?.error?.(e?.message || adminT('Delete failed', '删除失败'))
   }
 }
 

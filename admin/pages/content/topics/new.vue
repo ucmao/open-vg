@@ -11,22 +11,20 @@
             <ChevronLeft class="w-5 h-5" />
           </NuxtLink>
           <h1 class="text-xl font-bold text-gray-900">
-            {{ isEdit ? 'Edit' : '' }}
+            {{ isEdit ? $adminT('Edit Topic', '编辑专题') : $adminT('Create Topic', '创建新专题') }}
           </h1>
         </div>
 
         <div class="flex items-center space-x-3">
           <div class="hidden sm:flex items-center text-xs text-gray-400 mr-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-            Edit
-          </div>
+            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> {{ $adminT("Edit", "可视化编辑器已启用") }} </div>
           <button
             @click="saveTopic"
             :disabled="saving"
             class="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 flex items-center gap-2"
           >
             <div v-if="saving" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            {{ isEdit ? '' : '' }}
+            {{ isEdit ? $adminT('Update Topic', '更新专题') : $adminT('Publish Topic', '发布专题') }}
           </button>
         </div>
       </div>
@@ -42,16 +40,12 @@
               @click="activeTab = 'basic'"
               :class="activeTab === 'basic' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
               class="flex-1 px-4 py-2 text-xs font-bold rounded-lg transition-all"
-            >
-
-            </button>
+            >{{ $adminT("Basic information", "基础信息") }}</button>
             <button
               @click="activeTab = 'components'"
               :class="activeTab === 'components' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
               class="flex-1 px-4 py-2 text-xs font-bold rounded-lg transition-all"
-            >
-
-            </button>
+            >{{ $adminT("Add Component", "添加组件") }}</button>
           </div>
         </div>
 
@@ -59,50 +53,50 @@
         <div v-show="activeTab === 'basic'" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
           <!-- Header -->
           <div>
-            <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider opacity-50"></h3>
-            <p class="text-xs text-gray-500 mt-1">Title、Description、Edit</p>
+            <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider opacity-50">{{ $adminT("Basic information", "基础信息") }}</h3>
+            <p class="text-xs text-gray-500 mt-1">{{ $adminT("Titles, descriptions, pictures, etc. can be edited by clicking directly in the right preview area", "标题、描述、图片等可直接在右侧预览区点击编辑") }}</p>
           </div>
 
           <!-- Core Settings -->
           <div class="space-y-4">
-            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider"></h4>
+            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">{{ $adminT("Core Configuration", "核心配置") }}</h4>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Type", "任务类型") }}</label>
               <select
                 v-model="selectedTaskType"
                 @change="handleTaskTypeChange"
                 class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
               >
-                <option value=""></option>
-                <option value="text-to-image"> → </option>
-                <option value="image-to-image"> → </option>
-                <option value="text-to-video"> → </option>
-                <option value="image-to-video"> → </option>
-                <option value="video-effects"></option>
-                <option value="image-effects"></option>
+                <option value="">{{ $adminT("All", "全部") }}</option>
+                <option value="text-to-image"> {{ $adminT("Text & Picture", "文本 → 图片") }} </option>
+                <option value="image-to-image"> {{ $adminT("Pictures", "图片 → 图片") }} </option>
+                <option value="text-to-video"> {{ $adminT("Text Video", "文本 → 视频") }} </option>
+                <option value="image-to-video"> {{ $adminT("Images & Videos", "图片 → 视频") }} </option>
+                <option value="video-effects">{{ $adminT("Video Effects Template", "视频特效模板") }}</option>
+                <option value="image-effects">{{ $adminT("Picture Effects Template", "图片特效模板") }}</option>
               </select>
-              <p class="text-xs text-gray-500 mt-1">Type，Type</p>
+              <p class="text-xs text-gray-500 mt-1">{{ $adminT("After selecting the task type, only models of the corresponding type are shown below", "选择任务类型后，下方仅显示对应类型的模型") }}</p>
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">（）</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Association models (optional)", "关联模型（可选）") }}</label>
               <select
                 v-model="form.generation_model_id"
                 class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
                 :disabled="!filteredGenerationModels.length && !!selectedTaskType"
               >
-                <option value="">（）</option>
+                <option value="">{{ $adminT("None (topic page)", "无（专题页）") }}</option>
                 <option v-for="m in filteredGenerationModels" :key="m.id" :value="m.id">{{ m.name }} ({{ m.model_key }})</option>
               </select>
               <p class="text-xs text-gray-500 mt-1">
-                <span v-if="selectedTaskType && !filteredGenerationModels.length" class="text-amber-600">Type</span>
-                <span v-else>，</span>
+                <span v-if="selectedTaskType && !filteredGenerationModels.length" class="text-amber-600">{{ $adminT("Type", "暂无该类型的模型") }}</span>
+                <span v-else>{{ $adminT("After selecting the model, the page will be used as the model's exclusive page", "选择模型后，该页将作为模型专属页") }}</span>
               </p>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1"> (Slug) <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 mb-1"> {{ $adminT("(Slug)", "链接别名 (Slug)") }} <span class="text-red-500">*</span></label>
               <div class="flex">
                 <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-400 bg-gray-50 text-gray-600 text-sm font-mono">
                   {{ slugPrefix }}
@@ -114,45 +108,45 @@
                   placeholder="cyberpunk-landscapes"
                 />
               </div>
-              <p class="text-xs text-gray-500 mt-1">URL ，</p>
+              <p class="text-xs text-gray-500 mt-1">{{ $adminT("_Other Organiser", "URL 路径，创建后不建议修改") }}</p>
             </div>
           </div>
 
           <!-- SEO -->
           <div class="space-y-4 pt-4 border-t border-gray-100">
             <div class="flex items-center justify-between">
-              <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">SEO </h4>
+              <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">{{ $adminT("SEO", "SEO 优化") }} </h4>
               <button
                 type="button"
                 @click="generateSEO"
                 :disabled="generatingSEO || !form.title"
                 class="px-3 py-1.5 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1.5 shadow-sm hover:shadow-md"
-                title="AI Title、Description、"
+                :title="$adminT('Generate title, description, excerpt, and tags with AI', 'AI 生成标题、描述、摘要和标签')"
               >
                 <Loader2 v-if="generatingSEO" class="w-3.5 h-3.5 animate-spin" />
                 <Zap v-else class="w-3.5 h-3.5" />
-                <span>{{ generatingSEO ? '' : 'AI ' }}</span>
+                <span>{{ generatingSEO ? $adminT('Generating', '生成中') : $adminT('AI generate', 'AI 生成') }}</span>
               </button>
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">SEO Title (Meta Title)</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("SEO Title (Meta Title)", "SEO 标题 (Meta Title)") }}</label>
               <input
                 v-model="form.meta_title"
                 type="text"
                 class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
-                placeholder="SearchTitle..."
+                :placeholder="$adminT('Search Title', '用于搜索引擎的标题...')"
                 maxlength="200"
               />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">SEO Description (Meta Description)</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("SEO Description (Meta Description)", "SEO 描述 (Meta Description)") }}</label>
               <textarea
                 v-model="form.meta_description"
                 rows="3"
                 class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none text-sm"
-                placeholder="SearchDescription..."
+                :placeholder="$adminT('Search Description', '用于搜索引擎的描述...')"
                 maxlength="500"
               ></textarea>
             </div>
@@ -160,16 +154,16 @@
 
           <!-- Category & Tags -->
           <div class="space-y-4 pt-4 border-t border-gray-100">
-            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">Category</h4>
+            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">{{ $adminT("Category", "分类与标签") }}</h4>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Category", "分类") }}</label>
               <div class="flex gap-2">
                 <select
                   v-model="form.category_id"
                   class="flex-1 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
                 >
-                  <option :value="null">Category</option>
+                  <option :value="null">{{ $adminT("Category", "未分类") }}</option>
                   <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                     {{ cat.name }}
                   </option>
@@ -177,7 +171,7 @@
                 <NuxtLink 
                   to="/content/taxonomy" 
                   class="p-2 text-gray-400 hover:text-blue-600 border border-gray-300 rounded-lg transition-colors"
-                  title="Category"
+                  :title="$adminT('Category', '管理分类')"
                 >
                   <Settings class="w-4 h-4" />
                 </NuxtLink>
@@ -185,7 +179,7 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Label", "标签") }}</label>
               <div class="border border-gray-200 rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 min-h-[42px]">
                 <div class="flex flex-wrap gap-1.5">
                   <span
@@ -206,21 +200,21 @@
                     v-model="tagInput"
                     type="text"
                     class="flex-1 min-w-[80px] text-sm outline-none bg-transparent"
-                    placeholder="..."
+                    :placeholder="$adminT('Add Tab...', '添加标签...')"
                     @keydown.enter.prevent="addTagFromInput"
                     @keydown.comma.prevent="addTagFromInput"
                     @keydown.backspace="handleTagBackspace"
                   />
                 </div>
               </div>
-              <p class="text-xs text-gray-500 mt-1"> Enter </p>
+              <p class="text-xs text-gray-500 mt-1"> {{ $adminT("Add label with < or comma", "按 Enter 或逗号添加标签") }} </p>
             </div>
           </div>
 
           <div class="border-t border-gray-200 my-4"></div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"> (Published At)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"> {{ $adminT("(Published At)", "发布时间 (Published At)") }}</label>
             <input
               v-model="form.published_at"
               type="datetime-local"
@@ -231,10 +225,10 @@
           <div class="flex items-center justify-between pt-2 space-x-4">
             <div class="flex items-center space-x-2">
               <input v-model="form.is_featured" type="checkbox" id="is_featured" class="w-4 h-4 text-blue-600 rounded" />
-              <label for="is_featured" class="text-xs text-gray-700"></label>
+              <label for="is_featured" class="text-xs text-gray-700">{{ $adminT("Select", "精选") }}</label>
             </div>
             <div class="flex items-center space-x-2">
-              <label for="sort_order" class="text-xs text-gray-600 whitespace-nowrap">:</label>
+              <label for="sort_order" class="text-xs text-gray-600 whitespace-nowrap">{{ $adminT("Sort:", "排序:") }}</label>
               <input
                 v-model.number="form.sort_order"
                 type="number"
@@ -245,16 +239,16 @@
               />
             </div>
             <select v-model="form.status" class="bg-gray-50 border border-gray-200 text-xs font-bold rounded-lg px-2 py-1 outline-none">
-              <option value="draft"></option>
-              <option value="published"></option>
-              <option value="archived"></option>
+              <option value="draft">{{ $adminT("Draft", "草稿") }}</option>
+              <option value="published">{{ $adminT("Published", "已发布") }}</option>
+              <option value="archived">{{ $adminT("Archived", "已归档") }}</option>
             </select>
           </div>
         </div>
 
         <!-- Components List (Builder Controls) -->
         <div v-show="activeTab === 'components'" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-          <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider opacity-50 mb-4"></h3>
+          <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider opacity-50 mb-4">{{ $adminT("Add Component", "添加组件") }}</h3>
           
           <!-- Category Filter -->
           <div class="flex flex-wrap gap-2 mb-4 pb-4 border-b border-gray-200">
@@ -298,7 +292,7 @@
 
       <!-- Right Column: Live Builder / Preview -->
       <div class="lg:col-span-8 space-y-6">
-        <h2 class="text-lg font-bold text-gray-900"></h2>
+        <h2 class="text-lg font-bold text-gray-900">{{ $adminT("Visual builder", "可视化搭建器") }}</h2>
 
         <!-- Single Preview Canvas -->
         <div class="bg-gray-100 rounded-3xl overflow-hidden border border-gray-200 shadow-inner p-2 min-h-[600px]">
@@ -326,7 +320,7 @@
                         v-model="form.title"
                         type="text"
                         class="w-full text-4xl font-bold text-white bg-white/20 border-b-2 border-white outline-none py-0.5 rounded"
-                        placeholder="Title"
+                        :placeholder="$adminT('Title', '专题标题')"
                         @blur="editingHeroField = null; generateSlug()"
                         @keydown.enter.exact="editingHeroField = null; generateSlug()"
                         @keydown.esc="editingHeroField = null"
@@ -338,7 +332,7 @@
                         v-model="form.excerpt"
                         type="text"
                         class="w-full text-lg text-gray-300 bg-white/20 border-b-2 border-white outline-none py-0.5 rounded mt-2"
-                        placeholder="Description"
+                        :placeholder="$adminT('Description', '专题描述')"
                         @blur="editingHeroField = null"
                         @keydown.enter.exact="editingHeroField = null"
                         @keydown.esc="editingHeroField = null"
@@ -351,7 +345,7 @@
                           v-model="form.hero_button_text"
                           type="text"
                           class="text-sm font-semibold text-white bg-white/20 border-b-2 border-white outline-none py-0.5 rounded px-2"
-                          placeholder=""
+                          :placeholder="$adminT('Button Files', '按钮文案')"
                           @blur="editingHeroField = null"
                           @keydown.enter.exact="editingHeroField = null"
                           @keydown.esc="editingHeroField = null"
@@ -368,7 +362,7 @@
                       >
                         {{ form.hero_button_text || '' }}
                       </a>
-                      <span v-else class="cursor-text rounded px-1 -mx-1 hover:bg-white/10 text-sm py-1" @click="selectedBlockIndex = -1; editingHeroField = 'button_text'"></span>
+                      <span v-else class="cursor-text rounded px-1 -mx-1 hover:bg-white/10 text-sm py-1" @click="selectedBlockIndex = -1; editingHeroField = 'button_text'">{{ $adminT("Click Add Button Text", "点击添加按钮文案") }}</span>
                     </div>
                   </div>
                 </div>
@@ -377,31 +371,31 @@
               <div v-if="selectedBlockIndex === -1" class="p-4 bg-gray-50 rounded-b-xl border-t border-gray-200 space-y-3">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Icon", "图标") }}</label>
                     <input v-model="form.icon" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="🚀" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
-                    <button type="button" class="w-full px-2 py-1.5 border border-gray-200 rounded text-sm bg-white hover:bg-gray-50" @click.stop="openMediaSelector('featured_image')">{{ form.featured_image ? '' : '' }}</button>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Background", "背景图") }}</label>
+                    <button type="button" class="w-full px-2 py-1.5 border border-gray-200 rounded text-sm bg-white hover:bg-gray-50" @click.stop="openMediaSelector('featured_image')">{{ form.featured_image ? $adminT('Replace', '更换') : $adminT('Select', '选择') }}</button>
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Button Link", "按钮链接") }}</label>
                     <input v-model="form.hero_button_link" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="/generate" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Button Styles", "按钮样式") }}</label>
                     <select v-model="form.hero_button_style" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                      <option value="remix"></option>
-                      <option value="primary"></option>
-                      <option value="blue-violet"></option>
-                      <option value="outline"></option>
-                      <option value="white"></option>
-                      <option value="secondary"></option>
-                      <option value="success"></option>
-                      <option value="danger"></option>
-                      <option value="blue"></option>
-                      <option value="cyan"></option>
-                      <option value="violet"></option>
+                      <option value="remix">{{ $adminT("Powder turns.", "紫粉渐变") }}</option>
+                      <option value="primary">{{ $adminT("Uranium Gradient", "紫靛渐变") }}</option>
+                      <option value="blue-violet">{{ $adminT("Blue Purple Gradient", "蓝紫渐变") }}</option>
+                      <option value="outline">{{ $adminT("Paint white", "描边白") }}</option>
+                      <option value="white">{{ $adminT("White bottom", "白底") }}</option>
+                      <option value="secondary">{{ $adminT("Gray", "灰色") }}</option>
+                      <option value="success">{{ $adminT("Green", "绿色") }}</option>
+                      <option value="danger">{{ $adminT("Red", "红色") }}</option>
+                      <option value="blue">{{ $adminT("Blue", "蓝色") }}</option>
+                      <option value="cyan">{{ $adminT("Cyan", "青色") }}</option>
+                      <option value="violet">{{ $adminT("Purple", "紫色") }}</option>
                     </select>
                   </div>
                 </div>
@@ -412,10 +406,10 @@
               <div
                 v-if="dynamicComponents.length === 0"
                 class="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50 py-16 text-center"
-                aria-label="Status"
+                :aria-label="$adminT('Status', '空状态')"
               >
-                <p class="text-gray-500 font-medium mb-1"></p>
-                <p class="text-sm text-gray-400">「」</p>
+                <p class="text-gray-500 font-medium mb-1">{{ $adminT("No component at present", "暂无组件") }}</p>
+                <p class="text-sm text-gray-400">{{ $adminT("Click Left Add Component to drag the component here", "点击左侧「添加组件」将组件拖入此处") }}</p>
               </div>
               <div
                 v-for="(element, idx) in dynamicComponents"
@@ -428,12 +422,12 @@
                 <div
                   v-if="selectedBlockIndex === idx"
                   class="absolute -top-10 left-0 right-0 flex items-center justify-center gap-1 z-10"
-                  aria-label="Action"
+                  :aria-label="$adminT('Action', '块操作')"
                 >
                   <button
                     type="button"
                     :disabled="idx === 0"
-                    aria-label=""
+                    :aria-label="$adminT('Move Up', '上移')"
                     class="p-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
                     @click.stop="moveUp(idx)"
                   >
@@ -442,7 +436,7 @@
                   <button
                     type="button"
                     :disabled="idx === dynamicComponents.length - 1"
-                    aria-label=""
+                    :aria-label="$adminT('Move Down', '下移')"
                     class="p-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
                     @click.stop="moveDown(idx)"
                   >
@@ -451,7 +445,7 @@
                   <button
                     v-if="['carousel', 'prompts', 'gallery', 'faq', 'tabs', 'accordion', 'features'].includes(element.type)"
                     type="button"
-                    aria-label="Edit"
+                    :aria-label="$adminT('Edit', '编辑')"
                     class="p-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200 shadow-sm"
                     @click.stop="blockEditIndex = idx; showBlockEditModal = true"
                   >
@@ -459,7 +453,7 @@
                   </button>
                   <button
                     type="button"
-                    aria-label="Delete"
+                    :aria-label="$adminT('Delete', '删除')"
                     class="p-1.5 rounded-lg bg-white border border-gray-200 text-gray-500 hover:text-red-600 hover:border-red-200 shadow-sm"
                     @click.stop="removeComponent(idx); selectedBlockIndex = null"
                   >
@@ -474,7 +468,7 @@
                       type="text"
                       class="w-full bg-transparent border-b-2 border-blue-500 outline-none py-0.5"
                       :class="{'text-4xl': element.level===1, 'text-3xl': element.level===2, 'text-2xl': element.level===3}"
-                      placeholder="Title"
+                      :placeholder="$adminT('Title', '标题内容')"
                       @blur="editingBlockIndex = null; editingField = null"
                       @keydown.enter.exact="editingBlockIndex = null; editingField = null"
                       @keydown.esc="editingBlockIndex = null; editingField = null"
@@ -491,11 +485,11 @@
                   </component>
                   <!-- Level selector in toolbar area (when block toolbar is shown, add level dropdown for heading) -->
                   <div v-if="selectedBlockIndex === idx && element.type === 'heading'" class="mt-2 flex items-center gap-2">
-                    <label class="text-xs text-gray-500">:</label>
+                    <label class="text-xs text-gray-500">{{ $adminT("Level:", "级别:") }}</label>
                     <select
                       v-model="element.level"
                       class="px-2 py-1 text-sm border border-gray-200 rounded-lg bg-white outline-none focus:ring-1 focus:ring-blue-500"
-                      aria-label="Title"
+                      :aria-label="$adminT('Title', '标题级别')"
                     >
                       <option :value="1">H1</option>
                       <option :value="2">H2</option>
@@ -536,20 +530,20 @@
                         :src="element.image_url"
                         class="w-full h-full object-cover"
                       />
-                      <span v-else class="text-xs text-gray-400 font-bold uppercase">/</span>
+                      <span v-else class="text-xs text-gray-400 font-bold uppercase">{{ $adminT("Click to select a picture/video", "点击选择图片/视频") }}</span>
                     </div>
                     <p v-if="element.alt" class="text-center text-xs text-gray-600 mt-2">{{ element.alt }}</p>
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <input v-model="element.alt" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="Description (Alt)" />
-                      <input v-model="element.link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
+                      <input v-model="element.alt" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Description (Alt)', '图片描述 (Alt)')" />
+                      <input v-model="element.link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Jump Link', '跳转链接')" />
                     </div>
                     <div class="grid grid-cols-4 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Percentage", "比例") }}</label>
                         <select v-model="element.aspect_ratio" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="auto"></option>
+                          <option value="auto">{{ $adminT("Original", "原始") }}</option>
                           <option value="16/9">16:9</option>
                           <option value="4/3">4:3</option>
                           <option value="1/1">1:1</option>
@@ -558,33 +552,33 @@
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Shadow", "阴影") }}</label>
                         <select v-model="element.media_shadow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="sm"></option>
-                          <option value="md"></option>
-                          <option value="lg"></option>
-                          <option value="xl"></option>
-                          <option value="2xl"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="sm">{{ $adminT("Light", "轻") }}</option>
+                          <option value="md">{{ $adminT("Medium", "中") }}</option>
+                          <option value="lg">{{ $adminT("Heavy", "重") }}</option>
+                          <option value="xl">{{ $adminT("Overweight", "超重") }}</option>
+                          <option value="2xl">{{ $adminT("Max", "最大") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("The light.", "外发光") }}</label>
                         <select v-model="element.media_glow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="cyan"></option>
-                          <option value="purple"></option>
-                          <option value="blue"></option>
-                          <option value="white"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="cyan">{{ $adminT("Green", "青") }}</option>
+                          <option value="purple">{{ $adminT("Purple", "紫") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝") }}</option>
+                          <option value="white">{{ $adminT("White", "白") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Dimensions", "尺寸") }}</label>
                         <select v-model="element.media_size" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="full"></option>
-                          <option value="large"></option>
-                          <option value="medium"></option>
-                          <option value="small"></option>
+                          <option value="full">{{ $adminT("Full width", "全宽") }}</option>
+                          <option value="large">{{ $adminT("Large", "大") }}</option>
+                          <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                          <option value="small">{{ $adminT("Small", "小") }}</option>
                         </select>
                       </div>
                     </div>
@@ -623,7 +617,7 @@
                         playsinline
                       ></video>
                       <img v-else-if="element.image_url" :src="element.image_url" class="w-full h-full object-cover" />
-                      <span v-else class="text-xs text-gray-400 font-bold uppercase">/</span>
+                      <span v-else class="text-xs text-gray-400 font-bold uppercase">{{ $adminT("Click to select a picture/video", "点击选择图片/视频") }}</span>
                     </div>
                     <div
                       :class="[
@@ -638,20 +632,20 @@
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div class="flex flex-wrap items-center gap-2">
-                      <button type="button" :class="(element.layout === 'left' || !element.layout) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'left'"></button>
-                      <button type="button" :class="element.layout === 'right' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'right'"></button>
-                      <button type="button" :class="element.layout === 'top' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'top'"></button>
-                      <button type="button" :class="element.layout === 'bottom' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'bottom'"></button>
+                      <button type="button" :class="(element.layout === 'left' || !element.layout) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'left'">{{ $adminT("The picture is left.", "图片在左") }}</button>
+                      <button type="button" :class="element.layout === 'right' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'right'">{{ $adminT("Picture on right", "图片在右") }}</button>
+                      <button type="button" :class="element.layout === 'top' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'top'">{{ $adminT("The picture's up.", "图片在上") }}</button>
+                      <button type="button" :class="element.layout === 'bottom' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.layout = 'bottom'">{{ $adminT("Here's the picture.", "图片在下") }}</button>
                       <span class="h-5 w-px bg-gray-300 mx-1" aria-hidden="true"></span>
-                      <button type="button" :class="(element.text_align === 'left' || !element.text_align) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'left'"></button>
-                      <button type="button" :class="element.text_align === 'center' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'center'"></button>
-                      <button type="button" :class="element.text_align === 'right' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'right'"></button>
+                      <button type="button" :class="(element.text_align === 'left' || !element.text_align) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'left'">{{ $adminT("Text Left", "文字靠左") }}</button>
+                      <button type="button" :class="element.text_align === 'center' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'center'">{{ $adminT("Center Text", "文字居中") }}</button>
+                      <button type="button" :class="element.text_align === 'right' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'" class="px-3 py-1.5 text-xs font-bold rounded-lg" @click.stop="element.text_align = 'right'">{{ $adminT("Text Right", "文字靠右") }}</button>
                     </div>
-                    <input v-model="element.title" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="Title" />
-                    <textarea v-model="element.content" rows="3" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" placeholder="Description..."></textarea>
+                    <input v-model="element.title" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Title', '标题')" />
+                    <textarea v-model="element.content" rows="3" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" :placeholder="$adminT('Description', '内容描述...')"></textarea>
                     <div class="grid gap-2" :class="(element.layout === 'top' || element.layout === 'bottom') ? 'grid-cols-4' : 'grid-cols-3'">
                       <div v-if="element.layout === 'top' || element.layout === 'bottom'">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Width Percentage", "宽度百分比") }}</label>
                         <select v-model.number="element.media_width_percent" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
                           <option :value="25">25%</option>
                           <option :value="33">33%</option>
@@ -661,9 +655,9 @@
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Percentage", "比例") }}</label>
                         <select v-model="element.aspect_ratio" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="auto"></option>
+                          <option value="auto">{{ $adminT("Original", "原始") }}</option>
                           <option value="1/1">1:1</option>
                           <option value="4/3">4:3</option>
                           <option value="3/4">3:4</option>
@@ -679,36 +673,36 @@
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Shadow", "阴影") }}</label>
                         <select v-model="element.media_shadow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="sm"></option>
-                          <option value="md"></option>
-                          <option value="lg"></option>
-                          <option value="xl"></option>
-                          <option value="2xl"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="sm">{{ $adminT("Light", "轻") }}</option>
+                          <option value="md">{{ $adminT("Medium", "中") }}</option>
+                          <option value="lg">{{ $adminT("Heavy", "重") }}</option>
+                          <option value="xl">{{ $adminT("Overweight", "超重") }}</option>
+                          <option value="2xl">{{ $adminT("Max", "最大") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("The light.", "外发光") }}</label>
                         <select v-model="element.media_glow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="cyan"></option>
-                          <option value="blue"></option>
-                          <option value="purple"></option>
-                          <option value="pink"></option>
-                          <option value="red"></option>
-                          <option value="amber"></option>
-                          <option value="orange"></option>
-                          <option value="yellow"></option>
-                          <option value="green"></option>
-                          <option value="white"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="cyan">{{ $adminT("Green", "青") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝") }}</option>
+                          <option value="purple">{{ $adminT("Purple", "紫") }}</option>
+                          <option value="pink">{{ $adminT("Pink", "粉") }}</option>
+                          <option value="red">{{ $adminT("Red", "红") }}</option>
+                          <option value="amber">{{ $adminT("Amber.", "琥珀") }}</option>
+                          <option value="orange">{{ $adminT("Orange", "橙") }}</option>
+                          <option value="yellow">{{ $adminT("Yellow", "黄") }}</option>
+                          <option value="green">{{ $adminT("Green", "绿") }}</option>
+                          <option value="white">{{ $adminT("White", "白") }}</option>
                         </select>
                       </div>
                     </div>
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
-                      <input v-model="element.link" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Link", "链接") }}</label>
+                      <input v-model="element.link" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Jump Link', '跳转链接')" />
                     </div>
                   </div>
                 </div>
@@ -795,48 +789,48 @@
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div class="flex gap-2">
-                      <input v-model="element.video_url" type="text" class="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder=" (MP4/Youtube/Vimeo)" />
-                      <button type="button" class="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700" @click.stop="openMediaSelector('component', idx, null, 'video_url')"></button>
+                      <input v-model="element.video_url" type="text" class="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('(MP4/Youtube/Vimeo)', '视频链接 (MP4/Youtube/Vimeo)')" />
+                      <button type="button" class="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700" @click.stop="openMediaSelector('component', idx, null, 'video_url')">{{ $adminT("Select Video", "选择视频") }}</button>
                     </div>
                     <div class="flex gap-2">
-                      <input v-model="element.poster_url" type="text" class="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="" />
-                      <button type="button" class="px-3 py-1.5 bg-gray-200 rounded-lg text-xs font-bold" @click.stop="openMediaSelector('component', idx, null, 'poster_url')"></button>
+                      <input v-model="element.poster_url" type="text" class="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('Cover Map Link', '封面图链接')" />
+                      <button type="button" class="px-3 py-1.5 bg-gray-200 rounded-lg text-xs font-bold" @click.stop="openMediaSelector('component', idx, null, 'poster_url')">{{ $adminT("Select Cover", "选择封面") }}</button>
                     </div>
                     <div class="grid grid-cols-3 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Shadow", "阴影") }}</label>
                         <select v-model="element.media_shadow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="sm"></option>
-                          <option value="md"></option>
-                          <option value="lg"></option>
-                          <option value="xl"></option>
-                          <option value="2xl"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="sm">{{ $adminT("Light", "轻") }}</option>
+                          <option value="md">{{ $adminT("Medium", "中") }}</option>
+                          <option value="lg">{{ $adminT("Heavy", "重") }}</option>
+                          <option value="xl">{{ $adminT("Overweight", "超重") }}</option>
+                          <option value="2xl">{{ $adminT("Max", "最大") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("The light.", "外发光") }}</label>
                         <select v-model="element.media_glow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="cyan"></option>
-                          <option value="purple"></option>
-                          <option value="blue"></option>
-                          <option value="white"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="cyan">{{ $adminT("Green", "青") }}</option>
+                          <option value="purple">{{ $adminT("Purple", "紫") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝") }}</option>
+                          <option value="white">{{ $adminT("White", "白") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Dimensions", "尺寸") }}</label>
                         <select v-model="element.media_size" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="full"></option>
-                          <option value="large"></option>
-                          <option value="medium"></option>
-                          <option value="small"></option>
+                          <option value="full">{{ $adminT("Full width", "全宽") }}</option>
+                          <option value="large">{{ $adminT("Large", "大") }}</option>
+                          <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                          <option value="small">{{ $adminT("Small", "小") }}</option>
                         </select>
                       </div>
                     </div>
                     <label class="flex items-center gap-2">
                       <input v-model="element.autoplay" type="checkbox" class="w-4 h-4 rounded text-blue-600" />
-                      <span class="text-sm text-gray-600"></span>
+                      <span class="text-sm text-gray-600">{{ $adminT("Auto Play", "自动播放") }}</span>
                     </label>
                   </div>
                 </div>
@@ -849,17 +843,13 @@
                       :class="element.list_type === 'bullet' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'"
                       class="px-2 py-1 text-xs font-bold rounded-lg"
                       @click.stop="element.list_type = 'bullet'"
-                    >
-
-                    </button>
+                    >{{ $adminT("Serial", "无序") }}</button>
                     <button
                       type="button"
                       :class="element.list_type === 'ordered' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'"
                       class="px-2 py-1 text-xs font-bold rounded-lg"
                       @click.stop="element.list_type = 'ordered'"
-                    >
-
-                    </button>
+                    >{{ $adminT("Order", "有序") }}</button>
                   </div>
                   <component :is="element.list_type === 'bullet' ? 'ul' : 'ol'" class="space-y-2 list-inside" :class="element.list_type === 'bullet' ? 'list-disc' : 'list-decimal'">
                     <li v-for="(item, iIdx) in element.items" :key="iIdx" class="text-gray-700 flex items-center gap-2 group/list-item">
@@ -881,7 +871,7 @@
                       >{{ item || 'List...' }}</span>
                       <button
                         type="button"
-                        aria-label="Delete"
+                        :aria-label="$adminT('Delete', '删除此项')"
                         class="opacity-0 group-hover/list-item:opacity-100 p-1 text-gray-400 hover:text-red-500 rounded"
                         @click.stop="element.items.splice(iIdx, 1)"
                       >
@@ -893,9 +883,7 @@
                     type="button"
                     class="mt-2 w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold"
                     @click.stop="element.items.push(''); selectedBlockIndex = idx"
-                  >
-                    +
-                  </button>
+                  > {{ $adminT("+ Add Item", "+ 添加一项") }} </button>
                 </div>
 
                 <!-- Table Preview (inline edit) -->
@@ -920,7 +908,7 @@
                           >{{ h || '' }}</span>
                         </th>
                         <th v-if="selectedBlockIndex === idx" class="w-10 border border-gray-200 bg-gray-50 p-1">
-                          <button type="button" aria-label="" class="w-full py-1 text-blue-600 text-xs font-bold" @click.stop="element.headers.push(''); element.rows.forEach((r: unknown[]) => r.push(''))">+</button>
+                          <button type="button" :aria-label="$adminT('Add Column', '添加列')" class="w-full py-1 text-blue-600 text-xs font-bold" @click.stop="element.headers.push(''); element.rows.forEach((r: unknown[]) => r.push(''))">+</button>
                         </th>
                       </tr>
                     </thead>
@@ -943,13 +931,13 @@
                           >{{ cell || '' }}</span>
                         </td>
                         <td v-if="selectedBlockIndex === idx" class="w-10 border border-gray-200 p-1 text-center">
-                          <button type="button" aria-label="Delete" class="opacity-0 group-hover/row:opacity-100 text-red-500 text-xs" @click.stop="element.rows.splice(rIdx, 1)">×</button>
+                          <button type="button" :aria-label="$adminT('Delete', '删除行')" class="opacity-0 group-hover/row:opacity-100 text-red-500 text-xs" @click.stop="element.rows.splice(rIdx, 1)">×</button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                   <div v-if="selectedBlockIndex === idx" class="p-2 border-t border-gray-200 flex gap-2">
-                    <button type="button" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200" @click.stop="element.rows.push(element.headers.map(() => ''))">+ </button>
+                    <button type="button" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200" @click.stop="element.rows.push(element.headers.map(() => ''))">{{ $adminT("+Add Row", "+ 添加行") }} </button>
                   </div>
                 </div>
 
@@ -974,7 +962,7 @@
                           playsinline
                         ></video>
                         <img v-else-if="img.image_url" :src="img.image_url" class="w-full h-full object-cover" />
-                        <span v-else class="text-[10px] font-bold text-gray-400 uppercase"></span>
+                        <span v-else class="text-[10px] font-bold text-gray-400 uppercase">{{ $adminT("Add Media", "添加媒体") }}</span>
                       </div>
                       <p v-if="img.caption" class="text-center text-[10px] text-gray-600 mt-1">{{ img.caption }}</p>
                     </div>
@@ -982,15 +970,15 @@
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div class="grid grid-cols-5 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Columns", "列数") }}</label>
                         <select v-model="element.columns" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option :value="2">2 </option>
-                          <option :value="3">3 </option>
-                          <option :value="4">4 </option>
+                          <option :value="2">{{ $adminT("Column 2", "2 列") }} </option>
+                          <option :value="3">{{ $adminT("Column 3", "3 列") }} </option>
+                          <option :value="4">{{ $adminT("Column 4", "4 列") }} </option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Percentage", "比例") }}</label>
                         <select v-model="element.aspect_ratio" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
                           <option value="1/1">1:1</option>
                           <option value="16/9">16:9</option>
@@ -1000,45 +988,45 @@
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Shadow", "阴影") }}</label>
                         <select v-model="element.media_shadow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="sm"></option>
-                          <option value="md"></option>
-                          <option value="lg"></option>
-                          <option value="xl"></option>
-                          <option value="2xl"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="sm">{{ $adminT("Light", "轻") }}</option>
+                          <option value="md">{{ $adminT("Medium", "中") }}</option>
+                          <option value="lg">{{ $adminT("Heavy", "重") }}</option>
+                          <option value="xl">{{ $adminT("Overweight", "超重") }}</option>
+                          <option value="2xl">{{ $adminT("Max", "最大") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("The light.", "外发光") }}</label>
                         <select v-model="element.media_glow" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="none"></option>
-                          <option value="cyan"></option>
-                          <option value="purple"></option>
-                          <option value="blue"></option>
-                          <option value="white"></option>
+                          <option value="none">{{ $adminT("None", "无") }}</option>
+                          <option value="cyan">{{ $adminT("Green", "青") }}</option>
+                          <option value="purple">{{ $adminT("Purple", "紫") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝") }}</option>
+                          <option value="white">{{ $adminT("White", "白") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Spacing", "间距") }}</label>
                         <select v-model="element.gap" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="2"></option>
-                          <option value="4"></option>
-                          <option value="6"></option>
+                          <option value="2">{{ $adminT("Small", "小") }}</option>
+                          <option value="4">{{ $adminT("Medium", "中") }}</option>
+                          <option value="6">{{ $adminT("Large", "大") }}</option>
                         </select>
                       </div>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       <div v-for="(img, iIdx) in element.images" :key="iIdx" class="space-y-1">
                         <div class="text-[10px] font-bold text-gray-500">
-                          {{ img.media_type === 'video' ? '' : '' }} {{ iIdx + 1 }}
+                          {{ img.media_type === 'video' ? $adminT('Video', '视频') : $adminT('Image', '图片') }} {{ iIdx + 1 }}
                         </div>
-                        <input v-model="img.caption" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-xs outline-none" placeholder="Title" />
-                        <button type="button" class="text-red-500 text-xs" @click.stop="element.images.splice(iIdx, 1)">Delete</button>
+                        <input v-model="img.caption" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-xs outline-none" :placeholder="$adminT('Title', '标题')" />
+                        <button type="button" class="text-red-500 text-xs" @click.stop="element.images.splice(iIdx, 1)">{{ $adminT("Delete", "删除") }}</button>
                       </div>
                     </div>
-                    <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 text-xs font-bold" @click.stop="element.images.push({ image_url: '', video_url: '', poster_url: '', media_type: 'image', caption: '' })">+ /</button>
+                    <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 text-xs font-bold" @click.stop="element.images.push({ image_url: '', video_url: '', poster_url: '', media_type: 'image', caption: '' })">{{ $adminT("+Add pictures/ videos", "+ 添加图片/视频") }}</button>
                   </div>
                 </div>
 
@@ -1077,13 +1065,10 @@
                       class="w-full h-full object-cover"
                       @error="hideBrokenMedia"
                     />
-                    <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-600 font-bold uppercase tracking-widest text-center p-4">
-                       #{{ work.id || idx + 1 }}
+                    <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-600 font-bold uppercase tracking-widest text-center p-4"> {{ $adminT("Works#", "作品 #") }}{{ work.id || idx + 1 }}
                     </div>
                   </div>
-                  <div v-if="!element.works || element.works.length === 0" class="col-span-full text-center py-8 bg-gray-50 border border-dashed border-gray-200 rounded-xl text-xs text-gray-400 uppercase tracking-widest font-bold">
-
-                  </div>
+                  <div v-if="!element.works || element.works.length === 0" class="col-span-full text-center py-8 bg-gray-50 border border-dashed border-gray-200 rounded-xl text-xs text-gray-400 uppercase tracking-widest font-bold">{{ $adminT("No work added", "未添加作品") }}</div>
                 </div>
 
                 <!-- Button Preview + expand bar -->
@@ -1115,65 +1100,65 @@
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <input v-model="element.text" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
-                      <input v-model="element.link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
+                      <input v-model="element.text" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Button Text', '按钮文本')" />
+                      <input v-model="element.link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Jump Link', '跳转链接')" />
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Styles", "样式") }}</label>
                         <select v-model="element.style" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="remix"></option>
-                          <option value="primary"></option>
-                          <option value="blue-violet"></option>
-                          <option value="outline"></option>
-                          <option value="white"></option>
-                          <option value="secondary"></option>
-                          <option value="success"></option>
-                          <option value="danger"></option>
-                          <option value="blue"></option>
-                          <option value="cyan"></option>
-                          <option value="violet"></option>
+                          <option value="remix">{{ $adminT("Powder turns.", "紫粉渐变") }}</option>
+                          <option value="primary">{{ $adminT("Uranium Gradient", "紫靛渐变") }}</option>
+                          <option value="blue-violet">{{ $adminT("Blue Purple Gradient", "蓝紫渐变") }}</option>
+                          <option value="outline">{{ $adminT("Paint white", "描边白") }}</option>
+                          <option value="white">{{ $adminT("White bottom", "白底") }}</option>
+                          <option value="secondary">{{ $adminT("Gray", "灰色") }}</option>
+                          <option value="success">{{ $adminT("Green", "绿色") }}</option>
+                          <option value="danger">{{ $adminT("Red", "红色") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝色") }}</option>
+                          <option value="cyan">{{ $adminT("Cyan", "青色") }}</option>
+                          <option value="violet">{{ $adminT("Purple", "紫色") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Dimensions", "尺寸") }}</label>
                         <select v-model="element.size" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="small"></option>
-                          <option value="medium"></option>
-                          <option value="large"></option>
+                          <option value="small">{{ $adminT("Small", "小") }}</option>
+                          <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                          <option value="large">{{ $adminT("Large", "大") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Alignment", "对齐") }}</label>
                         <select v-model="element.align" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="left"></option>
-                          <option value="center"></option>
-                          <option value="right"></option>
+                          <option value="left">{{ $adminT("Left", "左") }}</option>
+                          <option value="center">{{ $adminT("Medium", "中") }}</option>
+                          <option value="right">{{ $adminT("Right", "右") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Width", "宽度") }}</label>
                         <select v-model="element.width" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="auto"></option>
-                          <option value="full"></option>
+                          <option value="auto">{{ $adminT("Adaptive", "自适应") }}</option>
+                          <option value="full">{{ $adminT("Full width", "全宽") }}</option>
                         </select>
                       </div>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"> (px)</label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"> {{ $adminT("(px)", "水平偏移 (px)") }}</label>
                         <input v-model.number="element.offset_x" type="number" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="0" />
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"> (px)</label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"> {{ $adminT("(px)", "垂直偏移 (px)") }}</label>
                         <input v-model.number="element.offset_y" type="number" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="0" />
                       </div>
                     </div>
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Open With", "打开方式") }}</label>
                       <select v-model="element.target" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                        <option value="_self"></option>
-                        <option value="_blank"></option>
+                        <option value="_self">{{ $adminT("Current window", "当前窗口") }}</option>
+                        <option value="_blank">{{ $adminT("New Window", "新窗口") }}</option>
                       </select>
                     </div>
                   </div>
@@ -1292,37 +1277,37 @@
                         class="px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-200"
                         @click.stop="element.style = s"
                       >
-                        {{ s === 'solid' ? '' : s === 'dashed' ? '' : s === 'dotted' ? '' : s === 'double' ? '' : s === 'gradient' ? '' : s === 'ornamental' ? '' : s === 'wave' ? '' : s === 'zigzag' ? '' : '' }}
+                        {{ s === 'solid' ? $adminT('Solid', '实线') : s === 'dashed' ? $adminT('Dashed', '虚线') : s === 'dotted' ? $adminT('Dotted', '点线') : s === 'double' ? $adminT('Double', '双线') : s === 'gradient' ? $adminT('Gradient', '渐变') : s === 'ornamental' ? $adminT('Ornamental', '装饰') : s === 'wave' ? $adminT('Wave', '波浪') : s === 'zigzag' ? $adminT('Zigzag', '锯齿') : $adminT('Accent', '点缀') }}
                       </button>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Thick", "粗细") }}</label>
                         <select v-model="element.thickness" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="thin"></option>
-                          <option value="medium"></option>
-                          <option value="thick"></option>
-                          <option value="extra-thick"></option>
+                          <option value="thin">{{ $adminT("Fine", "细") }}</option>
+                          <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                          <option value="thick">{{ $adminT("Bold", "粗") }}</option>
+                          <option value="extra-thick">{{ $adminT("Very thick.", "超粗") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Colour", "颜色") }}</label>
                         <select v-model="element.color" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="gray"></option>
-                          <option value="blue"></option>
-                          <option value="purple"></option>
-                          <option value="pink"></option>
-                          <option value="indigo"></option>
-                          <option value="gradient"></option>
+                          <option value="gray">{{ $adminT("Ash", "灰") }}</option>
+                          <option value="blue">{{ $adminT("Blue", "蓝") }}</option>
+                          <option value="purple">{{ $adminT("Purple", "紫") }}</option>
+                          <option value="pink">{{ $adminT("Pink", "粉") }}</option>
+                          <option value="indigo">{{ $adminT("Valium", "靛") }}</option>
+                          <option value="gradient">{{ $adminT("Gradient", "渐变") }}</option>
                         </select>
                       </div>
                       <div>
-                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Spacing", "间距") }}</label>
                         <select v-model="element.spacing" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                          <option value="small"></option>
-                          <option value="medium"></option>
-                          <option value="large"></option>
-                          <option value="extra-large"></option>
+                          <option value="small">{{ $adminT("Small", "小") }}</option>
+                          <option value="medium">{{ $adminT("Medium", "中") }}</option>
+                          <option value="large">{{ $adminT("Large", "大") }}</option>
+                          <option value="extra-large">{{ $adminT("It's huge.", "超大") }}</option>
                         </select>
                       </div>
                     </div>
@@ -1350,19 +1335,19 @@
                     </div>
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-                    <input v-model="element.text" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
+                    <input v-model="element.text" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Reference', '引用内容')" />
                     <div class="grid grid-cols-2 gap-2">
-                      <input v-model="element.author" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="" />
-                      <input v-model="element.role" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="" />
+                      <input v-model="element.author" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('Author', '作者')" />
+                      <input v-model="element.role" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('Positions', '职位')" />
                     </div>
-                    <input v-model="element.avatar" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder=" URL" />
+                    <input v-model="element.avatar" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('URL', '头像 URL')" />
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Styles", "样式") }}</label>
                       <select v-model="element.style" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                        <option value="default"></option>
-                        <option value="bordered"></option>
-                        <option value="gradient"></option>
-                        <option value="minimal"></option>
+                        <option value="default">{{ $adminT("Default", "默认") }}</option>
+                        <option value="bordered">{{ $adminT("Border", "边框") }}</option>
+                        <option value="gradient">{{ $adminT("Gradient Background", "渐变背景") }}</option>
+                        <option value="minimal">{{ $adminT("Extremely simple", "极简") }}</option>
                       </select>
                     </div>
                   </div>
@@ -1378,21 +1363,21 @@
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Columns", "列数") }}</label>
                       <select v-model="element.columns" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                        <option :value="2">2 </option>
-                        <option :value="3">3 </option>
-                        <option :value="4">4 </option>
+                        <option :value="2">{{ $adminT("Column 2", "2 列") }} </option>
+                        <option :value="3">{{ $adminT("Column 3", "3 列") }} </option>
+                        <option :value="4">{{ $adminT("Column 4", "4 列") }} </option>
                       </select>
                     </div>
                     <div v-for="(item, sIdx) in element.items" :key="sIdx" class="p-3 bg-white rounded-lg border border-gray-200 space-y-2">
                       <div class="text-[10px] font-bold text-gray-500 uppercase"> {{ sIdx + 1 }}</div>
                       <input v-model="item.number" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="1000+" />
-                      <input v-model="item.label" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="" />
-                      <input v-model="item.icon" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder=" (emoji)" />
-                      <button type="button" class="text-red-500 text-xs" @click.stop="element.items.splice(sIdx, 1)">Delete</button>
+                      <input v-model="item.label" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('Label', '标签')" />
+                      <input v-model="item.icon" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('(emoji)', '图标 (emoji)')" />
+                      <button type="button" class="text-red-500 text-xs" @click.stop="element.items.splice(sIdx, 1)">{{ $adminT("Delete", "删除") }}</button>
                     </div>
-                    <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 text-xs font-bold" @click.stop="element.items.push({ number: '', label: '', icon: '' })">+ </button>
+                    <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 text-xs font-bold" @click.stop="element.items.push({ number: '', label: '', icon: '' })">{{ $adminT("+ Add Statistics", "+ 添加统计项") }} </button>
                   </div>
                 </div>
 
@@ -1429,7 +1414,7 @@
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Languages", "语言") }}</label>
                       <select v-model="element.language" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500">
                         <option value="javascript">JavaScript</option>
                         <option value="python">Python</option>
@@ -1437,16 +1422,16 @@
                         <option value="css">CSS</option>
                         <option value="json">JSON</option>
                         <option value="bash">Bash</option>
-                        <option value="text"></option>
+                        <option value="text">{{ $adminT("Plain Text", "纯文本") }}</option>
                       </select>
                     </div>
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
-                      <textarea v-model="element.code" rows="8" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono outline-none focus:ring-1 focus:ring-blue-500 resize-none" placeholder="..."></textarea>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Code", "代码") }}</label>
+                      <textarea v-model="element.code" rows="8" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono outline-none focus:ring-1 focus:ring-blue-500 resize-none" :placeholder="$adminT('Enter Code...', '输入代码...')"></textarea>
                     </div>
                     <label class="flex items-center gap-2">
                       <input v-model="element.show_line_numbers" type="checkbox" class="w-4 h-4 rounded text-blue-600" />
-                      <span class="text-sm text-gray-600"></span>
+                      <span class="text-sm text-gray-600">{{ $adminT("Show Line Numbers", "显示行号") }}</span>
                     </label>
                   </div>
                 </div>
@@ -1477,19 +1462,19 @@
                     </a>
                   </div>
                   <div v-if="selectedBlockIndex === idx" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-                    <input v-model="element.title" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="Title" />
-                    <textarea v-model="element.description" rows="2" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" placeholder="Description"></textarea>
+                    <input v-model="element.title" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Title', '主标题')" />
+                    <textarea v-model="element.description" rows="2" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" :placeholder="$adminT('Description', '描述文字')"></textarea>
                     <div class="grid grid-cols-2 gap-2">
-                      <input v-model="element.button_text" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="" />
-                      <input v-model="element.button_link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="" />
+                      <input v-model="element.button_text" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('Button Text', '按钮文本')" />
+                      <input v-model="element.button_link" type="text" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('Button Link', '按钮链接')" />
                     </div>
                     <div>
-                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5"></label>
+                      <label class="text-[10px] font-bold text-gray-500 uppercase block mb-0.5">{{ $adminT("Styles", "样式") }}</label>
                       <select v-model="element.style" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                        <option value="gradient"></option>
-                        <option value="solid"></option>
-                        <option value="outline"></option>
-                        <option value="minimal"></option>
+                        <option value="gradient">{{ $adminT("Gradient Background", "渐变背景") }}</option>
+                        <option value="solid">{{ $adminT("Pure Background", "纯色背景") }}</option>
+                        <option value="outline">{{ $adminT("Outline", "轮廓") }}</option>
+                        <option value="minimal">{{ $adminT("Extremely simple", "极简") }}</option>
                       </select>
                     </div>
                   </div>
@@ -1505,13 +1490,13 @@
     <div
       v-if="showBlockEditModal && blockEditIndex >= 0 && dynamicComponents[blockEditIndex]"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-      aria-label="Edit"
+      :aria-label="$adminT('Edit', '编辑组件')"
       @click.self="showBlockEditModal = false"
     >
       <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h3 class="text-lg font-bold text-gray-900">Edit</h3>
-          <button type="button" class="p-2 text-gray-500 hover:text-gray-700 rounded-lg" aria-label="Close" @click="showBlockEditModal = false">
+          <h3 class="text-lg font-bold text-gray-900">{{ $adminT("Edit", "编辑组件") }}</h3>
+          <button type="button" class="p-2 text-gray-500 hover:text-gray-700 rounded-lg" :aria-label="$adminT('Close', '关闭')" @click="showBlockEditModal = false">
             <X class="w-5 h-5" />
           </button>
         </div>
@@ -1519,7 +1504,7 @@
           <!-- Carousel -->
           <template v-if="dynamicComponents[blockEditIndex]?.type === 'carousel'">
             <div class="flex items-center gap-4 mb-4">
-              <label class="text-sm font-medium text-gray-700">（）</label>
+              <label class="text-sm font-medium text-gray-700">{{ $adminT("Automatic rotation interval (seconds)", "自动轮播间隔（秒）") }}</label>
               <input v-model.number="dynamicComponents[blockEditIndex].interval" type="number" min="1" max="60" class="w-20 px-2 py-1 border border-gray-200 rounded-lg text-sm" />
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1544,11 +1529,11 @@
                 
                 <!-- Media type badge -->
                 <div v-if="item.type" class="mt-1 px-2 py-0.5 text-[10px] font-bold rounded text-center" :class="item.type === 'video' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'">
-                  {{ item.type === 'video' ? '' : '' }}
+                  {{ item.type === 'video' ? $adminT('Video', '视频') : $adminT('Image', '图片') }}
                 </div>
                 
                 <!-- Link -->
-                <input v-model="item.link" type="text" class="w-full mt-1 px-2 py-1 border border-gray-200 rounded text-xs outline-none" placeholder="（）" />
+                <input v-model="item.link" type="text" class="w-full mt-1 px-2 py-1 border border-gray-200 rounded text-xs outline-none" :placeholder="$adminT('Links (optional)', '链接（可选）')" />
                 
                 <!-- Delete button -->
                 <button type="button" class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover/slide:opacity-100 transition-opacity" @click="dynamicComponents[blockEditIndex].items.splice(iIdx, 1)">×</button>
@@ -1562,12 +1547,12 @@
           <template v-else-if="dynamicComponents[blockEditIndex]?.type === 'prompts'">
             <div v-for="(p, pIdx) in dynamicComponents[blockEditIndex].items" :key="pIdx" class="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
               <div class="md:col-span-3">
-                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1"></label>
-                <input v-model="p.label" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" placeholder="：" />
+                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">{{ $adminT("Label", "标签") }}</label>
+                <input v-model="p.label" type="text" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none" :placeholder="$adminT('For example: film perception', '例如：电影感')" />
               </div>
               <div class="md:col-span-8">
-                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Notice</label>
-                <textarea v-model="p.prompt" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm resize-none outline-none" rows="2" placeholder=" AI Notice..."></textarea>
+                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">{{ $adminT("Notice", "提示词") }}</label>
+                <textarea v-model="p.prompt" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm resize-none outline-none" rows="2" :placeholder="$adminT('AI Notice', '输入 AI 提示词...')"></textarea>
               </div>
               <div class="md:col-span-1 flex items-end">
                 <button type="button" class="p-2 text-gray-300 hover:text-red-500" @click="dynamicComponents[blockEditIndex].items.splice(pIdx, 1)">
@@ -1576,23 +1561,23 @@
               </div>
             </div>
             <div class="flex gap-2">
-              <button type="button" class="flex-1 py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold uppercase" @click="dynamicComponents[blockEditIndex].items.push({ label: '', prompt: '' })">+  Prompt </button>
-              <button type="button" class="px-4 py-3 border-2 border-dashed border-violet-200 rounded-xl text-violet-600 hover:border-violet-400 hover:bg-violet-50 text-xs font-bold uppercase" @click="openPromptModalForNewItem(dynamicComponents[blockEditIndex]); showBlockEditModal = false">Search</button>
+              <button type="button" class="flex-1 py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold uppercase" @click="dynamicComponents[blockEditIndex].items.push({ label: '', prompt: '' })">{{ $adminT("+Add Card", "+ 添加 Prompt 卡片") }} </button>
+              <button type="button" class="px-4 py-3 border-2 border-dashed border-violet-200 rounded-xl text-violet-600 hover:border-violet-400 hover:bg-violet-50 text-xs font-bold uppercase" @click="openPromptModalForNewItem(dynamicComponents[blockEditIndex]); showBlockEditModal = false">{{ $adminT("Search", "搜索插入") }}</button>
             </div>
           </template>
           <!-- Gallery -->
           <template v-else-if="dynamicComponents[blockEditIndex]?.type === 'gallery'">
             <div class="mb-4">
-              <label class="text-sm font-medium text-gray-700 block mb-1"></label>
+              <label class="text-sm font-medium text-gray-700 block mb-1">{{ $adminT("Columns", "列数") }}</label>
               <select v-model="dynamicComponents[blockEditIndex].columns" class="w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm outline-none">
-                <option :value="2">2 </option>
-                <option :value="3">3 </option>
-                <option :value="4">4 </option>
-                <option :value="5">5 </option>
-                <option :value="6">6 </option>
+                <option :value="2">{{ $adminT("Column 2", "2 列") }} </option>
+                <option :value="3">{{ $adminT("Column 3", "3 列") }} </option>
+                <option :value="4">{{ $adminT("Column 4", "4 列") }} </option>
+                <option :value="5">{{ $adminT("Column 5", "5 列") }} </option>
+                <option :value="6">{{ $adminT("6 Columns", "6 列") }} </option>
               </select>
             </div>
-            <button type="button" class="w-full px-4 py-3 border-2 border-dashed border-blue-200 rounded-xl text-blue-600 hover:border-blue-400 hover:bg-blue-50 text-xs font-bold uppercase" @click="openWorkSearchModal(dynamicComponents[blockEditIndex]); showBlockEditModal = false">Search</button>
+            <button type="button" class="w-full px-4 py-3 border-2 border-dashed border-blue-200 rounded-xl text-blue-600 hover:border-blue-400 hover:bg-blue-50 text-xs font-bold uppercase" @click="openWorkSearchModal(dynamicComponents[blockEditIndex]); showBlockEditModal = false">{{ $adminT("Search", "搜索并添加作品") }}</button>
             <div v-if="dynamicComponents[blockEditIndex].works?.length" class="mt-4 grid gap-2" :style="`grid-template-columns: repeat(${dynamicComponents[blockEditIndex].columns || 4}, 1fr)`">
               <div v-for="(work, wIdx) in dynamicComponents[blockEditIndex].works" :key="work.id || wIdx" class="relative group aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
                 <!-- Video preview -->
@@ -1609,7 +1594,7 @@
                 />
                 <!-- Image preview -->
                 <img v-else-if="getWorkImageUrl(work)" :src="getWorkImageUrl(work)" class="w-full h-full object-cover" />
-                <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"> #{{ work.id || wIdx + 1 }}</div>
+                <div v-else class="w-full h-full flex items-center justify-center text-[10px] text-gray-400"> {{ $adminT("Works#", "作品 #") }}{{ work.id || wIdx + 1 }}</div>
                 <button type="button" class="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 text-xs" @click="removeWorkFromGallery(dynamicComponents[blockEditIndex], wIdx)">×</button>
               </div>
             </div>
@@ -1623,10 +1608,10 @@
                   <Trash2 class="w-4 h-4" />
                 </button>
               </div>
-              <input v-model="item.question" type="text" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" placeholder="" />
-              <textarea v-model="item.answer" rows="3" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" placeholder=""></textarea>
+              <input v-model="item.question" type="text" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500" :placeholder="$adminT('Problem', '问题')" />
+              <textarea v-model="item.answer" rows="3" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 resize-none" :placeholder="$adminT('Answer', '答案')"></textarea>
             </div>
-            <button type="button" class="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold uppercase" @click="dynamicComponents[blockEditIndex].items.push({ question: '', answer: '' })">+ </button>
+            <button type="button" class="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold uppercase" @click="dynamicComponents[blockEditIndex].items.push({ question: '', answer: '' })">{{ $adminT("+ Add Problem", "+ 添加问题") }} </button>
           </template>
           <!-- Tabs -->
           <template v-else-if="dynamicComponents[blockEditIndex]?.type === 'tabs'">
@@ -1635,10 +1620,10 @@
                 <span class="text-[10px] font-bold text-gray-500 uppercase"> {{ tIdx + 1 }}</span>
                 <button type="button" class="text-red-400 text-xs" @click="dynamicComponents[blockEditIndex].tabs.splice(tIdx, 1)">×</button>
               </div>
-              <input v-model="tab.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="Title" />
-              <textarea v-model="tab.content" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" placeholder=""></textarea>
+              <input v-model="tab.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('Title', '标签标题')" />
+              <textarea v-model="tab.content" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" :placeholder="$adminT('Label Contents', '标签内容')"></textarea>
             </div>
-            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].tabs.push({ title: '', content: '' })">+ </button>
+            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].tabs.push({ title: '', content: '' })">{{ $adminT("+ Tag", "+ 添加标签") }} </button>
           </template>
           <!-- Accordion -->
           <template v-else-if="dynamicComponents[blockEditIndex]?.type === 'accordion'">
@@ -1647,19 +1632,19 @@
                 <span class="text-[10px] font-bold text-gray-500 uppercase"> {{ aIdx + 1 }}</span>
                 <button type="button" class="text-red-400 text-xs" @click="dynamicComponents[blockEditIndex].items.splice(aIdx, 1)">×</button>
               </div>
-              <input v-model="item.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="Title" />
-              <textarea v-model="item.content" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" placeholder=""></textarea>
+              <input v-model="item.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('Title', '标题')" />
+              <textarea v-model="item.content" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" :placeholder="$adminT('Content', '内容')"></textarea>
             </div>
-            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].items.push({ title: '', content: '' })">+ </button>
+            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].items.push({ title: '', content: '' })">{{ $adminT("+Add Item", "+ 添加项目") }} </button>
           </template>
           <!-- Features -->
           <template v-else-if="dynamicComponents[blockEditIndex]?.type === 'features'">
             <div class="mb-4">
-              <label class="text-sm font-medium text-gray-700 block mb-1"></label>
+              <label class="text-sm font-medium text-gray-700 block mb-1">{{ $adminT("Columns", "列数") }}</label>
               <select v-model="dynamicComponents[blockEditIndex].columns" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none">
-                <option :value="2">2 </option>
-                <option :value="3">3 </option>
-                <option :value="4">4 </option>
+                <option :value="2">{{ $adminT("Column 2", "2 列") }} </option>
+                <option :value="3">{{ $adminT("Column 3", "3 列") }} </option>
+                <option :value="4">{{ $adminT("Column 4", "4 列") }} </option>
               </select>
             </div>
             <div v-for="(item, fIdx) in dynamicComponents[blockEditIndex].items" :key="fIdx" class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
@@ -1667,15 +1652,15 @@
                 <span class="text-[10px] font-bold text-gray-500 uppercase"> {{ fIdx + 1 }}</span>
                 <button type="button" class="text-red-400 text-xs" @click="dynamicComponents[blockEditIndex].items.splice(fIdx, 1)">×</button>
               </div>
-              <input v-model="item.icon" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder=" (emoji)" />
-              <input v-model="item.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" placeholder="Title" />
-              <textarea v-model="item.description" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" placeholder="Description"></textarea>
+              <input v-model="item.icon" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('(emoji)', '图标 (emoji)')" />
+              <input v-model="item.title" type="text" class="w-full px-2 py-1 border border-gray-200 rounded text-sm outline-none" :placeholder="$adminT('Title', '功能标题')" />
+              <textarea v-model="item.description" rows="2" class="w-full px-2 py-1 border border-gray-200 rounded text-sm resize-none outline-none" :placeholder="$adminT('Description', '功能描述')"></textarea>
             </div>
-            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].items.push({ title: '', description: '', icon: '✓' })">+ </button>
+            <button type="button" class="w-full py-2 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-500 text-xs font-bold" @click="dynamicComponents[blockEditIndex].items.push({ title: '', description: '', icon: '✓' })">{{ $adminT("+ Add Function", "+ 添加功能") }} </button>
           </template>
         </div>
         <div class="px-6 py-4 border-t border-gray-200">
-          <button type="button" class="w-full px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700" @click="showBlockEditModal = false"></button>
+          <button type="button" class="w-full px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700" @click="showBlockEditModal = false">{{ $adminT("Completed", "完成") }}</button>
         </div>
       </div>
     </div>
@@ -1709,8 +1694,8 @@
         <!-- Header -->
         <div class="px-5 py-3 border-b border-gray-200 flex items-center justify-between">
           <div>
-            <h3 class="text-base font-bold text-gray-900"></h3>
-            <p class="text-xs text-gray-500 mt-0.5"></p>
+            <h3 class="text-base font-bold text-gray-900">{{ $adminT("Select Display Area", "选择显示区域") }}</h3>
+            <p class="text-xs text-gray-500 mt-0.5">{{ $adminT("Drag a rectangle box to select a significant display area for the picture", "拖动矩形框选择图片的重要显示区域") }}</p>
           </div>
           <button
             @click="showImageFocusModal = false"
@@ -1760,14 +1745,10 @@
               <div class="absolute -bottom-2 -right-2 w-5 h-5 bg-blue-500 border-2 border-white rounded-full cursor-nwse-resize hover:scale-125 transition-transform" @mousedown.stop="startResizingCrop('se', $event)"></div>
               
               <!-- Label -->
-              <div class="absolute -top-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded whitespace-nowrap">
-                Hero  (16:9)
-              </div>
+              <div class="absolute -top-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded whitespace-nowrap"> {{ $adminT("Hero Display Area", "Hero 显示区域 (16:9)") }} </div>
             </div>
           </div>
-          <p class="text-xs text-gray-500 mt-2 text-center">
-            ，（ 16:9）
-          </p>
+          <p class="text-xs text-gray-500 mt-2 text-center"> {{ $adminT("Drag rectangle box to move position, drag quadrupular scale (fixed at 16:9)", "拖动矩形框移动位置，拖动四角等比例缩放（比例固定为 16:9）") }} </p>
         </div>
 
         <!-- Footer -->
@@ -1775,22 +1756,16 @@
           <button
             @click="resetCropArea"
             class="px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            Reset
-          </button>
+          > {{ $adminT("Reset", "重置居中") }} </button>
           <div class="flex gap-2">
             <button
               @click="showImageFocusModal = false"
               class="px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Cancel
-            </button>
+            > {{ $adminT("Cancel", "取消") }} </button>
             <button
               @click="confirmCropArea"
               class="px-5 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20"
-            >
-              Confirm
-            </button>
+            > {{ $adminT("Confirm", "确认") }} </button>
           </div>
         </div>
       </div>
@@ -1833,6 +1808,9 @@ import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import PromptInsertModal from '~/components/PromptInsertModal.vue'
 import WorkSearchModal from '~/components/WorkSearchModal.vue'
 
+const { translateText: adminT } = useAdminI18n()
+
+
 const { isVideoWork, getWorkImageUrl, getWorkVideoUrl, getWorkVideoPoster } = useWorkMedia()
 
 const hideBrokenMedia = (event: Event) => {
@@ -1865,7 +1843,7 @@ const showBlockEditModal = ref(false)
 const blockEditIndex = ref(-1)
 const editingHeroField = ref<'title' | 'excerpt' | 'button_text' | null>(null)
 const activeTab = ref<'basic' | 'components' | 'seo'>('basic')
-const prefillPrompt = ref('')
+const prefillPrompt = ref(adminT("All", "全部"))
 const selectedCategory = ref('')
 const activePromptTarget = reactive({
   compIdx: null as number | null,
@@ -1906,25 +1884,25 @@ const componentIconMap: Record<string, any> = {
 
 const availableComponents = [
   { type: 'heading', label: 'Title (H1-H3)', category: '', iconName: 'Type' },
-  { type: 'rich_text', label: '', category: '', iconName: 'FileText' },
+  { type: 'rich_text', label: adminT("Rich Text", "富文本内容"), category: '', iconName: 'FileText' },
   { type: 'list', label: 'List', category: '', iconName: 'List' },
-  { type: 'table', label: '', category: '', iconName: 'Table' },
-  { type: 'divider', label: '', category: '', iconName: 'Minus' },
-  { type: 'code_block', label: '', category: '', iconName: 'Code' },
-  { type: 'single_image', label: '', category: '', iconName: 'ImageIcon' },
-  { type: 'image_text', label: '', category: '', iconName: 'LayoutList' },
-  { type: 'carousel', label: '', category: '', iconName: 'ChevronsUpDown' },
-  { type: 'multi_image', label: '', category: '', iconName: 'LayoutGrid' },
-  { type: 'video', label: '', category: '', iconName: 'Video' },
-  { type: 'gallery', label: '', category: '', iconName: 'LayoutGrid' },
-  { type: 'button', label: '', category: '', iconName: 'ArrowRight' },
-  { type: 'tabs', label: '', category: '', iconName: 'Highlighter' },
-  { type: 'accordion', label: '', category: '', iconName: 'ChevronsUpDown' },
-  { type: 'faq', label: '', category: '', iconName: 'HelpCircle' },
-  { type: 'quote', label: '', category: '', iconName: 'Quote' },
-  { type: 'stats', label: '', category: '', iconName: 'BarChart3' },
-  { type: 'features', label: '', category: '', iconName: 'CheckCircle' },
-  { type: 'cta', label: '', category: '', iconName: 'Zap' },
+  { type: 'table', label: adminT("Data Table", "数据表格"), category: '', iconName: 'Table' },
+  { type: 'divider', label: adminT("Divider", "分割线"), category: '', iconName: 'Minus' },
+  { type: 'code_block', label: adminT("Code block", "代码块"), category: '', iconName: 'Code' },
+  { type: 'single_image', label: adminT("Single Image", "单张图片"), category: '', iconName: 'ImageIcon' },
+  { type: 'image_text', label: adminT("Image and Text Card", "图文卡片"), category: '', iconName: 'LayoutList' },
+  { type: 'carousel', label: adminT("Carousel", "轮播图"), category: '', iconName: 'ChevronsUpDown' },
+  { type: 'multi_image', label: adminT("Image Grid", "多图网格"), category: '', iconName: 'LayoutGrid' },
+  { type: 'video', label: adminT("Video Player", "视频播放"), category: '', iconName: 'Video' },
+  { type: 'gallery', label: adminT("Works Grid", "作品网格"), category: '', iconName: 'LayoutGrid' },
+  { type: 'button', label: adminT("Button", "按钮"), category: '', iconName: 'ArrowRight' },
+  { type: 'tabs', label: adminT("Tabs", "标签页"), category: '', iconName: 'Highlighter' },
+  { type: 'accordion', label: adminT("Accordion", "手风琴"), category: '', iconName: 'ChevronsUpDown' },
+  { type: 'faq', label: adminT("FAQ", "常见问题"), category: '', iconName: 'HelpCircle' },
+  { type: 'quote', label: adminT("Quote Card", "引用卡片"), category: '', iconName: 'Quote' },
+  { type: 'stats', label: adminT("Statistics", "数据统计"), category: '', iconName: 'BarChart3' },
+  { type: 'features', label: adminT("Features", "功能特性"), category: '', iconName: 'CheckCircle' },
+  { type: 'cta', label: adminT("Call to Action", "行动号召"), category: '', iconName: 'Zap' },
   { type: 'prompts', label: 'Prompt ', category: '', iconName: 'Zap' },
 ]
 
@@ -2353,7 +2331,7 @@ const addComponent = (type: string) => {
       componentData = { ...componentData, text: '', author: '', role: '', avatar: '', style: 'default' }
       break
     case 'stats':
-      componentData = { ...componentData, items: [{ number: '1000+', label: '', icon: '' }], columns: 3, style: 'default' }
+      componentData = { ...componentData, items: [{ number: '1000+', label: adminT("User", "用户"), icon: '' }], columns: 3, style: 'default' }
       break
     case 'tabs':
       componentData = { ...componentData, tabs: [{ title: ' 1', content: ' 1' }, { title: ' 2', content: ' 2' }], style: 'default' }
@@ -2762,7 +2740,7 @@ const handleWorksAdd = (works: any[]) => {
   if (addedCount > 0) {
     toast.success(` ${addedCount} `)
   } else {
-    toast.warning('')
+    toast.warning(adminT("All selected works have been added", "所选作品已全部添加"))
   }
   
   showWorkSearchModal.value = false
@@ -2772,7 +2750,7 @@ const handleWorksAdd = (works: any[]) => {
 const removeWorkFromGallery = (element: any, index: number) => {
   if (element.works && element.works.length > index) {
     element.works.splice(index, 1)
-    toast.success('')
+    toast.success(adminT("Work removed", "作品已移除"))
   }
 }
 
@@ -2860,7 +2838,7 @@ const generateSEO = async () => {
   
   // Check if there's any content in components
   if (dynamicComponents.value.length === 0) {
-    toast.error('')
+    toast.error(adminT("Add some components or content first", "请先添加一些组件或内容"))
     return
   }
   
@@ -2878,7 +2856,12 @@ const generateSEO = async () => {
       // Confirm
       const confirmed = await confirm({
         title: 'Confirm SEO ',
-        message: `Title: ${generated.title || '()'}\nDescription: ${generated.description || '()'}\n: ${generated.excerpt || '()'}\n: ${generated.tags?.join(', ') || ''}`,
+        message: adminT('Title: {title}\nDescription: {description}\nExcerpt: {excerpt}\nTags: {tags}', '标题: {title}\n描述: {description}\n摘要: {excerpt}\n标签: {tags}', {
+          title: generated.title || adminT('(empty)', '(空)'),
+          description: generated.description || adminT('(empty)', '(空)'),
+          excerpt: generated.excerpt || adminT('(empty)', '(空)'),
+          tags: generated.tags?.join(', ') || adminT('None', '无')
+        }),
         confirmText: '',
         cancelText: 'Cancel'
       })
@@ -2976,7 +2959,7 @@ const saveTopic = async () => {
       router.push('/content/topics')
     }
   } catch (err: any) {
-    toast.error(err.message || 'Savefailed')
+    toast.error(err.message || adminT('Save failed', '保存失败'))
   } finally {
     saving.value = false
   }

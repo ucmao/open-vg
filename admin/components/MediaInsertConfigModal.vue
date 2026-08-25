@@ -13,7 +13,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h2 class="text-base font-bold text-gray-900">{{ mediaType === 'image' ? '' : '' }}</h2>
+          <h2 class="text-base font-bold text-gray-900">{{ mediaType === 'image' ? $adminT('Insert Image', '插入图片') : $adminT('Insert Video', '插入视频') }}</h2>
         </div>
         <button type="button" @click="close" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@
 
         <!-- URL with Copy -->
         <div class="space-y-1.5">
-          <label class="block text-xs font-semibold text-gray-700"></label>
+          <label class="block text-xs font-semibold text-gray-700">{{ $adminT("Media Links", "媒体链接") }}</label>
           <div class="flex items-center space-x-2">
             <input
               :value="mediaUrl"
@@ -69,7 +69,7 @@
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <span></span>
+              <span>{{ $adminT("Copy", "复制") }}</span>
             </button>
           </div>
         </div>
@@ -77,7 +77,7 @@
         <!-- Size Configuration -->
         <div class="space-y-1.5">
           <div class="flex items-center justify-between">
-            <label class="block text-xs font-semibold text-gray-700"></label>
+            <label class="block text-xs font-semibold text-gray-700">{{ $adminT("Dimensions", "尺寸") }}</label>
             <select
               v-model="config.sizeType"
               class="px-2 py-1 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
@@ -89,7 +89,7 @@
           <div class="flex items-center gap-2">
             <!-- Width -->
             <div class="flex-1">
-              <div class="text-[10px] text-gray-500 mb-1"></div>
+              <div class="text-[10px] text-gray-500 mb-1">{{ $adminT("Width", "宽度") }}</div>
               <input
                 v-model.number="config.width"
                 type="number"
@@ -107,7 +107,7 @@
               @click.stop="config.lockAspectRatio = !config.lockAspectRatio"
               class="mt-5 p-1.5 border-2 rounded transition-all"
               :class="config.lockAspectRatio ? 'border-blue-500 bg-blue-50 text-blue-600' : 'border-gray-300 text-gray-400 hover:border-gray-400'"
-              :title="config.lockAspectRatio ? 'Cancel' : ''"
+              :title="config.lockAspectRatio ? $adminT('Unlock aspect ratio', '取消锁定纵横比') : $adminT('Lock aspect ratio', '锁定纵横比')"
             >
               <svg v-if="config.lockAspectRatio" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -119,7 +119,7 @@
             
             <!-- Height -->
             <div class="flex-1">
-              <div class="text-[10px] text-gray-500 mb-1"></div>
+              <div class="text-[10px] text-gray-500 mb-1">{{ $adminT("Height", "高度") }}</div>
               <div class="relative">
                 <input
                   v-if="config.sizeType === 'pixels'"
@@ -135,9 +135,7 @@
                 <div 
                   v-else
                   class="w-full px-2.5 py-1.5 border border-gray-200 rounded text-xs bg-gray-50 text-gray-400 cursor-not-allowed italic"
-                >
-                   (auto)
-                </div>
+                > {{ $adminT("(auto)", "自动 (auto)") }} </div>
               </div>
             </div>
           </div>
@@ -145,11 +143,11 @@
 
         <!-- Alt Text (for images) -->
         <div v-if="mediaType === 'image'" class="space-y-1.5">
-          <label class="block text-xs font-semibold text-gray-700"> (Alt) <span class="text-gray-400 font-normal">({{ config.alt.length }}/200)</span></label>
+          <label class="block text-xs font-semibold text-gray-700"> {{ $adminT("(Alt)", "替代文本 (Alt)") }} <span class="text-gray-400 font-normal">({{ config.alt.length }}/200)</span></label>
           <input
             v-model="config.alt"
             type="text"
-            placeholder="Description..."
+            :placeholder="$adminT('Description', '描述图片内容...')"
             maxlength="200"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -157,7 +155,7 @@
 
         <!-- Alignment -->
         <div class="space-y-1.5">
-          <label class="block text-xs font-semibold text-gray-700"></label>
+          <label class="block text-xs font-semibold text-gray-700">{{ $adminT("Alignment", "对齐方式") }}</label>
           <div class="flex items-center gap-1.5">
             <button
               v-for="align in alignOptions"
@@ -186,16 +184,12 @@
           type="button"
           @click.stop="close"
           class="px-4 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-all"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消") }} </button>
         <button
           type="button"
           @click.stop="confirm"
           class="px-5 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 shadow-sm shadow-blue-200 transition-all"
-        >
-
-        </button>
+        >{{ $adminT("Insert", "插入") }}</button>
       </div>
     </div>
   </div>
@@ -203,6 +197,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const props = defineProps<{
   isOpen: boolean
@@ -285,9 +282,9 @@ const handleHeightChange = () => {
 }
 
 const alignOptions: { value: 'left' | 'center' | 'right'; label: string; icon: string }[] = [
-  { value: 'left', label: '', icon: 'M3 6h18M3 12h12M3 18h18' },
-  { value: 'center', label: '', icon: 'M3 6h18M6 12h12M3 18h18' },
-  { value: 'right', label: '', icon: 'M3 6h18M9 12h12M3 18h18' }
+  { value: 'left', label: adminT("Left", "左对齐"), icon: 'M3 6h18M3 12h12M3 18h18' },
+  { value: 'center', label: adminT("Centred", "居中"), icon: 'M3 6h18M6 12h12M3 18h18' },
+  { value: 'right', label: adminT("Right", "右对齐"), icon: 'M3 6h18M9 12h12M3 18h18' }
 ]
 
 // Reset config when modal opens with new media
@@ -323,7 +320,7 @@ const { toast } = useToast()
 
 const copyUrl = () => {
   navigator.clipboard.writeText(props.mediaUrl)
-  toast.success('！')
+  toast.success(adminT("Link copied to clipboard!", "链接已复制到剪贴板！"))
 }
 
 const close = () => {

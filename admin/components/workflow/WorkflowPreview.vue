@@ -1,17 +1,13 @@
 <template>
   <div class="workflow-preview border border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex flex-col" style="height: 260px;">
     <div class="flex items-center justify-between px-2 py-1.5 border-b border-gray-200 bg-white shrink-0">
-      <span class="text-xs font-medium text-gray-600 truncate flex-1 min-w-0 mr-2">：{{ workflowTitle || '—' }}</span>
+      <span class="text-xs font-medium text-gray-600 truncate flex-1 min-w-0 mr-2">{{ $adminT("Workstream:", "工作流：") }}{{ workflowTitle || '—' }}</span>
     </div>
-    <div v-if="loading" class="flex-1 min-h-[200px] flex items-center justify-center text-gray-500 text-sm">
-      Loading......
-    </div>
+    <div v-if="loading" class="flex-1 min-h-[200px] flex items-center justify-center text-gray-500 text-sm"> {{ $adminT("Loading", "加载中...") }} </div>
     <div v-else-if="error" class="flex-1 min-h-[200px] flex items-center justify-center text-red-500 text-sm">
       {{ error }}
     </div>
-    <div v-else-if="!workflowId" class="flex-1 min-h-[200px] flex items-center justify-center text-gray-400 text-sm">
-
-    </div>
+    <div v-else-if="!workflowId" class="flex-1 min-h-[200px] flex items-center justify-center text-gray-400 text-sm">{{ $adminT("Please select the workflow first.", "请先选择工作流") }}</div>
     <div v-else class="workflow-vueflow-wrapper">
       <VueFlow
         v-model="nodes"

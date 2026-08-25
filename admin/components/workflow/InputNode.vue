@@ -16,9 +16,7 @@
         <div class="text-sm font-semibold text-gray-900 truncate">
           {{ nodeLabel }}
         </div>
-        <div class="text-xs text-gray-500">
-
-        </div>
+        <div class="text-xs text-gray-500">{{ $adminT("User Input", "用户输入") }}</div>
       </div>
     </div>
     

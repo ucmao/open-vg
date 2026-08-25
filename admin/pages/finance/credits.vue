@@ -2,52 +2,48 @@
   <div class="p-6">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600 mt-1">View</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Accumulated fluid.", "积分流水") }}</h1>
+      <p class="text-gray-600 mt-1">{{ $adminT("View and manage platform logs of log changes", "查看和管理平台积分变动记录") }}</p>
     </div>
 
     <!-- Filters -->
     <div class="bg-white border rounded-lg shadow-sm overflow-hidden">
       <div class="p-6 bg-gray-50 border-b flex flex-wrap gap-4 items-end">
         <div class="w-24">
-          <label class="block text-xs font-medium text-gray-500 mb-1"> ID</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1"> {{ $adminT("ID", "用户 ID") }}</label>
           <input
             v-model="filters.user_id"
             type="text"
-            placeholder=" ID"
+            :placeholder="$adminT('ID', '用户 ID')"
             class="w-full border rounded px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             @keyup.enter="loadData"
           />
         </div>
 
         <div class="w-64">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Search</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1">{{ $adminT("Search", "搜索") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            placeholder="Email  Description"
+            :placeholder="$adminT('Email Description', 'Email 或 描述')"
             class="w-full border rounded px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             @keyup.enter="loadData"
           />
         </div>
 
         <div class="w-40">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Type</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1">{{ $adminT("Type", "类型") }}</label>
           <select v-model="filters.type" class="w-full border rounded px-3 py-2 text-sm outline-none" @change="loadData">
-            <option value=""></option>
-            <option value="recharge"></option>
-            <option value="consume"></option>
-            <option value="gift">/</option>
-            <option value="refund"></option>
+            <option value="">{{ $adminT("All", "全部") }}</option>
+            <option value="recharge">{{ $adminT("Purchasing", "充值购买") }}</option>
+            <option value="consume">{{ $adminT("Generate consumption", "生成消耗") }}</option>
+            <option value="gift">{{ $adminT("Gifts/system adjustments", "赠送/系统调整") }}</option>
+            <option value="refund">{{ $adminT("Return of refunds", "退款返还") }}</option>
           </select>
         </div>
 
-        <button @click="loadData" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
-          Filter
-        </button>
-        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50">
-          Reset
-        </button>
+        <button @click="loadData" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"> {{ $adminT("Filter", "筛选") }} </button>
+        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50"> {{ $adminT("Reset", "重置") }} </button>
         <button
           @click="openAdjustCreditModal"
           class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 flex items-center gap-2"
@@ -62,9 +58,7 @@
           :disabled="creditData.length === 0"
           style="margin-left: auto;"
         >
-          <Download class="w-4 h-4" />
-           CSV
-        </button>
+          <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
       </div>
 
       <!-- Table -->
@@ -72,19 +66,19 @@
         <table class="w-full text-left">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>
-              <th class="px-6 py-4"></th>
-              <th class="px-6 py-4"></th>
-              <th class="px-6 py-4"></th>
-              <th class="px-6 py-4">Type</th>
-              <th class="px-6 py-4">Description</th>
+              <th class="px-6 py-4">{{ $adminT("Time", "时间") }}</th>
+              <th class="px-6 py-4">{{ $adminT("User Information", "用户信息") }}</th>
+              <th class="px-6 py-4">{{ $adminT("Amount of change", "变动额度") }}</th>
+              <th class="px-6 py-4">{{ $adminT("Type", "类型") }}</th>
+              <th class="px-6 py-4">{{ $adminT("Description", "描述") }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
             <tr v-if="loading">
-              <td colspan="5" class="px-6 py-8 text-center text-gray-500">Loading......</td>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500">{{ $adminT("Loading", "加载中...") }}</td>
             </tr>
             <tr v-else-if="creditData.length === 0">
-              <td colspan="5" class="px-6 py-8 text-center text-gray-500">No data available</td>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500">{{ $adminT("No data available", "暂无数据") }}</td>
             </tr>
             <tr v-for="item in creditData" :key="item.id" class="hover:bg-gray-50">
               <td class="px-6 py-4 text-xs text-gray-400">
@@ -126,12 +120,10 @@
       <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} records', '显示第 {from}–{to} 条，共 {total} 条记录', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; loadData()"
@@ -149,7 +141,7 @@
             @click="loadPage(1)"
             :disabled="page === 1"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -157,11 +149,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="page"
               @keyup.enter="loadPage(page)"
@@ -171,20 +161,18 @@
               :max="Math.ceil(total / pageSize)"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -201,16 +189,16 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div class="bg-white px-6 pt-6 pb-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-6"></h3>
+            <h3 class="text-lg font-bold text-gray-900 mb-6">{{ $adminT("Manually Adjusted Scores", "手动调整积分") }}</h3>
             
             <!-- User Search -->
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">ID</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("ID", "用户邮箱或ID") }}</label>
               <div class="relative" ref="userSearchContainer">
                 <input
                   v-model="adjustForm.userSearch"
                   type="text"
-                  placeholder="、ID"
+                  :placeholder="$adminT('Enter Mailbox, Nickname or User ID', '输入邮箱、昵称或用户ID')"
                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   @input="searchUsers"
                   @focus="showUserSuggestions = true"
@@ -249,9 +237,7 @@
                 <div
                   v-if="showUserSuggestions && userSuggestions.length === 0 && adjustForm.userSearch.length >= 2"
                   class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl px-4 py-2 text-sm text-gray-500"
-                >
-
-                </div>
+                >{{ $adminT("No user found", "未找到用户") }}</div>
               </div>
               <div v-if="adjustForm.selectedUser" class="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
                 <div class="flex items-center justify-between">
@@ -281,47 +267,41 @@
                     <X class="w-4 h-4" />
                   </button>
                 </div>
-                <div class="text-xs text-gray-500 mt-2 font-medium">
-                  : <span class="text-blue-600 font-bold">{{ getDisplayCredits(adjustForm.selectedUser) }}</span>
-                  <span v-if="adjustForm.selectedUser.total_credits === undefined || adjustForm.selectedUser.total_credits === null" class="text-red-500 text-xs ml-2">()</span>
+                <div class="text-xs text-gray-500 mt-2 font-medium"> {{ $adminT("Current integral:", "当前积分:") }} <span class="text-blue-600 font-bold">{{ getDisplayCredits(adjustForm.selectedUser) }}</span>
+                  <span v-if="adjustForm.selectedUser.total_credits === undefined || adjustForm.selectedUser.total_credits === null" class="text-red-500 text-xs ml-2">{{ $adminT("(academic data not available)", "(未获取到积分数据)") }}</span>
                 </div>
               </div>
             </div>
 
             <!-- Credit Amount -->
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2"></label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Number of integrals", "积分数量") }}</label>
               <div class="flex gap-2 mb-2">
                 <button
                   @click="adjustForm.amount = Math.abs(adjustForm.amount || 0)"
                   class="flex-1 px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
                   :class="{ 'bg-green-600 text-white': (adjustForm.amount || 0) > 0 }"
-                >
-
-                </button>
+                >{{ $adminT("Increase", "增加") }}</button>
                 <button
                   @click="adjustForm.amount = -Math.abs(adjustForm.amount || 0)"
                   class="flex-1 px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
                   :class="{ 'bg-red-600 text-white': (adjustForm.amount || 0) < 0 }"
-                >
-
-                </button>
+                >{{ $adminT("Reduction", "减少") }}</button>
               </div>
               <input
                 v-model.number="adjustForm.amount"
                 type="number"
-                placeholder="（，）"
+                :placeholder="$adminT('Enter the number of points (positive increase and negative decrease)', '输入积分数量（正数为增加，负数为减少）')"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 :class="(adjustForm.amount || 0) > 0 ? 'text-green-600' : (adjustForm.amount || 0) < 0 ? 'text-red-600' : ''"
               />
-              <p class="mt-1 text-xs text-gray-500">
-                : {{ adjustForm.selectedUser ? ((adjustForm.selectedUser.total_credits || 0) + (adjustForm.amount || 0)) : '-' }}
+              <p class="mt-1 text-xs text-gray-500"> {{ $adminT("Adjusted credits:", "调整后积分:") }} {{ adjustForm.selectedUser ? ((adjustForm.selectedUser.total_credits || 0) + (adjustForm.amount || 0)) : '-' }}
               </p>
             </div>
 
             <!-- Description -->
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2"></label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Reason for adjustment", "调整原因") }}</label>
               <textarea
                 v-model="adjustForm.description"
                 rows="3"
@@ -329,7 +309,7 @@
                 :class="['w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none', adjustDescriptionError ? 'border-red-500' : 'border-gray-300']"
               ></textarea>
               <p v-if="adjustDescriptionError" class="mt-1 text-xs text-red-500">{{ adjustDescriptionError }}</p>
-              <p v-else class="mt-1 text-xs text-gray-500">（），。</p>
+              <p v-else class="mt-1 text-xs text-gray-500">{{ $adminT("This will be sent to the user (log of points), please use English.", "此内容将发给用户（积分记录），请使用英文。") }}</p>
             </div>
           </div>
           
@@ -337,9 +317,7 @@
             <button
               @click="closeAdjustModal"
               class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Cancel
-            </button>
+            > {{ $adminT("Cancel", "取消") }} </button>
             <button
               @click="handleAdjustCredits"
               :disabled="!canSubmitAdjust || submittingAdjust"
@@ -361,6 +339,9 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { validateReason } from '~/utils/reasonValidation'
 import type { CreditRecord, PaginatedData, UserSummary } from '~/types/domain'
+
+const { translateText: adminT, localeTag } = useAdminI18n()
+
 
 definePageMeta({
   layout: 'default',
@@ -446,7 +427,7 @@ const resetFilters = () => {
 
 const formatDate = (dateString: string) => {
   if (!dateString) return '-'
-  return new Date(dateString).toLocaleString('zh-CN')
+  return new Date(dateString).toLocaleString(localeTag.value)
 }
 
 const formatCreditType = (type: string) => {
@@ -472,7 +453,7 @@ const escapeCSV = (value: unknown): string => {
 
 const exportToCSV = () => {
   if (creditData.value.length === 0) {
-    toast.error('')
+    toast.error(adminT("No data to export", "没有数据可导出"))
     return
   }
 
@@ -741,7 +722,7 @@ const canSubmitAdjust = computed(() => {
 const handleAdjustCredits = async () => {
   const selectedUser = adjustForm.selectedUser
   if (!canSubmitAdjust.value || !selectedUser) {
-    toast.error('')
+    toast.error(adminT("Complete all required information", "请填写完整信息"))
     return
   }
 
@@ -763,7 +744,9 @@ const handleAdjustCredits = async () => {
     })
 
     if (response.success) {
-      toast.success(`successful！${adjustForm.amount > 0 ? '' : ''} ${Math.abs(adjustForm.amount)} `)
+      toast.success((adjustForm.amount > 0
+    ? adminT('Credits adjusted. Added {n} credits.', '积分调整成功！增加 {n} 积分', { n: Math.abs(adjustForm.amount) })
+    : adminT('Credits adjusted. Removed {n} credits.', '积分调整成功！减少 {n} 积分', { n: Math.abs(adjustForm.amount) })))
       closeAdjustModal()
       // Refresh credit records
       loadData()

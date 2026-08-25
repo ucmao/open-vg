@@ -42,7 +42,7 @@
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+                  <h3 class="text-lg font-semibold text-gray-900">{{ resolvedTitle }}</h3>
                 </div>
               </div>
             </div>
@@ -52,8 +52,7 @@
               <p class="text-sm text-gray-700 leading-relaxed mb-4">{{ message }}</p>
               
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Action <span class="text-gray-400 font-normal">()</span>
+                <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Action", "操作理由") }} <span class="text-gray-400 font-normal">{{ $adminT("(optional)", "(可选)") }}</span>
                 </label>
                 <textarea
                   v-model="reason"
@@ -69,9 +68,7 @@
                 <p v-if="reasonError" class="mt-1 text-xs text-red-500">
                   {{ reasonError }}
                 </p>
-                <p v-else class="mt-1 text-xs text-gray-500">
-                  This will be sent to users.
-                </p>
+                <p v-else class="mt-1 text-xs text-gray-500"> {{ $adminT("This will be sent to users", "此内容将发给用户，请使用英文。This will be sent to users.") }} </p>
               </div>
             </div>
 
@@ -81,7 +78,7 @@
                 @click="handleCancel"
                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               >
-                {{ cancelText }}
+                {{ resolvedCancelText }}
               </button>
               <button
                 @click="handleConfirm"
@@ -92,7 +89,7 @@
                     : 'bg-green-600 hover:bg-green-700 text-white'
                 ]"
               >
-                {{ confirmText }}
+                {{ resolvedConfirmText }}
               </button>
             </div>
           </div>
@@ -103,8 +100,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { validateReason } from '~/utils/reasonValidation'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 interface Props {
   show: boolean
@@ -116,11 +116,15 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'ConfirmAction',
-  confirmText: 'Confirm',
-  cancelText: 'Cancel',
+  title: '',
+  confirmText: '',
+  cancelText: '',
   isDisabling: false
 })
+
+const resolvedTitle = computed(() => props.title || adminT('Confirm Action', '确认操作'))
+const resolvedConfirmText = computed(() => props.confirmText || adminT('Confirm', '确认'))
+const resolvedCancelText = computed(() => props.cancelText || adminT('Cancel', '取消'))
 
 const emit = defineEmits<{
   confirm: [reason: string]
@@ -136,7 +140,7 @@ const handleConfirm = () => {
   if (trimmed) {
     const { valid, message } = validateReason(trimmed)
     if (!valid) {
-      reasonError.value = message || ''
+      reasonError.value = message || adminT("This will be sent to users, please use English.", "此内容将发给用户，请使用英文。")
       return
     }
   }

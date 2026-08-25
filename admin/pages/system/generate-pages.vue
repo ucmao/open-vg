@@ -2,8 +2,8 @@
   <div class="p-6">
     <div class="mb-6 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Category</h1>
-        <p class="text-gray-600 mt-1">Category TDK Settings（ /generate）</p>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Category", "生成分类页面") }}</h1>
+        <p class="text-gray-600 mt-1">{{ $adminT("Manage categories and TDK settings for each generation page (paths are prefixed with /generate)", "管理各生成页面的分类和 TDK 设置（路径前缀为 /generate）") }}</p>
       </div>
       <div class="flex items-center gap-2">
         <button
@@ -11,7 +11,7 @@
           :disabled="loadingGenerateTree"
           class="px-4 py-2 border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
         >
-          {{ loadingGenerateTree ? 'Loading......' : '' }}
+          {{ loadingGenerateTree ? $adminT('Loading...', '加载中...') : $adminT('Refresh', '刷新') }}
         </button>
         <button
           @click="exportGenerateToCSV"
@@ -28,7 +28,7 @@
           class="px-4 py-2 border border-amber-300 text-amber-700 rounded hover:bg-amber-50 disabled:opacity-50 text-sm transition-colors flex items-center gap-2"
         >
           <Loader2 v-if="ensuringDefaultLevel1" class="w-4 h-4 animate-spin" />
-          <template v-else>Category</template>
+          <template v-else>{{ $adminT("Category", "初始化一级分类") }}</template>
         </button>
         <button
           @click="syncFromModels"
@@ -36,23 +36,19 @@
           class="px-4 py-2 border border-blue-300 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50 text-sm transition-colors flex items-center gap-2"
         >
           <Loader2 v-if="syncingFromModels" class="w-4 h-4 animate-spin" />
-          <template v-else>
-            Category
-          </template>
+          <template v-else> {{ $adminT("Category", "从模型同步二级分类") }} </template>
         </button>
         <button
           @click="openCreateGenerateModal(null)"
           class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm transition-colors"
-        >
-          + CreateCategory
-        </button>
+        > {{ $adminT("+ Create Category", "+ 新建一级分类") }} </button>
       </div>
     </div>
 
     <!-- Loading -->
     <div v-if="loadingGenerateTree" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">Loading......</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Loading", "加载中...") }}</p>
     </div>
 
     <!-- Generate Category Tree (with optional batch bar) -->
@@ -67,39 +63,31 @@
           @click="batchUpdateGenerateStatus(true)"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50"
-        >
-
-        </button>
+        >{{ $adminT("Batch Enable", "批量启用") }}</button>
         <button
           @click="batchUpdateGenerateStatus(false)"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded hover:bg-gray-50 disabled:opacity-50"
-        >
-
-        </button>
+        >{{ $adminT("Bulk Disable", "批量禁用") }}</button>
         <button
           @click="batchDeleteGenerate"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
-        >
-          Delete
-        </button>
+        > {{ $adminT("Delete", "批量删除") }} </button>
         <button
           @click="selectedGenerateIds = []"
           class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700"
-        >
-          Cancel
-        </button>
+        > {{ $adminT("Cancel", "取消选择") }} </button>
       </div>
       <!-- List header with expand/collapse -->
       <div class="flex items-center justify-start gap-4 mb-2 px-1 text-sm text-gray-500">
-        <button type="button" @click="expandAllGenerateParents" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="expandAllGenerateParents" class="hover:text-gray-700 transition-colors">{{ $adminT("Expand All", "展开全部") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="collapseAllGenerateParents" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="collapseAllGenerateParents" class="hover:text-gray-700 transition-colors">{{ $adminT("Collapse All", "折叠全部") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="selectAllGenerate" class="hover:text-gray-700 transition-colors">Select All</button>
+        <button type="button" @click="selectAllGenerate" class="hover:text-gray-700 transition-colors">{{ $adminT("Select All", "全选") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="invertSelectGenerate" class="hover:text-gray-700 transition-colors"></button>
+        <button type="button" @click="invertSelectGenerate" class="hover:text-gray-700 transition-colors">{{ $adminT("Inverse", "反选") }}</button>
       </div>
       <div class="space-y-6">
         <div
@@ -114,7 +102,7 @@
                 type="button"
                 @click="toggleGenerateParentExpanded(parent.id)"
                 class="p-0.5 rounded text-gray-500 hover:bg-gray-100 transition-colors shrink-0"
-                :aria-label="expandedGenerateParentIds[parent.id] !== false ? '' : ''"
+                :aria-label="expandedGenerateParentIds[parent.id] !== false ? $adminT('Collapse', '收起') : $adminT('Expand', '展开')"
               >
                 <ChevronDown
                   class="w-5 h-5 transition-transform"
@@ -128,15 +116,13 @@
                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4 shrink-0"
               />
               <div class="flex items-center gap-2 flex-wrap min-w-0">
-                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                  Category
-                </span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"> {{ $adminT("Category", "一级分类") }} </span>
                 <span class="text-sm font-mono text-gray-400">[{{ parent.sort_order }}]</span>
                 <a 
                   :href="getCategoryPageUrl(getGeneratePagePath(parent))" 
                   target="_blank" 
                   class="font-semibold text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                  title="View"
+                  :title="$adminT('View', '查看前台页面')"
                 >
                   {{ parent.category_name }}
                 </a>
@@ -155,15 +141,11 @@
               <button
                 @click="openEditGenerateModal(parent)"
                 class="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
-              >
-                Edit
-              </button>
+              > {{ $adminT("Edit", "编辑") }} </button>
               <button
                 @click="deleteGenerateConfig(parent)"
                 class="px-2 py-1 text-xs text-red-600 border border-red-200 rounded hover:bg-red-50 transition-colors"
-              >
-                Delete
-              </button>
+              > {{ $adminT("Delete", "删除") }} </button>
             </div>
           </div>
 
@@ -186,7 +168,7 @@
                   :href="getCategoryPageUrl(getGeneratePagePath(child, parent))" 
                   target="_blank" 
                   class="font-medium text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                  title="View"
+                  :title="$adminT('View', '查看前台页面')"
                 >
                   {{ child.category_name }}
                 </a>
@@ -204,34 +186,26 @@
                 <button
                   @click="openEditGenerateModal(child)"
                   class="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
-                >
-                  Edit
-                </button>
+                > {{ $adminT("Edit", "编辑") }} </button>
                 <button
                   @click="deleteGenerateConfig(child)"
                   class="px-2 py-1 text-xs text-red-600 border border-red-200 rounded hover:bg-red-50 transition-colors"
-                >
-                  Delete
-                </button>
+                > {{ $adminT("Delete", "删除") }} </button>
               </div>
             </div>
           </div>
-          <div v-show="expandedGenerateParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic">
-            Category
-          </div>
+          <div v-show="expandedGenerateParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic"> {{ $adminT("Category", "暂无二级分类") }} </div>
         </div>
       </div>
     </div>
         
     <!-- Empty state -->
     <div v-else class="text-center py-12 bg-gray-50 rounded-lg">
-      <p class="text-gray-600 mb-4">Category</p>
+      <p class="text-gray-600 mb-4">{{ $adminT("Category", "暂无生成分类配置") }}</p>
       <button
         @click="openCreateGenerateModal(null)"
         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-      >
-        Category
-      </button>
+      > {{ $adminT("Category", "创建第一个生成分类") }} </button>
     </div>
 
     <!-- Generate Modal -->
@@ -246,7 +220,7 @@
             {{ editingGenerateConfig.id ? 'EditCategory' : 'CreateCategory' }}
           </h3>
           <div class="flex items-center gap-2 shrink-0">
-            <label class="text-sm font-medium text-gray-700"></label>
+            <label class="text-sm font-medium text-gray-700">{{ $adminT("Sort", "排序") }}</label>
             <input
               v-model.number="editingGenerateConfig.sort_order"
               type="number"
@@ -260,66 +234,66 @@
         <div class="space-y-4">
           <!-- Category Name -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Category *", "分类名称 *") }}</label>
             <input
               v-model="editingGenerateConfig.category_name"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder=": Image to Video"
+              :placeholder="$adminT('Image to Video', '例如: Image to Video')"
             />
           </div>
             
           <!-- Page Path Preview -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">（）</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Page Path (Preview)", "页面路径（预览）") }}</label>
             <input
               :value="computedGeneratePagePath"
               type="text"
               readonly
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-600 cursor-not-allowed"
             />
-            <p class="text-xs text-gray-500 mt-1"> (: /generate//)</p>
+            <p class="text-xs text-gray-500 mt-1"> {{ $adminT("Paths will be generated automatically by the system (structure: /geneate/level I/II)", "路径将由系统自动生成 (结构: /generate/一级/二级)") }}</p>
           </div>
           
           <!-- Display Description -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Description", "显示的描述") }}</label>
             <textarea
               v-model="editingGenerateConfig.display_description"
               rows="2"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Description"
+              :placeholder="$adminT('Description', '显示在生成页面顶部的描述文字')"
             ></textarea>
           </div>
           
           <!-- SEO Fields -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Title (Title)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Title (Title)", "页面标题 (Title)") }}</label>
             <input
               v-model="editingGenerateConfig.title"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="SEOTitle"
+              :placeholder="$adminT('SEOTitle', 'SEO标题')"
             />
           </div>
           
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description (Description)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Description (Description)", "页面描述 (Description)") }}</label>
             <textarea
               v-model="editingGenerateConfig.description"
               rows="3"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="SEODescription"
+              :placeholder="$adminT('SEODescription', 'SEO描述')"
             ></textarea>
           </div>
           
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"> (Keywords)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"> {{ $adminT("(Keywords)", "页面关键词 (Keywords)") }}</label>
             <input
               v-model="editingGenerateConfig.keywords"
               type="text"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder=""
+              :placeholder="$adminT('Separate with English Comma', '用英文逗号分隔')"
             />
           </div>
 
@@ -334,9 +308,9 @@
                     class="sr-only peer"
                   />
                   <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  <span class="ms-3 text-sm font-medium text-gray-700">Category</span>
+                  <span class="ms-3 text-sm font-medium text-gray-700">{{ $adminT("Category", "启用此生成分类") }}</span>
                 </label>
-                <p class="text-xs text-gray-500 mt-1.5 ml-14">， 404。</p>
+                <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("When enabled, the page is accessible.", "启用后页面可访问，不启用时 404。") }}</p>
               </div>
             </div>
           </div>
@@ -346,15 +320,11 @@
           <button
             @click="closeGenerateModal"
             class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="saveGenerateConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          >
-            Save
-          </button>
+          > {{ $adminT("Save", "保存配置") }} </button>
         </div>
       </div>
     </div>
@@ -367,7 +337,7 @@
     >
       <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-gray-900">Category</h3>
+          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Category", "批量导入生成分类") }}</h3>
           <button @click="showGenerateImportModal = false" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -379,9 +349,7 @@
               @click="generateFileInput?.click()"
               class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
-              <CloudUpload class="w-5 h-5" />
-               CSV
-            </button>
+              <CloudUpload class="w-5 h-5" /> {{ $adminT("CSV", "选择 CSV 文件") }} </button>
             <input
               ref="generateFileInput"
               type="file"
@@ -393,13 +361,9 @@
               @click="downloadGenerateConfigTemplate"
               class="text-blue-600 hover:underline text-sm flex items-center gap-1"
             >
-              <Download class="w-4 h-4" />
-              Category
-            </button>
+              <Download class="w-4 h-4" /> {{ $adminT("Category", "下载生成分类导入模板") }} </button>
           </div>
-          <p class="text-sm text-gray-500">
-            Notice：Category。Category， SEO 。
-          </p>
+          <p class="text-sm text-gray-500"> {{ $adminT("Tip: Imported categories are matched to parents by name. Existing categories have their SEO configuration updated.", "提示：导入会自动根据分类名称匹配父级。如果分类已存在，则会更新其 SEO 配置。") }} </p>
         </div>
 
         <!-- Preview Table -->
@@ -407,9 +371,9 @@
           <table class="w-full text-left border-collapse">
             <thead class="bg-gray-50 sticky top-0">
               <tr>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">Category</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">Category</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">SEO Title</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "父分类") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "分类名称") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("SEO Title", "SEO 标题") }}</th>
               </tr>
             </thead>
             <tbody class="divide-y">
@@ -426,16 +390,13 @@
           <button
             @click="showGenerateImportModal = false"
             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="handleGenerateImport"
             :disabled="generateImportPreview.length === 0 || importingGenerateConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50flex items-center gap-2"
           >
-            <Loader2 v-if="importingGenerateConfig" class="w-5 h-5 animate-spin" />
-            Confirm {{ generateImportPreview.length }}
+            <Loader2 v-if="importingGenerateConfig" class="w-5 h-5 animate-spin" /> {{ $adminT("Confirm", "确认导入") }} {{ generateImportPreview.length }}
           </button>
         </div>
       </div>
@@ -450,6 +411,8 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+
+const { translateText: adminT } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -549,7 +512,7 @@ const loadGenerateTree = async () => {
       )
     }
   } catch (error) {
-    toast.error('Categoryfailed')
+    toast.error(adminT("Failed to load the generation category tree", "加载生成分类树失败"))
     console.error('Failed to load generate tree:', error)
   } finally {
     loadingGenerateTree.value = false
@@ -583,13 +546,13 @@ const ensureDefaultLevel1 = async () => {
     const response = await adminApi.post('/api/admin/generate-pages/ensure-default-level1')
     if (response.success) {
       const n = response.data?.created_count ?? 0
-      toast.success(response.message || (n ? ` ${n} Category` : 'Category'))
+      toast.success(response.message || (n ? ` ${n} Category` : adminT("Category", "默认一级分类已存在")))
       await loadGenerateTree()
     } else {
-      toast.error(response.message || 'Actionfailed')
+      toast.error(response.message || adminT("Action failed", "操作失败"))
     }
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'failed')
+    toast.error(error.response?.data?.message || adminT("failed", "一键生成失败"))
     console.error('Failed to ensure default level1:', error)
   } finally {
     ensuringDefaultLevel1.value = false
@@ -606,17 +569,19 @@ const syncFromModels = async () => {
       const deleted = response.data?.deleted ?? 0
       const updated = response.data?.updated ?? 0
       const parts = []
-      if (deleted > 0) parts.push(`Delete ${deleted} `)
-      if (created > 0) parts.push(`Create ${created} `)
-      if (updated > 0) parts.push(` ${updated} `)
-      const msg = parts.length ? `：${parts.join('，')}（ TDK）` : '，'
+      if (deleted > 0) parts.push(adminT('{n} orphans removed', '删除 {n} 个孤儿', { n: deleted }))
+      if (created > 0) parts.push(adminT('{n} created', '新建 {n} 个', { n: created }))
+      if (updated > 0) parts.push(adminT('{n} display names updated', '仅更新显示名 {n} 个', { n: updated }))
+      const msg = parts.length
+        ? adminT('Sync finished: {parts} (existing TDK values are kept)', '同步完成：{parts}（已存在的不覆盖 TDK）', { parts: parts.join(adminT(', ', '，')) })
+        : adminT('Sync complete, no change', '同步完成，无变更')
       toast.success(response.message || msg)
       await loadGenerateTree()
     } else {
-      toast.error(response.message || 'failed')
+      toast.error(response.message || adminT("failed", "同步失败"))
     }
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'failed')
+    toast.error(error.response?.data?.message || adminT("failed", "同步失败"))
     console.error('Failed to sync generate pages from models:', error)
   } finally {
     syncingFromModels.value = false
@@ -696,11 +661,11 @@ const batchUpdateGenerateStatus = async (isActive: boolean) => {
       const { page_path, children, ...rest } = cat
       await adminApi.put(`/api/admin/generate-pages/${id}`, { ...rest, is_active: isActive })
     }
-    toast.success(isActive ? '' : '')
+    toast.success(isActive ? adminT("Batch enabled", "已批量启用") : adminT("Busted Disabled", "已批量禁用"))
     selectedGenerateIds.value = []
     await loadGenerateTree()
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'Actionfailed')
+    toast.error(error.response?.data?.message || adminT("Action failed", "操作失败"))
   } finally {
     batchActionLoading.value = false
   }
@@ -725,8 +690,8 @@ const getGenerateIdsInDeleteOrder = (): number[] => {
 const batchDeleteGenerate = async () => {
   if (selectedGenerateIds.value.length === 0) return
   const confirmed = await confirm({
-    title: 'Delete',
-    message: `ConfirmDelete ${selectedGenerateIds.value.length} Category？Action。`,
+    title: adminT("Delete", "批量删除"),
+    message: adminT('Delete {count} selected categories? This action cannot be undone.', '确定删除选中的 {count} 个分类吗？此操作不可撤销。', { count: selectedGenerateIds.value.length }),
     type: 'warning'
   })
   if (!confirmed) return
@@ -736,11 +701,11 @@ const batchDeleteGenerate = async () => {
     for (const id of ids) {
       await adminApi.delete(`/api/admin/generate-pages/${id}`)
     }
-    toast.success('Delete')
+    toast.success(adminT("Delete", "已批量删除"))
     selectedGenerateIds.value = []
     await loadGenerateTree()
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'Deletefailed')
+    toast.error(error.response?.data?.message || adminT("Delete failed", "删除失败"))
   } finally {
     batchActionLoading.value = false
   }
@@ -818,7 +783,7 @@ const computedGeneratePagePath = computed(() => {
 
 const saveGenerateConfig = async () => {
   if (!editingGenerateConfig.value.category_name) {
-    toast.error('Category')
+    toast.error(adminT("Category", "请填写分类名称"))
     return
   }
 
@@ -827,31 +792,40 @@ const saveGenerateConfig = async () => {
     if (editingGenerateConfig.value.id) {
       const response = await adminApi.put(`/api/admin/generate-pages/${editingGenerateConfig.value.id}`, dataToSave)
       if (response.success) {
-        toast.success('Category')
+        toast.success(adminT("Category", "生成分类已更新"))
         closeGenerateModal()
         await loadGenerateTree()
       }
     } else {
       const response = await adminApi.post('/api/admin/generate-pages', dataToSave)
       if (response.success) {
-        toast.success('Categorysuccessful')
+        toast.success(adminT("Generation category created", "生成分类创建成功"))
         closeGenerateModal()
         await loadGenerateTree()
       }
     }
   } catch (error: any) {
-    toast.error(error.response?.data?.message || 'Savefailed')
+    toast.error(error.response?.data?.message || adminT("Save failed", "保存失败"))
     console.error('Failed to save generate config:', error)
   }
 }
 
 const deleteGenerateConfig = async (category: any) => {
   const isLevel2 = category.level === 2 || category.parent_id != null
+  const hasChildren = Boolean(category.children?.length)
   const message = isLevel2
-    ? `ConfirmDeleteCategory "${category.category_name}" ？DeleteCategory，。Action。`
-    : `ConfirmDeleteCategory "${category.category_name}" ？${category.children && category.children.length > 0 ? 'DeleteCategory。' : ''}Action。`
+    ? adminT('Delete category "{name}"? Its associated page configuration will also be removed. This action cannot be undone.', '确定删除分类“{name}”吗？关联的页面配置也会被删除。此操作不可撤销。', { name: category.category_name })
+    : adminT(
+        hasChildren
+          ? 'Delete category "{name}" and all its subcategories? This action cannot be undone.'
+          : 'Delete category "{name}"? This action cannot be undone.',
+        hasChildren
+          ? '确定删除分类“{name}”及其所有子分类吗？此操作不可撤销。'
+          : '确定删除分类“{name}”吗？此操作不可撤销。',
+        { name: category.category_name }
+      )
   const confirmed = await confirm({
-    title: 'DeleteCategory',
+    title: adminT("Delete Category", "删除生成分类"),
     message,
     type: 'warning'
   })
@@ -860,12 +834,12 @@ const deleteGenerateConfig = async (category: any) => {
   try {
     const response = await adminApi.delete(`/api/admin/generate-pages/${category.id}`)
     if (response.success) {
-      toast.success('CategoryDelete')
+      toast.success(adminT("Category Delete", "生成分类已删除"))
       await loadGenerateTree()
     }
   } catch (error: unknown) {
     const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message
-    toast.error(message || 'Deletefailed')
+    toast.error(message || adminT('Delete failed', '删除失败'))
     console.error('Failed to delete generate config:', error)
   }
 }
@@ -880,10 +854,10 @@ const handleGenerateFileSelect = async (event: Event) => {
     const response = await adminApi.upload('/api/admin/category-pages/parse-excel', formData)
     if (response.success) {
       generateImportPreview.value = response.data.filter((item: any) => item.category_name)
-      toast.success(`successful ${generateImportPreview.value.length} `)
+      toast.success(adminT('Parsed {n} rows', '成功解析 {n} 条数据', { n: generateImportPreview.value.length }))
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT("failed", "文件解析失败"))
   }
 }
 
@@ -897,7 +871,7 @@ Image to Video,Nano Banana,All Nano Banana Pro works,Nano Banana Pro,Create vide
   const url = URL.createObjectURL(blob)
 
   link.setAttribute('href', url)
-  link.setAttribute('download', 'Category.csv')
+  link.setAttribute('download', adminT("Category.csv", "生成分类配置批量导入模板.csv"))
   link.style.visibility = 'hidden'
 
   document.body.appendChild(link)
@@ -915,12 +889,12 @@ const handleGenerateImport = async () => {
       categories: generateImportPreview.value
     })
     if (response.success) {
-      toast.success('successful')
+      toast.success(adminT("successful", "导入成功"))
       showGenerateImportModal.value = false
       await loadGenerateTree()
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT("failed", "导入失败"))
   } finally {
     importingGenerateConfig.value = false
   }
@@ -928,7 +902,7 @@ const handleGenerateImport = async () => {
 
 const exportGenerateToCSV = () => {
   if (generateTree.value.length === 0) {
-    toast.error('Category')
+    toast.error(adminT("Category", "没有可导出的生成分类数据"))
     return
   }
 
@@ -936,16 +910,16 @@ const exportGenerateToCSV = () => {
     const csvRows: string[] = []
 
     csvRows.push([
-      '',
-      'Category',
-      'Category',
-      '',
-      '',
-      '',
-      'Description',
-      'SEOTitle',
-      'SEODescription',
-      'SEO'
+      adminT("Level", "级别"),
+      adminT("Category", "分类名称"),
+      adminT("Category", "父分类"),
+      adminT("Page Path", "页面路径"),
+      adminT("Sort Order", "排序顺序"),
+      adminT("Enable", "是否启用"),
+      adminT("Description", "显示描述"),
+      adminT("SEOTitle", "SEO标题"),
+      adminT("SEODescription", "SEO描述"),
+      adminT("SEO", "SEO关键词")
     ].join(','))
 
     const flattenCategories = (categories: any[], parentName: string = '') => {
@@ -958,7 +932,7 @@ const exportGenerateToCSV = () => {
           parent_name: parentName,
           page_path: category.page_path || '',
           sort_order: category.sort_order || 0,
-          is_active: category.is_active ? '' : '',
+          is_active: category.is_active ? adminT("Yes.", "是") : adminT("Yes", "否"),
           display_description: category.display_description || '',
           title: category.title || '',
           description: category.description || '',
@@ -977,7 +951,7 @@ const exportGenerateToCSV = () => {
 
     for (const cat of flatCategories) {
       const row = [
-        cat.level === 1 ? 'Category' : 'Category',
+        cat.level === 1 ? adminT("Category", "一级分类") : adminT("Category", "二级分类"),
         escapeCSV(cat.category_name),
         escapeCSV(cat.parent_name),
         escapeCSV(cat.page_path),
@@ -1013,7 +987,7 @@ const exportGenerateToCSV = () => {
 
     toast.success(`successful ${flatCategories.length} Category`)
   } catch (error: any) {
-    toast.error('failed: ' + (error.message || ''))
+    toast.error(adminT("failed", "导出失败:") + (error.message || adminT("Unknown error", "未知错误")))
     console.error('Export error:', error)
   }
 }

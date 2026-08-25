@@ -2,8 +2,8 @@
   <div class="p-6">
     <!-- Header -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600 mt-1">，ViewDetails</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("User management", "用户管理") }}</h1>
+      <p class="text-gray-600 mt-1">{{ $adminT("Manage all registered users and view their detailed information and statistics", "管理所有注册用户，查看其详细信息和统计数据") }}</p>
     </div>
 
     <!-- Filters:  + ， -->
@@ -15,17 +15,17 @@
             <input
               v-model="filters.search_id"
               type="text"
-              placeholder=" ID"
+              :placeholder="$adminT('ID', '用户 ID')"
               class="w-24 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               @keyup.enter="applySearch"
             />
           </div>
           <div class="flex items-center gap-2" style="min-width: 140px;">
-            <span class="text-sm text-gray-500 whitespace-nowrap w-12"></span>
+            <span class="text-sm text-gray-500 whitespace-nowrap w-12">{{ $adminT("Nick", "昵称") }}</span>
             <input
               v-model="filters.search_nickname"
               type="text"
-              placeholder="Search"
+              :placeholder="$adminT('Search', '搜索昵称')"
               class="w-28 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               @keyup.enter="applySearch"
             />
@@ -35,14 +35,14 @@
             <input
               v-model="filters.search_handle"
               type="text"
-              placeholder="Search handle"
+              :placeholder="$adminT('Search handle', '搜索 handle')"
               class="w-28 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               @keyup.enter="applySearch"
             />
           </div>
         </div>
         <div class="flex items-center gap-2" style="min-width: 280px;">
-          <span class="text-sm text-gray-500 whitespace-nowrap"></span>
+          <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Registration time", "注册时间") }}</span>
           <div class="flex items-center gap-1 flex-wrap">
             <button
               v-for="preset in timePresets"
@@ -62,15 +62,11 @@
           <button
             @click="loadUsers"
             class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-          >
-            Filter
-          </button>
+          > {{ $adminT("Filter", "筛选") }} </button>
           <button
             @click="resetFilters"
             class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
-          >
-            Reset
-          </button>
+          > {{ $adminT("Reset", "重置") }} </button>
           <button
             type="button"
             @click="showMoreFilters = !showMoreFilters"
@@ -86,13 +82,13 @@
       <div v-show="showMoreFilters" class="border-t border-gray-100 bg-gray-50/60 px-4 py-4">
         <div class="flex flex-wrap items-end gap-x-6 gap-y-3">
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20"></span>
+            <span class="text-sm text-gray-500 w-20">{{ $adminT("Time to start.", "起止时间") }}</span>
             <input
               v-model="filters.created_after"
               type="datetime-local"
               class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            <span class="text-gray-400"></span>
+            <span class="text-gray-400">{{ $adminT("to", "至") }}</span>
             <input
               v-model="filters.created_before"
               type="datetime-local"
@@ -100,29 +96,29 @@
             />
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20"></span>
+            <span class="text-sm text-gray-500 w-20">{{ $adminT("Client source", "客户来源") }}</span>
             <select
               v-model="filters.source"
               class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[100px]"
               @change="loadUsers"
             >
-              <option value=""></option>
-              <option value="REAL"></option>
-              <option value="VIRTUAL"></option>
+              <option value="">{{ $adminT("All", "全部") }}</option>
+              <option value="REAL">{{ $adminT("Real User", "真实用户") }}</option>
+              <option value="VIRTUAL">{{ $adminT("Virtual users", "虚拟用户") }}</option>
             </select>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20"></span>
+            <span class="text-sm text-gray-500 w-20">{{ $adminT("Registration", "注册方式") }}</span>
             <select
               v-model="filters.registration_method"
               class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[110px]"
               @change="loadUsers"
             >
-              <option value=""></option>
-              <option value="REGISTER"></option>
-              <option value="GOOGLE">Google </option>
-              <option value="ADMIN_CREATED"></option>
-              <option value="IMPORT"></option>
+              <option value="">{{ $adminT("All", "全部") }}</option>
+              <option value="REGISTER">{{ $adminT("Mailbox Registration", "邮箱注册") }}</option>
+              <option value="GOOGLE">{{ $adminT("Google", "Google 登录") }} </option>
+              <option value="ADMIN_CREATED">{{ $adminT("Administrator Create", "管理员创建") }}</option>
+              <option value="IMPORT">{{ $adminT("Import creation", "导入创建") }}</option>
             </select>
           </div>
         </div>
@@ -165,15 +161,13 @@
         @click="exportCurrentPageCSV"
         class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
       >
-        <Download class="w-4 h-4" />
-         CSV
-      </button>
+        <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
     </div>
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">List...</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("List", "正在获取用户列表...") }}</p>
     </div>
 
     <!-- Users Table：，Action -->
@@ -182,14 +176,14 @@
         <table class="w-full min-w-max text-left">
           <thead class="bg-gray-50 border-b">
             <tr>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("User Information", "用户信息") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Handle</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase"></th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">Action</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Contact details", "联系方式") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Statistics", "统计") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Source", "来源") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Status", "状态") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Registration time", "注册时间") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
@@ -224,14 +218,14 @@
                     :to="{ path: '/users/works', query: { user_id: String(user.id) } }"
                     class="block w-fit group/stat hover:underline decoration-blue-600"
                   >
-                    <span class="text-gray-400 group-hover/stat:text-blue-600 transition-colors">:</span>
+                    <span class="text-gray-400 group-hover/stat:text-blue-600 transition-colors">{{ $adminT("Works:", "作品:") }}</span>
                     <span class="font-medium text-blue-600 transition-colors ml-1">{{ user.total_works_count || 0 }}</span>
                   </NuxtLink>
                   <NuxtLink
                     :to="{ path: '/finance/credits', query: { user_id: String(user.id) } }"
                     class="block w-fit group/stat hover:underline decoration-amber-600"
                   >
-                    <span class="text-gray-400 group-hover/stat:text-amber-600 transition-colors">:</span>
+                    <span class="text-gray-400 group-hover/stat:text-amber-600 transition-colors">{{ $adminT("Score:", "积分:") }}</span>
                     <span class="font-medium text-amber-600 transition-colors ml-1">{{ user.total_credits || 0 }}</span>
                   </NuxtLink>
                 </div>
@@ -270,7 +264,7 @@
                   class="px-2 py-1 text-xs rounded-full"
                   :class="user.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
                 >
-                  {{ user.is_active ? '' : '' }}
+                  {{ user.is_active ? $adminT('Active', '正常') : $adminT('Disabled', '已禁用') }}
                 </span>
               </td>
               <td class="px-6 py-4">
@@ -283,7 +277,7 @@
                     class="px-3 py-1.5 text-xs font-medium rounded transition-colors"
                     :class="user.is_active ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-green-50 text-green-600 hover:bg-green-100'"
                   >
-                    {{ user.is_active ? '' : '' }}
+                    {{ user.is_active ? $adminT('Disable', '禁用') : $adminT('Enable', '启用') }}
                   </button>
                 </div>
               </td>
@@ -296,12 +290,10 @@
       <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} users', '显示第 {from}–{to} 条，共 {total} 名用户', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; loadUsers()"
@@ -319,7 +311,7 @@
             @click="loadPage(1)"
             :disabled="page === 1"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -327,11 +319,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="page"
               @keyup.enter="loadPage(page)"
@@ -341,20 +331,18 @@
               :max="Math.ceil(total / pageSize)"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -365,19 +353,19 @@
     <!-- Empty State -->
     <div v-else class="text-center py-20 bg-white border rounded-lg">
       <Users class="w-16 h-16 text-gray-300 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900"></h3>
-      <p class="text-gray-500">Search</p>
+      <h3 class="text-lg font-medium text-gray-900">{{ $adminT("No user found", "未找到用户") }}</h3>
+      <p class="text-gray-500">{{ $adminT("Search", "尝试更换搜索关键词") }}</p>
     </div>
 
     <!-- User Status Change Modal -->
     <UserStatusChangeModal
       v-if="statusModal.user"
       :show="statusModal.show"
-      :title="`${statusModal.action}`"
-      :message="`Confirm${statusModal.action} '${statusModal.user.nickname}' (@${statusModal.user.handle}) ？Action。`"
+      :title="statusModal.isDisabling ? $adminT('Disable user', '禁用用户') : $adminT('Enable user', '启用用户')"
+      :message="$adminT('{action} user \'{name}\' (@{handle})? This action cannot be undone.', '确定{action}用户“{name}”（@{handle}）吗？此操作不可撤销。', { action: statusModal.action, name: statusModal.user.nickname, handle: statusModal.user.handle })"
       :is-disabling="statusModal.isDisabling"
-      confirm-text="Confirm"
-      cancel-text="Cancel"
+      :confirm-text="$adminT('Confirm', '确认')"
+      :cancel-text="$adminT('Cancel', '取消')"
       @confirm="handleStatusChangeConfirm"
       @cancel="handleStatusChangeCancel"
     />
@@ -390,6 +378,8 @@ import { ChevronDown, Download, Mail, Users, HelpCircle, ChevronsLeft, ChevronsR
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import UserStatusChangeModal from '~/components/UserStatusChangeModal.vue'
+
+const { translateText: adminT, localeTag } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -410,11 +400,11 @@ const showMoreFilters = ref(false)
 // ：、、7、
 const activeTimePreset = ref('')
 const timePresets = [
-  { key: 'today', label: '' },
-  { key: 'yesterday', label: '' },
-  { key: 'last7', label: '7' },
-  { key: 'month', label: '' },
-  { key: '', label: 'Clear' }
+  { key: 'today', label: adminT("Today", "今天") },
+  { key: 'yesterday', label: adminT("Yesterday.", "昨天") },
+  { key: 'last7', label: adminT("The last seven days", "最近7天") },
+  { key: 'month', label: adminT("Current month", "本月") },
+  { key: '', label: adminT("Clear", "清空") }
 ]
 
 function applyTimePreset(key) {
@@ -478,17 +468,17 @@ function applySearch() {
 
 function exportCurrentPageCSV() {
   if (users.value.length === 0) {
-    toast.error('')
+    toast.error(adminT("No data available for export on current page", "当前页无数据可导出"))
     return
   }
-  const headers = ['ID', '', 'Handle', 'Email', '', 'Status', '', '', '']
+  const headers = ['ID', adminT("Nick", "昵称"), 'Handle', 'Email', adminT("Source", "来源"), adminT("Status", "状态"), adminT("Number of works", "作品数"), adminT("Score", "积分"), adminT("Registration time", "注册时间")]
   const rows = users.value.map(u => [
     u.id,
     u.nickname || '',
     u.handle || '',
     u.email || '',
     getSourceLabel(u.source),
-    u.is_active ? '' : '',
+    u.is_active ? adminT("Normal", "正常") : adminT("Disabled", "已禁用"),
     u.total_works_count ?? 0,
     u.total_credits ?? 0,
     u.created_at ? formatDateTime(u.created_at) : ''
@@ -505,7 +495,7 @@ function exportCurrentPageCSV() {
   a.download = `List_${new Date().toISOString().slice(0, 10)}.csv`
   a.click()
   URL.revokeObjectURL(url)
-  toast.success(' CSV')
+  toast.success(adminT("CSV", "已导出当前页 CSV"))
 }
 
 // User status change modal state
@@ -554,7 +544,7 @@ const loadUsers = async () => {
       }
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT("failed", "加载用户失败"))
     console.error('Failed to load users:', error)
   } finally {
     loading.value = false
@@ -591,7 +581,7 @@ const resetFilters = () => {
 }
 
 const toggleUserStatus = (user) => {
-  const action = user.is_active ? '' : ''
+  const action = user.is_active ? adminT("Disable", "禁用") : adminT("Enable", "启用")
   statusModal.value = {
     show: true,
     user: user,
@@ -602,7 +592,7 @@ const toggleUserStatus = (user) => {
 
 const handleStatusChangeConfirm = async (reason) => {
   const user = statusModal.value.user
-  const action = statusModal.value.action
+  const isDisabling = statusModal.value.isDisabling
   
   statusModal.value.show = false
   
@@ -611,11 +601,15 @@ const handleStatusChangeConfirm = async (reason) => {
       reason: reason || undefined
     })
     if (response.success) {
-      toast.success(`${action}`)
+      toast.success(isDisabling
+        ? adminT('User disabled', '用户已禁用')
+        : adminT('User enabled', '用户已启用'))
       loadUsers()
     }
   } catch (error) {
-    toast.error(`${action}failed`)
+    toast.error(isDisabling
+      ? adminT('Failed to disable the user', '禁用失败')
+      : adminT('Failed to enable the user', '启用失败'))
     console.error('Failed to toggle user status:', error)
   }
 }
@@ -627,7 +621,7 @@ const handleStatusChangeCancel = () => {
 
 const formatDate = (dateString) => {
   if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString('zh-CN', {
+  return new Date(dateString).toLocaleDateString(localeTag.value, {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
@@ -648,12 +642,12 @@ const formatDateTime = (dateString) => {
 
 const getSourceLabel = (source) => {
   const labels = {
-    REGISTER: '',
-    GOOGLE: 'Google ',
-    ADMIN_CREATED: '',
-    IMPORT: ''
+    REGISTER: adminT("Mailbox Registration", "邮箱注册"),
+    GOOGLE: adminT("Google", "Google 登录"),
+    ADMIN_CREATED: adminT("Administrator Create", "管理员创建"),
+    IMPORT: adminT("Import creation", "导入创建")
   }
-  return labels[source] || ''
+  return labels[source] || adminT("Unknown", "未知")
 }
 
 const getSourceClass = (source) => {

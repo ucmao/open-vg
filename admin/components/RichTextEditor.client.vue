@@ -5,46 +5,46 @@
       <div class="toolbar-row">
         <!--  -->
         <div class="toolbar-group">
-          <button type="button" @click="execCommand('bold')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isBoldActive }" title=" (Ctrl+B)">
+          <button type="button" @click="execCommand('bold')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isBoldActive }" :title="$adminT('(Ctrl+B)', '加粗 (Ctrl+B)')">
             <Bold class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('italic')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isItalicActive }" title=" (Ctrl+I)">
+          <button type="button" @click="execCommand('italic')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isItalicActive }" :title="$adminT('(Ctrl+I)', '斜体 (Ctrl+I)')">
             <Italic class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('underline')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isUnderlineActive }" title=" (Ctrl+U)">
+          <button type="button" @click="execCommand('underline')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isUnderlineActive }" :title="$adminT('(Ctrl+U)', '下划线 (Ctrl+U)')">
             <UnderlineIcon class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('strikeThrough')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isStrikethroughActive }" title="Delete">
+          <button type="button" @click="execCommand('strikeThrough')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isStrikethroughActive }" :title="$adminT('Delete', '删除线')">
             <Strikethrough class="w-4 h-4" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <!--  -->
-        <select @change="formatHeading($event)" class="toolbar-select" title="">
-          <option value=""></option>
-          <option value="h1">Title 1</option>
-          <option value="h2">Title 2</option>
-          <option value="h3">Title 3</option>
+        <select @change="formatHeading($event)" class="toolbar-select" :title="$adminT('Paragraph Styles', '段落样式')">
+          <option value="">{{ $adminT("Text", "正文") }}</option>
+          <option value="h1">{{ $adminT("Title 1", "标题 1") }}</option>
+          <option value="h2">{{ $adminT("Title 2", "标题 2") }}</option>
+          <option value="h3">{{ $adminT("Title 3", "标题 3") }}</option>
         </select>
-        <select v-model="fontFamily" @change="applyFontFamily" class="toolbar-select toolbar-select-font" title="">
-          <option value=""></option>
+        <select v-model="fontFamily" @change="applyFontFamily" class="toolbar-select toolbar-select-font" :title="$adminT('Fonts', '字体')">
+          <option value="">{{ $adminT("Default", "默认") }}</option>
           <optgroup label=""><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="'Times New Roman'">Times New Roman</option><option value="'Courier New'">Courier New</option><option value="Verdana">Verdana</option></optgroup>
           <optgroup label="Google "><option value="'Roboto', sans-serif">Roboto</option><option value="'Open Sans', sans-serif">Open Sans</option><option value="'Lato', sans-serif">Lato</option><option value="'Poppins', sans-serif">Poppins</option><option value="'Montserrat', sans-serif">Montserrat</option><option value="'Inter', sans-serif">Inter</option><option value="'Oswald', sans-serif">Oswald</option><option value="'Source Sans 3', sans-serif">Source Sans 3</option><option value="'Nunito', sans-serif">Nunito</option><option value="'Raleway', sans-serif">Raleway</option><option value="'PT Sans', sans-serif">PT Sans</option><option value="'Playfair Display', serif">Playfair Display</option><option value="'Merriweather', serif">Merriweather</option><option value="'Lora', serif">Lora</option></optgroup>
           <optgroup label=""><option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">San Francisco</option><option value="'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica Neue</option></optgroup>
-          <optgroup label=""><option value="SimSun, serif"></option><option value="'Microsoft YaHei', sans-serif"></option><option value="SimHei, sans-serif"></option></optgroup>
+          <optgroup label=""><option value="SimSun, serif">{{ $adminT("Song", "宋体") }}</option><option value="'Microsoft YaHei', sans-serif">{{ $adminT("What?", "微软雅黑") }}</option><option value="SimHei, sans-serif">{{ $adminT("Bold", "黑体") }}</option></optgroup>
         </select>
-        <select v-model="fontSize" @change="applyFontSize" class="toolbar-select toolbar-select-size" title="">
-          <option value=""></option>
+        <select v-model="fontSize" @change="applyFontSize" class="toolbar-select toolbar-select-size" :title="$adminT('Symbol', '字号')">
+          <option value="">{{ $adminT("Default", "默认") }}</option>
           <option value="12px">12px</option><option value="14px">14px</option><option value="16px">16px</option><option value="18px">18px</option><option value="20px">20px</option><option value="24px">24px</option><option value="28px">28px</option><option value="32px">32px</option><option value="36px">36px</option><option value="48px">48px</option>
         </select>
         <div class="toolbar-divider" />
         <!--  -->
         <div class="toolbar-group">
-          <div class="toolbar-color-wrap" title="">
+          <div class="toolbar-color-wrap" :title="$adminT('Font Colour', '字体颜色')">
             <input type="color" v-model="fontColor" @input="applyFontColor" class="toolbar-color-input" />
             <span class="toolbar-color-preview" :style="{ backgroundColor: fontColor }" />
           </div>
-          <div class="toolbar-color-wrap" title="">
+          <div class="toolbar-color-wrap" :title="$adminT('Background Colour', '背景色')">
             <input type="color" v-model="highlightColor" @input="applyHighlightColor" class="toolbar-color-input" />
             <span class="toolbar-color-preview toolbar-color-preview-highlight" :style="{ backgroundColor: highlightColor }" />
           </div>
@@ -52,61 +52,61 @@
         <div class="toolbar-divider" />
         <!--  -->
         <div class="toolbar-group">
-          <button type="button" @click="execCommand('justifyLeft')" class="toolbar-btn" title="">
+          <button type="button" @click="execCommand('justifyLeft')" class="toolbar-btn" :title="$adminT('Left', '左对齐')">
             <AlignLeft class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('justifyCenter')" class="toolbar-btn" title="">
+          <button type="button" @click="execCommand('justifyCenter')" class="toolbar-btn" :title="$adminT('Centred', '居中对齐')">
             <AlignCenter class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('justifyRight')" class="toolbar-btn" title="">
+          <button type="button" @click="execCommand('justifyRight')" class="toolbar-btn" :title="$adminT('Right', '右对齐')">
             <AlignRight class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('insertUnorderedList')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isListActive }" title="List">
+          <button type="button" @click="execCommand('insertUnorderedList')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isListActive }" :title="$adminT('List', '无序列表')">
             <List class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('insertOrderedList')" class="toolbar-btn" title="List">
+          <button type="button" @click="execCommand('insertOrderedList')" class="toolbar-btn" :title="$adminT('List', '有序列表')">
             <ListOrdered class="w-4 h-4" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <!--  -->
         <div class="toolbar-group">
-          <button type="button" @click="insertLink" class="toolbar-btn" title="">
+          <button type="button" @click="insertLink" class="toolbar-btn" :title="$adminT('Insert Link', '插入链接')">
             <Link class="w-4 h-4" />
           </button>
-          <button type="button" @click="openMediaSelector" class="toolbar-btn" title="">
+          <button type="button" @click="openMediaSelector" class="toolbar-btn" :title="$adminT('Insert Picture', '插入图片')">
             <ImageIcon class="w-4 h-4" />
           </button>
-          <button type="button" @click="openPromptModal" class="toolbar-btn toolbar-btn-prompt" title=" Prompt">
+          <button type="button" @click="openPromptModal" class="toolbar-btn toolbar-btn-prompt" :title="$adminT('Prompt', '插入 Prompt')">
             <Zap class="w-5 h-5" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <div class="toolbar-group">
-          <button type="button" @click="insertBlockquote" class="toolbar-btn" title="">
+          <button type="button" @click="insertBlockquote" class="toolbar-btn" :title="$adminT('Reference', '引用')">
             <Quote class="w-4 h-4" />
           </button>
-          <button type="button" @click="insertCode" class="toolbar-btn" title="">
+          <button type="button" @click="insertCode" class="toolbar-btn" :title="$adminT('Code block', '代码块')">
             <Code class="w-4 h-4" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <!-- Action -->
         <div class="toolbar-group">
-          <button type="button" @click="execCommand('undo')" class="toolbar-btn" title=" (Ctrl+Z)" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
+          <button type="button" @click="execCommand('undo')" class="toolbar-btn" :title="$adminT('(Ctrl+Z)', '撤销 (Ctrl+Z)')" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
             <Undo2 class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('redo')" class="toolbar-btn" title=" (Ctrl+Y)" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
+          <button type="button" @click="execCommand('redo')" class="toolbar-btn" :title="$adminT('(Ctrl+Y)', '重做 (Ctrl+Y)')" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
             <Redo2 class="w-4 h-4" />
           </button>
-          <button type="button" @click="formatContent" class="toolbar-btn" title="" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
+          <button type="button" @click="formatContent" class="toolbar-btn" :title="$adminT('One key layout', '一键排版')" :disabled="isSourceMode" :class="{ 'opacity-50 cursor-not-allowed': isSourceMode }">
             <RefreshCw class="w-4 h-4" />
           </button>
         </div>
         <div class="toolbar-spacer" />
-        <button type="button" @click="toggleSourceMode" class="toolbar-source-btn" :class="isSourceMode ? 'toolbar-source-btn-active' : ''" :title="isSourceMode ? 'Edit' : ''">
+        <button type="button" @click="toggleSourceMode" class="toolbar-source-btn" :class="isSourceMode ? 'toolbar-source-btn-active' : ''" :title="isSourceMode ? $adminT('Switch to the visual editor', '切换到可视化编辑器') : $adminT('Switch to source code', '切换到源代码')">
           <Code class="w-4 h-4" />
-          <span class="toolbar-source-label">{{ isSourceMode ? '' : '' }}</span>
+          <span class="toolbar-source-label">{{ isSourceMode ? $adminT('Visual', '可视化') : $adminT('Source', '源码') }}</span>
         </button>
       </div>
     </div>
@@ -141,11 +141,11 @@
         @click.stop
         class="px-2 py-1 text-xs font-medium border border-gray-300 rounded bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
       >
-        <option value="p"></option>
+        <option value="p">{{ $adminT("Text", "正文") }}</option>
         <option value="h1">H1</option>
         <option value="h2">H2</option>
         <option value="h3">H3</option>
-        <option value="blockquote"></option>
+        <option value="blockquote">{{ $adminT("Reference", "引用") }}</option>
       </select>
 
       <!-- Link Button -->
@@ -154,7 +154,7 @@
         @click="insertLink"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
         :class="{ 'bg-gray-200': isLinkActive }"
-        title=""
+        :title="$adminT('Link', '链接')"
       >
         <Link class="w-4 h-4" />
       </button>
@@ -164,7 +164,7 @@
         type="button"
         @click="openPromptModal"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
-        title=" Prompt"
+        :title="$adminT('Prompt', '插入 Prompt')"
       >
         <Zap class="w-4 h-4" />
       </button>
@@ -175,7 +175,7 @@
         @click="execCommand('insertUnorderedList')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
         :class="{ 'bg-gray-200': isListActive }"
-        title="List"
+        :title="$adminT('List', '无序列表')"
       >
         <List class="w-4 h-4" />
       </button>
@@ -186,7 +186,7 @@
         @click="execCommand('bold')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors font-bold"
         :class="{ 'bg-gray-300': isBoldActive }"
-        title=""
+        :title="$adminT('Bold', '加粗')"
       >
         B
       </button>
@@ -197,7 +197,7 @@
         @click="execCommand('strikeThrough')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
         :class="{ 'bg-gray-200': isStrikethroughActive }"
-        title="Delete"
+        :title="$adminT('Delete', '删除线')"
       >
         <Strikethrough class="w-4 h-4" />
       </button>
@@ -208,7 +208,7 @@
         @click="execCommand('underline')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors underline"
         :class="{ 'bg-gray-200': isUnderlineActive }"
-        title=""
+        :title="$adminT('Underline', '下划线')"
       >
         U
       </button>
@@ -220,7 +220,7 @@
           v-model="foregroundColor"
           @input="applyForegroundColor"
           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          title=""
+          :title="$adminT('Foreground Color', '前景色')"
         />
         <div class="p-1.5 rounded hover:bg-gray-200 transition-colors flex items-center gap-1 pointer-events-none">
           <Highlighter class="w-4 h-4" />
@@ -235,7 +235,7 @@
           v-model="backgroundColor"
           @input="applyBackgroundColor"
           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          title=""
+          :title="$adminT('Background Colour', '背景色')"
         />
         <div class="p-1.5 rounded hover:bg-gray-200 transition-colors flex items-center gap-1 pointer-events-none">
           <Highlighter class="w-4 h-4" />
@@ -250,7 +250,7 @@
       ref="sourceRef"
       v-model="sourceCode"
       class="source-editor w-full min-h-[500px] p-4 font-mono text-sm text-gray-800 bg-gray-50 outline-none resize-none"
-      placeholder=" HTML ..."
+      :placeholder="$adminT('Enter / Source...', '输入 HTML 源代码...')"
       @input="handleSourceInput"
       spellcheck="false"
     ></textarea>
@@ -315,6 +315,9 @@ import MediaSelectorModal from './MediaSelectorModal.vue'
 import MediaInsertConfigModal from './MediaInsertConfigModal.vue'
 import LinkInsertModal from './LinkInsertModal.vue'
 import PromptInsertModal from './PromptInsertModal.vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 // Load Google Fonts so selected font families render in the editor
 const GOOGLE_FONTS_URL =
@@ -1520,11 +1523,11 @@ const formatContent = () => {
     if (editorRef.value) {
       editorRef.value.innerHTML = cleanedHtml
       emitChange()
-      toast.success('')
+      toast.success(adminT("Content Formatted", "内容已格式化"))
     }
   } catch (error) {
     console.error('Format content error:', error)
-    toast.error('failed')
+    toast.error(adminT("failed", "格式化失败"))
   }
 }
 

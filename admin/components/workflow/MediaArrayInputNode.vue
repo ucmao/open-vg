@@ -15,9 +15,7 @@
         </svg>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-sm font-semibold text-gray-900 truncate">
-          List
-        </div>
+        <div class="text-sm font-semibold text-gray-900 truncate"> {{ $adminT("List", "媒体列表演示") }} </div>
       </div>
     </div>
     
@@ -53,7 +51,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
-            <span class="text-[10px]"></span>
+            <span class="text-[10px]">{{ $adminT("Add", "添加") }}</span>
           </div>
           <div v-else class="w-full h-full flex items-center justify-center text-[8px] text-gray-400 px-1 text-center">
             {{ item.length > 20 ? item.substring(0, 20) + '...' : item }}
@@ -68,9 +66,7 @@
       <div class="text-xs text-gray-400 italic flex items-center gap-1">
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-        （）
-      </div>
+        </svg> {{ $adminT("Double click to select a picture or video (multiple options)", "双击选择图片或视频（可多选）") }} </div>
     </div>
     
     <!-- Output Handle -->

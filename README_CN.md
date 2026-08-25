@@ -10,7 +10,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141.1-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Docker Compose](https://img.shields.io/badge/Docker%20Compose-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
 
-[English](README.md) | [简体中文](README_CN.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Español](README_ES.md) | [Português](README_PT.md) | [Deutsch](README_DE.md) | [Français](README_FR.md)
+[English](README.md) | [简体中文](README_CN.md)
 
 </div>
 
@@ -74,7 +74,7 @@
 | 架构层级 | 技术选型 |
 | :--- | :--- |
 | **前台 Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
-| **管理后台 Admin** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, **Vue i18n** (中英双语), Axios |
+| **管理后台 Admin** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, 自定义 i18n（中英双语）, Axios |
 | **后端 API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
 | **任务队列与监控** | **Celery 5.4+**, **Flower 2.0+** (队列监控), **Redis 7** (Broker & 缓存) |
 | **数据库** | **PostgreSQL 15+**, **Alembic** 版本迁移工具 |

@@ -7,8 +7,8 @@
           <Search class="h-5 w-5" />
         </div>
         <div>
-          <h1 class="text-2xl font-bold tracking-tight text-gray-900"> SEO</h1>
-          <p class="mt-0.5 text-sm text-gray-500"> TDK (Title, Description, Keywords) Settings</p>
+          <h1 class="text-2xl font-bold tracking-tight text-gray-900"> {{ $adminT("SEO", "页面 SEO") }}</h1>
+          <p class="mt-0.5 text-sm text-gray-500"> {{ $adminT("TDK (Title, Description, Keywords) Settings", "管理各主要页面的 TDK (Title, Description, Keywords) 设置") }}</p>
         </div>
       </div>
       <div class="flex gap-3">
@@ -34,7 +34,7 @@
     <!-- Loading -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-16">
       <div class="h-9 w-9 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
-      <p class="mt-3 text-sm text-gray-500">Loading......</p>
+      <p class="mt-3 text-sm text-gray-500">{{ $adminT("Loading", "加载中...") }}</p>
     </div>
 
     <!-- Page SEO List -->
@@ -67,7 +67,7 @@
                   :href="getFrontendUrl(page.page_path)"
                   target="_blank"
                   class="inline-flex items-center gap-1.5 hover:text-blue-600 hover:underline"
-                  title="View"
+                  :title="$adminT('View', '查看前台页面')"
                 >
                   <component
                     :is="getPageIcon(page.page_name)"
@@ -88,7 +88,7 @@
                   page.is_enabled ? 'text-green-600' : 'text-gray-400'
                 ]"
               >
-                {{ page.is_enabled ? '' : '' }}
+                {{ page.is_enabled ? $adminT('Published', '已发布') : $adminT('Hidden', '已隐藏') }}
               </span>
               <button
                 @click="togglePageEnabled(page)"
@@ -113,34 +113,34 @@
           <!-- Form: Title + Keywords same row; Path removed from form (shown under title) -->
           <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
-              <label class="mb-1.5 block text-sm font-medium text-gray-700">Title (Title)</label>
+              <label class="mb-1.5 block text-sm font-medium text-gray-700">{{ $adminT("Title (Title)", "页面标题 (Title)") }}</label>
               <input
                 v-model="page.title"
                 type="text"
                 class="input-seo w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-shadow focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-                placeholder="Please enterTitle"
+                :placeholder="$adminT('Please enter Title', '请输入页面标题')"
                 @blur="updatePageSeo(page)"
               />
             </div>
             <div>
-              <label class="mb-1.5 block text-sm font-medium text-gray-700"> (Keywords)</label>
+              <label class="mb-1.5 block text-sm font-medium text-gray-700"> {{ $adminT("(Keywords)", "页面关键词 (Keywords)") }}</label>
               <input
                 v-model="page.keywords"
                 type="text"
                 class="input-seo w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-shadow focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-                placeholder=""
+                :placeholder="$adminT('English comma separated', '英文逗号分隔')"
                 @blur="updatePageSeo(page)"
               />
             </div>
           </div>
 
           <div class="mt-5">
-            <label class="mb-1.5 block text-sm font-medium text-gray-700">Description (Description)</label>
+            <label class="mb-1.5 block text-sm font-medium text-gray-700">{{ $adminT("Description (Description)", "页面描述 (Description)") }}</label>
             <textarea
               v-model="page.description"
               rows="3"
               class="input-seo w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-shadow focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-              placeholder="Please enterDescription"
+              :placeholder="$adminT('Please enter Description', '请输入页面描述')"
               @blur="updatePageSeo(page)"
             />
           </div>
@@ -150,13 +150,11 @@
 
     <!-- Empty state -->
     <div v-else class="rounded-xl bg-white py-16 text-center shadow-sm">
-      <p class="mb-4 text-gray-600"></p>
+      <p class="mb-4 text-gray-600">{{ $adminT("No page configuration available", "暂无页面配置") }}</p>
       <button
         @click="initDefaults"
         class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-      >
-
-      </button>
+      >{{ $adminT("Initialize Default Page Configuration", "初始化默认页面配置") }}</button>
     </div>
   </div>
 </template>
@@ -178,6 +176,8 @@ import {
 } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
+
+const { translateText: adminT } = useAdminI18n()
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
@@ -274,14 +274,16 @@ const loadPageSeos = async () => {
 
 const togglePageEnabled = async (page: any) => {
   const newStatus = !page.is_enabled
-  const action = newStatus ? '' : ''
+  const action = newStatus ? adminT('Enable', '启用') : adminT('Disable', '禁用')
   const pageDisplayName = getPageDisplayName(page.page_name)
   
   const confirmed = await confirm({
-    title: `${action}`,
-    message: `Confirm${action} "${pageDisplayName}" ？${newStatus ? '，。' : '，Back404，。'}`,
-    confirmText: `Confirm${action}`,
-    cancelText: 'Cancel',
+    title: newStatus ? adminT('Enable page', '启用页面') : adminT('Disable page', '禁用页面'),
+    message: newStatus
+      ? adminT('Enable "{name}"? The page will become publicly accessible.', '确定启用“{name}”吗？该页面将可公开访问。', { name: pageDisplayName })
+      : adminT('Disable "{name}"? The page will return a 404 response.', '确定禁用“{name}”吗？该页面将返回 404。', { name: pageDisplayName }),
+    confirmText: newStatus ? adminT('Confirm enable', '确认启用') : adminT('Confirm disable', '确认禁用'),
+    cancelText: adminT('Cancel', '取消'),
     type: newStatus ? 'info' : 'warning'
   })
   
@@ -314,7 +316,7 @@ const updatePageSeo = async (page: PageSeo) => {
 const initDefaults = async () => {
   const confirmed = await confirm({
     title: '',
-    message: 'Confirm？，。',
+    message: adminT('Initialize the default SEO configuration? Existing values may be overwritten.', '确定初始化默认 SEO 配置吗？现有值可能会被覆盖。'),
     type: 'warning'
   })
   if (!confirmed) return

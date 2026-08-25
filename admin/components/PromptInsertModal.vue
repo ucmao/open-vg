@@ -5,13 +5,13 @@
     <div class="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-xl overflow-hidden flex flex-col" @click.stop>
       <!-- ：Title，SearchFilter -->
       <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-gray-100">
-        <h2 class="text-base font-semibold text-[#1A1A1A] shrink-0"> Prompt</h2>
+        <h2 class="text-base font-semibold text-[#1A1A1A] shrink-0"> {{ $adminT("Prompt", "插入 Prompt") }}</h2>
         <div class="flex items-center gap-3 flex-1 justify-end min-w-0 max-w-2xl">
           <div class="relative w-72 min-w-0 flex-shrink-0">
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="SearchTitle、 Prompt …"
+              :placeholder="$adminT('Search for title, description or keyword...', '搜索标题、说明或 Prompt 关键词…')"
               class="w-full pl-8 pr-3 py-1.5 bg-gray-50/80 text-sm rounded-lg border-0 focus:ring-2 focus:ring-violet-500/25 outline-none transition-all placeholder:text-gray-400"
               @input="triggerSearch"
             />
@@ -24,13 +24,13 @@
             class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 focus:ring-2 focus:ring-violet-500/25 focus:border-violet-500 outline-none"
             @change="loadPrompts"
           >
-            <option value="">Type</option>
-            <option value="text-to-image">→</option>
-            <option value="image-to-image">→</option>
-            <option value="text-to-video">→</option>
-            <option value="image-to-video">→</option>
-            <option value="video-effects"></option>
-            <option value="image-effects"></option>
+            <option value="">{{ $adminT("Type", "全部类型") }}</option>
+            <option value="text-to-image">{{ $adminT("Text & Picture", "文本→图片") }}</option>
+            <option value="image-to-image">{{ $adminT("Pictures", "图片→图片") }}</option>
+            <option value="text-to-video">{{ $adminT("Text to Video", "文本→视频") }}</option>
+            <option value="image-to-video">{{ $adminT("Images and videos", "图片→视频") }}</option>
+            <option value="video-effects">{{ $adminT("Video Effects Template", "视频特效模板") }}</option>
+            <option value="image-effects">{{ $adminT("Picture Effects Template", "图片特效模板") }}</option>
           </select>
           <button
             type="button"
@@ -54,11 +54,9 @@
         <!-- List：，Title + Type +  -->
         <div class="overflow-y-auto border-r border-gray-100 bg-gray-50/30">
           <div v-if="loading && prompts.length === 0" class="flex items-center justify-center py-12 text-gray-500 text-sm">
-            <div class="w-4 h-4 border-2 border-gray-200 border-t-violet-500 rounded-full animate-spin mr-2"></div>
-            Loading...…
-          </div>
+            <div class="w-4 h-4 border-2 border-gray-200 border-t-violet-500 rounded-full animate-spin mr-2"></div> {{ $adminT("Loading...…", "加载中…") }} </div>
           <div v-else-if="prompts.length === 0" class="flex flex-col items-center justify-center py-12 text-center px-4">
-            <p class="text-gray-500 text-sm">，</p>
+            <p class="text-gray-500 text-sm">{{ $adminT("Unfinished, key words or right input", "暂无结果，可换关键词或右侧直接输入") }}</p>
           </div>
           <div v-else class="py-2">
             <button
@@ -101,45 +99,45 @@
               </a>
               <label class="absolute top-2 right-2 flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/95 shadow-sm border border-gray-200/80 cursor-pointer backdrop-blur-sm">
                 <input v-model="showPromptImage" type="checkbox" class="h-3.5 w-3.5 text-violet-600 focus:ring-violet-500 border-gray-300 rounded" />
-                <span class="text-xs text-gray-700 whitespace-nowrap">/</span>
+                <span class="text-xs text-gray-700 whitespace-nowrap">{{ $adminT("Show pictures/videos when inserted", "插入时显示图片/视频") }}</span>
               </label>
             </div>
 
             <!-- ：Title、Type、 -->
             <div class="space-y-5">
               <div>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">Prompt Title（）</label>
+                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Title (optional)", "Prompt 标题（可选）") }}</label>
                 <input
                   v-model="promptTitle"
                   type="text"
-                  placeholder="："
+                  :placeholder="$adminT('For example: Saberpenk Painting Wind Generator', '例如：赛博朋克画风生成器')"
                   class="w-full rounded-lg px-3 py-2 text-sm border border-gray-200 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none bg-white"
                   maxlength="100"
                 />
               </div>
 
               <div>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">Type</label>
+                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Type", "生成类型") }}</label>
                 <select
                   v-model="selectedType"
                   class="w-full rounded-lg px-3 py-2 text-sm border border-gray-200 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none bg-white"
                 >
-                  <option value="text2img">→</option>
-                  <option value="img2img">→</option>
-                  <option value="text2video">→</option>
-                  <option value="img2video">→</option>
-                  <option value="video_effects"></option>
-                  <option value="img_effects"></option>
+                  <option value="text2img">{{ $adminT("Text & Picture", "文本→图片") }}</option>
+                  <option value="img2img">{{ $adminT("Pictures", "图片→图片") }}</option>
+                  <option value="text2video">{{ $adminT("Text to Video", "文本→视频") }}</option>
+                  <option value="img2video">{{ $adminT("Images and videos", "图片→视频") }}</option>
+                  <option value="video_effects">{{ $adminT("Video Effects Template", "视频特效模板") }}</option>
+                  <option value="img_effects">{{ $adminT("Picture Effects Template", "图片特效模板") }}</option>
                 </select>
               </div>
 
               <div>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">Prompt </label>
+                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Prompt", "Prompt 内容") }} </label>
                 <textarea
                   v-model="manualPrompt"
                   rows="8"
                   class="w-full rounded-lg p-3 text-sm border border-gray-200 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none resize-none bg-white placeholder:text-gray-400"
-                  placeholder="，"
+                  :placeholder="$adminT('Selecting the left entry will be automatically filled, or it can be pasted or entered directly', '选择左侧项会自动填充，也可直接粘贴或输入')"
                 ></textarea>
                 <div class="mt-1 text-[11px] text-gray-400">{{ (manualPrompt || '').length }} </div>
               </div>
@@ -148,17 +146,13 @@
 
           <!-- Action：， -->
           <div class="shrink-0 flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50/50">
-            <button type="button" @click="handleClose" class="px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 rounded-lg transition-colors">
-              Cancel
-            </button>
+            <button type="button" @click="handleClose" class="px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 rounded-lg transition-colors"> {{ $adminT("Cancel", "取消") }} </button>
             <button
               type="button"
               class="px-5 py-2.5 bg-emerald-700 text-white text-sm font-semibold rounded-lg hover:bg-emerald-800 transition-colors disabled:opacity-50 disabled:pointer-events-none"
               :disabled="!resolvedPrompt"
               @click="handleConfirm"
-            >
-              Edit
-            </button>
+            > {{ $adminT("Edit", "插入到编辑器") }} </button>
           </div>
         </div>
       </div>
@@ -169,6 +163,9 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const props = withDefaults(defineProps<{
   isOpen: boolean
@@ -264,11 +261,11 @@ const loadPrompts = async () => {
         
         // Title、Description"""workflow"
         const hasWorkflowKeyword = 
-          title.includes('') ||
+          title.includes(adminT("Workstream", "工作流")) ||
           title.includes('workflow') ||
-          shareName.includes('') ||
+          shareName.includes(adminT("Workstream", "工作流")) ||
           shareName.includes('workflow') ||
-          description.includes('') ||
+          description.includes(adminT("Workstream", "工作流")) ||
           description.includes('workflow')
         
         //  prompt
@@ -281,11 +278,11 @@ const loadPrompts = async () => {
       prompts.value = filteredItems.slice(0, 20)
     } else {
       prompts.value = []
-      toast.error(response.message || ' Prompt failed')
+      toast.error(response.message || adminT("Prompt failed", "加载 Prompt 失败"))
     }
   } catch (error: any) {
     prompts.value = []
-    toast.error(error.message || ' Prompt failed')
+    toast.error(error.message || adminT("Prompt failed", "加载 Prompt 失败"))
   } finally {
     loading.value = false
   }
@@ -308,7 +305,7 @@ const selectPrompt = (item: any) => {
 
 const handleConfirm = () => {
   if (!resolvedPrompt.value) {
-    toast.warning('Please enter Prompt ')
+    toast.warning(adminT("Please enter Prompt", "请输入或选择 Prompt 后再插入"))
     return
   }
   const payload: Parameters<typeof emit>[1] = {

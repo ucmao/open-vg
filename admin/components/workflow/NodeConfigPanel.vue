@@ -2,7 +2,7 @@
   <div class="space-y-3">
     <!-- API Selection -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-0.5"> API</label>
+      <label class="block text-sm font-medium text-gray-700 mb-0.5"> {{ $adminT("API", "选择 API") }}</label>
       <div v-if="loadingParams" class="space-y-2">
         <div class="h-10 bg-gray-200 rounded animate-pulse"></div>
         <div class="h-4 bg-gray-200 rounded animate-pulse w-1/2"></div>
@@ -13,7 +13,7 @@
           @change="updateApiId(($event.target as HTMLSelectElement).value)"
           class="w-full border border-gray-300 rounded-md px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500"
         >
-          <option value="">--  API --</option>
+          <option value="">{{ $adminT("-- API --", "-- 选择 API --") }}</option>
           <option
             v-for="api in filteredApiLibraryEntries"
             :key="api.id"
@@ -23,24 +23,18 @@
           </option>
         </select>
         <p v-if="filteredApiLibraryEntries.length === 0" class="mt-0.5 text-xs text-red-500">
-          <span v-if="node.data?.output_type">
-            Type <span class="font-medium">{{ outputTypeLabel }}</span>  API， API
-          </span>
-          <span v-else>
-             API， API
-          </span>
+          <span v-if="node.data?.output_type"> {{ $adminT("Type", "暂无输出类型为") }} <span class="font-medium">{{ outputTypeLabel }}</span> {{ $adminT(", add the API library", "的可用 API，请先在 API 库中添加") }} </span>
+          <span v-else> {{ $adminT("API is currently not available. Please add it to the API library", "暂无可用 API，请先在 API 库中添加") }} </span>
         </p>
         <p v-else class="mt-0.5 text-xs text-gray-500">
           <span v-if="node.data?.output_type">
-             {{ filteredApiLibraryEntries.length }} Type <span class="font-medium">{{ outputTypeLabel }}</span>  API
+            {{ $adminT('{count} APIs with output type {label}', '共 {count} 个输出类型为 {label} 的 API', { count: filteredApiLibraryEntries.length, label: outputTypeLabel }) }}
           </span>
           <span v-else>
-             {{ filteredApiLibraryEntries.length }}  API
+            {{ $adminT('{count} APIs available', '共 {count} 个 API', { count: filteredApiLibraryEntries.length }) }}
           </span>
         </p>
-        <p v-if="selectedApi && !selectedApi.params_schema" class="mt-0.5 text-xs text-yellow-600">
-          ⚠️  API
-        </p>
+        <p v-if="selectedApi && !selectedApi.params_schema" class="mt-0.5 text-xs text-yellow-600"> {{ $adminT(", the AI is not currently defined as parameters", "⚠️ 该 API 暂无参数定义") }} </p>
       </div>
     </div>
 
@@ -51,30 +45,24 @@
           @click="activeTab = 'params'"
           :class="activeTab === 'params' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
           class="px-3 py-1 text-xs font-medium"
-        >
-
-        </button>
+        >{{ $adminT("Parameter Configuration", "参数配置") }}</button>
         <button
           @click="activeTab = 'json'"
           :class="activeTab === 'json' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
           class="px-3 py-1 text-xs font-medium"
-        >
-          JSON
-        </button>
+        > {{ $adminT("JSON", "JSON 预览") }} </button>
         <button
           @click="activeTab = 'test'"
           :class="activeTab === 'test' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
           class="px-3 py-1 text-xs font-medium"
-        >
-
-        </button>
+        >{{ $adminT("Show Information", "显示信息") }}</button>
       </div>
       
       <!-- Parameters Tab -->
       <div v-show="activeTab === 'params'">
         <div class="flex items-center justify-between mb-2">
-          <label class="block text-sm font-medium text-gray-700"></label>
-          <span class="text-xs text-green-600">✓  {{ paramsList.length }} </span>
+          <label class="block text-sm font-medium text-gray-700">{{ $adminT("Parameter Configuration", "参数配置") }}</label>
+          <span class="text-xs text-green-600">{{ $adminT("~ Loaded", "✓ 已加载") }} {{ paramsList.length }} </span>
         </div>
       <div class="space-y-2 max-h-64 overflow-y-auto">
         <div
@@ -97,12 +85,12 @@
               <span v-if="param.type" class="text-xs text-gray-500">({{ param.type }})</span>
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
-              <span v-if="isPromptPresetNodeConnection(param.name)" class="text-xs text-orange-600 font-medium">[]</span>
-              <span v-else-if="isApiToApiConnection(param.name)" class="text-xs text-blue-600 font-medium">[]</span>
+              <span v-if="isPromptPresetNodeConnection(param.name)" class="text-xs text-orange-600 font-medium">{{ $adminT("[predation]", "[预埋]") }}</span>
+              <span v-else-if="isApiToApiConnection(param.name)" class="text-xs text-blue-600 font-medium">{{ $adminT("[Change]", "[传值]") }}</span>
               <button
                 type="button"
                 :disabled="isVisibilityLocked(param.name) || (param.required && isParamVisible(param.name))"
-                :title="(param.required && isParamVisible(param.name)) ? 'Required' : (isVisibilityLocked(param.name) ? '，' : (isParamVisible(param.name) ? '' : ''))"
+                :title="(param.required && isParamVisible(param.name)) ? $adminT('Required parameters cannot be hidden', '必填参数不可设为不可见') : (isVisibilityLocked(param.name) ? $adminT('This parameter is connected; its visibility cannot be changed', '该参数已连接，不可切换可见性') : (isParamVisible(param.name) ? $adminT('Click to hide', '点击设为不可见') : $adminT('Click to show', '点击设为可见')))"
                 @click="toggleParamVisibility(param.name)"
                 :class="[
                   'px-2 py-0.5 text-xs rounded border transition-colors',
@@ -112,16 +100,14 @@
                   (isVisibilityLocked(param.name) || (param.required && isParamVisible(param.name))) && 'opacity-60 cursor-not-allowed'
                 ]"
               >
-                {{ isParamVisible(param.name) ? '' : '' }}
+                {{ isParamVisible(param.name) ? $adminT('Visible', '可见') : $adminT('Hidden', '不可见') }}
               </button>
             </div>
           </div>
 
             <!-- （） -->
             <div class="mb-1.5">
-              <label class="block text-xs text-gray-600 mb-0.5">
-
-              </label>
+              <label class="block text-xs text-gray-600 mb-0.5">{{ $adminT("Default", "默认值") }}</label>
               
               <!-- Boolean dropdown -->
               <select
@@ -131,7 +117,7 @@
                 :disabled="isSystemPresetAndConnected(param.name) || isConnectedToImageOrVideoInput(param.name) || isParamInvisible(param.name)"
                 class="w-full border rounded px-2 py-0.5 text-xs focus:ring-blue-500 focus:border-blue-500 transition-colors border-gray-300 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                <option value="">--  --</option>
+                <option value="">{{ $adminT("--Select Value --", "-- 选择值 --") }}</option>
                 <option value="true">true</option>
                 <option value="false">false</option>
               </select>
@@ -144,7 +130,7 @@
                 :disabled="isSystemPresetAndConnected(param.name) || isConnectedToImageOrVideoInput(param.name) || isParamInvisible(param.name)"
                 class="w-full border rounded px-2 py-0.5 text-xs focus:ring-blue-500 focus:border-blue-500 transition-colors border-gray-300 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                <option value="">--  --</option>
+                <option value="">{{ $adminT("--Select Value --", "-- 选择值 --") }}</option>
                 <option
                   v-for="option in param.options"
                   :key="String(option)"
@@ -183,12 +169,8 @@
             
             <!-- Helper text below the fields (Notice) -->
             <div class="mb-1.5">
-              <p v-if="isConnectedToImageOrVideoInput(param.name)" class="text-[10px] text-orange-600 italic">
-                ⓘ ，Action
-              </p>
-              <p v-else-if="isPromptPresetNodeConnection(param.name)" class="text-[10px] text-orange-600 italic">
-                ⓘ  Prompt ， Prompt ，
-              </p>
+              <p v-if="isConnectedToImageOrVideoInput(param.name)" class="text-[10px] text-orange-600 italic"> {{ $adminT("i This content will be used as a default, and the user can see or modify this parameter at the operating interface", "ⓘ 此内容将作为默认值，用户在操作界面可以看到或修改此参数") }} </p>
+              <p v-else-if="isPromptPresetNodeConnection(param.name)" class="text-[10px] text-orange-600 italic"> {{ $adminT("i This parameter has been taken over by preburial node, provided by preburial node, which the user cannot see or modify.", "ⓘ 此参数已被 Prompt 预埋节点接管，值由 Prompt 预埋节点提供，用户无法看到或修改此参数") }} </p>
             </div>
 
           <!-- Parameter Description -->
@@ -202,11 +184,11 @@
       <!-- JSON Preview Tab -->
       <div v-show="activeTab === 'json'" class="space-y-2">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5"> JSON</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("JSON", "节点完整配置 JSON") }}</label>
           <pre class="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs overflow-auto max-h-64 font-mono">{{ nodeJsonPreview }}</pre>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5"> JSON</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("JSON", "参数映射 JSON") }}</label>
           <pre class="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs overflow-auto max-h-32 font-mono">{{ mappingsJson }}</pre>
         </div>
       </div>
@@ -216,7 +198,7 @@
         <div v-if="selectedApi" class="space-y-3">
           <!-- API  -->
           <div v-if="selectedApi.api_docs_url">
-            <label class="block text-xs font-medium text-gray-700 mb-1">API </label>
+            <label class="block text-xs font-medium text-gray-700 mb-1">{{ $adminT("API", "API 文档") }} </label>
             <a
               :href="selectedApi.api_docs_url"
               target="_blank"
@@ -232,7 +214,7 @@
 
           <!-- Starting Price -->
           <div v-if="selectedApi.official_price !== undefined && selectedApi.official_price !== null && selectedApi.official_currency && selectedApi.official_unit">
-            <label class="block text-xs font-medium text-gray-700 mb-1"></label>
+            <label class="block text-xs font-medium text-gray-700 mb-1">{{ $adminT("Start price", "起步价格") }}</label>
             <div class="bg-gray-50 border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900">
               {{ selectedApi.official_currency }} {{ selectedApi.official_price }}/{{ selectedApi.official_unit }}
             </div>
@@ -240,20 +222,16 @@
           
           <!-- Notes -->
           <div v-if="selectedApi.notes !== undefined && selectedApi.notes !== null && selectedApi.notes !== ''">
-            <label class="block text-xs font-medium text-gray-700 mb-1"> (notes)</label>
+            <label class="block text-xs font-medium text-gray-700 mb-1"> {{ $adminT("(notes)", "备注 (notes)") }}</label>
             <div class="bg-gray-50 border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 whitespace-pre-wrap">
               {{ selectedApi.notes }}
             </div>
           </div>
           
           <!-- Empty State -->
-          <div v-if="!selectedApi.api_docs_url && (!selectedApi.official_price || !selectedApi.official_currency || !selectedApi.official_unit) && (!selectedApi.notes || selectedApi.notes === '')" class="text-center py-4 text-sm text-gray-500">
-
-          </div>
+          <div v-if="!selectedApi.api_docs_url && (!selectedApi.official_price || !selectedApi.official_currency || !selectedApi.official_unit) && (!selectedApi.notes || selectedApi.notes === '')" class="text-center py-4 text-sm text-gray-500">{{ $adminT("Can not open message", "暂无信息") }}</div>
         </div>
-        <div v-else class="text-center py-4 text-sm text-gray-500">
-           API
-        </div>
+        <div v-else class="text-center py-4 text-sm text-gray-500"> {{ $adminT("API", "请先选择 API") }} </div>
       </div>
     </div>
   </div>
@@ -263,6 +241,7 @@
 import { computed, ref } from 'vue'
 import type { ApiLibraryEntry, WorkflowEdge, WorkflowNode, WorkflowParamDefinition } from '~/types/domain'
 
+const { translateText: adminT } = useAdminI18n()
 const { toast } = useToast()
 
 const props = defineProps<{
@@ -291,9 +270,9 @@ const selectedApi = computed(() => {
 //  output_type （Notice）
 const outputTypeLabel = computed(() => {
   const t = props.node.data?.output_type
-  if (t === 'image') return ''
-  if (t === 'video') return ''
-  if (t === 'text') return ''
+  if (t === 'image') return adminT('Image', '图片')
+  if (t === 'video') return adminT('Video', '视频')
+  if (t === 'text') return adminT('Text', '文本')
   return t || ''
 })
 
@@ -442,8 +421,8 @@ const updateApiId = (apiId: string) => {
     const apiOut = apiEntry.output_type
     const match = nodeOut === apiOut || (nodeOut === 'text' && (apiOut === 'text' || apiOut === 'string'))
     if (!match) {
-      const apiOutLabel = apiOut === 'image' ? '' : apiOut === 'video' ? '' : apiOut === 'text' || apiOut === 'string' ? '' : apiOut
-      toast.error(` API Type。Type ${outputTypeLabel.value}， API Type ${apiOutLabel}`)
+      const apiOutLabel = apiOut === 'image' ? adminT('Image', '图片') : apiOut === 'video' ? adminT('Video', '视频') : apiOut === 'text' || apiOut === 'string' ? adminT('Text', '文本') : apiOut
+      toast.error(adminT('The selected API output type does not match. The node requires {required}, but the API returns {actual}.', '所选 API 的输出类型不匹配。节点要求 {required}，但 API 返回 {actual}。', { required: outputTypeLabel.value, actual: apiOutLabel || adminT('Unknown', '未知') }))
       return
     }
   }

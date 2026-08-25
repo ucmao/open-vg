@@ -7,9 +7,11 @@
 </template>
 
 <script setup lang="ts">
+const { localeTag } = useAdminI18n()
+
 useHead({
   htmlAttrs: {
-    lang: 'zh-CN'
+    lang: localeTag
   }
 })
 </script>

@@ -15,7 +15,7 @@
               @keyup.enter="isEditingName = false"
               @keyup.escape="isEditingName = false"
               class="text-2xl font-bold text-gray-900 border-none outline-none bg-transparent px-2 py-1 -mx-2 -my-1 rounded focus:bg-white focus:ring-2 focus:ring-blue-500 min-w-[200px]"
-              placeholder=""
+              :placeholder="$adminT('Jobstream Name', '工作流名称')"
             />
             <div
               v-else
@@ -58,19 +58,18 @@
                 <div class="space-y-4">
                   <!-- Description -->
                   <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Description</label>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">{{ $adminT("Description", "描述") }}</label>
                     <textarea
                       v-model="workflowForm.description"
                       rows="3"
                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 resize-none"
-                      placeholder="Description"
+                      :placeholder="$adminT('Description', '工作流描述')"
                     />
                   </div>
                   
                   <!-- Work Type -->
                   <div class="relative">
-                    <label class="block text-xs font-medium text-gray-700 mb-1">
-                      Type <span class="text-red-500">*</span>
+                    <label class="block text-xs font-medium text-gray-700 mb-1"> {{ $adminT("Type", "工作类型") }} <span class="text-red-500">*</span>
                     </label>
                     <button
                       type="button"
@@ -115,15 +114,15 @@
                   <!-- Metadata Info -->
                   <div class="pt-3 border-t border-gray-200 space-y-1.5">
                     <div v-if="workflowMetadata.updated_at" class="text-xs text-gray-500">
-                      <span class="font-medium text-gray-600">：</span>
+                      <span class="font-medium text-gray-600">{{ $adminT("Last revision:", "最后修改：") }}</span>
                       {{ formatDateTime(workflowMetadata.updated_at) }}
                     </div>
                     <div v-if="workflowMetadata.created_at" class="text-xs text-gray-500">
-                      <span class="font-medium text-gray-600">：</span>
+                      <span class="font-medium text-gray-600">{{ $adminT("_Other Organiser", "创建时间：") }}</span>
                       {{ formatDateTime(workflowMetadata.created_at) }}
                     </div>
                     <div v-if="workflowMetadata.created_by" class="text-xs text-gray-500">
-                      <span class="font-medium text-gray-600">：</span>
+                      <span class="font-medium text-gray-600">{{ $adminT("Creator:", "创建者：") }}</span>
                       {{ workflowMetadata.created_by_name || ` #${workflowMetadata.created_by}` }}
                     </div>
                   </div>
@@ -140,7 +139,7 @@
               @click="undo"
               :disabled="historyIndex <= 0"
               class="px-3 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              title=" (Ctrl+Z)"
+              :title="$adminT('(Ctrl+Z)', '撤销 (Ctrl+Z)')"
             >
               <Undo2 class="w-4 h-4" />
             </button>
@@ -148,7 +147,7 @@
               @click="redo"
               :disabled="historyIndex >= history.length - 1"
               class="px-3 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border-l border-gray-300"
-              title=" (Ctrl+Shift+Z)"
+              :title="$adminT('(Ctrl+Shift+Z)', '重做 (Ctrl+Shift+Z)')"
             >
               <Redo2 class="w-4 h-4" />
             </button>
@@ -160,25 +159,21 @@
               @click="updateEdgeType('bezier')"
               :class="edgeType === 'bezier' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'"
               class="px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150"
-              title=""
-            >
-
-            </button>
+              :title="$adminT('Curve', '曲线')"
+            >{{ $adminT("Curve", "曲线") }}</button>
             <button
               @click="updateEdgeType('step')"
               :class="edgeType === 'step' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'"
               class="px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150"
-              title=""
-            >
-
-            </button>
+              :title="$adminT('Straight Corner', '直角折线')"
+            >{{ $adminT("Straight Corner", "直角") }}</button>
           </div>
           
           <!-- Auto layout button -->
           <button
             @click="autoLayout"
             class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 flex items-center gap-1"
-            title=""
+            :title="$adminT('One key to arrange node layouts', '一键整理节点布局')"
           >
             <RefreshCw class="w-4 h-4" />
 
@@ -187,9 +182,7 @@
           <button
             @click="navigateTo('/models/workflows')"
             class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             @click="validateAndSave"
             :disabled="saving"
@@ -209,7 +202,7 @@
         :class="isNodePaletteCollapsed ? 'w-12 p-2' : 'w-48 p-4'"
       >
         <div class="flex items-center justify-between mb-3">
-          <h3 v-if="!isNodePaletteCollapsed" class="text-sm font-semibold text-gray-700">Type</h3>
+          <h3 v-if="!isNodePaletteCollapsed" class="text-sm font-semibold text-gray-700">{{ $adminT("Type", "节点类型") }}</h3>
           <button
             type="button"
             class="ml-auto p-1.5 rounded hover:bg-gray-100 text-gray-600"
@@ -227,7 +220,7 @@
           <div class="space-y-3">
           <!-- Preset and Default Values -->
           <div>
-            <div class="text-[10px] font-medium text-gray-500 mb-2 uppercase tracking-wider"></div>
+            <div class="text-[10px] font-medium text-gray-500 mb-2 uppercase tracking-wider">{{ $adminT("Prebunk & Default", "预埋与默认值") }}</div>
             <div class="space-y-2">
               <div
                 class="p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
@@ -238,7 +231,7 @@
                     <Check class="w-4 h-4 text-green-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">Prompt </div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Prompt", "Prompt 预埋") }} </div>
                   </div>
                 </div>
               </div>
@@ -251,7 +244,7 @@
                     <ImageIcon class="w-4 h-4 text-purple-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900"></div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Presentation Picture", "演示图片") }}</div>
                   </div>
                 </div>
               </div>
@@ -264,7 +257,7 @@
                     <Video class="w-4 h-4 text-red-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900"></div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Presentation Video", "演示视频") }}</div>
                   </div>
                 </div>
               </div>
@@ -277,7 +270,7 @@
                     <ImageIcon class="w-4 h-4 text-yellow-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">List</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("List", "媒体列表演示") }}</div>
                   </div>
                 </div>
               </div>
@@ -286,7 +279,7 @@
           
           <!-- API Node -->
           <div>
-            <div class="text-[10px] font-medium text-gray-500 mb-2 uppercase tracking-wider"></div>
+            <div class="text-[10px] font-medium text-gray-500 mb-2 uppercase tracking-wider">{{ $adminT("Process Nodes", "处理节点") }}</div>
             <div class="space-y-2">
               <button
                 type="button"
@@ -298,7 +291,7 @@
                     <Zap class="w-4 h-4 text-purple-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">API</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "图片生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -312,7 +305,7 @@
                     <Zap class="w-4 h-4 text-pink-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">API</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "视频生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -326,7 +319,7 @@
                     <Zap class="w-4 h-4 text-green-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">API</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "文本生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -343,7 +336,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title="Prompt "
+              :title="$adminT('Prompt', 'Prompt 预埋')"
               @click="() => addInputNode('prompt_default_hidden')"
             >
               <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center">
@@ -353,7 +346,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title=""
+              :title="$adminT('Presentation Picture', '演示图片')"
               @click="() => addInputNode('image')"
             >
               <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center">
@@ -363,7 +356,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title=""
+              :title="$adminT('Presentation Video', '演示视频')"
               @click="() => addInputNode('video')"
             >
               <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center">
@@ -373,7 +366,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title="List"
+              :title="$adminT('List', '媒体列表演示')"
               @click="() => addInputNode('media_array')"
             >
               <div class="w-6 h-6 bg-yellow-100 rounded flex items-center justify-center">
@@ -387,7 +380,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title="API"
+              :title="$adminT('API', '图片生成API')"
               @click.stop="() => addApiNode('image')"
             >
               <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center">
@@ -397,7 +390,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title="API"
+              :title="$adminT('API', '视频生成API')"
               @click.stop="() => addApiNode('video')"
             >
               <div class="w-6 h-6 bg-pink-100 rounded flex items-center justify-center">
@@ -407,7 +400,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              title="API"
+              :title="$adminT('API', '文本生成API')"
               @click.stop="() => addApiNode('text')"
             >
               <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center">
@@ -465,7 +458,7 @@
           <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showQuickSearch = false"></div>
           <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6" @click.stop>
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-gray-900"></h3>
+              <h3 class="text-lg font-semibold text-gray-900">{{ $adminT("Quick Add Node", "快速添加节点") }}</h3>
               <button
                 @click="showQuickSearch = false"
                 class="text-gray-400 hover:text-gray-600"
@@ -478,7 +471,7 @@
               v-model="quickSearchQuery"
               type="text"
               class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="SearchType..."
+              :placeholder="$adminT('Search Type', '输入关键词搜索节点类型...')"
               @keyup.enter="handleQuickSearchSelect"
               @keyup.escape="showQuickSearch = false"
             />
@@ -500,13 +493,9 @@
                 <span class="text-sm">{{ option.label }}</span>
                 <span class="text-xs text-gray-500 ml-auto">{{ option.description }}</span>
               </div>
-              <div v-if="filteredQuickSearchOptions.length === 0" class="px-3 py-2 text-sm text-gray-500 text-center">
-                Type
-              </div>
+              <div v-if="filteredQuickSearchOptions.length === 0" class="px-3 py-2 text-sm text-gray-500 text-center"> {{ $adminT("Type", "未找到匹配的节点类型") }} </div>
             </div>
-            <div class="mt-4 text-xs text-gray-500">
-               Enter Confirm，Esc Cancel
-            </div>
+            <div class="mt-4 text-xs text-gray-500"> {{ $adminT("Press OM to confirm, Esc cancel", "按 Enter 确认，Esc 取消") }} </div>
           </div>
         </div>
 
@@ -516,7 +505,7 @@
           class="absolute top-12 right-4 w-96 bg-white border border-gray-200 rounded-lg shadow-xl p-3 z-50 max-h-[calc(100vh-100px)] overflow-y-auto"
         >
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-semibold text-gray-900"></h3>
+            <h3 class="text-lg font-semibold text-gray-900">{{ $adminT("Node Configuration", "节点配置") }}</h3>
             <button
               @click="selectedNode = null"
               class="text-gray-400 hover:text-gray-600"
@@ -555,9 +544,7 @@
                 <X class="w-5 h-5" />
               </button>
             </div>
-            <div v-if="currentPromptNode?.type === 'prompt_default_hidden'" class="mb-3 p-2 bg-amber-50 border border-amber-200 rounded text-xs text-amber-800">
-              ⓘ ，
-            </div>
+            <div v-if="currentPromptNode?.type === 'prompt_default_hidden'" class="mb-3 p-2 bg-amber-50 border border-amber-200 rounded text-xs text-amber-800"> {{ $adminT("i This value will be used as a preset value for system input, which automatically hides the front end display when connected to the target node", "ⓘ 此值将作为系统注入的预设值，连接到目标节点后会自动隐藏前端显示") }} </div>
             <textarea
               v-if="currentPromptNode?.type === 'promptInput' || currentPromptNode?.type === 'prompt_default_hidden'"
               v-model="promptInputValue"
@@ -576,15 +563,11 @@
               <button
                 @click="showPromptInputModal = false"
                 class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Cancel
-              </button>
+              > {{ $adminT("Cancel", "取消") }} </button>
               <button
                 @click="savePromptInput"
                 class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
-              >
-                Save
-              </button>
+              > {{ $adminT("Save", "保存") }} </button>
             </div>
           </div>
         </div>
@@ -608,7 +591,7 @@
         <button
           @click="showKeyboardShortcuts = true"
           class="fixed bottom-6 right-6 z-50 p-2.5 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all text-gray-600 hover:text-gray-900"
-          title=""
+          :title="$adminT('Shortcut Keys', '快捷键')"
         >
           <Keyboard class="w-5 h-5" />
         </button>
@@ -630,7 +613,7 @@
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showKeyboardShortcuts = false"></div>
             <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6" @click.stop>
               <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold text-gray-900"></h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ $adminT("Shortcut Keys", "快捷键") }}</h3>
                 <button
                   @click="showKeyboardShortcuts = false"
                   class="text-gray-400 hover:text-gray-600"
@@ -640,35 +623,35 @@
               </div>
               <div class="space-y-2">
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
-                  <span class="text-xs text-gray-500"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Create Connection", "创建连接") }}</span>
+                  <span class="text-xs text-gray-500">{{ $adminT("Drag Node Connection", "拖拽节点连接点") }}</span>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Box", "框选") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Shift</kbd>
                     <span class="text-xs text-gray-400">+</span>
-                    <span class="text-xs text-gray-500"></span>
+                    <span class="text-xs text-gray-500">{{ $adminT("Drag", "拖拽") }}</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700">/</span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Multiple/Reverse", "多选/反选") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Ctrl</kbd>
                     <span class="text-xs text-gray-400">+</span>
-                    <span class="text-xs text-gray-500"></span>
+                    <span class="text-xs text-gray-500">{{ $adminT("Click", "点击") }}</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Move canvas", "移动画布") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Space</kbd>
                     <span class="text-xs text-gray-400">+</span>
-                    <span class="text-xs text-gray-500"></span>
+                    <span class="text-xs text-gray-500">{{ $adminT("Drag", "拖拽") }}</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Copy", "复制") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Ctrl</kbd>
                     <span class="text-xs text-gray-400">+</span>
@@ -678,7 +661,7 @@
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Paste", "粘贴") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Ctrl</kbd>
                     <span class="text-xs text-gray-400">+</span>
@@ -688,7 +671,7 @@
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Undo", "撤销") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Ctrl</kbd>
                     <span class="text-xs text-gray-400">+</span>
@@ -696,7 +679,7 @@
                   </div>
                 </div>
                 <div class="flex items-center justify-between py-2">
-                  <span class="text-sm text-gray-700"></span>
+                  <span class="text-sm text-gray-700">{{ $adminT("Redo", "重做") }}</span>
                   <div class="flex items-center gap-1">
                     <kbd class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded">Ctrl</kbd>
                     <span class="text-xs text-gray-400">+</span>
@@ -735,6 +718,8 @@ import NodeConfigPanel from '~/components/workflow/NodeConfigPanel.vue'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
 import MediaArraySelectorModal from '~/components/MediaArraySelectorModal.vue'
 import type { ApiLibraryEntry, PaginatedData, WorkflowEdge, WorkflowNode, WorkflowRecord } from '~/types/domain'
+
+const { translateText: adminT } = useAdminI18n()
 
 definePageMeta({
   layout: 'default',
@@ -948,8 +933,8 @@ const quickSearchPosition = ref({ x: 0, y: 0 })
 
 // Quick search options
 const quickSearchOptions = computed(() => [
-  { value: 'image', label: '', description: '', type: 'image_default', color: 'text-purple-600' },
-  { value: 'video', label: '', description: '', type: 'video_default', color: 'text-red-600' },
+  { value: 'image', label: adminT("Default Image", "图片默认"), description: '', type: 'image_default', color: 'text-purple-600' },
+  { value: 'video', label: adminT("Default Video", "视频默认"), description: '', type: 'video_default', color: 'text-red-600' },
   { value: 'media_array', label: 'List', description: 'List（）', type: 'media_list_default', color: 'text-yellow-600' },
   { value: 'prompt_default_hidden', label: 'Prompt （）', description: 'Prompt （，）', type: 'prompt_default_hidden', color: 'text-green-600' },
   { value: 'api', label: 'API ', description: ' API', type: 'apiCall', color: 'text-blue-600' }
@@ -1465,15 +1450,15 @@ const addInputNode = (paramType: string, position?: { x: number, y: number }) =>
     if (paramType === 'prompt') {
       nodeData = { label: 'Prompt ' }
     } else if (paramType === 'image') {
-      nodeData = { label: '' }
+      nodeData = { label: adminT("Default Image", "图片默认") }
     } else if (paramType === 'video') {
-      nodeData = { label: '' }
+      nodeData = { label: adminT("Default Video", "视频默认") }
     } else if (paramType === 'prompt_default_hidden') {
       nodeData = { label: 'Prompt （）' }
     } else if (paramType === 'media_array') {
       nodeData = { label: 'List', value: [] }
     } else {
-      nodeData = { label: '', param_name: paramType }
+      nodeData = { label: adminT("Parameter Input", "参数输入"), param_name: paramType }
     }
     
     const finalPosition = position || { x: 100, y: 100 + nodes.value.filter(n => n.type.includes('Input') || n.type === 'prompt_default_hidden' || n.type === 'image_default' || n.type === 'video_default' || n.type === 'media_list_default').length * 120 }
@@ -1518,7 +1503,7 @@ const addApiNodeAtPosition = (position: { x: number, y: number }, outputType?: '
       saveToHistory()
     })
   } catch (error) {
-    console.error(' API failed:', error)
+    console.error(adminT("API failed", "计算节点位置失败:"), error)
     toast.error(' API failed，')
   }
 }
@@ -1632,7 +1617,7 @@ const onConnect = (connection: any) => {
     
     // Check type compatibility (skip for prompt_default_hidden as it's handled specially)
     if (sourceNode.type !== 'prompt_default_hidden' && !isTypeCompatible(paramType, sourceType)) {
-      toast.error(`Type： "${paramName}" (${paramType})  ${sourceType} Type`)
+      toast.error(adminT('Type mismatch: parameter "{name}" ({paramType}) cannot connect to a {sourceType} source', '类型不匹配：参数 "{name}" ({paramType}) 不能连接到 {sourceType} 类型的源', { name: paramName, paramType, sourceType }))
       return
     }
     
@@ -1640,7 +1625,7 @@ const onConnect = (connection: any) => {
     if (sourceNode.type === 'prompt_default_hidden') {
       // Ensure prompt default (hidden) can only connect to text/prompt parameters
       if (!isTypeCompatible(paramType, 'text')) {
-        toast.error(`Prompt Type， ${paramType} Type`)
+        toast.error(adminT('A prompt preset node can only connect to a text parameter, not a {paramType} parameter', 'Prompt 预埋节点只能连接到文本类型参数，不能连接到 {paramType} 类型参数', { paramType }))
         return
       }
       
@@ -2227,7 +2212,7 @@ const deleteNode = () => {
 
 const validateAndSave = async () => {
   if (!workflowForm.name.trim()) return toast.error('Please enter')
-  if (nodes.value.length === 0) return toast.error('')
+  if (nodes.value.length === 0) return toast.error(adminT("A workflow requires at least one node", "工作流至少需要一个节点"))
   
   // Validate and fix all nodes before saving
   nodes.value.forEach((node, index) => {
@@ -2332,7 +2317,7 @@ const validateAndSave = async () => {
       navigateTo('/models/workflows')
     }
   } catch (error: any) {
-    toast.error(error.message || 'Savefailed')
+    toast.error(error.message || adminT('Save failed', '保存失败'))
   } finally {
     saving.value = false
   }
@@ -2348,7 +2333,7 @@ const copySelected = () => {
   const selectedNodes = (getSelectedNodes as any).value ?? (getSelectedNodes as any)()
   
   if (selectedNodes.length === 0) {
-    toast.info('')
+    toast.info(adminT("Select the nodes to copy first", "请先选择要复制的节点"))
     return
   }
   
@@ -2410,7 +2395,7 @@ const pasteFromClipboard = () => {
     })
     
     if (invalidApiNodes.length > 0) {
-      toast.error(`： ${invalidApiNodes.length}  API  API `)
+      toast.error(adminT('Cannot paste: {n} API nodes reference APIs that do not exist in this workflow', '无法粘贴：有 {n} 个 API 节点引用的 API 在当前工作流中不存在', { n: invalidApiNodes.length }))
       return
     }
   }
@@ -2615,13 +2600,13 @@ const pasteFromClipboard = () => {
   }).filter((node: any) => node !== null)
   
   if (nodesToAdd.length === 0) {
-    toast.error('')
+    toast.error(adminT("There are no valid nodes to paste", "没有有效的节点可以粘贴"))
     return
   }
   
   if (nodesToAdd.length !== dataToPaste.nodes.length) {
-    console.warn(` ${dataToPaste.nodes.length - nodesToAdd.length} `)
-    toast.warning(` ${nodesToAdd.length} （${dataToPaste.nodes.length - nodesToAdd.length} ）`)
+    console.warn(`Filtered out ${dataToPaste.nodes.length - nodesToAdd.length} invalid nodes`)
+    toast.warning(adminT('Pasted {n} nodes ({bad} nodes were invalid)', '已粘贴 {n} 个节点（{bad} 个节点无效）', { n: nodesToAdd.length, bad: dataToPaste.nodes.length - nodesToAdd.length }))
   }
   
   // Add nodes and edges to the workflow

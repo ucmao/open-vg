@@ -14,8 +14,8 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-xl font-bold text-gray-900"></h2>
-            <p class="text-xs text-gray-500"></p>
+            <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Select Media File", "选择媒体文件") }}</h2>
+            <p class="text-xs text-gray-500">{{ $adminT("Select existing file or upload new file", "选择现有文件或上传新文件") }}</p>
           </div>
         </div>
         <button type="button" @click.stop="close" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all">
@@ -49,7 +49,7 @@
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Search..."
+              :placeholder="$adminT('Search', '搜索文件...')"
               class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               @input="handleSearch"
             />
@@ -77,7 +77,7 @@
         <!-- Loading -->
         <div v-if="loading && mediaList.length === 0" class="flex flex-col items-center justify-center py-20">
           <div class="w-12 h-12 border-4 border-gray-100 border-t-blue-600 rounded-full animate-spin mb-4"></div>
-          <p class="text-gray-500 text-sm">...</p>
+          <p class="text-gray-500 text-sm">{{ $adminT("Loading library...", "正在加载素材库...") }}</p>
         </div>
 
         <!-- Empty -->
@@ -87,8 +87,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 class="text-lg font-medium text-gray-900"></h3>
-          <p class="text-gray-500 text-sm mt-1"></p>
+          <h3 class="text-lg font-medium text-gray-900">{{ $adminT("No file found", "未找到文件") }}</h3>
+          <p class="text-gray-500 text-sm mt-1">{{ $adminT("Upload new files to start", "上传新文件以开始") }}</p>
         </div>
 
         <!-- Grid -->
@@ -169,7 +169,7 @@
             :disabled="loading"
             class="px-6 py-2 border border-gray-200 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-all"
           >
-            {{ loading ? 'Loading......' : '' }}
+            {{ loading ? $adminT('Loading...', '加载中...') : $adminT('Load more', '加载更多') }}
           </button>
         </div>
       </div>
@@ -177,25 +177,21 @@
       <!-- Footer -->
       <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex items-center justify-between">
         <div class="text-sm text-gray-500">
-          <span v-if="selectedItem">： <span class="text-gray-900 font-medium">{{ selectedItem.original_filename }}</span></span>
-          <span v-else>Please select</span>
+          <span v-if="selectedItem">{{ $adminT("Selected:", "已选择：") }} <span class="text-gray-900 font-medium">{{ selectedItem.original_filename }}</span></span>
+          <span v-else>{{ $adminT("Please select", "请选择一个文件以继续") }}</span>
         </div>
         <div class="flex items-center space-x-3">
           <button
             type="button"
             @click.stop="close"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all"
-          >
-            Cancel
-          </button>
+          > {{ $adminT("Cancel", "取消") }} </button>
           <button
             type="button"
             @click.stop="confirmSelection"
             :disabled="!selectedItem"
             class="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-200 transition-all"
-          >
-            Confirm
-          </button>
+          > {{ $adminT("Confirm", "确认选择") }} </button>
         </div>
       </div>
 
@@ -214,6 +210,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from 'vue'
+
+const { translateText: adminT } = useAdminI18n()
+
 
 const props = defineProps<{
   isOpen: boolean
@@ -244,10 +243,10 @@ const filters = reactive({
 })
 
 const filterOptions = [
-  { label: '', value: 'all' },
-  { label: '', value: 'image' },
-  { label: '', value: 'video' },
-  { label: '', value: 'document' }
+  { label: adminT("All Files", "全部文件"), value: 'all' },
+  { label: adminT("Picture", "图片"), value: 'image' },
+  { label: adminT("Video", "视频"), value: 'video' },
+  { label: adminT("Other", "其他"), value: 'document' }
 ]
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -287,7 +286,7 @@ const fetchMedia = async (refresh = false) => {
       hasMore.value = newItems.length === pageSize.value
     }
   } catch (error: any) {
-    toast.error('failed')
+    toast.error(adminT("failed", "加载素材库失败"))
   } finally {
     loading.value = false
   }
@@ -348,12 +347,12 @@ const handleFileUpload = async (event: Event) => {
         selectedItem.value = lastUploadedItem
       }
       if (failCount === 0) {
-        toast.success(total === 1 ? 'successful' : `successful ${successCount} `)
+        toast.success(total === 1 ? adminT('Upload successful', '上传成功') : adminT('Uploaded {n} files', '成功上传 {n} 个文件', { n: successCount }))
       } else {
-        toast.success(`successful ${successCount} ，failed ${failCount} `)
+        toast.success(adminT('{ok} succeeded, {fail} failed', '成功 {ok} 个，失败 {fail} 个', { ok: successCount, fail: failCount }))
       }
     } else {
-      toast.error(failCount === 1 ? 'failed' : ` ${total} failed`)
+      toast.error(failCount === 1 ? adminT("failed", "上传失败") : ` ${total} failed`)
     }
   } finally {
     uploading.value = false

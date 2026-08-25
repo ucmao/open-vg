@@ -2,41 +2,37 @@
   <div class="p-6">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-2xl font-bold text-gray-900"></h1>
-      <p class="text-gray-600 mt-1">View</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Fill log", "充值记录") }}</h1>
+      <p class="text-gray-600 mt-1">{{ $adminT("View and manage platform replenishment order records", "查看和管理平台充值订单记录") }}</p>
     </div>
 
     <!-- Filters -->
     <div class="bg-white border rounded-lg shadow-sm overflow-hidden">
       <div class="p-6 bg-gray-50 border-b flex flex-wrap gap-4 items-end">
         <div class="w-64">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Search</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1">{{ $adminT("Search", "搜索") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            placeholder="Email /  / Stripe "
+            :placeholder="$adminT('Email / / Stripe', 'Email / 订单 / Stripe 单号')"
             class="w-full border rounded px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             @keyup.enter="loadData"
           />
         </div>
 
         <div class="w-40">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1">{{ $adminT("Status", "状态") }}</label>
           <select v-model="filters.status" class="w-full border rounded px-3 py-2 text-sm outline-none" @change="loadData">
-            <option value=""></option>
-            <option value="completed"></option>
-            <option value="pending"></option>
-            <option value="failed">failed</option>
-            <option value="cancelled">Cancel</option>
+            <option value="">{{ $adminT("All", "全部") }}</option>
+            <option value="completed">{{ $adminT("Completed", "已完成") }}</option>
+            <option value="pending">{{ $adminT("Ongoing", "进行中") }}</option>
+            <option value="failed">{{ $adminT("failed", "已失败") }}</option>
+            <option value="cancelled">{{ $adminT("Cancel", "已取消") }}</option>
           </select>
         </div>
 
-        <button @click="loadData" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
-          Filter
-        </button>
-        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50">
-          Reset
-        </button>
+        <button @click="loadData" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"> {{ $adminT("Filter", "筛选") }} </button>
+        <button @click="resetFilters" class="px-4 py-2 bg-white border text-gray-600 rounded text-sm hover:bg-gray-50"> {{ $adminT("Reset", "重置") }} </button>
         <button
           type="button"
           @click="exportToCSV"
@@ -44,9 +40,7 @@
           :disabled="rechargeData.length === 0"
           style="margin-left: auto;"
         >
-          <Download class="w-4 h-4" />
-           CSV
-        </button>
+          <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
       </div>
 
       <!-- Table -->
@@ -54,19 +48,19 @@
         <table class="w-full text-left">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>
-              <th class="px-6 py-4">ID / </th>
-              <th class="px-6 py-4"></th>
-              <th class="px-6 py-4"> / </th>
-              <th class="px-6 py-4">Status</th>
-              <th class="px-6 py-4"> / </th>
+              <th class="px-6 py-4">{{ $adminT("ID /", "订单ID / 时间") }} </th>
+              <th class="px-6 py-4">{{ $adminT("User Information", "用户信息") }}</th>
+              <th class="px-6 py-4"> {{ $adminT("Amount/ Account", "充值金额 / 积分") }} </th>
+              <th class="px-6 py-4">{{ $adminT("Status", "状态") }}</th>
+              <th class="px-6 py-4"> {{ $adminT("Method of payment / Single number", "支付方式 / 单号") }} </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
             <tr v-if="loading">
-              <td colspan="5" class="px-6 py-8 text-center text-gray-500">Loading......</td>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500">{{ $adminT("Loading", "加载中...") }}</td>
             </tr>
             <tr v-else-if="rechargeData.length === 0">
-              <td colspan="5" class="px-6 py-8 text-center text-gray-500">No data available</td>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500">{{ $adminT("No data available", "暂无数据") }}</td>
             </tr>
             <tr v-for="item in rechargeData" :key="item.id" class="hover:bg-gray-50">
               <td class="px-6 py-4">
@@ -113,12 +107,10 @@
       <div v-if="total > 0" class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between">
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-600">
-             <span class="font-medium">{{ (page - 1) * pageSize + 1 }}</span>
-            <span class="font-medium">{{ Math.min(page * pageSize, total) }}</span> ，
-            <span class="font-medium text-gray-900">{{ total }}</span>
+            {{ $adminT('Showing {from}–{to} of {total} records', '显示第 {from}–{to} 条，共 {total} 条记录', { from: (page - 1) * pageSize + 1, to: Math.min(page * pageSize, total), total: total }) }}
           </span>
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">：</span>
+            <span class="text-sm text-gray-500">{{ $adminT("Each page shows:", "每页显示：") }}</span>
             <select
               v-model="pageSize"
               @change="page = 1; loadData()"
@@ -136,7 +128,7 @@
             @click="loadPage(1)"
             :disabled="page === 1"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Page one', '第一页')"
           >
             <ChevronsLeft class="w-4 h-4" />
           </button>
@@ -144,11 +136,9 @@
             @click="loadPage(page - 1)"
             :disabled="page === 1"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Previous Page", "上一页") }}</button>
           <div class="flex items-center gap-1">
-            <span class="text-sm text-gray-600"></span>
+            <span class="text-sm text-gray-600">{{ $adminT('Page', '第') }}</span>
             <input
               v-model.number="page"
               @keyup.enter="loadPage(page)"
@@ -158,20 +148,18 @@
               :max="Math.ceil(total / pageSize)"
               class="w-16 px-2 py-1 border rounded text-sm text-center outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span class="text-sm text-gray-600">/ {{ Math.ceil(total / pageSize) }} </span>
+            <span class="text-sm text-gray-600">{{ $adminT('of {total}', '/ {total} 页', { total: Math.ceil(total / pageSize) }) }}</span>
           </div>
           <button
             @click="loadPage(page + 1)"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-4 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-
-          </button>
+          >{{ $adminT("Next Page", "下一页") }}</button>
           <button
             @click="loadPage(Math.ceil(total / pageSize))"
             :disabled="page >= Math.ceil(total / pageSize)"
             class="px-3 py-1.5 border rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            title=""
+            :title="$adminT('Last Page', '最后一页')"
           >
             <ChevronsRight class="w-4 h-4" />
           </button>
@@ -187,6 +175,9 @@ import { Download, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import type { PaginatedData, PaymentOrder } from '~/types/domain'
+
+const { translateText: adminT, localeTag } = useAdminI18n()
+
 
 definePageMeta({
   layout: 'default',
@@ -256,7 +247,7 @@ const resetFilters = () => {
 
 const formatDate = (dateString: string) => {
   if (!dateString) return '-'
-  return new Date(dateString).toLocaleString('zh-CN')
+  return new Date(dateString).toLocaleString(localeTag.value)
 }
 
 const formatStatus = (status: string) => {
@@ -298,7 +289,7 @@ const escapeCSV = (value: unknown): string => {
 
 const exportToCSV = () => {
   if (rechargeData.value.length === 0) {
-    toast.error('')
+    toast.error(adminT("No data to export", "没有数据可导出"))
     return
   }
 
