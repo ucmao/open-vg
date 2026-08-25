@@ -56,7 +56,7 @@
           <div v-if="loading && prompts.length === 0" class="flex items-center justify-center py-12 text-gray-500 text-sm">
             <div class="w-4 h-4 border-2 border-gray-200 border-t-violet-500 rounded-full animate-spin mr-2"></div> {{ $adminT("Loading...", "加载中…") }} </div>
           <div v-else-if="prompts.length === 0" class="flex flex-col items-center justify-center py-12 text-center px-4">
-            <p class="text-gray-500 text-sm">{{ $adminT("Unfinished, key words or right input", "暂无结果，可换关键词或右侧直接输入") }}</p>
+            <p class="text-gray-500 text-sm">{{ $adminT("No results found. Try another keyword or enter prompt directly", "暂无结果，可换关键词或右侧直接输入") }}</p>
           </div>
           <div v-else class="py-2">
             <button

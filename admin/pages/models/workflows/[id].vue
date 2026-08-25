@@ -495,7 +495,7 @@
               </div>
               <div v-if="filteredQuickSearchOptions.length === 0" class="px-3 py-2 text-sm text-gray-500 text-center"> {{ $adminT("No matching node type found", "未找到匹配的节点类型") }} </div>
             </div>
-            <div class="mt-4 text-xs text-gray-500"> {{ $adminT("Press OM to confirm, Esc cancel", "按 Enter 确认，Esc 取消") }} </div>
+            <div class="mt-4 text-xs text-gray-500"> {{ $adminT("Press Enter to confirm, Esc to cancel", "按 Enter 确认，Esc 取消") }} </div>
           </div>
         </div>
 

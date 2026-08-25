@@ -62,7 +62,7 @@
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="formData.layout_config.content_carousel_enabled ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.content_carousel_enabled = !formData.layout_config.content_carousel_enabled">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="formData.layout_config.content_carousel_enabled ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Start the rotation.", "启动轮播") }}</span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Enable carousel", "启动轮播") }}</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer">
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="!formData.layout_config.buttons.closeButton.visible ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.buttons.closeButton.visible = !formData.layout_config.buttons.closeButton.visible">
@@ -617,7 +617,7 @@
                         <option value="small">{{ $adminT("Small", "小") }}</option>
                         <option value="medium">{{ $adminT("Medium", "中") }}</option>
                         <option value="large">{{ $adminT("Large", "大") }}</option>
-                        <option value="full">{{ $adminT("Full circle.", "完全圆角") }}</option>
+                        <option value="full">{{ $adminT("Fully rounded", "完全圆角") }}</option>
                       </select>
                     </div>
                     <!--  -->
@@ -671,7 +671,7 @@
                         <option value="solid">{{ $adminT("Solid fill", "实心") }}</option>
                         <option value="transparent">{{ $adminT("Transparent", "透明") }}</option>
                         <option value="gradient">{{ $adminT("Gradient", "渐变") }}</option>
-                        <option value="backdrop-blur">{{ $adminT("Furry glass.", "毛玻璃") }}</option>
+                        <option value="backdrop-blur">{{ $adminT("Frosted glass", "毛玻璃") }}</option>
                       </select>
                     </div>
                     <!-- （） -->
@@ -1038,10 +1038,10 @@ const enableEffectiveTime = ref(false)
 const textColorPresets = [
   // --- ：（，，） ---
   { label: adminT("White", "白色"), value: '#FFFFFF' },
-  { label: adminT("Mib.", "米白"), value: '#FDFEFE' },
-  { label: adminT("Warm white.", "暖白"), value: '#FEF9EF' },
-  { label: adminT("Ash.", "浅灰"), value: '#CCCCCC' },
-  { label: adminT("Silver ash.", "银灰"), value: '#A8A8A8' },
+  { label: adminT("Creamy white", "米白"), value: '#FDFEFE' },
+  { label: adminT("Warm white", "暖白"), value: '#FEF9EF' },
+  { label: adminT("Light gray", "浅灰"), value: '#CCCCCC' },
+  { label: adminT("Silver gray", "银灰"), value: '#A8A8A8' },
   { label: adminT("Medium Ash", "中灰"), value: '#666666' },
   { label: adminT("Space ash", "太空灰"), value: '#6E6E73' },
   { label: adminT("Dark Ash", "深灰"), value: '#333333' },
@@ -1049,15 +1049,15 @@ const textColorPresets = [
   { label: adminT("Black", "黑色"), value: '#000000' },
 
   // --- ：（ Banner ，） ---
-  { label: adminT("Champagne gold.", "香槟金"), value: '#D4C5A9' },
-  { label: adminT("Tama.", "亚麻"), value: '#CBC0AD' },
-  { label: adminT("Warm ash.", "暖灰"), value: '#A39E93' },
-  { label: adminT("Cold ash.", "冷灰"), value: '#8B8B8F' },
+  { label: adminT("Champagne gold", "香槟金"), value: '#D4C5A9' },
+  { label: adminT("Flaxen", "亚麻"), value: '#CBC0AD' },
+  { label: adminT("Warm gray", "暖灰"), value: '#A39E93' },
+  { label: adminT("Cool gray", "冷灰"), value: '#8B8B8F' },
   { label: adminT("Cold Grey Bottom", "冷灰底"), value: '#F0F2F5' },
   { label: adminT("Slate", "灰蓝"), value: '#8E9AAF' },
   { label: adminT("Fog Blue", "雾蓝"), value: '#D4E5F7' },
-  { label: adminT("Dou Sha.", "豆沙"), value: '#F5D0C5' },
-  { label: adminT("Rose gold.", "玫瑰金"), value: '#B76E79' },
+  { label: adminT("Red bean paste", "豆沙"), value: '#F5D0C5' },
+  { label: adminT("Rose gold", "玫瑰金"), value: '#B76E79' },
   { label: adminT("Purple", "紫色"), value: '#9B59B6' },
 
   // --- ：（，、Title、WarningsuccessfulStatus） ---
@@ -1073,11 +1073,11 @@ const textColorPresets = [
   { label: adminT("Dark Blue", "深蓝"), value: '#2980B9' },
 
   // --- ：/（，） ---
-  { label: adminT("Cherry pollen.", "樱花粉"), value: '#FFD1DC' },
-  { label: adminT("Peaches.", "蜜桃"), value: '#FFE4C4' },
+  { label: adminT("Sakura pink", "樱花粉"), value: '#FFD1DC' },
+  { label: adminT("Peach", "蜜桃"), value: '#FFE4C4' },
   { label: adminT("Lemon Light", "柠檬浅"), value: '#FFFACD' },
-  { label: adminT("Cream.", "奶油"), value: '#FCF3CF' },
-  { label: adminT("Mint light.", "薄荷浅"), value: '#B5EAD7' },
+  { label: adminT("Cream", "奶油"), value: '#FCF3CF' },
+  { label: adminT("Light mint", "薄荷浅"), value: '#B5EAD7' },
   { label: adminT("Sky Blue", "天空蓝"), value: '#B0E0E6' },
   { label: adminT("Light Blue", "浅蓝"), value: '#ADD8E6' },
   { label: adminT("Lavender.", "薰衣草"), value: '#E66EFA' },
@@ -1089,7 +1089,7 @@ const textColorPresets = [
 const buttonBgColorPresets = [
   // --- ： ---
   { label: adminT("White", "白色"), value: '#FFFFFF' },
-  { label: adminT("Ash.", "浅灰"), value: '#E5E5E5' },
+  { label: adminT("Light gray", "浅灰"), value: '#E5E5E5' },
   { label: adminT("Black", "黑色"), value: '#000000' },
   { label: adminT("Dark Ash", "深灰"), value: '#333333' },
   { label: adminT("i OS", "iOS蓝"), value: '#007AFF' },
@@ -1131,7 +1131,7 @@ const buttonBgColorPresets = [
   { label: adminT("Dark Purple", "深紫"), value: '#8E44AD' },
   { label: adminT("Half white.", "半透白"), value: 'rgba(255,255,255,0.2)' },
   { label: adminT("Half black.", "半透黑"), value: 'rgba(0,0,0,0.3)' },
-  { label: adminT("Furry glass.", "毛玻璃"), value: 'rgba(255,255,255,0.15)' },
+  { label: adminT("Frosted glass", "毛玻璃"), value: 'rgba(255,255,255,0.15)' },
   { label: adminT("Smoke.", "烟雾"), value: 'rgba(200,200,200,0.25)' },
   { label: adminT("Transparent", "透明"), value: 'transparent' },
 ]

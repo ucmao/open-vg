@@ -82,7 +82,7 @@
       <div v-show="showMoreFilters" class="border-t border-gray-100 bg-gray-50/60 px-4 py-4">
         <div class="flex flex-wrap items-end gap-x-6 gap-y-3">
           <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500 w-20">{{ $adminT("Time to start.", "起止时间") }}</span>
+            <span class="text-sm text-gray-500 w-20">{{ $adminT("Start and end time", "起止时间") }}</span>
             <input
               v-model="filters.created_after"
               type="datetime-local"

@@ -67,7 +67,7 @@
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
                 <span v-if="item.valid_from">{{ formatDate(item.valid_from) }}</span>
-                <span v-else class="text-gray-400">{{ $adminT("Immediately.", "立即") }}</span>
+                <span v-else class="text-gray-400">{{ $adminT("Immediately", "立即") }}</span>
                 <span class="mx-1">~</span>
                 <span>{{ formatDate(item.valid_until) }}</span>
               </td>
@@ -117,7 +117,7 @@
           </tbody>
         </table>
       </div>
-      <div v-if="items.length === 0" class="text-center py-12 text-gray-500"> {{ $adminT("For the time being, add a new discount.", "暂无折扣优惠，点击「新建折扣优惠」添加") }} </div>
+      <div v-if="items.length === 0" class="text-center py-12 text-gray-500"> {{ $adminT('No discount offer yet, click "Create Discount" to add one', "暂无折扣优惠，点击「新建折扣优惠」添加") }} </div>
 
       <!-- Pagination (recharges style) -->
       <div class="px-6 py-4 bg-gray-50 border-t flex items-center justify-between flex-wrap gap-3">

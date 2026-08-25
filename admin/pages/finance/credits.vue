@@ -2,7 +2,7 @@
   <div class="p-6">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Accumulated fluid.", "积分流水") }}</h1>
+      <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Credit records", "积分流水") }}</h1>
       <p class="text-gray-600 mt-1">{{ $adminT("View and manage platform logs of log changes", "查看和管理平台积分变动记录") }}</p>
     </div>
 

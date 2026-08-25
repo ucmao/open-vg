@@ -49,7 +49,7 @@
           <input
             v-model="config.text"
             type="text"
-            :placeholder="$adminT('Click here.', '点击这里')"
+            :placeholder="$adminT('Click here', '点击这里')"
             :disabled="hasSelection"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-600"
           />

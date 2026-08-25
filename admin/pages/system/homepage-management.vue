@@ -2,7 +2,7 @@
   <div class="p-6">
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Homepage Activities", "首页活动") }}</h1>
-      <p class="text-gray-600 mt-1">{{ $adminT("Manage front page campaign promotions for Bonner and rotation", "管理首页首屏的活动促销Banner和轮播图") }}</p>
+      <p class="text-gray-600 mt-1">{{ $adminT("Manage homepage promotion banners and carousel slides", "管理首页首屏的活动促销Banner和轮播图") }}</p>
     </div>
 
     <!-- Tabs Navigation -->
@@ -96,7 +96,7 @@
           </div>
         </div>
 
-        <div v-if="promotions.length === 0" class="text-center py-12 text-gray-500"> {{ $adminT("For the moment, no campaign to promote the Bonner, click \"Create the Burner\" to add one.", "暂无活动促销Banner，点击\"创建Banner\"添加一个") }} </div>
+        <div v-if="promotions.length === 0" class="text-center py-12 text-gray-500"> {{ $adminT("No promotion banner yet. Click \"Create Banner\" to add one.", "暂无活动促销Banner，点击\"创建Banner\"添加一个") }} </div>
       </div>
     </div>
 
@@ -177,7 +177,7 @@
           </div>
         </div>
 
-        <div v-if="carouselSlides.length === 0" class="col-span-2 text-center py-12 text-gray-500"> {{ $adminT("For the time being, click \"Create rotation\" to add one.", "暂无轮播图，点击\"创建轮播图\"添加一个") }} </div>
+        <div v-if="carouselSlides.length === 0" class="col-span-2 text-center py-12 text-gray-500"> {{ $adminT("No carousel slide yet. Click \"Create Slide\" to add one.", "暂无轮播图，点击\"创建轮播图\"添加一个") }} </div>
       </div>
     </div>
 

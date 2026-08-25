@@ -131,7 +131,7 @@
       <!-- Empty State -->
       <div v-if="!loading && workflows.length === 0" class="text-center py-12">
         <div class="text-4xl mb-3">🔧</div>
-        <p class="text-gray-500">{{ $adminT("Not yet.", "暂无工作流") }}</p>
+        <p class="text-gray-500">{{ $adminT("No workflows yet", "暂无工作流") }}</p>
         <button
           @click="createNewWorkflow"
           class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 inline-block"

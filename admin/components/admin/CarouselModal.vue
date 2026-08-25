@@ -181,9 +181,9 @@
                     v-model="formData.text_align"
                     class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                   >
-                    <option value="left">{{ $adminT("Left.", "靠左") }}</option>
+                    <option value="left">{{ $adminT("Left", "靠左") }}</option>
                     <option value="center">{{ $adminT("Centre", "居中") }}</option>
-                    <option value="right">{{ $adminT("Right.", "靠右") }}</option>
+                    <option value="right">{{ $adminT("Right", "靠右") }}</option>
                   </select>
                 </div>
               </div>

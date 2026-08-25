@@ -462,7 +462,7 @@
                 >
                   <button v-if="!work.deleted_at" @click="showCategoryModal(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Change category", "修改分类") }}</button>
                   <button v-if="work.nsfw_status !== 'BLOCKED' && !work.deleted_at" @click="showBanModal(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Ban", "禁止") }}</button>
-                  <button v-else-if="work.nsfw_status === 'BLOCKED' && !work.deleted_at" @click="unbanWork(work.id); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Released.", "解除禁止") }}</button>
+                  <button v-else-if="work.nsfw_status === 'BLOCKED' && !work.deleted_at" @click="unbanWork(work.id); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Unbanned", "解除禁止") }}</button>
                   <button v-if="!work.deleted_at" @click="softDeleteWork(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-amber-700 hover:bg-amber-50">{{ $adminT("Delete", "删除") }}</button>
                   <button v-if="work.deleted_at" @click="confirmDelete(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50">{{ $adminT("Delete permanently", "永久删除") }}</button>
                 </div>
@@ -1245,7 +1245,7 @@ const confirmBan = async () => {
 
 const unbanWork = async (workId) => {
   const confirmed = await confirm({
-    title: adminT("Released.", "解除禁止"),
+    title: adminT("Unbanned", "解除禁止"),
     message: adminT("Are you sure you want to lift the ban on this work? The NSFW status will be set to pass.", "确定要解除禁止这个作品吗？解除后NSFW状态将设为已通过。"),
     type: 'info'
   })

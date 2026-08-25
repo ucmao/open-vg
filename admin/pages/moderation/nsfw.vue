@@ -215,7 +215,7 @@
               <option value="AUTO_FLAGGED">{{ $adminT("Automark", "自动标记") }}</option>
               <option value="MANUAL_FLAGGED">{{ $adminT("Manual Tags", "手动标记") }}</option>
               <option value="AUTO_APPROVED">{{ $adminT("Auto Pass", "自动通过") }}</option>
-              <option value="MANUAL_APPROVED">{{ $adminT("Manually passed.", "手动通过") }}</option>
+              <option value="MANUAL_APPROVED">{{ $adminT("Manually passed", "手动通过") }}</option>
               <option value="MANUAL_REJECTED">{{ $adminT("Manual rejection", "手动拒绝") }}</option>
             </select>
           </div>
@@ -590,7 +590,7 @@ function getActionLabel(actionType: string) {
     AUTO_FLAGGED: adminT("Automark", "自动标记"),
     MANUAL_FLAGGED: adminT("Manual Tags", "手动标记"),
     AUTO_APPROVED: adminT("Auto Pass", "自动通过"),
-    MANUAL_APPROVED: adminT("Manually passed.", "手动通过"),
+    MANUAL_APPROVED: adminT("Manually passed", "手动通过"),
     MANUAL_REJECTED: adminT("Manual rejection", "手动拒绝")
   }
   return labels[actionType] || actionType

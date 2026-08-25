@@ -719,7 +719,7 @@ const reportTypeFilters = [
   { label: adminT("All", "全部"), value: '' },
   { label: adminT("Pornography", "色情"), value: 'pornography' },
   { label: adminT("Violence", "暴力"), value: 'violence' },
-  { label: adminT("Bloody.", "血腥"), value: 'gore' },
+  { label: adminT("Bloody", "血腥"), value: 'gore' },
   { label: adminT("Harassment", "骚扰"), value: 'harassment' },
   { label: adminT("Spam", "垃圾信息"), value: 'spam' },
   { label: adminT("Copyright", "版权"), value: 'copyright' },
@@ -1085,7 +1085,7 @@ const getReportTypeLabel = (type: string | null | undefined) => {
   const labels: Record<string, string> = {
     'pornography': adminT("Pornography", "色情"),
     'violence': adminT("Violence", "暴力"),
-    'gore': adminT("Bloody.", "血腥"),
+    'gore': adminT("Bloody", "血腥"),
     'harassment': adminT("Harassment", "骚扰"),
     'spam': adminT("Spam", "垃圾信息"),
     'copyright': adminT("Copyright infringement", "版权侵犯"),

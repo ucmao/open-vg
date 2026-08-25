@@ -336,7 +336,7 @@
                 <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                 <span class="ms-3 text-sm font-medium text-gray-700"> {{ $adminT("Show on the Magic page", "在 Magic 页展示") }} </span>
               </label>
-              <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("Displays the tab as a quick filter at the top of the iv.", "作为快捷筛选标签显示在 Magic 页顶部。") }}</p>
+              <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("Displays as a quick filter tab at the top of the Magic page", "作为快捷筛选标签显示在 Magic 页顶部。") }}</p>
             </div>
           </div>
           </div>

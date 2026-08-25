@@ -582,7 +582,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Bulk edit keywords", "批量编辑关键词") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
-           {{ selectAllAcrossPages ? ` ${total} ` : ` ${selectedIds.length} ` }}{{ $adminT("To be updated", "将更新") }} <br /> {{ $adminT("Keywords.", "关键词。") }} </p>
+           {{ selectAllAcrossPages ? ` ${total} ` : ` ${selectedIds.length} ` }}{{ $adminT("To be updated", "将更新") }} <br /> {{ $adminT("Keywords", "关键词。") }} </p>
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Category", "分类") }} </label>

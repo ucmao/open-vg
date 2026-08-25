@@ -229,7 +229,7 @@
           </div>
           
           <!-- Empty State -->
-          <div v-if="!selectedApi.api_docs_url && (!selectedApi.official_price || !selectedApi.official_currency || !selectedApi.official_unit) && (!selectedApi.notes || selectedApi.notes === '')" class="text-center py-4 text-sm text-gray-500">{{ $adminT("Can not open message", "暂无信息") }}</div>
+          <div v-if="!selectedApi.api_docs_url && (!selectedApi.official_price || !selectedApi.official_currency || !selectedApi.official_unit) && (!selectedApi.notes || selectedApi.notes === '')" class="text-center py-4 text-sm text-gray-500">{{ $adminT("No information available", "暂无信息") }}</div>
         </div>
         <div v-else class="text-center py-4 text-sm text-gray-500"> {{ $adminT("Select an API first", "请先选择 API") }} </div>
       </div>
