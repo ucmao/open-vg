@@ -63,7 +63,7 @@
           <input
             v-model="config.title"
             type="text"
-            :placeholder="$adminT('Notice', '悬停提示文本...')"
+            :placeholder="$adminT('Hover tooltip text...', '悬停提示文本...')"
             maxlength="200"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -250,7 +250,7 @@ watch(() => props.isOpen, (isOpen) => {
 // Validate URL
 const validateUrl = () => {
   if (!config.url) {
-    urlError.value = adminT("Required", "链接地址是必填项")
+    urlError.value = adminT("The link URL is required", "链接地址是必填项")
     return false
   }
   

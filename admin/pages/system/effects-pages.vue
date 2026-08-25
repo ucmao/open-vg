@@ -2,7 +2,7 @@
   <div class="p-6">
     <div class="mb-6 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Category", "特效分类页面") }}</h1>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Effects category pages", "特效分类页面") }}</h1>
         <p class="text-gray-600 mt-1">{{ $adminT("Category TDK Settings", "管理各特效页面的分类和 TDK 设置") }}</p>
       </div>
       <div class="flex items-center gap-2">
@@ -63,11 +63,11 @@
           @click="batchDeleteEffects"
           :disabled="batchActionLoading"
           class="px-3 py-1.5 text-sm border border-red-200 text-red-600 rounded hover:bg-red-50 disabled:opacity-50"
-        > {{ $adminT("Delete", "批量删除") }} </button>
+        > {{ $adminT("Bulk delete", "批量删除") }} </button>
         <button
           @click="selectedEffectsIds = []"
           class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
       </div>
       <!-- List header with expand/collapse -->
       <div class="flex items-center justify-start gap-4 mb-2 px-1 text-sm text-gray-500">
@@ -75,7 +75,7 @@
         <span class="text-gray-300">|</span>
         <button type="button" @click="collapseAllEffectsParents" class="hover:text-gray-700 transition-colors">{{ $adminT("Collapse All", "折叠全部") }}</button>
         <span class="text-gray-300">|</span>
-        <button type="button" @click="selectAllEffects" class="hover:text-gray-700 transition-colors">{{ $adminT("Select All", "全选") }}</button>
+        <button type="button" @click="selectAllEffects" class="hover:text-gray-700 transition-colors">{{ $adminT("Select all", "全选") }}</button>
         <span class="text-gray-300">|</span>
         <button type="button" @click="invertSelectEffects" class="hover:text-gray-700 transition-colors">{{ $adminT("Inverse", "反选") }}</button>
       </div>
@@ -106,13 +106,13 @@
               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4 shrink-0"
             />
             <div class="flex items-center gap-2 flex-wrap min-w-0">
-              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"> {{ $adminT("Category", "一级分类") }} </span>
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"> {{ $adminT("Top-level category", "一级分类") }} </span>
               <span class="text-sm font-mono text-gray-400">[{{ parent.sort_order }}]</span>
               <a 
                 :href="getCategoryPageUrl(getEffectsPagePath(parent))" 
                 target="_blank" 
                 class="font-semibold text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                :title="$adminT('View', '查看前台页面')"
+                :title="$adminT('View the public page', '查看前台页面')"
               >
                 {{ parent.category_name }}
               </a>
@@ -165,7 +165,7 @@
                 :href="getCategoryPageUrl(getEffectsPagePath(child, parent))" 
                 target="_blank" 
                 class="font-medium text-gray-900 hover:text-blue-600 hover:underline transition-colors"
-                :title="$adminT('View', '查看前台页面')"
+                :title="$adminT('View the public page', '查看前台页面')"
               >
                 {{ child.category_name }}
               </a>
@@ -194,18 +194,18 @@
             </div>
           </div>
         </div>
-        <div v-show="expandedEffectsParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic"> {{ $adminT("Category", "暂无二级分类") }} </div>
+        <div v-show="expandedEffectsParentIds[parent.id] !== false" v-else class="ml-8 mt-2 border-l border-gray-100 pl-4 text-sm text-gray-400 italic"> {{ $adminT("No subcategories yet", "暂无二级分类") }} </div>
       </div>
       </div>
     </div>
         
     <!-- Empty state -->
     <div v-else class="text-center py-12 bg-gray-50 rounded-lg">
-      <p class="text-gray-600 mb-4">{{ $adminT("Category", "暂无特效分类配置") }}</p>
+      <p class="text-gray-600 mb-4">{{ $adminT("No effects category configured yet", "暂无特效分类配置") }}</p>
       <button
         @click="openCreateEffectsModal(null)"
         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-      > {{ $adminT("Category", "创建第一个特效分类") }} </button>
+      > {{ $adminT("Create the first effects category", "创建第一个特效分类") }} </button>
     </div>
 
     <!-- Effects Modal -->
@@ -271,12 +271,12 @@
           
           <!-- Display Description -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Description", "显示的描述") }}</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Display description", "显示的描述") }}</label>
             <textarea
               v-model="editingEffectsConfig.display_description"
               rows="2"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              :placeholder="$adminT('Description', '显示在特效页面顶部的描述文字')"
+              :placeholder="$adminT('Description shown at the top of the effects page', '显示在特效页面顶部的描述文字')"
             ></textarea>
           </div>
           
@@ -322,7 +322,7 @@
                   class="sr-only peer"
                 />
                 <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                <span class="ms-3 text-sm font-medium text-gray-700">{{ $adminT("Category", "启用此特效分类") }}</span>
+                <span class="ms-3 text-sm font-medium text-gray-700">{{ $adminT("Enable this effects category", "启用此特效分类") }}</span>
               </label>
               <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("When enabled, the page is accessible.", "启用后页面可访问，不启用时 404。") }}</p>
             </div>
@@ -334,7 +334,7 @@
                   class="sr-only peer"
                 />
                 <div class="relative w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                <span class="ms-3 text-sm font-medium text-gray-700"> {{ $adminT("Magic", "在 Magic 页展示") }} </span>
+                <span class="ms-3 text-sm font-medium text-gray-700"> {{ $adminT("Show on the Magic page", "在 Magic 页展示") }} </span>
               </label>
               <p class="text-xs text-gray-500 mt-1.5 ml-14">{{ $adminT("Displays the tab as a quick filter at the top of the iv.", "作为快捷筛选标签显示在 Magic 页顶部。") }}</p>
             </div>
@@ -350,7 +350,7 @@
           <button
             @click="saveEffectsConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          > {{ $adminT("Save", "保存配置") }} </button>
+          > {{ $adminT("Save configuration", "保存配置") }} </button>
         </div>
       </div>
     </div>
@@ -363,7 +363,7 @@
     >
       <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Category", "批量导入特效分类") }}</h3>
+          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Bulk import effects categories", "批量导入特效分类") }}</h3>
           <button @click="showEffectsImportModal = false" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -375,7 +375,7 @@
               @click="effectsFileInput?.click()"
               class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
-              <CloudUpload class="w-5 h-5" /> {{ $adminT("CSV", "选择 CSV 文件") }} </button>
+              <CloudUpload class="w-5 h-5" /> {{ $adminT("Choose a CSV file", "选择 CSV 文件") }} </button>
             <input
               ref="effectsFileInput"
               type="file"
@@ -399,10 +399,10 @@
           <table class="w-full text-left border-collapse">
             <thead class="bg-gray-50 sticky top-0">
               <tr>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "父分类") }}</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category", "分类名称") }}</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("SEO Title", "SEO 标题") }}</th>
-                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Magic", "Magic 展示") }} </th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Parent category", "父分类") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Category name", "分类名称") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("SEO title", "SEO 标题") }}</th>
+                <th class="px-4 py-2 border-b text-sm font-semibold text-gray-700">{{ $adminT("Show on Magic", "Magic 展示") }} </th>
               </tr>
             </thead>
             <tbody class="divide-y">
@@ -430,7 +430,7 @@
             :disabled="effectsImportPreview.length === 0 || importingEffectsConfig"
             class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
           >
-            <Loader2 v-if="importingEffectsConfig" class="w-5 h-5 animate-spin" /> {{ $adminT("Confirm", "确认导入") }} {{ effectsImportPreview.length }}
+            <Loader2 v-if="importingEffectsConfig" class="w-5 h-5 animate-spin" /> {{ $adminT("Confirm import", "确认导入") }} {{ effectsImportPreview.length }}
           </button>
         </div>
       </div>
@@ -708,7 +708,7 @@ const batchDeleteEffects = async () => {
     for (const id of ids) {
       await adminApi.delete(`/api/admin/effects-pages/${id}`)
     }
-    toast.success('Delete')
+    toast.success(adminT('Batch delete successful', '已批量删除'))
     selectedEffectsIds.value = []
     await loadEffectsTree()
   } catch (error: any) {
@@ -841,7 +841,7 @@ const saveEffectsConfig = async () => {
 
 const deleteEffectsConfig = async (category: any) => {
   const confirmed = await confirm({
-    title: adminT('Delete Category', '删除分类'),
+    title: adminT('Delete category', '删除分类'),
     message: adminT(
       category.children?.length ? 'Delete category "{name}" and all its subcategories? This action cannot be undone.' : 'Delete category "{name}"? This action cannot be undone.',
       category.children?.length ? '确定删除分类“{name}”及其所有子分类吗？此操作不可撤销。' : '确定删除分类“{name}”吗？此操作不可撤销。',
@@ -854,7 +854,7 @@ const deleteEffectsConfig = async (category: any) => {
   try {
     const response = await adminApi.delete(`/api/admin/effects-pages/${category.id}`)
     if (response.success) {
-      toast.success('CategoryDelete')
+      toast.success(adminT('Effects category deleted', '特效分类已删除'))
       await loadEffectsTree()
     }
   } catch (error: unknown) {
@@ -877,7 +877,7 @@ const handleEffectsFileSelect = async (event: Event) => {
       toast.success(adminT('Parsed {n} rows', '成功解析 {n} 条数据', { n: effectsImportPreview.value.length }))
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT('File parse failed', '文件解析失败'))
   }
 }
 
@@ -893,7 +893,7 @@ VHS Effects,Noise,Browse all Noise works,Noise Art,View noise artworks,"noise,re
   const url = URL.createObjectURL(blob)
   
   link.setAttribute('href', url)
-  link.setAttribute('download', 'Category.csv')
+  link.setAttribute('download', 'effects-category-import-template.csv')
   link.style.visibility = 'hidden'
   
   document.body.appendChild(link)
@@ -911,12 +911,12 @@ const handleEffectsImport = async () => {
       categories: effectsImportPreview.value
     })
     if (response.success) {
-      toast.success('successful')
+      toast.success(adminT('Import successful', '导入成功'))
       showEffectsImportModal.value = false
       await loadEffectsTree()
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT('Import failed', '导入失败'))
   } finally {
     importingEffectsConfig.value = false
   }
@@ -924,7 +924,7 @@ const handleEffectsImport = async () => {
 
 const exportEffectsToCSV = () => {
   if (effectsTree.value.length === 0) {
-    toast.error('Category')
+    toast.error(adminT('No effects categories to export', '暂无特效分类可导出'))
     return
   }
 
@@ -1010,9 +1010,9 @@ const exportEffectsToCSV = () => {
     
     URL.revokeObjectURL(url)
     
-    toast.success(`successful ${flatCategories.length} Category`)
+    toast.success(adminT('Successfully exported {n} categories', '成功导出 {n} 个分类', { n: flatCategories.length }))
   } catch (error: any) {
-    toast.error('failed: ' + (error.message || ''))
+    toast.error(adminT('Export failed: ', '导出失败：') + (error.message || ''))
     console.error('Export error:', error)
   }
 }

@@ -2,7 +2,7 @@
   <div class="space-y-3">
     <!-- API Selection -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-0.5"> {{ $adminT("API", "选择 API") }}</label>
+      <label class="block text-sm font-medium text-gray-700 mb-0.5"> {{ $adminT("Select API", "选择 API") }}</label>
       <div v-if="loadingParams" class="space-y-2">
         <div class="h-10 bg-gray-200 rounded animate-pulse"></div>
         <div class="h-4 bg-gray-200 rounded animate-pulse w-1/2"></div>
@@ -23,7 +23,7 @@
           </option>
         </select>
         <p v-if="filteredApiLibraryEntries.length === 0" class="mt-0.5 text-xs text-red-500">
-          <span v-if="node.data?.output_type"> {{ $adminT("Type", "暂无输出类型为") }} <span class="font-medium">{{ outputTypeLabel }}</span> {{ $adminT(", add the API library", "的可用 API，请先在 API 库中添加") }} </span>
+          <span v-if="node.data?.output_type"> {{ $adminT("No nodes with output type", "暂无输出类型为") }} <span class="font-medium">{{ outputTypeLabel }}</span> {{ $adminT(", add the API library", "的可用 API，请先在 API 库中添加") }} </span>
           <span v-else> {{ $adminT("API is currently not available. Please add it to the API library", "暂无可用 API，请先在 API 库中添加") }} </span>
         </p>
         <p v-else class="mt-0.5 text-xs text-gray-500">
@@ -50,7 +50,7 @@
           @click="activeTab = 'json'"
           :class="activeTab === 'json' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
           class="px-3 py-1 text-xs font-medium"
-        > {{ $adminT("JSON", "JSON 预览") }} </button>
+        > {{ $adminT("JSON preview", "JSON 预览") }} </button>
         <button
           @click="activeTab = 'test'"
           :class="activeTab === 'test' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
@@ -100,14 +100,14 @@
                   (isVisibilityLocked(param.name) || (param.required && isParamVisible(param.name))) && 'opacity-60 cursor-not-allowed'
                 ]"
               >
-                {{ isParamVisible(param.name) ? $adminT('Visible', '可见') : $adminT('Hidden', '不可见') }}
+                {{ isParamVisible(param.name) ? $adminT('Visible', '可见') : $adminT('Not visible', '不可见') }}
               </button>
             </div>
           </div>
 
             <!-- （） -->
             <div class="mb-1.5">
-              <label class="block text-xs text-gray-600 mb-0.5">{{ $adminT("Default", "默认值") }}</label>
+              <label class="block text-xs text-gray-600 mb-0.5">{{ $adminT("Default value", "默认值") }}</label>
               
               <!-- Boolean dropdown -->
               <select
@@ -184,11 +184,11 @@
       <!-- JSON Preview Tab -->
       <div v-show="activeTab === 'json'" class="space-y-2">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("JSON", "节点完整配置 JSON") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("Full node configuration JSON", "节点完整配置 JSON") }}</label>
           <pre class="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs overflow-auto max-h-64 font-mono">{{ nodeJsonPreview }}</pre>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("JSON", "参数映射 JSON") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5"> {{ $adminT("Parameter mapping JSON", "参数映射 JSON") }}</label>
           <pre class="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs overflow-auto max-h-32 font-mono">{{ mappingsJson }}</pre>
         </div>
       </div>
@@ -198,7 +198,7 @@
         <div v-if="selectedApi" class="space-y-3">
           <!-- API  -->
           <div v-if="selectedApi.api_docs_url">
-            <label class="block text-xs font-medium text-gray-700 mb-1">{{ $adminT("API", "API 文档") }} </label>
+            <label class="block text-xs font-medium text-gray-700 mb-1">{{ $adminT("API documentation", "API 文档") }} </label>
             <a
               :href="selectedApi.api_docs_url"
               target="_blank"
@@ -231,7 +231,7 @@
           <!-- Empty State -->
           <div v-if="!selectedApi.api_docs_url && (!selectedApi.official_price || !selectedApi.official_currency || !selectedApi.official_unit) && (!selectedApi.notes || selectedApi.notes === '')" class="text-center py-4 text-sm text-gray-500">{{ $adminT("Can not open message", "暂无信息") }}</div>
         </div>
-        <div v-else class="text-center py-4 text-sm text-gray-500"> {{ $adminT("API", "请先选择 API") }} </div>
+        <div v-else class="text-center py-4 text-sm text-gray-500"> {{ $adminT("Select an API first", "请先选择 API") }} </div>
       </div>
     </div>
   </div>
@@ -343,7 +343,7 @@ const availableNodeOutputs = computed(() => {
     .forEach(n => {
       const nodeLabel = n.data?.label || n.id
       if (n.type === 'prompt_default_hidden') {
-        // For prompt_default_hidden nodes, show only the node label (e.g., "Prompt （）")
+        // For prompt_default_hidden nodes, show only the node label (e.g., "Prompt default (hidden)")
         outputs.push({ 
           value: `$.${n.id}.output.prompt`, 
           label: nodeLabel,
@@ -824,21 +824,21 @@ const updateConnection = (paramName: string, source: string) => {
   // If connected from an API node, force it to be "system_preset" (not user input)
   // Because the URL is directly passed from the previous API, users shouldn't see or configure it
   if (isApiToApiConnection && source === 'user_input') {
-    toast.error('APIAPI，，')
+    toast.error(adminT('When an API output feeds an API input, this parameter must use the system preset and cannot be switched to user input', 'API输出连接到API输入时，该参数必须使用系统预设，不能改为用户输入'))
     return
   }
   
   // If connected from a UserInput node, force it to be "system_preset" (not user input)
   // Because UserInput nodes connected to API should be system preset
   if (isUserInputConnection && source === 'user_input') {
-    toast.error('API，，')
+    toast.error(adminT('When a UserInput node feeds an API, this parameter must use the system preset and cannot be switched to user input', '用户输入节点连接到API时，该参数必须使用系统预设，不能改为用户输入'))
     return
   }
   
   // If connected from a PromptPreset node, force it to be "system_preset" (not user input)
   // Because PromptPreset nodes connected to API should be system preset
   if (isPromptPresetConnection && source === 'user_input') {
-    toast.error('PromptAPI，，')
+    toast.error(adminT('When a preset-prompt node feeds an API, this parameter must use the system preset and cannot be switched to user input', 'Prompt预埋节点连接到API时，该参数必须使用系统预设，不能改为用户输入'))
     return
   }
   
@@ -883,10 +883,10 @@ const updateConnection = (paramName: string, source: string) => {
   emit('update', updatedNode)
 }
 
-// ： <-> 。 API Edit
+// Toggle a parameter between visible and hidden in the API call editor
 const toggleParamVisibility = (paramName: string) => {
   if (isVisibilityLocked(paramName)) {
-    toast.error('，')
+    toast.error(adminT('This parameter is connected; its visibility cannot be toggled', '该参数已连接，不可切换可见性'))
     return
   }
   const mappings = { ...(props.node.data.param_mappings || {}) }
@@ -1004,14 +1004,14 @@ const handleNumberInput = (paramName: string, event: Event) => {
   
   // Validate min/max range
   if (param.min !== undefined && numValue < param.min) {
-    toast.error(` ${param.min}`)
+    toast.error(adminT('Value cannot be less than {min}', '值不能小于 {min}', { min: param.min }))
     target.value = String(param.min)
     updateDefaultValue(paramName, String(param.min))
     return
   }
   
   if (param.max !== undefined && numValue > param.max) {
-    toast.error(` ${param.max}`)
+    toast.error(adminT('Value cannot be greater than {max}', '值不能大于 {max}', { max: param.max }))
     target.value = String(param.max)
     updateDefaultValue(paramName, String(param.max))
     return

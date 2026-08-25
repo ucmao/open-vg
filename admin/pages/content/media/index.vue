@@ -10,7 +10,7 @@
         <input
           v-model="searchQuery"
           type="text"
-          :placeholder="$adminT('Search', '搜索文件...')"
+          :placeholder="$adminT('Search files...', '搜索文件...')"
           class="px-4 py-2 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           @input="handleSearch"
         />
@@ -337,7 +337,7 @@ const handleFileUpload = async (event: Event) => {
 
 const handleDelete = async (item: any) => {
   const confirmed = await confirm({
-    title: adminT("Confirm Delete", "确认删除"),
+    title: adminT("Confirm delete", "确认删除"),
     message: adminT('Delete "{name}"? This action cannot be undone.', '确定删除“{name}”吗？此操作不可撤销。', { name: item.original_filename }),
     confirmText: adminT("Delete", "删除"),
     cancelText: adminT("Cancel", "取消"),
@@ -355,11 +355,11 @@ const handleDelete = async (item: any) => {
       toast.success(adminT("File deleted", "文件删除成功"))
       mediaList.value = mediaList.value.filter(m => m.id !== item.id)
     } else {
-      toast.error(response.message || adminT("Delete", "无法删除文件"))
+      toast.error(response.message || adminT("Could not delete the file", "无法删除文件"))
     }
   } catch (error: any) {
     console.error('Delete error:', error)
-    toast.error(error.message || adminT("Delete", "无法删除文件"))
+    toast.error(error.message || adminT("Could not delete the file", "无法删除文件"))
   }
 }
 

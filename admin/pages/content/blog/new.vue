@@ -14,7 +14,7 @@
           <div>
             <h1 class="text-xl font-semibold text-gray-900">{{ $adminT("Create a new article", "创建新文章") }}</h1>
             <p class="text-xs text-gray-500 mt-0.5 flex items-center">
-              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span> {{ $adminT("Save", "已启用自动保存") }} </p>
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span> {{ $adminT("Autosave enabled", "已启用自动保存") }} </p>
           </div>
         </div>
         
@@ -54,7 +54,7 @@
               required
               maxlength="200"
               class="w-full text-3xl font-bold text-gray-900 placeholder-gray-400 border-0 border-b-2 border-transparent focus:border-blue-500 bg-transparent px-0 py-3 outline-none transition-colors"
-              :placeholder="$adminT('Title', '文章标题...')"
+              :placeholder="$adminT('Post title...', '文章标题...')"
               @blur="onTitleBlur"
             />
             <!-- URL Slug Preview -->
@@ -93,7 +93,7 @@
           <!-- Publishing Options -->
           <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
             <h3 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
-              <Clock class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("Settings", "发布设置") }} </h3>
+              <Clock class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("Publish settings", "发布设置") }} </h3>
 
             <div class="space-y-4">
               <!-- Author Selection -->
@@ -165,7 +165,7 @@
               </div>
               <!-- Published Date -->
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Organisation", "定时发布") }}</label>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Schedule publishing", "定时发布") }}</label>
                 <div class="relative">
                   <input
                     v-model="form.published_at"
@@ -185,7 +185,7 @@
                     v-model="form.category_id"
                     class="flex-1 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
                   >
-                    <option :value="null">{{ $adminT("Category", "未分类") }}</option>
+                    <option :value="null">{{ $adminT("Uncategorised", "未分类") }}</option>
                     <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                       {{ cat.name }}
                     </option>
@@ -193,7 +193,7 @@
                   <NuxtLink 
                     to="/content/taxonomy" 
                     class="p-2 text-gray-400 hover:text-blue-600 border border-gray-300 rounded-lg transition-colors"
-                    :title="$adminT('Category', '管理分类')"
+                    :title="$adminT('Manage categories', '管理分类')"
                   >
                     <Settings class="w-4 h-4" />
                   </NuxtLink>
@@ -366,7 +366,7 @@
               :placeholder="$adminT('Short summary for preview...', '用于预览的简短总结...')"
             ></textarea>
             <div class="flex justify-between items-center mt-1.5">
-              <p class="text-xs text-gray-400">{{ $adminT("Search", "用于搜索结果和社交分享") }}</p>
+              <p class="text-xs text-gray-400">{{ $adminT("Used in search results and social shares", "用于搜索结果和社交分享") }}</p>
               <span class="text-xs text-gray-400">{{ form.excerpt?.length || 0 }}/500</span>
             </div>
           </div>
@@ -391,26 +391,26 @@
 
             <div class="space-y-4">
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Title", "Meta 标题") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Title)", "(默认为文章标题)") }}</span>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta title", "Meta 标题") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Title)", "(默认为文章标题)") }}</span>
                 </label>
                 <input
                   v-model="form.meta_title"
                   type="text"
                   maxlength="200"
                   class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  :placeholder="$adminT('Meta Title', '自定义 Meta 标题...')"
+                  :placeholder="$adminT('Custom meta title...', '自定义 Meta 标题...')"
                 />
               </div>
 
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Description", "Meta 描述") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Default summary)", "(默认为摘要)") }}</span>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta description", "Meta 描述") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Default summary)", "(默认为摘要)") }}</span>
                 </label>
                 <textarea
                   v-model="form.meta_description"
                   rows="3"
                   maxlength="500"
                   class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-                  :placeholder="$adminT('Meta Description', '自定义 Meta 描述...')"
+                  :placeholder="$adminT('Custom meta description...', '自定义 Meta 描述...')"
                 ></textarea>
               </div>
             </div>
@@ -491,7 +491,7 @@ const form = reactive({
 
 const generateSEO = async () => {
   if (!form.title || !form.content) {
-    toast.error(adminT("Title", "请先填写文章标题和内容"))
+    toast.error(adminT("Fill in the post title and content first", "请先填写文章标题和内容"))
     return
   }
   
@@ -507,7 +507,7 @@ const generateSEO = async () => {
       
       // Confirm
       const confirmed = await confirm({
-        title: adminT("Confirm SEO", "确认应用生成的 SEO 内容"),
+        title: adminT("Apply the generated SEO content", "确认应用生成的 SEO 内容"),
         message: adminT('Title: {title}\nDescription: {description}\nTags: {tags}\nExcerpt: {excerpt}', '标题: {title}\n描述: {description}\n标签: {tags}\n摘要: {excerpt}', {
           title: generated.title || adminT('(empty)', '(空)'),
           description: generated.description || adminT('(empty)', '(空)'),
@@ -532,16 +532,16 @@ const generateSEO = async () => {
             }
           })
         }
-        toast.success(adminT("SEO", "SEO 内容已应用"))
+        toast.success(adminT("SEO content applied", "SEO 内容已应用"))
       }
     } else {
-      toast.error(response.message || adminT("failed", "生成失败"))
+      toast.error(response.message || adminT("Generation failed", "生成失败"))
     }
   } catch (error: any) {
     console.error('Failed to generate SEO:', error)
     
     // Handle different error types
-    const errorMessage = error.response?.data?.message || error.message || adminT("failed", "生成失败")
+    const errorMessage = error.response?.data?.message || error.message || adminT("Generation failed", "生成失败")
     const statusCode = error.response?.status
     
     if (statusCode === 503) {
@@ -739,13 +739,13 @@ const handleSubmit = async () => {
     }
     
     if (!form.slug?.trim()) {
-      toast.error(adminT("Required", "别名是必填项"))
+      toast.error(adminT("Slug is required", "别名是必填项"))
       saving.value = false
       return
     }
     
     if (!form.content?.trim() || form.content === '<p><br></p>') {
-      toast.error(adminT("Required", "内容是必填项"))
+      toast.error(adminT("Content is required", "内容是必填项"))
       saving.value = false
       return
     }
@@ -772,7 +772,7 @@ const handleSubmit = async () => {
     })
     
     if (response.success) {
-      toast.success(adminT("successful！", "文章创建成功！"))
+      toast.success(adminT("Article created successfully!", "文章创建成功！"))
       router.push('/content/blog')
     } else {
       toast.error(response.message || adminT("Could not create article", "无法创建文章"))
@@ -780,7 +780,7 @@ const handleSubmit = async () => {
   } catch (error: any) {
     console.error('Failed to create post:', error)
     if (error.response?.status === 403) {
-      toast.error(adminT("Could not close temporary folder: %s", "需要管理员权限"))
+      toast.error(adminT("Administrator permission required", "需要管理员权限"))
       router.push('/login')
     } else {
       toast.error(error.message || adminT("Could not create article", "无法创建文章"))

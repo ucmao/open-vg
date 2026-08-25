@@ -151,11 +151,11 @@
             </div>
             <div class="relative">
               <div class="flex justify-between items-start">
-                <span class="text-sm text-white/90">{{ $adminT("Collection", "营收额") }}</span>
+                <span class="text-sm text-white/90">{{ $adminT("Revenue", "营收额") }}</span>
                 <span v-if="growthPercent('revenue') !== null" class="text-xs font-bold bg-white/20 px-2 py-0.5 rounded">{{ growthPercent('revenue')! > 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('revenue')!).toFixed(0) }}%</span>
               </div>
               <div class="text-4xl font-black mt-2">${{ period.current.revenue.toFixed(2) }}</div>
-              <div class="mt-5 text-xs text-white/90"> {{ $adminT("(USD)", "周期内营收 (USD)") }}</div>
+              <div class="mt-5 text-xs text-white/90"> {{ $adminT("Revenue in period (USD)", "周期内营收 (USD)") }}</div>
             </div>
           </div>
           <!--  -->
@@ -165,7 +165,7 @@
               <span v-if="growthPercent('recharge_count') !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="growthPercent('recharge_count')! >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ growthPercent('recharge_count')! >= 0 ? '↑' : '↓' }}{{ Math.abs(growthPercent('recharge_count')!).toFixed(0) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ period.current.recharge_count }}</div>
-            <div class="mt-5 text-xs text-gray-400">{{ $adminT("successful", "周期内成功订单数") }}</div>
+            <div class="mt-5 text-xs text-gray-400">{{ $adminT("Successful orders in period", "周期内成功订单数") }}</div>
           </div>
           <!-- ：/； =、successful= -->
           <div class="bg-white rounded-2xl p-10 border border-gray-100 shadow-md">
@@ -184,7 +184,7 @@
               </div>
               <div class="mt-1.5 flex justify-between text-xs text-gray-500">
                 <span>{{ period.current.payment_initiated }} </span>
-                <span>{{ period.current.recharge_count }} {{ $adminT("successful", "次成功") }}</span>
+                <span>{{ period.current.recharge_count }} {{ $adminT("succeeded", "次成功") }}</span>
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@ const loading = ref(true)
 
 const primaryTimeOptions = [
   { value: 'today', label: adminT("Today", "今日") },
-  { value: 'yesterday', label: adminT("Yesterday.", "昨日") },
+  { value: 'yesterday', label: adminT("Yesterday", "昨日") },
   { value: '7d', label: adminT("Almost seven days.", "近7天") },
   { value: '30d', label: adminT("Almost 30 days.", "近30天") },
 ]

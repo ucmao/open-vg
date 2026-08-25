@@ -12,9 +12,9 @@
           @click="exportCsv"
           :disabled="loading || models.length === 0"
           class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-        > {{ $adminT("CSV", "导出 CSV") }} </button>
+        > {{ $adminT("Export CSV", "导出 CSV") }} </button>
         <label class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer">
-          <input type="file" accept=".csv" class="hidden" @change="handleCsvFileSelect" /> {{ $adminT("CSV", "导入 CSV") }} </label>
+          <input type="file" accept=".csv" class="hidden" @change="handleCsvFileSelect" /> {{ $adminT("Import CSV", "导入 CSV") }} </label>
         <button
           type="button"
           @click="showApplyPresetModal = true"
@@ -32,16 +32,16 @@
         type="button"
         @click="showBatchCostModal = true"
         class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700"
-      > {{ $adminT("Settings", "批量设置基础积分") }} </button>
+      > {{ $adminT("Bulk set base credits", "批量设置基础积分") }} </button>
       <button
         type="button"
         @click="showBatchAdditionsModal = true"
         class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700"
-      > {{ $adminT("Settings", "批量设置附加积分") }} </button>
+      > {{ $adminT("Bulk set additional credits", "批量设置附加积分") }} </button>
       <button
         @click="clearSelection"
         class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-      > {{ $adminT("Cancel", "取消选择") }} </button>
+      > {{ $adminT("Clear selection", "取消选择") }} </button>
     </div>
 
     <!-- Filters -->
@@ -58,7 +58,7 @@
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Type", "模型类型") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Model type", "模型类型") }}</label>
           <select
             v-model="filterWorkType"
             @change="page = 1; fetchModels(true)"
@@ -95,7 +95,7 @@
               <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase"> {{ $adminT("/ model_key", "名称 / model_key") }}</th>
               <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("Type", "类型") }}</th>
               <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("Associate workflow", "关联工作流") }}</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("API", "关联API") }}</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("Linked API", "关联API") }}</th>
               <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("Sale price", "售价") }}</th>
               <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $adminT("Count", "积分计算") }}</th>
               <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
@@ -129,7 +129,7 @@
                     :to="`/models/workflows/${m.workflow_id}`"
                     target="_blank"
                     class="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
-                    :title="$adminT('View/Edit', '点击查看/编辑工作流')"
+                    :title="$adminT('Click to view or edit the workflow', '点击查看/编辑工作流')"
                   > {{ $adminT("Workstream#", "工作流 #") }}{{ m.workflow_id }}
                   </NuxtLink>
                 </div>
@@ -231,7 +231,7 @@
       <div class="flex min-h-full items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/50" @click="showBatchCostModal = false"></div>
         <div class="relative z-10 bg-white rounded-lg shadow-xl max-w-sm w-full p-6">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Settings", "批量设置基础积分") }}</h3>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Bulk set base credits", "批量设置基础积分") }}</h3>
           <p class="text-sm text-gray-600 mb-3"> {{ selectedIds.length }} {{ $adminT("Selected", "已选") }}</p>
           <input
             v-model.number="batchCostValue"
@@ -255,7 +255,7 @@
       <div class="flex min-h-full items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/50" @click="showBatchAdditionsModal = false"></div>
         <div class="relative z-10 bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Settings", "批量设置附加积分") }}</h3>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Bulk set additional credits", "批量设置附加积分") }}</h3>
           <p class="text-sm text-gray-600 mb-2"> {{ selectedIds.length }} {{ $adminT("Selected", "已选") }}</p>
           <div class="mb-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Parameters", "参数名") }}</label>
@@ -312,7 +312,7 @@
               class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
               <option value="selected">{{ $adminT("Only Selected Models", "仅已勾选的模型") }}</option>
-              <option value="same_type">{{ $adminT("Type", "与来源同类型下的全部模型") }}</option>
+              <option value="same_type">{{ $adminT("All models of the same type as the source", "与来源同类型下的全部模型") }}</option>
             </select>
           </div>
           <div class="flex justify-end gap-2">
@@ -488,7 +488,7 @@ class="absolute top-[2px] rounded-full h-5 w-5 bg-white border transition-all"
                                       :min="field.config.min"
                                       :max="field.config.max"
                                       step="1"
-                                      :placeholder="$adminT('Max', '最大值')"
+                                      :placeholder="$adminT('Maximum value', '最大值')"
                                       class="w-16 shrink-0 pl-1.5 pr-1 py-0.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-right"
                                     />
                                     <input
@@ -505,7 +505,7 @@ class="absolute top-[2px] rounded-full h-5 w-5 bg-white border transition-all"
                                       type="button"
                                       @click="removeEditCostRange(field.key, idx)"
                                       class="text-red-500 hover:text-red-700 text-xs px-1 shrink-0 whitespace-nowrap"
-                                      :title="$adminT('Delete', '删除区间')"
+                                      :title="$adminT('Delete range', '删除区间')"
                                     >{{ $adminT("Delete", "删除") }}</button>
                                   </div>
                                   <button
@@ -555,8 +555,8 @@ const api = useAdminApi()
 const { toast } = useToast()
 
 const workTypeOptions = [
-  { value: 'text-to-image', label: adminT("Text & Picture", "文本→图片") },
-  { value: 'image-to-image', label: adminT("Pictures", "图片→图片") },
+  { value: 'text-to-image', label: adminT("Text → image", "文本→图片") },
+  { value: 'image-to-image', label: adminT("Image → image", "图片→图片") },
   { value: 'text-to-video', label: adminT("Text to Video", "文本→视频") },
   { value: 'image-to-video', label: adminT("Images and videos", "图片→视频") },
   { value: 'video-effects', label: adminT("Video Effects Template", "视频特效模板") },
@@ -895,10 +895,10 @@ async function applyBatchCost () {
       clearSelection()
       fetchModels()
     } else {
-      toast.error(res.message || adminT("failed", "更新失败"))
+      toast.error(res.message || adminT("Update failed", "更新失败"))
     }
   } catch (e: any) {
-    toast.error(e.message || adminT("failed", "更新失败"))
+    toast.error(e.message || adminT("Update failed", "更新失败"))
   } finally {
     saving.value = false
   }
@@ -921,7 +921,7 @@ async function applyBatchAdditions () {
       additions[k] = Number(v) || 0
     }
   } catch {
-    toast.error(adminT("JSON", "JSON 格式错误"))
+    toast.error(adminT("Invalid JSON", "JSON 格式错误"))
     return
   }
   if (Object.keys(additions).length === 0) {
@@ -942,10 +942,10 @@ async function applyBatchAdditions () {
       clearSelection()
       fetchModels()
     } else {
-      toast.error(res.message || adminT("failed", "更新失败"))
+      toast.error(res.message || adminT("Update failed", "更新失败"))
     }
   } catch (e: any) {
-    toast.error(e.message || adminT("failed", "更新失败"))
+    toast.error(e.message || adminT("Update failed", "更新失败"))
   } finally {
     saving.value = false
   }
@@ -998,12 +998,12 @@ async function applyPreset () {
     const workType = source.work_type
     const res = await api.get('/api/admin/models', { params: { work_type: workType, page: 1, page_size: 2000 } })
     if (!res.success || !res.data?.items?.length) {
-      toast.error(adminT("Type", "未获取到同类型模型"))
+      toast.error(adminT("No models of the same type were found", "未获取到同类型模型"))
       return
     }
     targetIds = (res.data.items as any[]).map((m: any) => m.id).filter((id: number) => id !== sourceId)
     if (targetIds.length === 0) {
-      toast.error(adminT("Type", "同类型下无其他模型"))
+      toast.error(adminT("No other models of this type", "同类型下无其他模型"))
       return
     }
   }
@@ -1016,16 +1016,16 @@ async function applyPreset () {
     if (Object.keys(costAdditions).length > 0) payload.cost_additions = costAdditions
     const res = await api.post('/api/admin/models/batch-update-pricing', payload)
     if (res.success) {
-      toast.success(res.message || ` ${targetIds.length} `)
+      toast.success(res.message || adminT('Successfully applied pricing to {n} models', '成功应用定价到 {n} 个模型', { n: targetIds.length }))
       showApplyPresetModal.value = false
       applyPresetSourceId.value = 0
       clearSelection()
       fetchModels()
     } else {
-      toast.error(res.message || adminT("failed", "应用失败"))
+      toast.error(res.message || adminT("Failed to apply", "应用失败"))
     }
   } catch (e: any) {
-    toast.error(e.message || adminT("failed", "应用失败"))
+    toast.error(e.message || adminT("Failed to apply", "应用失败"))
   } finally {
     saving.value = false
   }
@@ -1041,7 +1041,7 @@ async function exportCsv () {
     const res = await api.get('/api/admin/models', { params })
     const items = (res.success && res.data?.items) ? res.data.items : []
     if (items.length === 0) {
-      toast.error(adminT("No data available", "暂无数据可导出"))
+      toast.error(adminT("No data to export", "暂无数据可导出"))
       return
     }
     const headers = ['id', 'model_key', 'work_type', 'name', 'cost', 'cost_additions']
@@ -1076,7 +1076,7 @@ async function exportCsv () {
     URL.revokeObjectURL(url)
     toast.success(` ${items.length} `)
   } catch (e: any) {
-    toast.error(e.message || adminT("failed", "导出失败"))
+    toast.error(e.message || adminT("Export failed", "导出失败"))
   } finally {
     loading.value = false
   }
@@ -1198,7 +1198,7 @@ async function handleCsvFileSelect (event: Event) {
     toast.success(adminT('Import finished: {ok} succeeded{failed}', '导入完成：成功 {ok} 条{failed}', { ok, failed: err > 0 ? adminT(', {n} failed', '，失败 {n} 条', { n: err }) : '' }))
     fetchModels()
   } catch (e: any) {
-    toast.error(e.message || adminT("failed", "导入失败"))
+    toast.error(e.message || adminT("Import failed", "导入失败"))
   } finally {
     saving.value = false
   }

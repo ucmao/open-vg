@@ -49,7 +49,7 @@
             <input
               v-model="searchQuery"
               type="text"
-              :placeholder="$adminT('Search', '搜索文件...')"
+              :placeholder="$adminT('Search files...', '搜索文件...')"
               class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               @input="handleSearch"
             />
@@ -166,7 +166,7 @@
       <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex items-center justify-between">
         <div class="text-sm text-gray-500">
           <span v-if="selectedItems.length > 0"> <span class="text-gray-900 font-medium">{{ selectedItems.length }}</span> </span>
-          <span v-else>{{ $adminT("Please select", "请选择一个或多个文件以继续") }}</span>
+          <span v-else>{{ $adminT("Select one or more files to continue", "请选择一个或多个文件以继续") }}</span>
         </div>
         <div class="flex items-center space-x-3">
           <button
@@ -289,7 +289,7 @@ const fetchMedia = async (refresh = false) => {
       hasMore.value = newItems.length === pageSize.value
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "加载素材库失败"))
+    toast.error(adminT("Failed to load the media library", "加载素材库失败"))
   } finally {
     loading.value = false
   }
@@ -357,10 +357,10 @@ const handleFileUpload = async (event: Event) => {
         }
       })
     } else {
-      toast.error(adminT("failed", "上传失败"))
+      toast.error(adminT("Upload failed", "上传失败"))
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "上传失败"))
+    toast.error(adminT("Upload failed", "上传失败"))
   } finally {
     uploading.value = false
     target.value = ''

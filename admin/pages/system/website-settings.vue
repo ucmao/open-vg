@@ -2,7 +2,7 @@
   <div class="p-6">
     <div class="mb-6 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Settings", "网站设置") }}</h1>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Website settings", "网站设置") }}</h1>
         <p class="text-gray-600 mt-1"> {{ $adminT("Manage global SEO settings, robots.txt, and sitemap", "管理网站的全局 SEO 属性、Robots 和 Sitemap") }}</p>
       </div>
       <div class="flex gap-3">
@@ -106,7 +106,7 @@
               :href="`${apiBaseUrl}/robots.txt`"
               target="_blank"
               class="text-sm font-medium text-blue-700 hover:text-blue-600 flex items-center"
-            > {{ $adminT("View", "查看实际输出") }} <ExternalLink class="ml-1 h-4 w-4" />
+            > {{ $adminT("View the actual output", "查看实际输出") }} <ExternalLink class="ml-1 h-4 w-4" />
             </a>
           </div>
         </div>
@@ -157,7 +157,7 @@
               :href="`${apiBaseUrl}/sitemap.xml`"
               target="_blank"
               class="text-sm font-medium text-green-700 hover:text-green-600 flex items-center"
-            > {{ $adminT("View", "查看实际输出") }} <ExternalLink class="ml-1 h-4 w-4" />
+            > {{ $adminT("View the actual output", "查看实际输出") }} <ExternalLink class="ml-1 h-4 w-4" />
             </a>
           </div>
         </div>
@@ -324,7 +324,7 @@
 
     <!-- Empty state -->
     <div v-else class="text-center py-12 bg-gray-50 rounded-lg">
-      <p class="text-gray-600 mb-4">{{ $adminT("Cannot initialise Evolution's mail component.", "暂无配置") }}</p>
+      <p class="text-gray-600 mb-4">{{ $adminT("No configuration yet", "暂无配置") }}</p>
       <button
         @click="initDefaults"
         class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
@@ -416,7 +416,7 @@ const configs = ref([])
 const activeTab = ref('site')
 
 const tabs = [
-  { id: 'site', name: adminT("Settings", "网站设置") },
+  { id: 'site', name: adminT("Website settings", "网站设置") },
   { id: 'robots', name: 'robots' },
   { id: 'sitemap', name: 'sitemap' },
   { id: 'custom', name: adminT("Custom code", "自定义代码") }
@@ -462,9 +462,9 @@ const getSitemapTitle = (key) => {
     'sitemap_include_blogs': adminT("Blog articles", "博客文章"),
     'sitemap_include_topics': adminT("Topic", "专题"),
     'sitemap_include_users': adminT("User Home Page", "用户主页"),
-    'sitemap_include_categories': adminT("Category", "作品分类页面"),
-    'sitemap_include_effects': adminT("Category", "特效分类页面"),
-    'sitemap_include_generate': adminT("Category", "生成分类页面")
+    'sitemap_include_categories': adminT("Work category pages", "作品分类页面"),
+    'sitemap_include_effects': adminT("Effects category pages", "特效分类页面"),
+    'sitemap_include_generate': adminT("Generation category pages", "生成分类页面")
   }
   return titles[key] || key
 }
@@ -477,7 +477,7 @@ const loadConfigs = async () => {
       configs.value = response.data
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载配置失败"))
+    toast.error(adminT("Failed to load the configuration", "加载配置失败"))
     console.error('Failed to load configs:', error)
   } finally {
     loading.value = false
@@ -486,7 +486,7 @@ const loadConfigs = async () => {
 
 const initDefaults = async () => {
   const confirmed = await confirm({
-    title: adminT("SEO", "初始化 SEO 配置"),
+    title: adminT("Initialise the SEO configuration", "初始化 SEO 配置"),
     message: adminT("Are you sure you want to initialize the default configuration? This may cover some of the existing configurations.", "确定要初始化默认配置吗？这可能会覆盖现有的一些配置。"),
     type: 'warning'
   })
@@ -500,7 +500,7 @@ const initDefaults = async () => {
       await loadConfigs()
     }
   } catch (error) {
-    toast.error(adminT("failed", "初始化失败"))
+    toast.error(adminT("Initialisation failed", "初始化失败"))
     console.error('Failed to init defaults:', error)
   } finally {
     loading.value = false
@@ -519,7 +519,7 @@ const updateConfig = async (config) => {
       await loadConfigs()
     }
   } catch (error) {
-    toast.error(adminT("failed", "更新失败"))
+    toast.error(adminT("Update failed", "更新失败"))
     console.error('Failed to update config:', error)
   }
 }
@@ -531,7 +531,7 @@ const toggleEnabled = async (config) => {
 
 const deleteConfig = async (config) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除配置"),
+    title: adminT("Delete configuration", "删除配置"),
     message: adminT('Delete "{name}"? This action cannot be undone.', '确定删除“{name}”吗？此操作不可撤销。', { name: config.description || config.config_key }),
     type: 'danger'
   })
@@ -540,7 +540,7 @@ const deleteConfig = async (config) => {
   try {
     const response = await adminApi.delete(`/api/admin/seo/configs/${config.config_key}`)
     if (response.success) {
-      toast.success(adminT("Delete", "已删除"))
+      toast.success(adminT("Deleted", "已删除"))
       await loadConfigs()
     }
   } catch (error) {
@@ -574,10 +574,10 @@ const openModal = (item = null) => {
 
 const saveSnippet = async () => {
   if (!modalForm.value.description) {
-    return toast.error(adminT("Please enter Title", "请输入标题"))
+    return toast.error(adminT("Enter a title", "请输入标题"))
   }
   if (!modalForm.value.config_value) {
-    return toast.error(adminT("Please enter", "请输入代码内容"))
+    return toast.error(adminT("Enter the code", "请输入代码内容"))
   }
 
   try {

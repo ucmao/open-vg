@@ -29,7 +29,7 @@
           <button
             @click="openCreateModal"
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
-          > {{ $adminT("Create", "新建折扣优惠") }} </button>
+          > {{ $adminT("New discount", "新建折扣优惠") }} </button>
           <button
             @click="loadList"
             :disabled="loading"
@@ -204,7 +204,7 @@
             </label>
             <p class="text-xs text-gray-500 mt-1">{{ $adminT("When ticked, the discount link is valid for any user you want to access without the need to specify the user.", "勾选后，该折扣链接对任意访问用户生效，无需指定用户。") }}</p>
             <div v-if="!form.applyToAllUsers" class="mt-3">
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("ID", "用户邮箱或ID") }}</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("User email or ID", "用户邮箱或ID") }}</label>
               <div class="relative" ref="userSearchContainer">
                 <input
                   v-model="form.userSearch"
@@ -367,7 +367,7 @@
         <p class="text-sm text-gray-600 mb-4">
            <strong>{{ sendEmailTarget.user?.email }}</strong> {{ $adminT("To", "将向") }} </p>
         <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("/Title", "邮件理由/标题") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Email reason / subject", "邮件理由/标题") }}</label>
           <select
             v-model="sendEmailReasonKey"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -379,7 +379,7 @@
         <!-- Confirm -->
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <label class="block text-sm font-medium text-gray-700">{{ $adminT("Confirm", "邮件内容确认") }}</label>
+            <label class="block text-sm font-medium text-gray-700">{{ $adminT("Confirm the email content", "邮件内容确认") }}</label>
             <button
               type="button"
               @click="loadEmailPreview()"
@@ -742,10 +742,10 @@ async function doSendEmail () {
       sendEmailTarget.value = null
       emailPreview.value = null
     } else {
-      toast?.error?.(res.message || adminT("failed", "删除失败"))
+      toast?.error?.(res.message || adminT("Delete failed", "删除失败"))
     }
   } catch (e: any) {
-    toast?.error?.(e?.message || adminT("failed", "删除失败"))
+    toast?.error?.(e?.message || adminT("Delete failed", "删除失败"))
   } finally {
     sendingEmail.value = false
   }

@@ -7,7 +7,7 @@
           <Search class="h-5 w-5" />
         </div>
         <div>
-          <h1 class="text-2xl font-bold tracking-tight text-gray-900"> {{ $adminT("SEO", "页面 SEO") }}</h1>
+          <h1 class="text-2xl font-bold tracking-tight text-gray-900"> {{ $adminT("Page SEO", "页面 SEO") }}</h1>
           <p class="mt-0.5 text-sm text-gray-500"> {{ $adminT("TDK (Title, Description, Keywords) Settings", "管理各主要页面的 TDK (Title, Description, Keywords) 设置") }}</p>
         </div>
       </div>
@@ -67,7 +67,7 @@
                   :href="getFrontendUrl(page.page_path)"
                   target="_blank"
                   class="inline-flex items-center gap-1.5 hover:text-blue-600 hover:underline"
-                  :title="$adminT('View', '查看前台页面')"
+                  :title="$adminT('View the public page', '查看前台页面')"
                 >
                   <component
                     :is="getPageIcon(page.page_name)"
@@ -118,7 +118,7 @@
                 v-model="page.title"
                 type="text"
                 class="input-seo w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-shadow focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-                :placeholder="$adminT('Please enter Title', '请输入页面标题')"
+                :placeholder="$adminT('Enter a page title', '请输入页面标题')"
                 @blur="updatePageSeo(page)"
               />
             </div>
@@ -265,7 +265,7 @@ const loadPageSeos = async () => {
       })
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT('Failed to load page SEO config', '获取页面 SEO 配置失败'))
     console.error('Failed to load page seos:', error)
   } finally {
     loading.value = false
@@ -305,10 +305,10 @@ const updatePageSeo = async (page: PageSeo) => {
       is_enabled: page.is_enabled
     })
     if (response.success) {
-      toast.success(`${getPageDisplayName(page.page_name)} `)
+      toast.success(adminT('{name} updated successfully', '{name} 已更新', { name: getPageDisplayName(page.page_name) }))
     }
   } catch (error) {
-    toast.error('failed')
+    toast.error(adminT('Failed to update page SEO config', '更新页面 SEO 配置失败'))
     console.error('Failed to update page seo:', error)
   }
 }

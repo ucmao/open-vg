@@ -2,8 +2,8 @@
   <div class="space-y-8">
     <!-- Header -->
     <div>
-      <h2 class="text-2xl font-bold text-gray-900">{{ $adminT("Category", "内容分类与标签") }}</h2>
-      <p class="mt-1 text-sm text-gray-500">{{ $adminT("Category", "统一管理文章的分类结构与标签体系") }}</p>
+      <h2 class="text-2xl font-bold text-gray-900">{{ $adminT("Content categories and tags", "内容分类与标签") }}</h2>
+      <p class="mt-1 text-sm text-gray-500">{{ $adminT("Manage the category structure and tag system for posts", "统一管理文章的分类结构与标签体系") }}</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -11,7 +11,7 @@
       <div class="space-y-4">
         <div class="flex justify-between items-center">
           <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <div class="w-1 h-5 bg-blue-600 rounded-full"></div> {{ $adminT("Category", "分类管理") }} </h3>
+            <div class="w-1 h-5 bg-blue-600 rounded-full"></div> {{ $adminT("Category management", "分类管理") }} </h3>
           <div class="flex items-center gap-2">
             <button
               @click="openModal('category')"
@@ -41,7 +41,7 @@
                 <td colspan="2" class="px-4 py-10 text-center text-gray-400">{{ $adminT("Loading", "加载中...") }}</td>
               </tr>
               <tr v-else-if="categories.length === 0">
-                <td colspan="2" class="px-4 py-10 text-center text-gray-400 font-medium italic">{{ $adminT("Category", "暂无分类") }}</td>
+                <td colspan="2" class="px-4 py-10 text-center text-gray-400 font-medium italic">{{ $adminT("No categories yet", "暂无分类") }}</td>
               </tr>
               <tr v-for="cat in categories" :key="cat.id" class="hover:bg-gray-50">
                 <td class="px-4 py-3">
@@ -70,7 +70,7 @@
               @click="openModal('tag')"
               class="px-3 py-1.5 bg-purple-600 text-white text-xs font-medium rounded hover:bg-purple-700 transition-colors flex items-center gap-1"
             >
-              <Plus class="w-4 h-4" /> {{ $adminT("Create", "新建标签") }} </button>
+              <Plus class="w-4 h-4" /> {{ $adminT("New tag", "新建标签") }} </button>
             <button
               @click="showBatchImportModal('tag')"
               class="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded hover:bg-green-700 transition-colors flex items-center gap-1"
@@ -132,7 +132,7 @@
               v-model="form.name"
               type="text"
               class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              :placeholder="$adminT('Please enter', '请输入名称')"
+              :placeholder="$adminT('Enter a name', '请输入名称')"
             />
           </div>
           <div>
@@ -150,7 +150,7 @@
               v-model="form.description"
               rows="3"
               class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              :placeholder="$adminT('Category Description', '分类的简单描述')"
+              :placeholder="$adminT('A short description of the category', '分类的简单描述')"
             ></textarea>
           </div>
         </div>
@@ -302,7 +302,7 @@ const handleSubmit = async () => {
     }
 
     if (res && res.success !== false) {
-      toast.success(isEditing.value ? adminT("successful", "更新成功") : adminT("successful", "创建成功"))
+      toast.success(isEditing.value ? adminT("Updated", "更新成功") : adminT("Created", "创建成功"))
       closeModal()
       modalType.value === 'category' ? fetchCategories() : fetchTags()
     }
@@ -347,7 +347,7 @@ const closeBatchModal = () => {
 
 const handleBatchImport = async () => {
   if (!batchText.value.trim()) {
-    toast.error(adminT("Please enter", "请输入要导入的内容"))
+    toast.error(adminT("Enter the content to import", "请输入要导入的内容"))
     return
   }
 
@@ -392,8 +392,8 @@ const handleBatchImport = async () => {
       batchImportType.value === 'category' ? fetchCategories() : fetchTags()
     }
   } catch (err: any) {
-    console.error(adminT("failed", "批量导入失败:"), err)
-    toast.error(err.message || adminT("failed", "批量导入失败"))
+    console.error(adminT("Bulk import failed:", "批量导入失败:"), err)
+    toast.error(err.message || adminT("Bulk import failed", "批量导入失败"))
   } finally {
     batchImporting.value = false
   }

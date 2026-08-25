@@ -16,15 +16,15 @@
         <button
           @click="showBatchEditModal = true"
           class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-        > {{ $adminT("Edit", "批量编辑") }} </button>
+        > {{ $adminT("Bulk edit", "批量编辑") }} </button>
         <button
           @click="handleBatchDelete"
           class="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-        > {{ $adminT("Delete", "批量删除") }} </button>
+        > {{ $adminT("Bulk delete", "批量删除") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
       </div>
 
       <NuxtLink
@@ -32,7 +32,7 @@
         to="/content/topics/new"
         class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
       >
-        <Plus class="w-5 h-5 mr-2" /> {{ $adminT("Create", "新建专题") }} </NuxtLink>
+        <Plus class="w-5 h-5 mr-2" /> {{ $adminT("New topic", "新建专题") }} </NuxtLink>
     </div>
 
     <!-- Filters -->
@@ -91,7 +91,7 @@
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider max-w-sm">{{ $adminT("Topic", "专题") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ $adminT("Status", "状态") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ $adminT("Browse", "浏览量") }}</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ $adminT("Created", "创建时间") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ $adminT("Created at", "创建时间") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
@@ -141,7 +141,7 @@
                       {{ topic.title }}
                     </a>
                     <div class="text-xs text-gray-500 font-mono truncate">{{ previewUrl(topic) }}</div>
-                    <div v-if="topic.is_featured" class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 mt-1">{{ $adminT("Select", "精选") }}</div>
+                    <div v-if="topic.is_featured" class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 mt-1">{{ $adminT("Featured", "精选") }}</div>
                   </div>
                 </div>
               </td>
@@ -260,12 +260,12 @@
       @click.self="showBatchEditModal = false"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Edit", "批量编辑专题") }}</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Bulk edit topics", "批量编辑专题") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
-           {{ selectedIds.length }} {{ $adminT("Selected", "将更新选中的") }} <br /> {{ $adminT("Thematic.", "个专题。") }} </p>
+           {{ selectedIds.length }} {{ $adminT("selected", "将更新选中的") }} <br /> {{ $adminT("topics will be updated.", "个专题。") }} </p>
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Status", "发布状态") }} </label>
+            <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Publish status", "发布状态") }} </label>
             <select
               v-model="batchEditForm.status"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
@@ -277,14 +277,14 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Select", "是否精选") }}</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Featured", "是否精选") }}</label>
             <select
               v-model="batchEditForm.is_featured"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
               <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
               <option :value="true">{{ $adminT("Yes.", "是") }}</option>
-              <option :value="false">{{ $adminT("Yes", "否") }}</option>
+              <option :value="false">{{ $adminT("No", "否") }}</option>
             </select>
           </div>
         </div>
@@ -340,7 +340,7 @@ const copyingId = ref<number | null>(null)
 const stats = ref([
   { label: adminT("Total number of topics", "专题总数"), value: '0' },
   { label: adminT("Published", "已发布"), value: '0' },
-  { label: adminT("Select", "精选"), value: '0' },
+  { label: adminT("Featured", "精选"), value: '0' },
   { label: adminT("Total browsing", "总浏览量"), value: '0' }
 ])
 
@@ -387,12 +387,12 @@ const toggleSelectAll = () => {
 
 const handleBatchEdit = async () => {
   if (!batchEditForm.status && batchEditForm.is_featured === null) {
-    toast.error(adminT("Please select", "请选择要更新的字段"))
+    toast.error(adminT("Select the fields to update", "请选择要更新的字段"))
     return
   }
   
   const confirmed = await confirm({
-    title: adminT("Edit", "批量编辑"),
+    title: adminT("Bulk edit", "批量编辑"),
     message: adminT('Update the {n} selected topics?', '确定要更新选中的 {n} 个专题吗？', { n: selectedIds.value.length }),
     type: 'info'
   })
@@ -409,13 +409,13 @@ const handleBatchEdit = async () => {
     
     const res = await api.post('/api/admin/topics/batch-update', payload)
     if (res.success) {
-      toast.success(adminT("successful", "批量更新成功"))
+      toast.success(adminT("Bulk update complete", "批量更新成功"))
       showBatchEditModal.value = false
       clearSelection()
       fetchTopics()
     }
   } catch (err: any) {
-    toast.error(err.message || adminT("failed", "批量更新失败"))
+    toast.error(err.message || adminT("Bulk update failed", "批量更新失败"))
   } finally {
     saving.value = false
   }
@@ -423,10 +423,10 @@ const handleBatchEdit = async () => {
 
 const handleBatchDelete = async () => {
   const confirmed = await confirm({
-    title: adminT("Delete", "批量删除"),
+    title: adminT("Bulk delete", "批量删除"),
     message: adminT('Delete the {n} selected topics? This cannot be undone.', '确定要删除选中的 {n} 个专题吗？此操作不可撤销！', { n: selectedIds.value.length }),
     type: 'danger',
-    confirmText: adminT("Confirm Delete", "确认删除")
+    confirmText: adminT("Confirm delete", "确认删除")
   })
   
   if (!confirmed) return
@@ -488,7 +488,7 @@ const updateStats = () => {
   stats.value = [
     { label: adminT("Total number of topics", "专题总数"), value: totalTopics.value.toString() },
     { label: adminT("Published", "已发布"), value: published.toString() },
-    { label: adminT("Select", "精选"), value: featured.toString() },
+    { label: adminT("Featured", "精选"), value: featured.toString() },
     { label: adminT("Total browsing", "总浏览量"), value: views.toLocaleString() }
   ]
 }
@@ -498,14 +498,14 @@ const copyTopic = async (topic: any) => {
     copyingId.value = topic.id
     const detailRes = await api.get(`/api/admin/topics/${topic.id}`)
     if (!detailRes.success || !detailRes.data) {
-      toast.error(adminT("failed", "获取详情失败"))
+      toast.error(adminT("Failed to fetch details", "获取详情失败"))
       return
     }
     const d = detailRes.data
     const copySlug = `${d.slug}-copy-${Date.now().toString(36)}`
     const payload = {
       slug: copySlug,
-      title: (d.title || '').trim() ? `${d.title} ()` : adminT("Copy", "副本"),
+      title: (d.title || '').trim() ? `${d.title} ()` : adminT("Untitled copy", "副本"),
       excerpt: d.excerpt ?? undefined,
       content: d.content ?? undefined,
       meta_title: d.meta_title ?? undefined,
@@ -525,13 +525,13 @@ const copyTopic = async (topic: any) => {
     }
     const res = await api.post('/api/admin/topics', payload)
     if (res.success) {
-      toast.success(adminT("successful", "复制成功"))
+      toast.success(adminT("Copied", "复制成功"))
       fetchTopics()
     } else {
-      toast.error(res.message || adminT("failed", "复制失败"))
+      toast.error(res.message || adminT("Copy failed", "复制失败"))
     }
   } catch (err: any) {
-    toast.error(err.message || adminT("failed", "复制失败"))
+    toast.error(err.message || adminT("Copy failed", "复制失败"))
   } finally {
     copyingId.value = null
   }
@@ -539,7 +539,7 @@ const copyTopic = async (topic: any) => {
 
 const deleteTopic = async (topic: any) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除专题"),
+    title: adminT("Delete topic", "删除专题"),
     message: adminT('Delete topic "{title}"?', '确定要删除专题 "{title}" 吗？', { title: topic.title }),
     type: 'danger'
   })
@@ -548,7 +548,7 @@ const deleteTopic = async (topic: any) => {
   try {
     const res = await api.delete(`/api/admin/topics/${topic.id}`)
     if (res.success) {
-      toast.success(adminT("Delete", "专题已删除"))
+      toast.success(adminT("Topic deleted", "专题已删除"))
       fetchTopics()
     }
   } catch (err) {

@@ -16,15 +16,15 @@
         <button
           @click="showBatchEditModal"
           class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-        > {{ $adminT("Edit", "批量编辑") }} </button>
+        > {{ $adminT("Bulk edit", "批量编辑") }} </button>
         <button
           @click="handleBatchDelete"
           class="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-        > {{ $adminT("Delete", "批量删除") }} </button>
+        > {{ $adminT("Bulk delete", "批量删除") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
         </div>
         <div v-if="activeTab === 'lexicons'" class="flex items-center gap-3">
           <button
@@ -85,7 +85,7 @@
               @change="toggleSelectAll"
               class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
             />
-            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">{{ $adminT("Select All", "全选本页") }}</span>
+            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">{{ $adminT("Select all on this page", "全选本页") }}</span>
           </label>
 
           <!-- Select All Across Pages -->
@@ -162,7 +162,7 @@
           <input
             v-model="filters.search"
             type="text"
-            :placeholder="$adminT('Search', '搜索关键词')"
+            :placeholder="$adminT('Search keywords', '搜索关键词')"
             @keyup.enter="page = 1; fetchLexicons(true)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -197,7 +197,7 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Extent", "严重程度") }}</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Status", "状态") }}</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Remarks", "备注") }}</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Created", "创建时间") }}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Created at", "创建时间") }}</th>
               <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
@@ -415,7 +415,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
             </div>
           </div>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="text-sm text-gray-500 mb-2">{{ $adminT("Category", "按分类") }}</div>
+            <div class="text-sm text-gray-500 mb-2">{{ $adminT("By category", "按分类") }}</div>
             <div class="space-y-1 text-sm">
               <div v-for="(cnt, key) in analysisData.by_category" :key="key" class="flex justify-between">
                 <span>{{ key }}</span>
@@ -432,7 +432,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               <table class="min-w-full text-sm">
                 <thead>
                   <tr class="border-b">
-                    <th class="text-left py-1 pr-4"> {{ $adminT("ID", "用户 ID") }}</th>
+                    <th class="text-left py-1 pr-4"> {{ $adminT("User ID", "用户 ID") }}</th>
                     <th class="text-right">{{ $adminT("Hit", "命中数") }}</th>
                   </tr>
                 </thead>
@@ -580,7 +580,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
       @click.self="showBatchEditModalRef = false"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Edit", "批量编辑关键词") }}</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Bulk edit keywords", "批量编辑关键词") }}</h3>
         <p class="text-sm text-gray-600 mb-4">
            {{ selectAllAcrossPages ? ` ${total} ` : ` ${selectedIds.length} ` }}{{ $adminT("To be updated", "将更新") }} <br /> {{ $adminT("Keywords.", "关键词。") }} </p>
         <div class="space-y-4">
@@ -626,7 +626,7 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               v-model="batchEditForm.notes"
               rows="3"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              :placeholder="$adminT('Leave the space.', '留空则保持不变')"
+              :placeholder="$adminT('Leave blank to keep unchanged', '留空则保持不变')"
             ></textarea>
           </div>
         </div>
@@ -725,7 +725,7 @@ const setTab = (tab: 'lexicons' | 'analyze') => {
 const analysisPeriod = ref('last7')
 const analysisPeriodPresets = [
   { key: 'today', label: adminT("Today", "今日") },
-  { key: 'yesterday', label: adminT("Yesterday.", "昨日") },
+  { key: 'yesterday', label: adminT("Yesterday", "昨日") },
   { key: 'last7', label: adminT("The last seven days", "最近7天") },
   { key: 'last30', label: adminT("Last 30 days", "最近30天") },
   { key: 'all', label: adminT("All", "全部") },
@@ -761,7 +761,7 @@ const fetchAnalyzeHits = async () => {
       analysisError.value = data.error
     }
   } catch (e: any) {
-    analysisError.value = e?.message || e?.response?.data?.message || adminT("failed", "加载失败")
+    analysisError.value = e?.message || e?.response?.data?.message || adminT("Load failed", "加载失败")
     analysisData.value = null
     toast.error(analysisError.value)
   } finally {
@@ -908,7 +908,7 @@ const closeBatchModal = () => {
 
 const handleSubmit = async () => {
   if (!form.word.trim()) {
-    toast.error(adminT("Please enter", "请输入关键词"))
+    toast.error(adminT("Enter a keyword", "请输入关键词"))
     return
   }
   
@@ -948,8 +948,8 @@ const handleSubmit = async () => {
 
 const handleDelete = async (id: number) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除关键词"),
-    message: adminT("Confirm Delete？", "您确定要删除这个关键词吗？")
+    title: adminT("Delete keyword", "删除关键词"),
+    message: adminT("Delete this keyword?", "您确定要删除这个关键词吗？")
   })
   
   if (!confirmed) return
@@ -958,7 +958,7 @@ const handleDelete = async (id: number) => {
     const response = await api.delete(`/api/admin/moderation/lexicons/${id}`)
     
     if (response.success) {
-      toast.success(adminT("Delete", "关键词已删除"))
+      toast.success(adminT("Keyword deleted", "关键词已删除"))
       fetchLexicons()
     }
   } catch (error: any) {
@@ -969,7 +969,7 @@ const handleDelete = async (id: number) => {
 
 const handleBatchImport = async () => {
   if (!batchText.value.trim()) {
-    toast.error(adminT("Please enter", "请输入要导入的关键词"))
+    toast.error(adminT("Enter the keywords to import", "请输入要导入的关键词"))
     return
   }
   
@@ -1004,7 +1004,7 @@ const handleBatchImport = async () => {
     }
   } catch (error: any) {
     console.error('Failed to batch import:', error)
-    toast.error(error.message || adminT("failed", "批量导入失败"))
+    toast.error(error.message || adminT("Bulk import failed", "批量导入失败"))
   } finally {
     batchImporting.value = false
   }
@@ -1055,7 +1055,7 @@ const handleExport = async () => {
     }
     
     // CSV
-    const headers = [adminT("Keywords", "关键词"), adminT("Category", "分类"), adminT("Extent", "严重程度"), adminT("Status", "状态"), adminT("Remarks", "备注"), adminT("Created", "创建时间")]
+    const headers = [adminT("Keywords", "关键词"), adminT("Category", "分类"), adminT("Extent", "严重程度"), adminT("Status", "状态"), adminT("Remarks", "备注"), adminT("Created at", "创建时间")]
     const rows = allLexicons.map(lexicon => [
       lexicon.word || '',
       getCategoryLabel(lexicon.category || ''),
@@ -1095,7 +1095,7 @@ const handleExport = async () => {
     toast.success(adminT('Exported {n} keywords', '成功导出 {n} 条关键词', { n: allLexicons.length }))
   } catch (error: any) {
     console.error('Failed to export lexicons:', error)
-    toast.error(error.message || adminT("failed", "导出失败"))
+    toast.error(error.message || adminT("Export failed", "导出失败"))
   } finally {
     exporting.value = false
   }
@@ -1182,12 +1182,12 @@ const handleBatchEdit = async () => {
   
   const count = selectAllAcrossPages.value ? total.value : selectedIds.value.length
   if (count === 0) {
-    toast.error(adminT("Edit", "请先选择要编辑的关键词"))
+    toast.error(adminT("Select the keywords to edit first", "请先选择要编辑的关键词"))
     return
   }
   
   const confirmed = await confirm({
-    title: adminT("Edit", "批量编辑"),
+    title: adminT("Bulk edit", "批量编辑"),
     message: selectAllAcrossPages.value
       ? adminT('Batch edit all {count} matching keywords?', '确定要批量编辑全部匹配的 {count} 个关键词吗？', { count })
       : adminT('Batch edit the {count} selected keywords?', '确定要批量编辑选中的 {count} 个关键词吗？', { count }),
@@ -1238,17 +1238,17 @@ const handleBatchEdit = async () => {
 const handleBatchDelete = async () => {
   const count = selectAllAcrossPages.value ? total.value : selectedIds.value.length
   if (count === 0) {
-    toast.error(adminT("Delete", "请先选择要删除的关键词"))
+    toast.error(adminT("Select the keywords to delete first", "请先选择要删除的关键词"))
     return
   }
   
   const confirmed = await confirm({
-    title: adminT("Delete", "批量删除"),
+    title: adminT("Bulk delete", "批量删除"),
     message: selectAllAcrossPages.value
       ? adminT('Batch delete all {count} matching keywords? This cannot be undone.', '确定要批量删除全部匹配的 {count} 个关键词吗？此操作不可撤销！', { count })
       : adminT('Batch delete the {count} selected keywords? This cannot be undone.', '确定要批量删除选中的 {count} 个关键词吗？此操作不可撤销！', { count }),
     type: 'danger',
-    confirmText: adminT("Confirm Delete", "确认删除")
+    confirmText: adminT("Confirm delete", "确认删除")
   })
   
   if (!confirmed) return

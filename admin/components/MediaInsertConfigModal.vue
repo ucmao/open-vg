@@ -147,7 +147,7 @@
           <input
             v-model="config.alt"
             type="text"
-            :placeholder="$adminT('Description', '描述图片内容...')"
+            :placeholder="$adminT('Describe the image content...', '描述图片内容...')"
             maxlength="200"
             class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
@@ -282,9 +282,9 @@ const handleHeightChange = () => {
 }
 
 const alignOptions: { value: 'left' | 'center' | 'right'; label: string; icon: string }[] = [
-  { value: 'left', label: adminT("Left", "左对齐"), icon: 'M3 6h18M3 12h12M3 18h18' },
-  { value: 'center', label: adminT("Centred", "居中"), icon: 'M3 6h18M6 12h12M3 18h18' },
-  { value: 'right', label: adminT("Right", "右对齐"), icon: 'M3 6h18M9 12h12M3 18h18' }
+  { value: 'left', label: adminT("Align left", "左对齐"), icon: 'M3 6h18M3 12h12M3 18h18' },
+  { value: 'center', label: adminT("Centre", "居中"), icon: 'M3 6h18M6 12h12M3 18h18' },
+  { value: 'right', label: adminT("Align right", "右对齐"), icon: 'M3 6h18M9 12h12M3 18h18' }
 ]
 
 // Reset config when modal opens with new media

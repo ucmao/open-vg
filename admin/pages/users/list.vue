@@ -15,7 +15,7 @@
             <input
               v-model="filters.search_id"
               type="text"
-              :placeholder="$adminT('ID', '用户 ID')"
+              :placeholder="$adminT('User ID', '用户 ID')"
               class="w-24 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               @keyup.enter="applySearch"
             />
@@ -25,7 +25,7 @@
             <input
               v-model="filters.search_nickname"
               type="text"
-              :placeholder="$adminT('Search', '搜索昵称')"
+              :placeholder="$adminT('Search nicknames', '搜索昵称')"
               class="w-28 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               @keyup.enter="applySearch"
             />
@@ -161,13 +161,13 @@
         @click="exportCurrentPageCSV"
         class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
       >
-        <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
+        <Download class="w-4 h-4" /> {{ $adminT("Export CSV", "导出 CSV") }} </button>
     </div>
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">{{ $adminT("List", "正在获取用户列表...") }}</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Loading the user list...", "正在获取用户列表...") }}</p>
     </div>
 
     <!-- Users Table：，Action -->
@@ -354,7 +354,7 @@
     <div v-else class="text-center py-20 bg-white border rounded-lg">
       <Users class="w-16 h-16 text-gray-300 mx-auto mb-4" />
       <h3 class="text-lg font-medium text-gray-900">{{ $adminT("No user found", "未找到用户") }}</h3>
-      <p class="text-gray-500">{{ $adminT("Search", "尝试更换搜索关键词") }}</p>
+      <p class="text-gray-500">{{ $adminT("Try a different search keyword", "尝试更换搜索关键词") }}</p>
     </div>
 
     <!-- User Status Change Modal -->
@@ -401,7 +401,7 @@ const showMoreFilters = ref(false)
 const activeTimePreset = ref('')
 const timePresets = [
   { key: 'today', label: adminT("Today", "今天") },
-  { key: 'yesterday', label: adminT("Yesterday.", "昨天") },
+  { key: 'yesterday', label: adminT("Yesterday", "昨天") },
   { key: 'last7', label: adminT("The last seven days", "最近7天") },
   { key: 'month', label: adminT("Current month", "本月") },
   { key: '', label: adminT("Clear", "清空") }
@@ -495,7 +495,7 @@ function exportCurrentPageCSV() {
   a.download = `List_${new Date().toISOString().slice(0, 10)}.csv`
   a.click()
   URL.revokeObjectURL(url)
-  toast.success(adminT("CSV", "已导出当前页 CSV"))
+  toast.success(adminT("Exported the current page as CSV", "已导出当前页 CSV"))
 }
 
 // User status change modal state
@@ -544,7 +544,7 @@ const loadUsers = async () => {
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载用户失败"))
+    toast.error(adminT("Failed to load users", "加载用户失败"))
     console.error('Failed to load users:', error)
   } finally {
     loading.value = false

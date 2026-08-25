@@ -16,7 +16,7 @@
     <div class="bg-white border rounded-lg p-6 mb-6 shadow-sm">
       <div class="flex items-end gap-4">
         <div class="flex-1">
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search", "搜索虚拟用户") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search sockpuppets", "搜索虚拟用户") }}</label>
           <input
             v-model="filters.search"
             type="text"
@@ -45,7 +45,7 @@
         <button
           @click="clearAllSelection"
           class="text-xs text-blue-600 hover:text-blue-800 underline"
-        > {{ $adminT("Clear", "清空选择") }} </button>
+        > {{ $adminT("Clear selection", "清空选择") }} </button>
       </div>
       <div class="flex gap-2">
         <button
@@ -80,7 +80,7 @@
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Handle</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Contact details", "联系方式") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Statistics", "统计") }}</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Created", "创建时间") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Created at", "创建时间") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase text-right sticky right-0 z-10 bg-gray-50 shadow-[inset_4px_0_6px_-2px_rgba(0,0,0,0.08)]">{{ $adminT("Action", "操作") }}</th>
             </tr>
           </thead>
@@ -145,7 +145,7 @@
                   <button
                     @click="openImportModal(user)"
                     class="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-600 rounded hover:bg-green-100 transition-colors"
-                  >{{ $adminT("Organisation", "导入作品") }}</button>
+                  >{{ $adminT("Import works", "导入作品") }}</button>
                   <button
                     @click="deleteUser(user)"
                     class="px-3 py-1.5 text-xs font-medium bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors"
@@ -323,7 +323,7 @@
       <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <!-- Header -->
         <div class="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
-          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Organisation", "导入作品") }}</h2>
+          <h2 class="text-xl font-bold text-gray-900">{{ $adminT("Import works", "导入作品") }}</h2>
           <button @click="closeImportModal" class="text-gray-400 hover:text-gray-600">
             <X class="w-6 h-6" />
           </button>
@@ -363,7 +363,7 @@
                  <span class="text-red-500">*</span>
               </label>
               <select v-model="singleImportConfig.userId" class="w-full border rounded px-3 py-2">
-                <option value="">{{ $adminT("Please select", "请选择虚拟用户") }}</option>
+                <option value="">{{ $adminT("Select a sockpuppet", "请选择虚拟用户") }}</option>
                 <option v-for="user in users" :key="user.id" :value="user.id.toString()">
                   {{ user.nickname }} (@{{ user.handle }})
                 </option>
@@ -377,8 +377,8 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Type", "类型") }} <span class="text-red-500">*</span>
                 </label>
                 <select v-model="singleImportConfig.workType" @change="onWorkTypeChange" class="w-full border rounded px-3 py-2">
-                  <option value="text-to-image">{{ $adminT("Text & Picture", "文本→图片") }}</option>
-                  <option value="image-to-image">{{ $adminT("Pictures", "图片→图片") }}</option>
+                  <option value="text-to-image">{{ $adminT("Text → image", "文本→图片") }}</option>
+                  <option value="image-to-image">{{ $adminT("Image → image", "图片→图片") }}</option>
                   <option value="text-to-video">{{ $adminT("Text to Video", "文本→视频") }}</option>
                   <option value="image-to-video">{{ $adminT("Images and videos", "图片→视频") }}</option>
                 </select>
@@ -394,13 +394,13 @@
                   :disabled="!singleImportConfig.workType || filteredModels.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">{{ $adminT("Please select", "请选择模型") }}</option>
+                  <option value="">{{ $adminT("Select a model", "请选择模型") }}</option>
                   <option v-for="model in filteredModels" :key="model.id" :value="model.name">
                     {{ model.name }}
                   </option>
                 </select>
-                <p v-if="!singleImportConfig.workType" class="mt-1 text-xs text-gray-500">{{ $adminT("Type", "请先选择类型") }}</p>
-                <p v-else-if="filteredModels.length === 0" class="mt-1 text-xs text-amber-600">{{ $adminT("Type", "该类型暂无可用模型") }}</p>
+                <p v-if="!singleImportConfig.workType" class="mt-1 text-xs text-gray-500">{{ $adminT("Select a type first", "请先选择类型") }}</p>
+                <p v-else-if="filteredModels.length === 0" class="mt-1 text-xs text-amber-600">{{ $adminT("No models available for this type", "该类型暂无可用模型") }}</p>
               </div>
             </div>
 
@@ -414,7 +414,7 @@
                   @change="onCategoryLevel1Change"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="">{{ $adminT("Please select", "请选择一级目录") }}</option>
+                  <option value="">{{ $adminT("Select a top-level directory", "请选择一级目录") }}</option>
                   <option v-for="cat in level1Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -429,7 +429,7 @@
                   :disabled="!singleImportConfig.categoryLevel1 || level2Categories.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">{{ $adminT("Please select", "请选择二级目录") }}</option>
+                  <option value="">{{ $adminT("Select a subdirectory", "请选择二级目录") }}</option>
                   <option v-for="cat in level2Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -447,7 +447,7 @@
               <textarea
                 v-model="singleImportConfig.prompt"
                 rows="3"
-                :placeholder="$adminT('Notice', '输入作品提示词')"
+                :placeholder="$adminT('Enter the work prompt', '输入作品提示词')"
                 class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
               ></textarea>
             </div>
@@ -473,7 +473,7 @@
                  <span class="text-red-500">*</span>
               </label>
               <select v-model="batchFileImportConfig.userId" class="w-full border rounded px-3 py-2">
-                <option value="">{{ $adminT("Please select", "请选择虚拟用户") }}</option>
+                <option value="">{{ $adminT("Select a sockpuppet", "请选择虚拟用户") }}</option>
                 <option v-for="user in users" :key="user.id" :value="user.id.toString()">
                   {{ user.nickname }} (@{{ user.handle }})
                 </option>
@@ -490,7 +490,7 @@
                   @change="onBatchFileCategoryLevel1Change"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="">{{ $adminT("Please select", "请选择一级目录") }}</option>
+                  <option value="">{{ $adminT("Select a top-level directory", "请选择一级目录") }}</option>
                   <option v-for="cat in level1Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -505,7 +505,7 @@
                   :disabled="!batchFileImportConfig.categoryLevel1 || batchFileLevel2Categories.length === 0"
                   class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">{{ $adminT("Please select", "请选择二级目录") }}</option>
+                  <option value="">{{ $adminT("Select a subdirectory", "请选择二级目录") }}</option>
                   <option v-for="cat in batchFileLevel2Categories" :key="cat.id" :value="cat.category_name">
                     {{ cat.category_name }}
                   </option>
@@ -563,7 +563,7 @@
                 <p class="font-medium mb-1">{{ $adminT("Document format requirements:", "文件格式要求：") }}</p>
                 <ul class="list-disc list-inside space-y-1">
                   <li>{{ $adminT("The SV/Excel file needs to contain columns: model name, Prompt, type, URL", "CSV/Excel 文件需包含列：模型名称、Prompt、类型、URL地址") }}</li>
-                  <li>{{ $adminT("_Other Organiser", "类型可选值：text-to-image（文本→图片）、image-to-image（图片→图片）、text-to-video（文本→视频）、image-to-video（图片→视频）") }}</li>
+                  <li>{{ $adminT("Allowed types: text-to-image, image-to-image, text-to-video, image-to-video", "类型可选值：text-to-image（文本→图片）、image-to-image（图片→图片）、text-to-video（文本→视频）、image-to-video（图片→视频）") }}</li>
                 </ul>
               </div>
             </div>
@@ -678,7 +678,7 @@
               <textarea
                 v-model="engageConfig.commentContents"
                 rows="4"
-                placeholder="：&#10;Amazing!&#10;Love this work&#10;Great job!"
+                :placeholder="$adminT('For example:\nAmazing!\nLove this work\nGreat job!', '例如：\nAmazing!\nLove this work\nGreat job!')"
                 class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
               ></textarea>
             </div>
@@ -787,7 +787,7 @@
               <textarea
                 v-model="batchEngageConfig.commentContents"
                 rows="4"
-                placeholder="：&#10;Amazing!&#10;Love this work&#10;Great job!"
+                :placeholder="$adminT('For example:\nAmazing!\nLove this work\nGreat job!', '例如：\nAmazing!\nLove this work\nGreat job!')"
                 class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
               ></textarea>
             </div>
@@ -946,7 +946,7 @@ const loadUsers = async () => {
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载虚拟用户失败"))
+    toast.error(adminT("Failed to load sockpuppets", "加载虚拟用户失败"))
     console.error('Failed to load users:', error)
   } finally {
     loading.value = false
@@ -1020,7 +1020,7 @@ const createUsers = async () => {
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || adminT("failed", "创建虚拟用户失败"))
+    toast.error(error.message || adminT("Failed to create the sockpuppet", "创建虚拟用户失败"))
     console.error('Failed to create users:', error)
   } finally {
     creating.value = false
@@ -1029,7 +1029,7 @@ const createUsers = async () => {
 
 const deleteUser = async (user) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除虚拟用户"),
+    title: adminT("Delete sockpuppet", "删除虚拟用户"),
     message: adminT('Delete "{name}" (@{handle})? This action cannot be undone.', '确定删除“{name}”（@{handle}）吗？此操作不可撤销。', { name: user.nickname, handle: user.handle }),
     type: 'danger'
   })
@@ -1039,7 +1039,7 @@ const deleteUser = async (user) => {
   try {
     const response = await adminApi.delete(`/api/admin/sockpuppets/${user.id}`)
     if (response.success) {
-      toast.success(adminT("Delete", "虚拟用户已删除"))
+      toast.success(adminT("Sockpuppet deleted", "虚拟用户已删除"))
       loadUsers()
     }
   } catch (error) {
@@ -1062,22 +1062,22 @@ const formatDate = (dateString) => {
 // Import works methods
 const doSingleImport = async () => {
   if (!singleImportConfig.value.userId) {
-    toast.error(adminT("Please select", "请选择目标虚拟用户"))
+    toast.error(adminT("Select the target sockpuppet", "请选择目标虚拟用户"))
     return
   }
   
   if (!singleImportConfig.value.modelName.trim()) {
-    toast.error(adminT("Please select", "请选择模型名称"))
+    toast.error(adminT("Select a model name", "请选择模型名称"))
     return
   }
   
   if (!singleImportConfig.value.prompt.trim()) {
-    toast.error(adminT("Please enter Prompt", "请输入Prompt"))
+    toast.error(adminT("Enter a prompt", "请输入Prompt"))
     return
   }
   
   if (!singleImportConfig.value.workType) {
-    toast.error(adminT("Please select Type", "请选择类型"))
+    toast.error(adminT("Select a type", "请选择类型"))
     return
   }
   
@@ -1087,7 +1087,7 @@ const doSingleImport = async () => {
   }
 
   const confirmed = await confirm({
-    title: adminT("Confirm", "确认导入"),
+    title: adminT("Confirm import", "确认导入"),
     message: adminT("Are you sure you want to import this work to a virtual user?", "确定要导入这个作品到虚拟用户吗？"),
     type: 'info'
   })
@@ -1117,12 +1117,12 @@ const doSingleImport = async () => {
     const response = await adminApi.upload('/api/admin/sockpuppets/create-work', formData)
 
     if (response.success) {
-      toast.success(adminT("successful", "作品导入成功"))
+      toast.success(adminT("Works imported", "作品导入成功"))
       closeImportModal()
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || adminT("failed", "导入失败"))
+    toast.error(error.message || adminT("Import failed", "导入失败"))
     console.error('Failed to import work:', error)
   } finally {
     importing.value = false
@@ -1131,18 +1131,18 @@ const doSingleImport = async () => {
 
 const doBatchFileImport = async () => {
   if (!batchFileImportConfig.value.userId) {
-    toast.error(adminT("Please select", "请选择目标虚拟用户"))
+    toast.error(adminT("Select the target sockpuppet", "请选择目标虚拟用户"))
     return
   }
   
   if (!batchFileImportConfig.value.file) {
-    toast.error(adminT("Please select", "请选择要上传的文件"))
+    toast.error(adminT("Select the files to upload", "请选择要上传的文件"))
     return
   }
 
   const confirmed = await confirm({
-    title: adminT("Confirm", "确认批量导入"),
-    message: adminT("Confirm？", "确定要批量导入作品吗？"),
+    title: adminT("Confirm bulk import", "确认批量导入"),
+    message: adminT("Bulk import these works?", "确定要批量导入作品吗？"),
     type: 'info'
   })
 
@@ -1181,7 +1181,7 @@ const doBatchFileImport = async () => {
       loadUsers()
     }
   } catch (error) {
-    toast.error(error.message || adminT("failed", "批量导入失败"))
+    toast.error(error.message || adminT("Bulk import failed", "批量导入失败"))
     console.error('Failed to batch import works:', error)
   } finally {
     importing.value = false
@@ -1251,7 +1251,7 @@ Stable Diffusion 3,A futuristic city at night,text-to-video,https://example.com/
   const url = URL.createObjectURL(blob)
   
   link.setAttribute('href', url)
-  link.setAttribute('download', adminT("csv", "批量导入作品模板.csv"))
+  link.setAttribute('download', adminT("work-bulk-import-template.csv", "批量导入作品模板.csv"))
   link.style.visibility = 'hidden'
   
   document.body.appendChild(link)
@@ -1307,7 +1307,7 @@ const closeEngageModal = () => {
 
 const doEngage = async () => {
   if (!engageConfig.value.userId) {
-    toast.error(adminT("Please select", "请先选择虚拟用户"))
+    toast.error(adminT("Select a sockpuppet first", "请先选择虚拟用户"))
     return
   }
   
@@ -1415,7 +1415,7 @@ const doBatchEngage = async () => {
   }
   
   if (batchEngageConfig.value.commentCount > 0 && !batchEngageConfig.value.commentContents.trim()) {
-    toast.error('0，List')
+    toast.error(adminT('Comment count is greater than 0, please provide a list of comment contents', '设置了评论次数，请填写评论内容列表'))
     return
   }
 

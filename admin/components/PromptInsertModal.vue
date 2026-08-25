@@ -5,7 +5,7 @@
     <div class="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-xl overflow-hidden flex flex-col" @click.stop>
       <!-- ：Title，SearchFilter -->
       <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-gray-100">
-        <h2 class="text-base font-semibold text-[#1A1A1A] shrink-0"> {{ $adminT("Prompt", "插入 Prompt") }}</h2>
+        <h2 class="text-base font-semibold text-[#1A1A1A] shrink-0"> {{ $adminT("Insert prompt", "插入 Prompt") }}</h2>
         <div class="flex items-center gap-3 flex-1 justify-end min-w-0 max-w-2xl">
           <div class="relative w-72 min-w-0 flex-shrink-0">
             <input
@@ -24,9 +24,9 @@
             class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 focus:ring-2 focus:ring-violet-500/25 focus:border-violet-500 outline-none"
             @change="loadPrompts"
           >
-            <option value="">{{ $adminT("Type", "全部类型") }}</option>
-            <option value="text-to-image">{{ $adminT("Text & Picture", "文本→图片") }}</option>
-            <option value="image-to-image">{{ $adminT("Pictures", "图片→图片") }}</option>
+            <option value="">{{ $adminT("All types", "全部类型") }}</option>
+            <option value="text-to-image">{{ $adminT("Text → image", "文本→图片") }}</option>
+            <option value="image-to-image">{{ $adminT("Image → image", "图片→图片") }}</option>
             <option value="text-to-video">{{ $adminT("Text to Video", "文本→视频") }}</option>
             <option value="image-to-video">{{ $adminT("Images and videos", "图片→视频") }}</option>
             <option value="video-effects">{{ $adminT("Video Effects Template", "视频特效模板") }}</option>
@@ -54,7 +54,7 @@
         <!-- List：，Title + Type +  -->
         <div class="overflow-y-auto border-r border-gray-100 bg-gray-50/30">
           <div v-if="loading && prompts.length === 0" class="flex items-center justify-center py-12 text-gray-500 text-sm">
-            <div class="w-4 h-4 border-2 border-gray-200 border-t-violet-500 rounded-full animate-spin mr-2"></div> {{ $adminT("Loading...…", "加载中…") }} </div>
+            <div class="w-4 h-4 border-2 border-gray-200 border-t-violet-500 rounded-full animate-spin mr-2"></div> {{ $adminT("Loading...", "加载中…") }} </div>
           <div v-else-if="prompts.length === 0" class="flex flex-col items-center justify-center py-12 text-center px-4">
             <p class="text-gray-500 text-sm">{{ $adminT("Unfinished, key words or right input", "暂无结果，可换关键词或右侧直接输入") }}</p>
           </div>
@@ -117,13 +117,13 @@
               </div>
 
               <div>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Type", "生成类型") }}</label>
+                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Generation type", "生成类型") }}</label>
                 <select
                   v-model="selectedType"
                   class="w-full rounded-lg px-3 py-2 text-sm border border-gray-200 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none bg-white"
                 >
-                  <option value="text2img">{{ $adminT("Text & Picture", "文本→图片") }}</option>
-                  <option value="img2img">{{ $adminT("Pictures", "图片→图片") }}</option>
+                  <option value="text2img">{{ $adminT("Text → image", "文本→图片") }}</option>
+                  <option value="img2img">{{ $adminT("Image → image", "图片→图片") }}</option>
                   <option value="text2video">{{ $adminT("Text to Video", "文本→视频") }}</option>
                   <option value="img2video">{{ $adminT("Images and videos", "图片→视频") }}</option>
                   <option value="video_effects">{{ $adminT("Video Effects Template", "视频特效模板") }}</option>
@@ -132,7 +132,7 @@
               </div>
 
               <div>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Prompt", "Prompt 内容") }} </label>
+                <label class="block text-[11px] font-medium text-gray-400 mb-1.5">{{ $adminT("Prompt content", "Prompt 内容") }} </label>
                 <textarea
                   v-model="manualPrompt"
                   rows="8"
@@ -152,7 +152,7 @@
               class="px-5 py-2.5 bg-emerald-700 text-white text-sm font-semibold rounded-lg hover:bg-emerald-800 transition-colors disabled:opacity-50 disabled:pointer-events-none"
               :disabled="!resolvedPrompt"
               @click="handleConfirm"
-            > {{ $adminT("Edit", "插入到编辑器") }} </button>
+            > {{ $adminT("Insert into the editor", "插入到编辑器") }} </button>
           </div>
         </div>
       </div>
@@ -305,7 +305,7 @@ const selectPrompt = (item: any) => {
 
 const handleConfirm = () => {
   if (!resolvedPrompt.value) {
-    toast.warning(adminT("Please enter Prompt", "请输入或选择 Prompt 后再插入"))
+    toast.warning(adminT("Enter or choose a prompt before inserting", "请输入或选择 Prompt 后再插入"))
     return
   }
   const payload: Parameters<typeof emit>[1] = {

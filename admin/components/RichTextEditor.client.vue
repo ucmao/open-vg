@@ -14,14 +14,14 @@
           <button type="button" @click="execCommand('underline')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isUnderlineActive }" :title="$adminT('(Ctrl+U)', '下划线 (Ctrl+U)')">
             <UnderlineIcon class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('strikeThrough')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isStrikethroughActive }" :title="$adminT('Delete', '删除线')">
+          <button type="button" @click="execCommand('strikeThrough')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isStrikethroughActive }" :title="$adminT('Strikethrough', '删除线')">
             <Strikethrough class="w-4 h-4" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <!--  -->
         <select @change="formatHeading($event)" class="toolbar-select" :title="$adminT('Paragraph Styles', '段落样式')">
-          <option value="">{{ $adminT("Text", "正文") }}</option>
+          <option value="">{{ $adminT("Body text", "正文") }}</option>
           <option value="h1">{{ $adminT("Title 1", "标题 1") }}</option>
           <option value="h2">{{ $adminT("Title 2", "标题 2") }}</option>
           <option value="h3">{{ $adminT("Title 3", "标题 3") }}</option>
@@ -31,7 +31,7 @@
           <optgroup label=""><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="'Times New Roman'">Times New Roman</option><option value="'Courier New'">Courier New</option><option value="Verdana">Verdana</option></optgroup>
           <optgroup label="Google "><option value="'Roboto', sans-serif">Roboto</option><option value="'Open Sans', sans-serif">Open Sans</option><option value="'Lato', sans-serif">Lato</option><option value="'Poppins', sans-serif">Poppins</option><option value="'Montserrat', sans-serif">Montserrat</option><option value="'Inter', sans-serif">Inter</option><option value="'Oswald', sans-serif">Oswald</option><option value="'Source Sans 3', sans-serif">Source Sans 3</option><option value="'Nunito', sans-serif">Nunito</option><option value="'Raleway', sans-serif">Raleway</option><option value="'PT Sans', sans-serif">PT Sans</option><option value="'Playfair Display', serif">Playfair Display</option><option value="'Merriweather', serif">Merriweather</option><option value="'Lora', serif">Lora</option></optgroup>
           <optgroup label=""><option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">San Francisco</option><option value="'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica Neue</option></optgroup>
-          <optgroup label=""><option value="SimSun, serif">{{ $adminT("Song", "宋体") }}</option><option value="'Microsoft YaHei', sans-serif">{{ $adminT("What?", "微软雅黑") }}</option><option value="SimHei, sans-serif">{{ $adminT("Bold", "黑体") }}</option></optgroup>
+          <optgroup label=""><option value="SimSun, serif">{{ $adminT("Song", "宋体") }}</option><option value="'Microsoft YaHei', sans-serif">{{ $adminT("What?", "微软雅黑") }}</option><option value="SimHei, sans-serif">{{ $adminT("SimHei", "黑体") }}</option></optgroup>
         </select>
         <select v-model="fontSize" @change="applyFontSize" class="toolbar-select toolbar-select-size" :title="$adminT('Symbol', '字号')">
           <option value="">{{ $adminT("Default", "默认") }}</option>
@@ -44,7 +44,7 @@
             <input type="color" v-model="fontColor" @input="applyFontColor" class="toolbar-color-input" />
             <span class="toolbar-color-preview" :style="{ backgroundColor: fontColor }" />
           </div>
-          <div class="toolbar-color-wrap" :title="$adminT('Background Colour', '背景色')">
+          <div class="toolbar-color-wrap" :title="$adminT('Background colour', '背景色')">
             <input type="color" v-model="highlightColor" @input="applyHighlightColor" class="toolbar-color-input" />
             <span class="toolbar-color-preview toolbar-color-preview-highlight" :style="{ backgroundColor: highlightColor }" />
           </div>
@@ -52,19 +52,19 @@
         <div class="toolbar-divider" />
         <!--  -->
         <div class="toolbar-group">
-          <button type="button" @click="execCommand('justifyLeft')" class="toolbar-btn" :title="$adminT('Left', '左对齐')">
+          <button type="button" @click="execCommand('justifyLeft')" class="toolbar-btn" :title="$adminT('Align left', '左对齐')">
             <AlignLeft class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('justifyCenter')" class="toolbar-btn" :title="$adminT('Centred', '居中对齐')">
+          <button type="button" @click="execCommand('justifyCenter')" class="toolbar-btn" :title="$adminT('Align centre', '居中对齐')">
             <AlignCenter class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('justifyRight')" class="toolbar-btn" :title="$adminT('Right', '右对齐')">
+          <button type="button" @click="execCommand('justifyRight')" class="toolbar-btn" :title="$adminT('Align right', '右对齐')">
             <AlignRight class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('insertUnorderedList')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isListActive }" :title="$adminT('List', '无序列表')">
+          <button type="button" @click="execCommand('insertUnorderedList')" class="toolbar-btn" :class="{ 'toolbar-btn-active': isListActive }" :title="$adminT('Bulleted list', '无序列表')">
             <List class="w-4 h-4" />
           </button>
-          <button type="button" @click="execCommand('insertOrderedList')" class="toolbar-btn" :title="$adminT('List', '有序列表')">
+          <button type="button" @click="execCommand('insertOrderedList')" class="toolbar-btn" :title="$adminT('Numbered list', '有序列表')">
             <ListOrdered class="w-4 h-4" />
           </button>
         </div>
@@ -77,13 +77,13 @@
           <button type="button" @click="openMediaSelector" class="toolbar-btn" :title="$adminT('Insert Picture', '插入图片')">
             <ImageIcon class="w-4 h-4" />
           </button>
-          <button type="button" @click="openPromptModal" class="toolbar-btn toolbar-btn-prompt" :title="$adminT('Prompt', '插入 Prompt')">
+          <button type="button" @click="openPromptModal" class="toolbar-btn toolbar-btn-prompt" :title="$adminT('Insert prompt', '插入 Prompt')">
             <Zap class="w-5 h-5" />
           </button>
         </div>
         <div class="toolbar-divider" />
         <div class="toolbar-group">
-          <button type="button" @click="insertBlockquote" class="toolbar-btn" :title="$adminT('Reference', '引用')">
+          <button type="button" @click="insertBlockquote" class="toolbar-btn" :title="$adminT('Quote', '引用')">
             <Quote class="w-4 h-4" />
           </button>
           <button type="button" @click="insertCode" class="toolbar-btn" :title="$adminT('Code block', '代码块')">
@@ -106,7 +106,7 @@
         <div class="toolbar-spacer" />
         <button type="button" @click="toggleSourceMode" class="toolbar-source-btn" :class="isSourceMode ? 'toolbar-source-btn-active' : ''" :title="isSourceMode ? $adminT('Switch to the visual editor', '切换到可视化编辑器') : $adminT('Switch to source code', '切换到源代码')">
           <Code class="w-4 h-4" />
-          <span class="toolbar-source-label">{{ isSourceMode ? $adminT('Visual', '可视化') : $adminT('Source', '源码') }}</span>
+          <span class="toolbar-source-label">{{ isSourceMode ? $adminT('Visual', '可视化') : $adminT('Source code', '源码') }}</span>
         </button>
       </div>
     </div>
@@ -141,11 +141,11 @@
         @click.stop
         class="px-2 py-1 text-xs font-medium border border-gray-300 rounded bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
       >
-        <option value="p">{{ $adminT("Text", "正文") }}</option>
+        <option value="p">{{ $adminT("Body text", "正文") }}</option>
         <option value="h1">H1</option>
         <option value="h2">H2</option>
         <option value="h3">H3</option>
-        <option value="blockquote">{{ $adminT("Reference", "引用") }}</option>
+        <option value="blockquote">{{ $adminT("Quote", "引用") }}</option>
       </select>
 
       <!-- Link Button -->
@@ -164,7 +164,7 @@
         type="button"
         @click="openPromptModal"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
-        :title="$adminT('Prompt', '插入 Prompt')"
+        :title="$adminT('Insert prompt', '插入 Prompt')"
       >
         <Zap class="w-4 h-4" />
       </button>
@@ -175,7 +175,7 @@
         @click="execCommand('insertUnorderedList')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
         :class="{ 'bg-gray-200': isListActive }"
-        :title="$adminT('List', '无序列表')"
+        :title="$adminT('Bulleted list', '无序列表')"
       >
         <List class="w-4 h-4" />
       </button>
@@ -197,7 +197,7 @@
         @click="execCommand('strikeThrough')"
         class="p-1.5 rounded hover:bg-gray-200 transition-colors"
         :class="{ 'bg-gray-200': isStrikethroughActive }"
-        :title="$adminT('Delete', '删除线')"
+        :title="$adminT('Strikethrough', '删除线')"
       >
         <Strikethrough class="w-4 h-4" />
       </button>
@@ -235,7 +235,7 @@
           v-model="backgroundColor"
           @input="applyBackgroundColor"
           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          :title="$adminT('Background Colour', '背景色')"
+          :title="$adminT('Background colour', '背景色')"
         />
         <div class="p-1.5 rounded hover:bg-gray-200 transition-colors flex items-center gap-1 pointer-events-none">
           <Highlighter class="w-4 h-4" />
@@ -1527,7 +1527,7 @@ const formatContent = () => {
     }
   } catch (error) {
     console.error('Format content error:', error)
-    toast.error(adminT("failed", "格式化失败"))
+    toast.error(adminT("Formatting failed", "格式化失败"))
   }
 }
 

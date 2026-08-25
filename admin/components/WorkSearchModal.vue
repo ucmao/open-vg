@@ -11,7 +11,7 @@
             </svg>
           </div>
           <div>
-            <h2 class="text-lg font-semibold text-gray-900">{{ $adminT("Search", "搜索并添加作品") }}</h2>
+            <h2 class="text-lg font-semibold text-gray-900">{{ $adminT("Search and add works", "搜索并添加作品") }}</h2>
             <p class="text-xs text-gray-500">{{ $adminT("Search for work inside the site and add bulk to the gallery", "搜索站内作品并批量添加到画廊") }}</p>
           </div>
         </div>
@@ -73,8 +73,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <div class="text-gray-700 font-medium">{{ $adminT("Search", "暂无搜索结果") }}</div>
-            <p class="text-xs text-gray-500">{{ $adminT("Search", "尝试换个关键词搜索") }}</p>
+            <div class="text-gray-700 font-medium">{{ $adminT("No search results", "暂无搜索结果") }}</div>
+            <p class="text-xs text-gray-500">{{ $adminT("Try searching with a different keyword", "尝试换个关键词搜索") }}</p>
           </div>
 
           <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -133,7 +133,7 @@
       <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
         <div class="text-sm text-gray-600">
           <span v-if="selectedWorks.length > 0"> {{ selectedWorks.length }} </span>
-          <span v-else class="text-gray-400">{{ $adminT("Please select", "请选择要添加的作品") }}</span>
+          <span v-else class="text-gray-400">{{ $adminT("Select the works to add", "请选择要添加的作品") }}</span>
         </div>
         <div class="flex items-center gap-3">
           <button
@@ -221,7 +221,7 @@ const clearSelection = () => {
 
 const loadWorks = async () => {
   if (!searchQuery.value.trim()) {
-    toast.warning(adminT("Please enter Search", "请至少选择一个作品"))
+    toast.warning(adminT("Select at least one work", "请至少选择一个作品"))
     return
   }
 

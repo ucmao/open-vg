@@ -124,8 +124,6 @@ export const uiZh: Record<string, string> = {
 
   // Search, empty and loading states
   'Loading': '正在加载',
-  'Loading...…': '正在加载...',
-  'Loading......': '正在加载...',
   'No data available': '暂无数据',
   'No image': '暂无图片',
   'No results found': '未找到结果',

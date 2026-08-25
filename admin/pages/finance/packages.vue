@@ -10,14 +10,14 @@
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <div>
-            <h2 class="text-lg font-bold text-gray-900">{{ $adminT("List", "充值套餐列表") }}</h2>
+            <h2 class="text-lg font-bold text-gray-900">{{ $adminT("Top-up package list", "充值套餐列表") }}</h2>
             <p class="mt-1 text-sm text-gray-500">{{ $adminT("Configure the amount and integral map of front-end page", "配置前端充值页面的金额与积分映射表") }}</p>
           </div>
           <button
             @click="openCreatePackageModal"
             class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
           >
-            <Plus class="w-5 h-5 mr-2" /> {{ $adminT("Create", "新建套餐") }} </button>
+            <Plus class="w-5 h-5 mr-2" /> {{ $adminT("New package", "新建套餐") }} </button>
         </div>
 
         <div class="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
@@ -26,7 +26,7 @@
               <tr>
                 <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Sort", "排序") }}</th>
                 <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Package Name", "套餐名称") }}</th>
-                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"> {{ $adminT("(USD)", "金额 (USD)") }}</th>
+                <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"> {{ $adminT("Amount (USD)", "金额 (USD)") }}</th>
                 <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Get a score", "获得积分") }}</th>
                 <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Status/", "状态/标签") }}</th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $adminT("Action", "操作") }}</th>
@@ -119,7 +119,7 @@
 
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> {{ $adminT("(USD)", "金额 (USD)") }}</label>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1"> {{ $adminT("Amount (USD)", "金额 (USD)") }}</label>
                   <input
                     v-model.number="packageForm.amount"
                     type="number"
@@ -154,7 +154,7 @@
                 <ClientOnly>
                   <RichTextEditor v-model="packageForm.description" class="package-description-editor" />
                   <template #fallback>
-                    <div class="border border-gray-300 rounded-lg p-4 min-h-[200px] bg-gray-50 text-gray-500 text-sm">{{ $adminT("Edit", "加载编辑器中...") }}</div>
+                    <div class="border border-gray-300 rounded-lg p-4 min-h-[200px] bg-gray-50 text-gray-500 text-sm">{{ $adminT("Loading the editor...", "加载编辑器中...") }}</div>
                   </template>
                 </ClientOnly>
               </div>
@@ -237,7 +237,7 @@ const fetchPackages = async () => {
       packages.value = res.data
     }
   } catch (err) {
-    toast.error('failed')
+    toast.error(adminT('Failed to fetch packages', '获取套餐失败'))
   } finally {
     loading.value = false
   }
@@ -295,7 +295,7 @@ const handlePackageSubmit = async () => {
     }
 
     if (res && res.success !== false) {
-      toast.success(isEditingPackage.value ? 'successful' : 'successful')
+      toast.success(isEditingPackage.value ? adminT('Package updated successfully', '更新成功') : adminT('Package created successfully', '创建成功'))
       closePackageModal()
       fetchPackages()
     }

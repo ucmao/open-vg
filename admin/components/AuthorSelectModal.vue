@@ -37,7 +37,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                :placeholder="$adminT('_Other Organiser', '搜索用户（昵称、handle、邮箱）...')"
+                :placeholder="$adminT('Search users by nickname, handle, or email...', '搜索用户（昵称、handle、邮箱）...')"
                 class="w-full border border-gray-300 text-gray-900 rounded-lg px-4 py-2 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 @input="handleSearch"
               />
@@ -58,7 +58,7 @@
               <div class="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
             
-            <div v-else-if="searchResults.length === 0 && !searchQuery" class="text-center py-8 text-gray-500 text-sm"> {{ $adminT("Please enter Search", "请输入关键词搜索用户") }} </div>
+            <div v-else-if="searchResults.length === 0 && !searchQuery" class="text-center py-8 text-gray-500 text-sm"> {{ $adminT("Enter a keyword to search users", "请输入关键词搜索用户") }} </div>
             
             <div v-else-if="searchResults.length === 0 && searchQuery" class="text-center py-8 text-gray-500 text-sm">{{ $adminT("No user found", "未找到用户") }}</div>
             

@@ -10,11 +10,11 @@
     <div class="bg-white border rounded-lg shadow-sm overflow-hidden">
       <div class="p-6 bg-gray-50 border-b flex flex-wrap gap-4 items-end">
         <div class="w-24">
-          <label class="block text-xs font-medium text-gray-500 mb-1"> {{ $adminT("ID", "用户 ID") }}</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1"> {{ $adminT("User ID", "用户 ID") }}</label>
           <input
             v-model="filters.user_id"
             type="text"
-            :placeholder="$adminT('ID', '用户 ID')"
+            :placeholder="$adminT('User ID', '用户 ID')"
             class="w-full border rounded px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             @keyup.enter="loadData"
           />
@@ -58,7 +58,7 @@
           :disabled="creditData.length === 0"
           style="margin-left: auto;"
         >
-          <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
+          <Download class="w-4 h-4" /> {{ $adminT("Export CSV", "导出 CSV") }} </button>
       </div>
 
       <!-- Table -->
@@ -193,7 +193,7 @@
             
             <!-- User Search -->
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("ID", "用户邮箱或ID") }}</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("User email or ID", "用户邮箱或ID") }}</label>
               <div class="relative" ref="userSearchContainer">
                 <input
                   v-model="adjustForm.userSearch"
@@ -751,11 +751,11 @@ const handleAdjustCredits = async () => {
       // Refresh credit records
       loadData()
     } else {
-      toast.error(response.message || 'failed')
+      toast.error(response.message || adminT('Action failed', '操作失败'))
     }
   } catch (error: any) {
     console.error('Failed to adjust credits:', error)
-    toast.error(error.message || 'failed')
+    toast.error(error.message || adminT('Action failed', '操作失败'))
   } finally {
     submittingAdjust.value = false
   }

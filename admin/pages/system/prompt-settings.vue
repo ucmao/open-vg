@@ -3,7 +3,7 @@
     <!-- Page header -->
     <div class="mb-4 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Prompt", "Prompt 页面管理") }} </h1>
+        <h1 class="text-2xl font-bold text-gray-900">{{ $adminT("Prompt page management", "Prompt 页面管理") }} </h1>
         <p class="text-gray-500 mt-0.5 text-sm"> {{ $adminT("Manage displays, sot templates and suffixes for individual details", "管理各作品详情页的 Prompt 展示、SEO 模板和 URL 后缀") }} </p>
       </div>
       <div class="flex items-center gap-2">
@@ -31,7 +31,7 @@
     <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 mb-4">
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex items-center gap-2">
-          <span class="text-xs text-gray-500">{{ $adminT("Search", "搜索内容") }}</span>
+          <span class="text-xs text-gray-500">{{ $adminT("Search content", "搜索内容") }}</span>
           <input
             v-model="promptFilters.search"
             type="text"
@@ -90,11 +90,11 @@
           class="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-1.5"
         >
           <Loader2 v-if="batchGenerating" class="w-4 h-4 animate-spin" />
-          <Zap v-else class="w-4 h-4" /> {{ $adminT("AI SEO", "批量 AI 生成 SEO") }} </button>
+          <Zap v-else class="w-4 h-4" /> {{ $adminT("Bulk generate SEO with AI", "批量 AI 生成 SEO") }} </button>
         <button
           @click="selectedWorkIds = []"
           class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-200 rounded"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
       </div>
     </div>
 
@@ -119,8 +119,8 @@
                   @change="toggleSelectAll"
                 />
               </th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase whitespace-nowrap"> {{ $adminT("ID", "作品 ID") }}</th>
-              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase min-w-[200px]">{{ $adminT("SEO Title", "SEO 标题") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase whitespace-nowrap"> {{ $adminT("Work ID", "作品 ID") }}</th>
+              <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase min-w-[200px]">{{ $adminT("SEO title", "SEO 标题") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase w-[28%] min-w-[280px]">{{ $adminT("SEO Description", "SEO 描述") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Category", "分类") }}</th>
               <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{{ $adminT("Label", "标签") }}</th>
@@ -211,7 +211,7 @@
                   <button
                     type="button"
                     class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded border border-gray-200 transition-colors"
-                    :aria-label="$adminT('Edit', '编辑详情')"
+                    :aria-label="$adminT('Edit details', '编辑详情')"
                     @click.stop="openDrawer(work)"
                   >
                     <PencilLine class="w-4 h-4" />
@@ -221,7 +221,7 @@
                     @click.stop="generateSEO(work.id)"
                     :disabled="generatingSEO[work.id]"
                     class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded border border-gray-200 transition-colors disabled:opacity-50 flex items-center justify-center"
-                    :aria-label="$adminT('AI SEO', 'AI 生成 SEO')"
+                    :aria-label="$adminT('Generate SEO with AI', 'AI 生成 SEO')"
                   >
                     <Zap v-if="!generatingSEO[work.id]" class="w-4 h-4" />
                     <Loader2 v-else class="w-4 h-4 animate-spin" />
@@ -302,12 +302,12 @@
       <div class="bg-gray-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
         <ImageIcon class="w-7 h-7 text-gray-400" />
       </div>
-      <h3 class="text-base font-medium text-gray-900">{{ $adminT("No work found", "未找到相关作品") }}</h3>
-      <p class="text-gray-500 mt-1 text-sm">{{ $adminT("Filter Reset", "尝试调整筛选条件或重置") }}</p>
+      <h3 class="text-base font-medium text-gray-900">{{ $adminT("No works found", "未找到相关作品") }}</h3>
+      <p class="text-gray-500 mt-1 text-sm">{{ $adminT("Try adjusting or resetting the filters", "尝试调整筛选条件或重置") }}</p>
       <button
         class="mt-3 text-sm text-blue-600 hover:underline"
         @click="promptFilters = { search: '', author_search: '', date_from: '', date_to: '' }; loadPromptWorks(true)"
-      > {{ $adminT("Reset Filter", "重置所有筛选") }} </button>
+      > {{ $adminT("Reset all filters", "重置所有筛选") }} </button>
     </div>
 
     <!-- Detail drawer -->
@@ -329,7 +329,7 @@
                 type="button"
                 :disabled="generatingSEO[drawerWork.id]"
                 class="p-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center"
-                :title="$adminT('AI SEO', 'AI 生成 SEO')"
+                :title="$adminT('Generate SEO with AI', 'AI 生成 SEO')"
                 @click="async () => { await generateSEO(drawerWork.id); syncDrawerFromWork() }"
               >
                 <Zap v-if="!generatingSEO[drawerWork.id]" class="w-4 h-4" />
@@ -360,7 +360,7 @@
                 <button
                   type="button"
                   class="px-3 py-2 text-gray-500 hover:bg-gray-100 rounded border border-gray-300 flex-shrink-0 self-start"
-                  :title="$adminT('Prompt', '复制 Prompt')"
+                  :title="$adminT('Copy prompt', '复制 Prompt')"
                   @click="copyPrompt(drawerWork.prompt || '')"
                 >
                   <Copy class="w-4 h-4" />
@@ -370,7 +370,7 @@
 
             <!-- URL  -->
             <div>
-              <label class="block text-xs text-gray-500 mb-1">{{ $adminT("URL", "URL 后缀") }} </label>
+              <label class="block text-xs text-gray-500 mb-1">{{ $adminT("URL suffix", "URL 后缀") }} </label>
               <div class="flex items-stretch gap-1">
                 <span class="inline-flex items-center px-3 rounded-l border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-xs font-mono">/prompt/{{ drawerWork.short_code }}-</span>
                 <input
@@ -382,7 +382,7 @@
                 <button
                   type="button"
                   class="px-2 py-2 text-gray-500 hover:bg-gray-100 rounded border border-gray-300"
-                  :title="$adminT('URL', '复制完整 URL')"
+                  :title="$adminT('Copy the full URL', '复制完整 URL')"
                   @click="copyUrl(drawerWork)"
                 >
                   <Copy class="w-4 h-4" />
@@ -401,7 +401,7 @@
                 type="button"
                 class="mt-1 text-xs text-indigo-600 hover:underline"
                 @click="useSeoTitleForUrlSlug(drawerWork); syncDrawerFromWork()"
-              > {{ $adminT("SEO Title", "使用 SEO 标题") }} </button>
+              > {{ $adminT("Use the SEO title", "使用 SEO 标题") }} </button>
             </div>
 
             <!-- Category -->
@@ -449,12 +449,12 @@
 
             <!-- SEO Title -->
             <div>
-              <label class="block text-xs text-gray-500 mb-1">{{ $adminT("SEO Title", "SEO 标题") }}</label>
+              <label class="block text-xs text-gray-500 mb-1">{{ $adminT("SEO title", "SEO 标题") }}</label>
               <input
                 v-model="drawerWork.title"
                 type="text"
                 class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                :placeholder="$adminT('SEO Title', 'SEO 标题')"
+                :placeholder="$adminT('SEO title', 'SEO 标题')"
               />
               <button
                 type="button"
@@ -568,7 +568,7 @@ async function saveDrawer() {
     await updateWorkCategory(work.id, work.category)
     await updateWorkTags(work.id, (work.tags || []).join(', '))
     syncDrawerFromWork()
-    toast.success(adminT("Save", "已保存"))
+    toast.success(adminT("Saved", "已保存"))
   } catch (e) {
     // toasts already shown in update* functions
   } finally {
@@ -611,7 +611,7 @@ function removeDrawerTag(tag: string) {
 
 function copyUrl(work: any) {
   const url = getFrontendUrl(`/prompt/${work.url_slug}`)
-  navigator.clipboard.writeText(url).then(() => toast.success(adminT("URL", "URL 已复制")))
+  navigator.clipboard.writeText(url).then(() => toast.success(adminT("URL copied", "URL 已复制")))
 }
 
 const loadPromptWorks = async (resetPage: boolean | PointerEvent = false) => {
@@ -640,7 +640,7 @@ const loadPromptWorks = async (resetPage: boolean | PointerEvent = false) => {
       }))
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载作品失败"))
+    toast.error(adminT("Failed to load works", "加载作品失败"))
     console.error('Failed to load prompt works:', error)
   } finally {
     loadingPromptWorks.value = false
@@ -674,7 +674,7 @@ const updateUrlSlugSuffix = async (workId: number, suffix: string, shortCode: st
       if (work && response.data) work.url_slug = response.data.url_slug || work.url_slug
     }
   } catch (error: any) {
-    toast.error(error.message || adminT("failed", "更新失败"))
+    toast.error(error.message || adminT("Update failed", "更新失败"))
   }
 }
 
@@ -682,7 +682,7 @@ const updateWorkTitleDescription = async (workId: number, field: 'title' | 'desc
   try {
     const response = await adminApi.put(`/api/admin/works/${workId}/title-description`, { [field]: value || null })
     if (response.success) {
-      toast.success(adminT("successful", "更新成功"))
+      toast.success(adminT("Updated", "更新成功"))
       const work = promptWorks.value.find((w: any) => w.id === workId)
       if (work) {
         work[field] = value || null
@@ -690,7 +690,7 @@ const updateWorkTitleDescription = async (workId: number, field: 'title' | 'desc
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "更新失败"))
+    toast.error(adminT("Update failed", "更新失败"))
   }
 }
 
@@ -701,11 +701,11 @@ function slugify(text: string): string {
 }
 
 const useSeoTitleForUrlSlug = async (work: any) => {
-  if (!work.title) { toast.error(adminT("SEO Title", "请先填写 SEO 标题")); return }
+  if (!work.title) { toast.error(adminT("Fill in the SEO title first", "请先填写 SEO 标题")); return }
   if (!work.short_code) { toast.error(adminT("short_code", "作品缺少 short_code")); return }
   try {
     const slug = slugify(work.title)
-    if (!slug) { toast.error(adminT("Title slug", "标题无法转换为有效 slug")); return }
+    if (!slug) { toast.error(adminT("The title cannot be converted into a valid slug", "标题无法转换为有效 slug")); return }
     await updateUrlSlugSuffix(work.id, slug, work.short_code)
     toast.success(adminT("URL SEO Title", "URL 后缀已更新为 SEO 标题"))
   } catch (error) {
@@ -714,7 +714,7 @@ const useSeoTitleForUrlSlug = async (work: any) => {
 }
 
 const syncTitleToH1 = async (work: any) => {
-  if (!work.title) { toast.error(adminT("SEO Title", "请先填写 SEO 标题")); return }
+  if (!work.title) { toast.error(adminT("Fill in the SEO title first", "请先填写 SEO 标题")); return }
   try {
     const response = await adminApi.put(`/api/admin/works/${work.id}/title-description`, { share_name: work.title })
     if (response.success) {
@@ -723,7 +723,7 @@ const syncTitleToH1 = async (work: any) => {
       if (w) w.share_name = work.title
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "同步失败"))
+    toast.error(adminT("Sync failed", "同步失败"))
   }
 }
 
@@ -732,12 +732,12 @@ const updateWorkTags = async (workId: number, tagsString: string) => {
     const tags = tagsString.split(',').map((t: string) => t.trim()).filter((t: string) => t.length > 0)
     const response = await adminApi.put(`/api/admin/works/${workId}/tags`, { tags })
     if (response.success) {
-      toast.success(adminT("successful", "标签更新成功"))
+      toast.success(adminT("Tags updated", "标签更新成功"))
       const work = promptWorks.value.find((w: any) => w.id === workId)
       if (work) work.tags = tags
     }
   } catch (error) {
-    toast.error(adminT("failed", "标签更新失败"))
+    toast.error(adminT("Failed to update tags", "标签更新失败"))
   }
 }
 
@@ -761,7 +761,7 @@ const generateSEO = async (workId: number) => {
     if (response.success) {
       const generated = response.data
       const confirmed = await confirm({
-        title: adminT("Confirm SEO", "确认应用生成的 SEO 内容"),
+        title: adminT("Apply the generated SEO content", "确认应用生成的 SEO 内容"),
         message: adminT('Title: {title}\nDescription: {description}\nTags: {tags}\nCategory: {category}', '标题: {title}\n描述: {description}\n标签: {tags}\n分类: {category}', {
           title: generated.title || adminT('(empty)', '(空)'),
           description: generated.description || adminT('(empty)', '(空)'),
@@ -774,13 +774,13 @@ const generateSEO = async (workId: number) => {
       if (confirmed) {
         const applyResponse = await adminApi.post(`/api/admin/works/${workId}/apply-generated-seo`, generated)
         if (applyResponse.success) {
-          toast.success(adminT("SEO", "SEO 内容已应用"))
+          toast.success(adminT("SEO content applied", "SEO 内容已应用"))
           await loadPromptWorks()
         }
       }
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "生成失败"))
+    toast.error(adminT("Generation failed", "生成失败"))
   } finally {
     generatingSEO.value[workId] = false
   }
@@ -829,7 +829,7 @@ const exportPromptWorksToCSV = async (scope: 'current' | 'all') => {
       toast.error(adminT("No data to export", "没有可导出的数据"))
       return
     }
-    const csvRows = [['ID', 'Short Code', 'URL Slug', adminT("Title", "标题"), adminT("SEO Title", "SEO 标题"), adminT("SEO Description", "SEO 描述"), 'Prompt', adminT("Author", "作者"), adminT("Created", "创建时间")]]
+    const csvRows = [['ID', 'Short Code', 'URL Slug', adminT("Title", "标题"), adminT("SEO title", "SEO 标题"), adminT("SEO Description", "SEO 描述"), 'Prompt', adminT("Author", "作者"), adminT("Created at", "创建时间")]]
     for (const work of worksToExport) {
       csvRows.push([
         work.id, work.short_code, work.url_slug,
@@ -842,9 +842,9 @@ const exportPromptWorksToCSV = async (scope: 'current' | 'all') => {
     link.href = URL.createObjectURL(new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }))
     link.download = `Prompts_${scope}_${new Date().toISOString().slice(0, 10)}.csv`
     link.click()
-    toast.success(adminT("successful", "导出成功"))
+    toast.success(adminT("Exported", "导出成功"))
   } catch (error) {
-    toast.error(adminT("failed", "导出失败"))
+    toast.error(adminT("Export failed", "导出失败"))
   } finally {
     exportingPromptWorks.value = false
   }

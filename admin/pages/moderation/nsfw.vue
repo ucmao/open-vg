@@ -3,8 +3,8 @@
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("NSFW", "NSFW审核") }}</h2>
-        <p class="text-gray-600 mt-1">{{ activeTab === 'pending' ? 'NSFW，' : 'View' }}</p>
+        <h2 class="text-2xl font-semibold text-gray-900">{{ $adminT("NSFW review", "NSFW审核") }}</h2>
+        <p class="text-gray-600 mt-1">{{ activeTab === 'pending' ? $adminT('Review pending NSFW content to ensure platform content safety', '审核待处理的NSFW内容，确保平台内容安全') : $adminT('View all violation records flagged and blocked manually or automatically by the system', '查看所有手动或系统自动标记并拦截的违规记录') }}</p>
       </div>
       <div v-if="activeTab === 'pending'" class="flex items-center gap-3">
         <!-- Tag Filter -->
@@ -192,14 +192,14 @@
       <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Type", "审核类型") }}</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Review type", "审核类型") }}</label>
             <select
               v-model="filters.moderation_type"
               @change="pageLogs = 1; fetchLogs()"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
               <option value="">{{ $adminT("All", "全部") }}</option>
-              <option value="NSFW">{{ $adminT("NSFW", "NSFW审核") }}</option>
+              <option value="NSFW">{{ $adminT("NSFW review", "NSFW审核") }}</option>
               <option value="SHARE_REVIEW">{{ $adminT("Share Audit", "分享审核") }}</option>
             </select>
           </div>
@@ -220,11 +220,11 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("ID", "作品ID") }}</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Work ID", "作品ID") }}</label>
             <input
               v-model.number="filters.work_id"
               type="number"
-              :placeholder="$adminT('ID', '输入作品ID')"
+              :placeholder="$adminT('Enter a work ID', '输入作品ID')"
               @keyup.enter="pageLogs = 1; fetchLogs()"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             />
@@ -233,7 +233,7 @@
             <button
               @click="clearFilters"
               class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            > {{ $adminT("Filter", "清除筛选") }} </button>
+            > {{ $adminT("Clear filters", "清除筛选") }} </button>
           </div>
         </div>
       </div>
@@ -260,11 +260,11 @@
                     class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                   />
                 </th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">{{ $adminT("ID", "作品ID") }}</th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">{{ $adminT("/Title", "内容摘要/标题") }}</th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">{{ $adminT("Status", "审核状态") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">{{ $adminT("Work ID", "作品ID") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">{{ $adminT("Excerpt / title", "内容摘要/标题") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">{{ $adminT("Review status", "审核状态") }}</th>
                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">{{ $adminT("Reason for rejection", "拒绝原因") }}</th>
-                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">{{ $adminT("Action", "操作人") }}</th>
+                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">{{ $adminT("Operator", "操作人") }}</th>
                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">{{ $adminT("Audit time", "审核时间") }}</th>
                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">{{ $adminT("Action", "操作") }}</th>
               </tr>
@@ -330,9 +330,9 @@ class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
                           <div>
                             <h4 class="text-sm font-semibold text-gray-900 mb-2">{{ $adminT("Work Information", "作品信息") }}</h4>
                             <div class="bg-white rounded-lg border border-gray-200 p-4 space-y-2">
-                              <div class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("ID", "作品ID:") }}</span><span class="text-sm font-medium text-gray-900">#{{ log.work_id }}</span></div>
-                              <div class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Title", "标题:") }}</span><span class="text-sm font-medium text-gray-900">{{ log.work.title || log.work.share_name || '' }}</span></div>
-                              <div v-if="log.work.category" class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Category", "分类:") }}</span><span class="text-sm font-medium text-gray-900">{{ log.work.category }}</span></div>
+                              <div class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Work ID:", "作品ID:") }}</span><span class="text-sm font-medium text-gray-900">#{{ log.work_id }}</span></div>
+                              <div class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Title:", "标题:") }}</span><span class="text-sm font-medium text-gray-900">{{ log.work.title || log.work.share_name || '' }}</span></div>
+                              <div v-if="log.work.category" class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Category:", "分类:") }}</span><span class="text-sm font-medium text-gray-900">{{ log.work.category }}</span></div>
                               <div v-if="log.work.user" class="flex justify-between"><span class="text-sm text-gray-600">{{ $adminT("Author:", "作者:") }}</span><span class="text-sm font-medium text-gray-900">{{ log.work.user.nickname || log.work.user.handle }}</span></div>
                             </div>
                           </div>
@@ -354,7 +354,7 @@ class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
                             </div>
                           </div>
                           <div v-if="log.nsfw_tags && log.nsfw_tags.length > 0">
-                            <h4 class="text-sm font-semibold text-gray-900 mb-2">{{ $adminT("NSFW", "NSFW标签") }}</h4>
+                            <h4 class="text-sm font-semibold text-gray-900 mb-2">{{ $adminT("NSFW tags", "NSFW标签") }}</h4>
                             <div class="flex flex-wrap gap-2">
                               <span
 v-for="tag in log.nsfw_tags" :key="tag" class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium"
@@ -382,7 +382,7 @@ v-for="(kw, idx) in log.flagged_keywords" :key="idx" class="inline-flex items-ce
                         </div>
                       </div>
                       <div class="flex justify-end gap-2 pt-4 border-t border-gray-200">
-                        <NuxtLink v-if="log.work_id" :to="`/users/works?work_id=${log.work_id}`" class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors">{{ $adminT("View", "查看作品详情") }}</NuxtLink>
+                        <NuxtLink v-if="log.work_id" :to="`/users/works?work_id=${log.work_id}`" class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors">{{ $adminT("View work details", "查看作品详情") }}</NuxtLink>
                       </div>
                     </div>
                   </td>
@@ -474,7 +474,7 @@ definePageMeta({
 })
 
 useHead({
-  title: adminT("NSFW", "NSFW审核"),
+  title: adminT("NSFW review", "NSFW审核"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -559,7 +559,7 @@ async function fetchLogs() {
     }
   } catch (error: any) {
     console.error('Failed to fetch logs:', error)
-    toast.error(error.message || adminT("failed", "获取日志失败"))
+    toast.error(error.message || adminT("Failed to fetch the log", "获取日志失败"))
   } finally {
     loadingLogs.value = false
   }
@@ -656,8 +656,8 @@ const handleTagChange = () => {
 
 const handleApprove = async (workId: number) => {
   const confirmed = await confirm({
-    title: adminT("NSFW", "通过NSFW审核"),
-    message: adminT("Confirm NSFW？", "您确定要通过这个作品的NSFW审核吗？")
+    title: adminT("Approve NSFW review", "通过NSFW审核"),
+    message: adminT("Approve NSFW review for this work?", "您确定要通过这个作品的NSFW审核吗？")
   })
   
   if (!confirmed) {
@@ -669,14 +669,14 @@ const handleApprove = async (workId: number) => {
     const response = await api.post(`/api/admin/moderation/nsfw/${workId}/approve`, {})
     
     if (response.success) {
-      toast.success(adminT("NSFW", "作品已通过NSFW审核"))
+      toast.success(adminT("The work passed NSFW review", "作品已通过NSFW审核"))
       fetchWorks()
     } else {
-      toast.error(response.message || adminT("Could not close temporary folder: %s", "无法通过审核"))
+      toast.error(response.message || adminT("Could not approve", "无法通过审核"))
     }
   } catch (error: any) {
     console.error('Failed to approve work:', error)
-    toast.error(error.message || adminT("Could not close temporary folder: %s", "无法通过审核"))
+    toast.error(error.message || adminT("Could not approve", "无法通过审核"))
   } finally {
     actionLoading.value = null
   }
@@ -698,7 +698,7 @@ const handleReject = async () => {
   rejectReasonError.value = ''
   const trimmed = rejectReason.value.trim()
   if (!trimmed) {
-    toast.error(adminT("Please enter", "请输入拦截原因"))
+    toast.error(adminT("Enter a reason for blocking", "请输入拦截原因"))
     return
   }
   const { valid, message } = validateReason(trimmed)

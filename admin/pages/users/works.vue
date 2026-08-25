@@ -19,15 +19,15 @@
         <button
           @click="showBatchEditModal = true"
           class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-        > {{ $adminT("Edit", "批量编辑") }} </button>
+        > {{ $adminT("Bulk edit", "批量编辑") }} </button>
         <button
           @click="handleBatchDelete"
           class="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-        > {{ $adminT("Delete", "批量删除") }} </button>
+        > {{ $adminT("Bulk delete", "批量删除") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
           <input
             v-model="filters.work_id"
             type="text"
-            :placeholder="$adminT('ID', '作品 ID')"
+            :placeholder="$adminT('Work ID', '作品 ID')"
             class="flex-1 min-w-0 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             @keyup.enter="loadWorks(true)"
           />
@@ -56,19 +56,19 @@
           />
         </div>
         <div class="flex items-center gap-2">
-          <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Status", "生成状态") }}</span>
+          <span class="text-sm text-gray-500 whitespace-nowrap">{{ $adminT("Generation status", "生成状态") }}</span>
           <select v-model="filters.status" class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[100px]">
             <option value="">{{ $adminT("All", "全部") }}</option>
-            <option value="success">{{ $adminT("successful", "成功") }}</option>
+            <option value="success">{{ $adminT("Succeeded", "成功") }}</option>
             <option value="generating">{{ $adminT("Generating", "生成中") }}</option>
-            <option value="failed">{{ $adminT("failed", "失败") }}</option>
+            <option value="failed">{{ $adminT("Failed", "失败") }}</option>
           </select>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
           <button
             @click="loadWorks(true)"
             class="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
-          > {{ $adminT("Filter", "应用筛选") }} </button>
+          > {{ $adminT("Apply filters", "应用筛选") }} </button>
           <button
             @click="resetFilters"
             class="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
@@ -77,7 +77,7 @@
             type="button"
             @click="showMoreFilters = !showMoreFilters"
             class="px-3 py-1.5 text-sm rounded border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-1"
-          > {{ $adminT("Filter", "更多筛选") }} <ChevronDown class="w-4 h-4 transition-transform" :class="showMoreFilters ? 'rotate-180' : ''" />
+          > {{ $adminT("More filters", "更多筛选") }} <ChevronDown class="w-4 h-4 transition-transform" :class="showMoreFilters ? 'rotate-180' : ''" />
           </button>
         </div>
       </div>
@@ -86,24 +86,24 @@
       <div v-show="showMoreFilters" class="border-t border-gray-100 bg-gray-50/60 px-4 py-4">
         <!-- Search -->
         <div class="mb-4 last:mb-0">
-          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Search", "基础搜索") }}</div>
+          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Basic search", "基础搜索") }}</div>
           <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
             <div class="flex items-center gap-2">
               <span class="text-sm text-gray-500 w-12">{{ $adminT("Author", "作者") }}</span>
               <input
                 v-model="filters.author_search"
                 type="text"
-                :placeholder="$adminT('@handle', '昵称或 @handle')"
+                :placeholder="$adminT('Nickname or @handle', '昵称或 @handle')"
                 class="w-48 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 @keyup.enter="loadWorks(true)"
               />
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-sm text-gray-500 w-14"> {{ $adminT("ID", "作者 ID") }}</span>
+              <span class="text-sm text-gray-500 w-14"> {{ $adminT("Author ID", "作者 ID") }}</span>
               <input
                 v-model="filters.user_id"
                 type="text"
-                :placeholder="$adminT('ID', '用户 ID')"
+                :placeholder="$adminT('User ID', '用户 ID')"
                 class="w-32 border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 @keyup.enter="loadWorks(true)"
               />
@@ -113,7 +113,7 @@
 
         <!-- Status -->
         <div class="mb-4 last:mb-0">
-          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Status", "业务状态") }}</div>
+          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Business status", "业务状态") }}</div>
           <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
             <div class="flex items-center gap-2">
               <span class="text-sm text-gray-500 w-12">{{ $adminT("Category", "分类") }}</span>
@@ -124,7 +124,7 @@
                   class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[100px]"
                 >
                   <option value="">{{ $adminT("All", "全部") }}</option>
-                  <option value="__UNCATEGORIZED__">{{ $adminT("Category", "未分类") }}</option>
+                  <option value="__UNCATEGORIZED__">{{ $adminT("Uncategorised", "未分类") }}</option>
                   <option v-for="c in availableCategories" :key="c.level1" :value="c.level1">{{ c.level1 }}</option>
                 </select>
                 <select
@@ -149,8 +149,8 @@
               <span class="text-sm text-gray-500 w-12">{{ $adminT("Type", "类型") }}</span>
               <select v-model="filters.work_type" class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[110px]">
                 <option value="">{{ $adminT("All", "全部") }}</option>
-                <option value="text-to-image">{{ $adminT("Text & Picture", "文本→图片") }}</option>
-                <option value="image-to-image">{{ $adminT("Pictures", "图片→图片") }}</option>
+                <option value="text-to-image">{{ $adminT("Text → image", "文本→图片") }}</option>
+                <option value="image-to-image">{{ $adminT("Image → image", "图片→图片") }}</option>
                 <option value="text-to-video">{{ $adminT("Text to Video", "文本→视频") }}</option>
                 <option value="image-to-video">{{ $adminT("Images and videos", "图片→视频") }}</option>
                 <option value="video-effects">{{ $adminT("Video Template Effects", "视频模板特效") }}</option>
@@ -162,10 +162,10 @@
 
         <!-- Status -->
         <div>
-          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Status", "管理状态") }}</div>
+          <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{{ $adminT("Moderation status", "管理状态") }}</div>
           <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
             <div class="flex items-center gap-2">
-              <span class="text-sm text-gray-500 w-14">{{ $adminT("NSFW", "NSFW审核") }}</span>
+              <span class="text-sm text-gray-500 w-14">{{ $adminT("NSFW review", "NSFW审核") }}</span>
               <select v-model="filters.nsfw_status" class="border border-gray-300 rounded px-2.5 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none min-w-[90px]">
                 <option value="">{{ $adminT("All", "全部") }}</option>
                 <option value="PENDING">{{ $adminT("Pending audit", "待审核") }}</option>
@@ -174,7 +174,7 @@
               </select>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-sm text-gray-500 w-14">{{ $adminT("Select", "精选") }}</span>
+              <span class="text-sm text-gray-500 w-14">{{ $adminT("Featured", "精选") }}</span>
               <div class="flex rounded-md overflow-hidden border border-gray-300 bg-white">
                 <button
                   type="button"
@@ -187,13 +187,13 @@
                   :class="[filters.is_featured === 'true' ? 'bg-gray-100 font-medium text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50']"
                   class="px-2.5 py-1.5 text-sm border-r border-gray-300"
                   @click="filters.is_featured = 'true'"
-                >{{ $adminT("Selected", "已精选") }}</button>
+                >{{ $adminT("Featured", "已精选") }}</button>
                 <button
                   type="button"
                   :class="[filters.is_featured === 'false' ? 'bg-gray-100 font-medium text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50']"
                   class="px-2.5 py-1.5 text-sm"
                   @click="filters.is_featured = 'false'"
-                >{{ $adminT("Not selected", "未精选") }}</button>
+                >{{ $adminT("Not featured", "未精选") }}</button>
               </div>
             </div>
             <div class="flex items-center gap-2">
@@ -239,7 +239,7 @@
                   :class="[filters.hidden === 'true' ? 'bg-gray-100 font-medium text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50']"
                   class="px-2.5 py-1.5 text-sm"
                   @click="filters.hidden = 'true'"
-                >{{ $adminT("Hide", "已隐藏") }}</button>
+                >{{ $adminT("Hidden", "已隐藏") }}</button>
               </div>
             </div>
             <div class="flex items-center gap-2">
@@ -256,13 +256,13 @@
                   :class="[filters.is_deleted === 'false' ? 'bg-gray-100 font-medium text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50']"
                   class="px-2.5 py-1.5 text-sm border-r border-gray-300"
                   @click="filters.is_deleted = 'false'"
-                >{{ $adminT("Delete", "未删除") }}</button>
+                >{{ $adminT("Not deleted", "未删除") }}</button>
                 <button
                   type="button"
                   :class="[filters.is_deleted === 'true' ? 'bg-gray-100 font-medium text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50']"
                   class="px-2.5 py-1.5 text-sm"
                   @click="filters.is_deleted = 'true'"
-                >{{ $adminT("Delete", "已删除") }}</button>
+                >{{ $adminT("Deleted", "已删除") }}</button>
               </div>
             </div>
           </div>
@@ -287,12 +287,12 @@
               @change="toggleSelectAll"
               class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
             />
-            <span class="font-medium group-hover:text-blue-600 transition-colors">{{ $adminT("Select All", "全选本页") }}</span>
+            <span class="font-medium group-hover:text-blue-600 transition-colors">{{ $adminT("Select all on this page", "全选本页") }}</span>
           </label>
           <span> <strong>{{ total }}</strong> </span>
         </div>
         <div class="flex items-center gap-2">
-          <span>{{ $adminT('Per page', '每页显示') }}</span>
+          <span>{{ $adminT('Show per page', '每页显示') }}</span>
           <select v-model="pageSize" @change="loadWorks(true)" class="border rounded px-2 py-1 bg-white">
             <option :value="10">10</option>
             <option :value="20">20</option>
@@ -347,7 +347,7 @@
               <div v-if="work.hidden" class="absolute inset-0 bg-black/50 backdrop-blur-[1px] flex items-center justify-center z-20">
                 <div class="flex flex-col items-center gap-2 px-4 py-3 bg-gray-900/80 rounded-xl">
                   <EyeOff class="w-8 h-8 text-white" />
-                  <span class="text-white font-semibold text-sm">{{ $adminT("Hide", "已隐藏") }}</span>
+                  <span class="text-white font-semibold text-sm">{{ $adminT("Hidden", "已隐藏") }}</span>
                 </div>
               </div>
             </div>
@@ -366,7 +366,7 @@
                 {{ work.title || work.share_name || '' }}
               </a>
               <span v-else class="text-xl font-bold text-gray-700">{{ work.title || work.share_name || '' }}</span>
-              <span class="text-xs font-mono text-gray-400 ml-2" :title="$adminT('ID', '作品 ID')">#{{ work.id }}</span>
+              <span class="text-xs font-mono text-gray-400 ml-2" :title="$adminT('Work ID', '作品 ID')">#{{ work.id }}</span>
             </div>
 
             <!-- Row 2: Author (click to search on this page) + Time -->
@@ -387,7 +387,7 @@
             <!-- Row 3: Prompt (collapsible) -->
             <div class="text-sm text-gray-600 mb-3">
               <p class="line-clamp-2">
-                <span class="text-gray-500">{{ $adminT("Notice", "提示词:") }}</span>
+                <span class="text-gray-500">{{ $adminT("Prompt:", "提示词:") }}</span>
                 {{ truncateText(work.prompt, 120) }}
               </p>
               <button
@@ -408,13 +408,13 @@
                   {{ getNSFWStatusText(work.nsfw_status) }}
                 </span>
               </template>
-              <span v-if="work.is_featured" class="px-2 py-0.5 text-xs rounded-md font-medium bg-amber-100 text-amber-800">{{ $adminT("Select", "精选") }}</span>
-              <span v-if="work.deleted_at" class="px-2 py-0.5 text-xs rounded-md font-medium bg-red-100 text-red-700">{{ $adminT("Delete", "已删除") }}</span>
+              <span v-if="work.is_featured" class="px-2 py-0.5 text-xs rounded-md font-medium bg-amber-100 text-amber-800">{{ $adminT("Featured", "精选") }}</span>
+              <span v-if="work.deleted_at" class="px-2 py-0.5 text-xs rounded-md font-medium bg-red-100 text-red-700">{{ $adminT("Deleted", "已删除") }}</span>
               <!-- Attribute Group () -->
               <span class="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-600">{{ work.model_name }}</span>
               <span class="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-600">{{ getWorkTypeLabel(work.type) }}</span>
               <span class="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-600">
-                {{ work.is_shared && !work.deleted_at && work.nsfw_status !== 'PENDING' && work.nsfw_status !== 'BLOCKED' ? $adminT('Publicly shared', '公开分享') : $adminT('Private', '用户私有') }}
+                {{ work.is_shared && !work.deleted_at && work.nsfw_status !== 'PENDING' && work.nsfw_status !== 'BLOCKED' ? $adminT('Publicly shared', '公开分享') : $adminT('Private to the user', '用户私有') }}
               </span>
               <span class="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-600">{{ work.category || 'Category' }}</span>
               <span v-if="work.fork_count !== undefined && work.fork_count !== null" class="px-2 py-0.5 text-xs rounded-md bg-slate-100 text-slate-600">↻ {{ work.fork_count }}</span>
@@ -455,16 +455,16 @@
                 <button
                   @click="toggleActionDropdown(work.id)"
                   class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
-                > {{ $adminT("More.", "更多 ▼") }} </button>
+                > {{ $adminT("More ▼", "更多 ▼") }} </button>
                 <div
                   v-if="actionDropdownId === work.id"
                   class="absolute left-0 top-full mt-1 py-1 bg-white border rounded-lg shadow-lg z-20 min-w-[140px]"
                 >
-                  <button v-if="!work.deleted_at" @click="showCategoryModal(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Category", "修改分类") }}</button>
+                  <button v-if="!work.deleted_at" @click="showCategoryModal(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Change category", "修改分类") }}</button>
                   <button v-if="work.nsfw_status !== 'BLOCKED' && !work.deleted_at" @click="showBanModal(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Ban", "禁止") }}</button>
                   <button v-else-if="work.nsfw_status === 'BLOCKED' && !work.deleted_at" @click="unbanWork(work.id); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50">{{ $adminT("Released.", "解除禁止") }}</button>
                   <button v-if="!work.deleted_at" @click="softDeleteWork(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-amber-700 hover:bg-amber-50">{{ $adminT("Delete", "删除") }}</button>
-                  <button v-if="work.deleted_at" @click="confirmDelete(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50">{{ $adminT("Delete", "永久删除") }}</button>
+                  <button v-if="work.deleted_at" @click="confirmDelete(work); actionDropdownId = null" class="w-full px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50">{{ $adminT("Delete permanently", "永久删除") }}</button>
                 </div>
               </div>
             </div>
@@ -559,8 +559,8 @@
     <!-- Empty State -->
     <div v-else class="text-center py-20 bg-white border rounded-lg">
       <FileText class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-      <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No work found", "没有找到作品") }}</h3>
-      <p class="text-gray-600">{{ $adminT("Filter", "尝试调整筛选条件") }}</p>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">{{ $adminT("No works found", "没有找到作品") }}</h3>
+      <p class="text-gray-600">{{ $adminT("Try adjusting the filters", "尝试调整筛选条件") }}</p>
     </div>
 
     <!-- Dropdown overlay (click outside to close) -->
@@ -596,7 +596,7 @@
           <button
             @click="confirmBan"
             class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-          > {{ $adminT("Confirm", "确认禁止") }} </button>
+          > {{ $adminT("Confirm ban", "确认禁止") }} </button>
         </div>
       </div>
     </div>
@@ -609,7 +609,7 @@
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <h3 class="text-lg font-semibold text-gray-900 mb-4 text-orange-600">{{ $adminT("Sharing request denied", "拒绝分享请求") }}</h3>
-        <p class="text-sm text-gray-600 mb-4">{{ $adminT("Please enter", "请输入拒绝该作品公开分享的原因") }}</p>
+        <p class="text-sm text-gray-600 mb-4">{{ $adminT("Enter a reason for refusing to share this work publicly", "请输入拒绝该作品公开分享的原因") }}</p>
         <textarea
           v-model="rejectModal.reason"
           rows="4"
@@ -620,7 +620,7 @@
         <p v-else class="text-xs text-gray-500 mb-4">{{ $adminT("This will be sent to users, please use English.", "此内容将发给用户，请使用英文。") }}</p>
         <div class="flex justify-end gap-3">
           <button @click="closeRejectModal" class="px-4 py-2 text-gray-600 hover:text-gray-800 border rounded">{{ $adminT("Cancel", "取消") }}</button>
-          <button @click="confirmReject" :disabled="!rejectModal.reason.trim()" class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 disabled:opacity-50">{{ $adminT("Confirm", "确认拒绝") }}</button>
+          <button @click="confirmReject" :disabled="!rejectModal.reason.trim()" class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 disabled:opacity-50">{{ $adminT("Confirm rejection", "确认拒绝") }}</button>
         </div>
       </div>
     </div>
@@ -632,12 +632,12 @@
       @click.self="closeCategoryModal"
     >
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Category", "修改分类") }}</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $adminT("Change category", "修改分类") }}</h3>
         <p class="text-sm text-gray-600 mb-4">{{ $adminT("Select classification for the work (support only level 1 classification that already exists in the system)", "为作品选择分类（仅支持系统已存在的一二级分类）") }}</p>
         
         <!-- Level 1 Category -->
         <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Category", "一级分类") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Top-level category", "一级分类") }}</label>
           <select
             v-model="categoryModal.level1"
             @change="onLevel1Change"
@@ -666,7 +666,7 @@
             :disabled="!categoryModal.level1"
             class="w-full border rounded px-3 py-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
-            <option value="">{{ $adminT("Category", "不选择二级分类") }}</option>
+            <option value="">{{ $adminT("No subcategory", "不选择二级分类") }}</option>
             <option
               v-for="level2 in getLevel2Categories(categoryModal.level1)"
               :key="level2"
@@ -679,12 +679,12 @@
 
         <div class="mb-4 p-3 bg-gray-50 rounded">
           <p class="text-sm text-gray-600">
-            <span class="font-medium">{{ $adminT("Category", "当前分类:") }}</span>
+            <span class="font-medium">{{ $adminT("Current category:", "当前分类:") }}</span>
             <span v-if="categoryModal.work?.category" class="text-indigo-600">{{ categoryModal.work.category }}</span>
-            <span v-else class="text-gray-400">{{ $adminT("Settings", "未设置") }}</span>
+            <span v-else class="text-gray-400">{{ $adminT("Not set", "未设置") }}</span>
           </p>
           <p class="text-sm text-gray-600 mt-1">
-            <span class="font-medium">{{ $adminT("Category", "新分类:") }}</span>
+            <span class="font-medium">{{ $adminT("New category:", "新分类:") }}</span>
             <span v-if="getSelectedCategory()" class="text-green-600">{{ getSelectedCategory() }}</span>
             <span v-else class="text-gray-400">{{ $adminT("Not selected", "未选择") }}</span>
           </p>
@@ -695,13 +695,13 @@
             @click="clearCategory"
             :disabled="!categoryModal.work?.category"
             class="px-4 py-2 text-gray-600 hover:text-gray-800 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
-          > {{ $adminT("Category", "清除分类") }} </button>
+          > {{ $adminT("Clear category", "清除分类") }} </button>
           <button @click="closeCategoryModal" class="px-4 py-2 text-gray-600 hover:text-gray-800 border rounded">{{ $adminT("Cancel", "取消") }}</button>
           <button
             @click="confirmCategoryUpdate"
             :disabled="!canUpdateCategory()"
             class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          > {{ $adminT("Confirm", "确认修改") }} </button>
+          > {{ $adminT("Confirm change", "确认修改") }} </button>
         </div>
       </div>
     </div>
@@ -714,14 +714,14 @@
     >
       <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 shadow-2xl border border-gray-100 animate-fade-in">
         <div class="flex items-center justify-between mb-4 pb-4 border-b">
-          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Edit", "批量编辑作品") }}</h3>
+          <h3 class="text-xl font-bold text-gray-900">{{ $adminT("Bulk edit works", "批量编辑作品") }}</h3>
           <button @click="showBatchEditModal = false" class="text-gray-400 hover:text-gray-600 transition-colors">
             <X class="w-6 h-6" />
           </button>
         </div>
         
         <p class="text-sm text-gray-600 mb-6 bg-blue-50 p-3 rounded-lg border border-blue-100">
-          <span class="font-bold text-blue-700">{{ $adminT("Notice", "提示:") }}</span> {{ $adminT("Selected", "将更新选中的") }} <span class="font-bold text-blue-700">{{ selectedIds.length }}</span> {{ $adminT("a work. Only the fields that need to be modified are filled out, leaving the blanks as they are.", "个作品。只填写需要修改的字段，留空则保持现状。") }} </p>
+          <span class="font-bold text-blue-700">{{ $adminT("Tip:", "提示:") }}</span> {{ $adminT("This will update the selected", "将更新选中的") }} <span class="font-bold text-blue-700">{{ selectedIds.length }}</span> {{ $adminT("a work. Only the fields that need to be modified are filled out, leaving the blanks as they are.", "个作品。只填写需要修改的字段，留空则保持现状。") }} </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
           <!-- Visibility -->
@@ -736,20 +736,20 @@
 
           <!-- Featured -->
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Status", "精选状态") }}</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Featured status", "精选状态") }}</label>
             <select v-model="batchEditForm.is_featured" class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
               <option :value="null">{{ $adminT("No change.", "保持不变") }}</option>
               <option :value="true"> {{ $adminT("Set as selection,", "设为精选 ⭐") }}</option>
-              <option :value="false">{{ $adminT("Cancel", "取消精选") }}</option>
+              <option :value="false">{{ $adminT("Unfeature", "取消精选") }}</option>
             </select>
           </div>
 
           <!-- Category -->
           <div class="md:col-span-2">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Category", "修改分类") }}</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ $adminT("Change category", "修改分类") }}</label>
             <select v-model="batchEditForm.category" class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
               <option value="">{{ $adminT("No change.", "保持不变") }}</option>
-              <option value="__CLEAR__">{{ $adminT("Category", "清除分类") }}</option>
+              <option value="__CLEAR__">{{ $adminT("Clear category", "清除分类") }}</option>
               <optgroup v-for="cat in availableCategories" :key="cat.level1" :label="cat.level1">
                 <option :value="cat.level1">{{ cat.level1 }} {{ $adminT("(All categories)", "(全类)") }}</option>
                 <option v-for="level2 in cat.level2" :key="level2" :value="`${cat.level1}|${level2}`">
@@ -861,10 +861,10 @@ const toggleSelectAll = () => {
 
 const handleBatchDelete = async () => {
   const confirmed = await confirm({
-    title: adminT("Delete", "批量删除作品"),
+    title: adminT("Bulk delete works", "批量删除作品"),
     message: adminT('Delete {count} selected works? They will be moved to the recycle bin.', '确定删除选中的 {count} 个作品吗？作品将移入回收站。', { count: selectedIds.value.length }),
     type: 'warning',
-    confirmText: adminT("Confirm Delete", "确认批量删除")
+    confirmText: adminT("Confirm bulk delete", "确认批量删除")
   })
   if (!confirmed) return
 
@@ -898,13 +898,13 @@ const handleBatchEdit = async () => {
   const willNotifyUsers = batchEditForm.value.is_shared !== null || 
                           batchEditForm.value.is_featured !== null
 
-  let confirmMessage = `Confirm ${selectedIds.value.length} ？`
+  let confirmMessage = adminT('Are you sure you want to update the {count} selected works?', '确定要更新选中的 {count} 个作品吗？', { count: selectedIds.value.length })
   if (willNotifyUsers) {
-    confirmMessage += adminT(", this operation informs the user.", "⚠️ 此操作会通知相关用户。")
+    confirmMessage += '\n\n' + adminT('⚠️ This operation will notify the affected users.', '⚠️ 此操作会通知相关用户。')
   }
 
   const confirmed = await confirm({
-    title: adminT("Confirm", "确认批量更新"),
+    title: adminT("Confirm bulk update", "确认批量更新"),
     message: confirmMessage,
     type: 'info'
   })
@@ -927,7 +927,7 @@ const handleBatchEdit = async () => {
 
     const response = await adminApi.post('/api/admin/works/batch-update', payload)
     if (response.success) {
-      toast.success(adminT("successful", "批量更新成功"))
+      toast.success(adminT("Bulk update complete", "批量更新成功"))
       showBatchEditModal.value = false
       clearSelection()
       loadWorks()
@@ -939,7 +939,7 @@ const handleBatchEdit = async () => {
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "批量更新失败"))
+    toast.error(adminT("Bulk update failed", "批量更新失败"))
   } finally {
     saving.value = false
   }
@@ -1097,7 +1097,7 @@ const loadWorks = async (resetPage = false) => {
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载作品失败"))
+    toast.error(adminT("Failed to load works", "加载作品失败"))
   } finally {
     loading.value = false
   }
@@ -1192,7 +1192,7 @@ const confirmReject = async () => {
   rejectReasonError.value = ''
   const trimmed = rejectModal.value.reason.trim()
   if (!trimmed) {
-    toast.error(adminT("Please enter", "请输入拒绝原因"))
+    toast.error(adminT("Enter a reason for rejection", "请输入拒绝原因"))
     return
   }
   const { valid, message } = validateReason(trimmed)
@@ -1239,7 +1239,7 @@ const confirmBan = async () => {
       loadWorks()
     }
   } catch (error) {
-    toast.error(adminT("failed", "禁止作品失败"))
+    toast.error(adminT("Failed to ban the work", "禁止作品失败"))
   }
 }
 
@@ -1262,13 +1262,13 @@ const unbanWork = async (workId) => {
       loadWorks()
     }
   } catch (error) {
-    toast.error(adminT("failed", "解除禁止失败"))
+    toast.error(adminT("Failed to unban", "解除禁止失败"))
   }
 }
 
 const softDeleteWork = async (work) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除作品"),
+    title: adminT("Delete work", "删除作品"),
     message: adminT('Delete the work "{title}"?\n\nDeleted works can be restored from the deleted list.', '确定要删除作品《{title}》吗？\n\n删除的作品可以从已删除列表中恢复。', { title: work.title || work.share_name || adminT('Unnamed', '未命名') }),
     type: 'warning'
   })
@@ -1277,7 +1277,7 @@ const softDeleteWork = async (work) => {
   try {
     const response = await adminApi.post(`/api/admin/works/${work.id}/soft-delete`)
     if (response.success) {
-      toast.success(adminT("Delete List", "作品已移至删除列表"))
+      toast.success(adminT("Work moved to the deleted list", "作品已移至删除列表"))
       loadWorks()
     }
   } catch (error) {
@@ -1288,7 +1288,7 @@ const softDeleteWork = async (work) => {
 const restoreWork = async (workId) => {
   const confirmed = await confirm({
     title: adminT("Restore work", "恢复作品"),
-    message: adminT("Confirm Delete？", "确定要恢复这个已删除的作品吗？"),
+    message: adminT("Restore this deleted work?", "确定要恢复这个已删除的作品吗？"),
     type: 'info'
   })
   if (!confirmed) return
@@ -1300,14 +1300,14 @@ const restoreWork = async (workId) => {
       loadWorks()
     }
   } catch (error) {
-    toast.error(adminT("failed", "恢复作品失败"))
+    toast.error(adminT("Failed to restore the work", "恢复作品失败"))
   }
 }
 
 const toggleVisibility = async (workId, makePublic) => {
   const action = makePublic ? adminT("Open Sharing", "公开分享") : adminT("User Private", "用户私有")
   const confirmed = await confirm({
-    title: adminT("Status", "修改分享状态"),
+    title: adminT("Change sharing status", "修改分享状态"),
     message: adminT('Change this work to {action}? This action will affect its public visibility.', '确定将该作品设为{action}吗？此操作将影响作品的公开可见性。', { action }),
     type: 'info'
   })
@@ -1329,7 +1329,7 @@ const toggleVisibility = async (workId, makePublic) => {
 }
 
 const toggleFeatured = async (work) => {
-  const action = work.is_featured ? adminT("Cancel", "取消精选") : adminT("Set as Select", "设为精选")
+  const action = work.is_featured ? adminT("Unfeature", "取消精选") : adminT("Set as Select", "设为精选")
   const message = work.is_featured
     ? adminT('Remove this work from Featured?', '确定取消该作品的精选状态吗？')
     : adminT('Feature this work? It will receive additional exposure.', '确定将该作品设为精选吗？该作品将获得更多展示。')
@@ -1357,10 +1357,10 @@ const toggleFeatured = async (work) => {
 
 const confirmDelete = async (work) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "永久删除作品"),
+    title: adminT("Permanently delete work", "永久删除作品"),
     message: adminT('Permanently delete the work "{title}" from the database?\n\n⚠️ This cannot be undone!', '确定要永久从数据库中删除作品《{title}》吗？\n\n⚠️ 此操作不可撤销！', { title: work.title || work.share_name || adminT('Unnamed', '未命名') }),
     type: 'danger',
-    confirmText: adminT("Confirm Delete", "确认永久删除")
+    confirmText: adminT("Confirm permanent delete", "确认永久删除")
   })
   if (!confirmed) return
 
@@ -1377,17 +1377,17 @@ const confirmDelete = async (work) => {
 
 const getNSFWStatusClass = (status) => {
   const classes = {
-    APPROVED: adminT("bg-green-100 text-green-800", "文本→图片"),
-    PENDING: adminT("bg-yellow-100 text-yellow-800", "图片→图片"),
-    BLOCKED: adminT("bg-red-100 text-red-800", "文本→视频")
+    APPROVED: 'bg-green-100 text-green-800',
+    PENDING: 'bg-yellow-100 text-yellow-800',
+    BLOCKED: 'bg-red-100 text-red-800'
   }
   return classes[status] || 'bg-gray-100 text-gray-800'
 }
 
 const getWorkTypeLabel = (type) => {
   const labels = {
-    'text-to-image': adminT("Text & Picture", "文本→图片"),
-    'image-to-image': adminT("Pictures", "图片→图片"),
+    'text-to-image': adminT("Text → image", "文本→图片"),
+    'image-to-image': adminT("Image → image", "图片→图片"),
     'text-to-video': adminT("Text to Video", "文本→视频"),
     'image-to-video': adminT("Images and videos", "图片→视频"),
     'video-effects': adminT("Video Template Effects", "视频模板特效"),
@@ -1398,9 +1398,9 @@ const getWorkTypeLabel = (type) => {
 
 const getNSFWStatusText = (status) => {
   const texts = {
-    APPROVED: adminT("NSFW", "NSFW已通过"),
-    PENDING: adminT("NSFW", "NSFW待审核"),
-    BLOCKED: adminT("NSFW", "NSFW已拦截")
+    APPROVED: adminT("NSFW passed", "NSFW已通过"),
+    PENDING: adminT("NSFW pending review", "NSFW待审核"),
+    BLOCKED: adminT("NSFW blocked", "NSFW已拦截")
   }
   return texts[status] || status
 }
@@ -1439,7 +1439,7 @@ const loadCategories = async () => {
       toast.error(adminT("Failed to load categories:", "加载分类失败:") + (response.message || adminT("Unknown error", "未知错误")))
     }
   } catch (error) {
-    toast.error(adminT("Could not close temporary folder: %s", "加载分类失败，请检查网络连接"))
+    toast.error(adminT("Failed to load categories, please check your network connection", "加载分类失败，请检查网络连接"))
   } finally {
     loadingCategories.value = false
   }
@@ -1518,7 +1518,7 @@ const confirmCategoryUpdate = async () => {
       { category: selectedCategory }
     )
     if (response.success) {
-      toast.success(adminT("Category", "分类已更新"))
+      toast.success(adminT("Category updated", "分类已更新"))
       closeCategoryModal()
       loadWorks()
     }
@@ -1534,7 +1534,7 @@ const clearCategory = async () => {
       { category: null }
     )
     if (response.success) {
-      toast.success(adminT("Category", "分类已清除"))
+      toast.success(adminT("Category cleared", "分类已清除"))
       closeCategoryModal()
       loadWorks()
     }

@@ -49,7 +49,7 @@
               <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg> {{ $adminT("Settings", "样式设置") }} </h3>
+                </svg> {{ $adminT("Style settings", "样式设置") }} </h3>
               <!-- URL *： -->
               <div>
                 <label class="block text-sm font-medium text-gray-700"> {{ $adminT("URL *", "媒体URL *") }} <span class="text-xs text-gray-500 font-normal ml-1">{{ $adminT("(Support pictures or videos, suggested dimensions: 1920x1080px)", "（支持图片或视频，建议尺寸：1920x1080px）") }}</span>
@@ -170,9 +170,9 @@
                     v-model="formData.text_position"
                     class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                   >
-                    <option value="left">{{ $adminT("Left", "左侧") }}</option>
-                    <option value="center">{{ $adminT("Centred", "居中") }}</option>
-                    <option value="right">{{ $adminT("Right", "右侧") }}</option>
+                    <option value="left">{{ $adminT("Left side", "左侧") }}</option>
+                    <option value="center">{{ $adminT("Centre", "居中") }}</option>
+                    <option value="right">{{ $adminT("Right side", "右侧") }}</option>
                   </select>
                 </div>
                 <div>
@@ -182,7 +182,7 @@
                     class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                   >
                     <option value="left">{{ $adminT("Left.", "靠左") }}</option>
-                    <option value="center">{{ $adminT("Centred", "居中") }}</option>
+                    <option value="center">{{ $adminT("Centre", "居中") }}</option>
                     <option value="right">{{ $adminT("Right.", "靠右") }}</option>
                   </select>
                 </div>
@@ -194,7 +194,7 @@
               <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg> {{ $adminT("Settings", "链接设置") }} </h3>
+                </svg> {{ $adminT("Link settings", "链接设置") }} </h3>
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">{{ $adminT("Button Styles", "按钮样式") }}</label>
@@ -208,12 +208,12 @@
                   </select>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">{{ $adminT("Button Text", "按钮文字") }}</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $adminT("Button text", "按钮文字") }}</label>
                   <input
                     v-model="formData.link_text"
                     type="text"
                     class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-                    :placeholder="$adminT('More.', '了解更多')"
+                    :placeholder="$adminT('Learn more', '了解更多')"
                   />
                 </div>
               </div>
@@ -233,7 +233,7 @@
               <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg> {{ $adminT("Settings", "时间设置") }} </h3>
+                </svg> {{ $adminT("Schedule settings", "时间设置") }} </h3>
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">{{ $adminT("Start", "开始时间") }}</label>
@@ -384,7 +384,7 @@ const formData = ref({
   image_url: '',
   video_url: '',
   link_url: '',
-  link_text: adminT("More.", "了解更多"),
+  link_text: adminT("Learn more", "了解更多"),
   button_style: 'primary',
   overlay_opacity: 50,
   text_position: 'center',
@@ -402,7 +402,7 @@ watch(() => props.slide, (slide) => {
       image_url: slide.image_url || '',
       video_url: slide.video_url || '',
       link_url: slide.link_url || '',
-      link_text: slide.link_text || adminT("More.", "了解更多"),
+      link_text: slide.link_text || adminT("Learn more", "了解更多"),
       button_style: slide.button_style || 'primary',
       overlay_opacity: slide.overlay_opacity !== undefined ? slide.overlay_opacity : 50,
       text_position: slide.text_position || 'center',
@@ -418,7 +418,7 @@ watch(() => props.slide, (slide) => {
       image_url: '',
       video_url: '',
       link_url: '',
-      link_text: adminT("More.", "了解更多"),
+      link_text: adminT("Learn more", "了解更多"),
       button_style: 'primary',
       overlay_opacity: 50,
       text_position: 'center',
@@ -453,7 +453,7 @@ const save = async () => {
     }
 
     if (response.success) {
-      toast.success(props.slide ? adminT("successful", "更新成功") : adminT("successful", "创建成功"))
+      toast.success(props.slide ? adminT("Updated", "更新成功") : adminT("Created", "创建成功"))
       emit('saved')
     } else {
       toast.error(response.message || adminT("Save failed", "保存失败"))

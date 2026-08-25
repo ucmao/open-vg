@@ -20,11 +20,11 @@
         <button
           @click="handleBatchAction(false)"
           class="px-3 py-1.5 bg-violet-600 text-white text-sm font-medium rounded hover:bg-violet-700 transition-colors"
-        > {{ $adminT("Cancel", "批量取消隐藏") }} </button>
+        > {{ $adminT("Bulk unhide", "批量取消隐藏") }} </button>
         <button
           @click="clearSelection"
           class="text-gray-500 hover:text-gray-700 text-sm font-medium"
-        > {{ $adminT("Cancel", "取消选择") }} </button>
+        > {{ $adminT("Clear selection", "取消选择") }} </button>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <!-- Search Title -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search Title", "搜索标题") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search titles", "搜索标题") }}</label>
           <input
             v-model="filters.search"
             type="text"
@@ -45,11 +45,11 @@
 
         <!-- Author Search -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search", "搜索作者") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search authors", "搜索作者") }}</label>
           <input
             v-model="filters.author_search"
             type="text"
-            :placeholder="$adminT('@handle', '昵称 或 @handle')"
+            :placeholder="$adminT('Nickname or @handle', '昵称 或 @handle')"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none"
             @keyup.enter="loadWorks(true)"
           />
@@ -57,14 +57,14 @@
 
         <!-- Category Filter -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Category", "一二级分类") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Category / subcategory", "一二级分类") }}</label>
           <select 
             v-model="filters.category" 
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none"
             @change="loadWorks(true)"
           >
             <option value="">{{ $adminT("All", "全部") }}</option>
-            <option value="__UNCATEGORIZED__">{{ $adminT("Category", "未分类") }}</option>
+            <option value="__UNCATEGORIZED__">{{ $adminT("Uncategorised", "未分类") }}</option>
             <optgroup v-for="cat in availableCategories" :key="cat.level1" :label="cat.level1">
               <option :value="cat.level1">{{ cat.level1 }} {{ $adminT("(All categories)", "(全类)") }}</option>
               <option v-for="level2 in cat.level2" :key="level2" :value="`${cat.level1}|${level2}`">
@@ -76,7 +76,7 @@
 
         <!-- Hidden Status Filter -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Status", "隐藏状态") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Hidden status", "隐藏状态") }}</label>
           <select 
             v-model="filters.hidden" 
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none"
@@ -113,7 +113,7 @@
               @change="toggleSelectAll"
               class="w-5 h-5 rounded border-gray-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
             />
-            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">{{ $adminT("Select All", "全选本页") }}</span>
+            <span class="text-sm text-gray-700 font-medium group-hover:text-gray-900">{{ $adminT("Select all on this page", "全选本页") }}</span>
           </label>
 
           <!-- Subtle 'Select All' link -->
@@ -211,7 +211,7 @@
               :title="work.category ? 'Category' : 'SettingsCategory'"
             >
               <span v-if="getCategoryDisplay(work)">{{ getCategoryDisplay(work) }}</span>
-              <span v-else class="text-gray-300">{{ $adminT("Category", "未分类") }}</span>
+              <span v-else class="text-gray-300">{{ $adminT("Uncategorised", "未分类") }}</span>
             </div>
           </div>
 
@@ -226,7 +226,7 @@
               <button
                 @click="updateCategory(work, null)"
                 class="w-full text-left px-2.5 py-1 text-[10px] text-red-400 font-medium rounded-md hover:bg-white/10 transition-colors mb-0.5 border-b border-white/5"
-              > {{ $adminT("Category", "清除分类") }} </button>
+              > {{ $adminT("Clear category", "清除分类") }} </button>
 
               <!-- Combined Categories List -->
               <div v-for="cat in availableCategories" :key="cat.level1" class="mb-1">
@@ -272,7 +272,7 @@
           <div v-if="work.hidden" class="absolute inset-0 bg-black/50 backdrop-blur-[1px] flex items-center justify-center z-20">
             <div class="flex flex-col items-center gap-2 px-4 py-3 bg-gray-900/80 backdrop-blur-md border-2 border-white/30 rounded-xl shadow-2xl">
               <EyeOff class="w-8 h-8 text-white" />
-              <span class="text-white font-bold text-sm uppercase tracking-wide">{{ $adminT("Hide", "已隐藏") }}</span>
+              <span class="text-white font-bold text-sm uppercase tracking-wide">{{ $adminT("Hidden", "已隐藏") }}</span>
             </div>
           </div>
         </div>
@@ -299,13 +299,13 @@
       </div>
       <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $adminT("No matching works found", "未找到匹配的作品") }}</h3>
       <p class="text-gray-500">{{ $adminT("Try adjusting your filter or keyword", "尝试调整您的过滤器或关键词") }}</p>
-      <button @click="resetFilters" class="mt-6 px-6 py-2 bg-violet-600 text-white font-bold rounded-xl hover:bg-violet-700 transition-all shadow-lg shadow-violet-200"> {{ $adminT("Reset Filter", "重置筛选") }} </button>
+      <button @click="resetFilters" class="mt-6 px-6 py-2 bg-violet-600 text-white font-bold rounded-xl hover:bg-violet-700 transition-all shadow-lg shadow-violet-200"> {{ $adminT("Reset filters", "重置筛选") }} </button>
     </div>
 
     <!-- Pagination -->
     <div v-if="total > 0" class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 pb-12 border-t pt-8">
       <div class="flex items-center gap-4 text-sm text-gray-500 font-medium">
-        <span>{{ $adminT('Per page', '每页显示') }}</span>
+        <span>{{ $adminT('Show per page', '每页显示') }}</span>
         <select v-model.number="pageSize" @change="loadWorks(true)" class="border border-gray-300 rounded-lg px-2 py-1 bg-white outline-none focus:ring-2 focus:ring-violet-500">
           <option :value="20">20</option>
           <option :value="40">40</option>
@@ -519,7 +519,7 @@ const loadWorks = async (resetPage = false) => {
       total.value = response.data.pagination?.total || 0
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载作品失败"))
+    toast.error(adminT("Failed to load works", "加载作品失败"))
     console.error('Hidden page - Failed to load works:', error)
   } finally {
     loading.value = false
@@ -642,7 +642,7 @@ const updateCategory = async (work, category) => {
     if (response.success) {
       // Update local state to show immediately
       work.category = category
-      toast.success(category ? adminT("Category", "分类已更新") : adminT("Category", "分类已清除"))
+      toast.success(category ? adminT("Category updated", "分类已更新") : adminT("Category cleared", "分类已清除"))
       categoryDropdown.value.open = false
       categoryDropdown.value.workId = null
     }
@@ -662,7 +662,7 @@ const getLevel2Categories = (level1) => {
 }
 
 const handleBatchAction = async (hidden) => {
-  const actionText = hidden ? adminT("Hide", "隐藏") : adminT("Cancel", "取消隐藏")
+  const actionText = hidden ? adminT("Hide", "隐藏") : adminT("Unhide", "取消隐藏")
   const count = selectAllAcrossPages.value ? total.value : selectedIds.value.length
   
   const confirmed = await confirm({

@@ -68,13 +68,13 @@
                   <span class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="!formData.layout_config.buttons.closeButton.visible ? 'bg-blue-600' : 'bg-gray-200'" @click="formData.layout_config.buttons.closeButton.visible = !formData.layout_config.buttons.closeButton.visible">
                     <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition" :class="!formData.layout_config.buttons.closeButton.visible ? 'translate-x-4' : 'translate-x-1'" />
                   </span>
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Close", "隐藏关闭按钮") }}</span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Hide the close button", "隐藏关闭按钮") }}</span>
                 </label>
               </div>
               <!-- ：Banner 、、（） -->
               <div class="grid grid-cols-3 gap-4">
                 <div class="min-w-0 flex flex-col gap-1">
-                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Banner", "Banner 高度") }} </span>
+                  <span class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ $adminT("Banner height", "Banner 高度") }} </span>
                   <div class="flex rounded-md border border-gray-200 overflow-hidden bg-white">
                     <button
                       type="button"
@@ -167,7 +167,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >{{ $adminT("Left", "居左") }}</button>
+                    >{{ $adminT("Align left", "居左") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.textAlign = 'center'"
@@ -177,7 +177,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >{{ $adminT("Centred", "居中") }}</button>
+                    >{{ $adminT("Centre", "居中") }}</button>
                     <button
                       type="button"
                       @click="formData.layout_config.textAlign = 'right'"
@@ -187,7 +187,7 @@
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 hover:bg-gray-100'
                       ]"
-                    >{{ $adminT("Right", "居右") }}</button>
+                    >{{ $adminT("Align right", "居右") }}</button>
                   </div>
                 </div>
               </div>
@@ -202,7 +202,7 @@
                     @click="formData.content_items.splice(idx, 1)"
                     :disabled="formData.content_items.length <= 1"
                     class="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    :title="$adminT('Delete', '删除本条')"
+                    :title="$adminT('Delete this entry', '删除本条')"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -236,8 +236,8 @@
                             type="button"
                             @click.stop="item.image_url = ''"
                             class="absolute top-0.5 right-0.5 p-1 rounded-full bg-black/50 text-white hover:bg-red-500 transition-colors"
-                            :title="$adminT('Delete', '删除首图')"
-                            :aria-label="$adminT('Delete', '删除首图')"
+                            :title="$adminT('Remove the header image', '删除首图')"
+                            :aria-label="$adminT('Remove the header image', '删除首图')"
                           >
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -269,8 +269,8 @@
                             type="button"
                             @click.stop="item.trailing_image_url = ''"
                             class="absolute top-0.5 right-0.5 p-1 rounded-full bg-black/50 text-white hover:bg-red-500 transition-colors"
-                            :title="$adminT('Delete', '删除尾图')"
-                            :aria-label="$adminT('Delete', '删除尾图')"
+                            :title="$adminT('Remove the footer image', '删除尾图')"
+                            :aria-label="$adminT('Remove the footer image', '删除尾图')"
                           >
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -383,7 +383,7 @@
                   <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-3">
                       <div>
-                        <label class="block text-xs text-gray-500 mb-1">{{ $adminT("Type", "渐变类型") }}</label>
+                        <label class="block text-xs text-gray-500 mb-1">{{ $adminT("Gradient type", "渐变类型") }}</label>
                         <select
                           v-model="gradientType"
                           class="w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
@@ -431,7 +431,7 @@
                             :class="selectedGradientStopId === stop.id ? 'border-blue-600 ring-1 ring-blue-300' : 'border-white hover:border-gray-300'"
                             :style="{ backgroundColor: stop.color }"
                           />
-                          <span v-if="gradientStops.length > 2" class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-xs text-gray-500 whitespace-nowrap">{{ $adminT("Delete", "双击删除") }}</span>
+                          <span v-if="gradientStops.length > 2" class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-xs text-gray-500 whitespace-nowrap">{{ $adminT("Double-click to delete", "双击删除") }}</span>
                         </div>
                       </div>
                       <!-- （） -->
@@ -500,7 +500,7 @@
                           type="button"
                           @click="removeGradientStop(selectedStop.id)"
                           class="px-2 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded"
-                        > {{ $adminT("Delete", "删除此色标") }} </button>
+                        > {{ $adminT("Remove this colour stop", "删除此色标") }} </button>
                       </div>
                       <p v-else class="text-xs text-gray-400">{{ $adminT("Click the gradient bar above to add colours or click the already existing colours to edit", "点击上方渐变条添加色标，或点击已有色标进行编辑") }}</p>
                     </div>
@@ -536,7 +536,7 @@
 
             <!-- Settings -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Settings", "链接设置") }} </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Link settings", "链接设置") }} </h3>
               <!-- ：，「」 -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <label class="flex items-center gap-2 cursor-pointer">
@@ -578,7 +578,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Left", "居左") }}</button>
+                      >{{ $adminT("Align left", "居左") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.buttons.position = 'center'"
@@ -588,7 +588,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Centred", "居中") }}</button>
+                      >{{ $adminT("Centre", "居中") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.buttons.position = 'right'"
@@ -598,7 +598,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Right", "居右") }}</button>
+                      >{{ $adminT("Align right", "居右") }}</button>
                     </div>
                   </div>
                 </div>
@@ -644,7 +644,7 @@
                         <option value="small">{{ $adminT("Small", "小") }}</option>
                         <option value="medium">{{ $adminT("Medium", "中") }}</option>
                         <option value="large">{{ $adminT("Large", "大") }}</option>
-                        <option value="xlarge">{{ $adminT("Large", "极大") }}</option>
+                        <option value="xlarge">{{ $adminT("Extra large", "极大") }}</option>
                       </select>
                     </div>
                     <!--  -->
@@ -658,7 +658,7 @@
                         <option value="small">{{ $adminT("Small", "小") }}</option>
                         <option value="medium">{{ $adminT("Medium", "中") }}</option>
                         <option value="large">{{ $adminT("Large", "大") }}</option>
-                        <option value="xlarge">{{ $adminT("Large", "极大") }}</option>
+                        <option value="xlarge">{{ $adminT("Extra large", "极大") }}</option>
                       </select>
                     </div>
                     <!-- （） -->
@@ -668,7 +668,7 @@
                         v-model="formData.layout_config.buttons.linkButton.backgroundType"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-2 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
                       >
-                        <option value="solid">{{ $adminT("Solid", "实心") }}</option>
+                        <option value="solid">{{ $adminT("Solid fill", "实心") }}</option>
                         <option value="transparent">{{ $adminT("Transparent", "透明") }}</option>
                         <option value="gradient">{{ $adminT("Gradient", "渐变") }}</option>
                         <option value="backdrop-blur">{{ $adminT("Furry glass.", "毛玻璃") }}</option>
@@ -676,7 +676,7 @@
                     </div>
                     <!-- （） -->
                     <div class="min-w-0">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Background Colour", "背景颜色") }}</label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Background colour", "背景颜色") }}</label>
                       <div ref="linkBtnBgColorPopoverRef" class="relative w-full">
                         <button
                           type="button"
@@ -760,7 +760,7 @@
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Button Text", "按钮文字") }}</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ $adminT("Button text", "按钮文字") }}</label>
                   <ClientOnly>
                     <RichTextEditor
                       v-model="formData.link_text"
@@ -771,7 +771,7 @@
                         v-model="formData.link_text"
                         type="text"
                         class="block w-full h-8 border border-gray-200 rounded-md shadow-sm px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 text-sm"
-                        :placeholder="$adminT('More.', '了解更多')"
+                        :placeholder="$adminT('Learn more', '了解更多')"
                       />
                     </template>
                   </ClientOnly>
@@ -790,7 +790,7 @@
 
             <!-- Settings -->
             <div class="bg-white rounded-lg p-4 space-y-4 shadow-sm">
-              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Settings", "时间设置") }} </h3>
+              <h3 class="text-base font-bold text-gray-800 border-l-4 border-blue-600 pl-3"> {{ $adminT("Schedule settings", "时间设置") }} </h3>
               <!-- ：、（Settings） -->
               <div class="bg-gray-100/80 rounded-lg px-3 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <label class="flex items-center gap-2 cursor-pointer">
@@ -863,7 +863,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Left", "居左") }}</button>
+                      >{{ $adminT("Align left", "居左") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.countdown.position = 'center'"
@@ -873,7 +873,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Centred", "居中") }}</button>
+                      >{{ $adminT("Centre", "居中") }}</button>
                       <button
                         type="button"
                         @click="formData.layout_config.countdown.position = 'right'"
@@ -883,7 +883,7 @@
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 hover:bg-gray-100'
                         ]"
-                      >{{ $adminT("Right", "居右") }}</button>
+                      >{{ $adminT("Align right", "居右") }}</button>
                     </div>
                   </div>
                   <div class="flex items-center gap-2">
@@ -1054,7 +1054,7 @@ const textColorPresets = [
   { label: adminT("Warm ash.", "暖灰"), value: '#A39E93' },
   { label: adminT("Cold ash.", "冷灰"), value: '#8B8B8F' },
   { label: adminT("Cold Grey Bottom", "冷灰底"), value: '#F0F2F5' },
-  { label: adminT("Gray", "灰蓝"), value: '#8E9AAF' },
+  { label: adminT("Slate", "灰蓝"), value: '#8E9AAF' },
   { label: adminT("Fog Blue", "雾蓝"), value: '#D4E5F7' },
   { label: adminT("Dou Sha.", "豆沙"), value: '#F5D0C5' },
   { label: adminT("Rose gold.", "玫瑰金"), value: '#B76E79' },
@@ -1106,10 +1106,10 @@ const buttonBgColorPresets = [
   { label: adminT("Yellow", "黄色"), value: '#FFCC00' },
   { label: adminT("A lemon.", "青柠"), value: '#34C759' },
   { label: adminT("Green", "绿色"), value: '#10B981' },
-  { label: adminT("Green", "翠绿"), value: '#00C7BE' },
+  { label: adminT("Emerald", "翠绿"), value: '#00C7BE' },
   { label: adminT("SkyBlue", "天蓝"), value: '#5AC8FA' },
   { label: adminT("Blu", "靛蓝"), value: '#5856D6' },
-  { label: adminT("Violet.", "紫红"), value: '#AF52DE' },
+  { label: adminT("Magenta", "紫红"), value: '#AF52DE' },
 
   // --- ：（） ---
   { label: adminT("Sunset Orange", "落日橙"), value: '#FF6B6B' },
@@ -1119,7 +1119,7 @@ const buttonBgColorPresets = [
   { label: adminT("Mint", "薄荷"), value: '#6BCF7F' },
   { label: adminT("Cyan", "青色"), value: '#4ECDC4' },
   { label: adminT("Ocean blue", "海洋蓝"), value: '#4A90E2' },
-  { label: adminT("Violet.", "紫罗兰"), value: '#9B59B6' },
+  { label: adminT("Violet", "紫罗兰"), value: '#9B59B6' },
   { label: adminT("Magenta", "洋红"), value: '#E91E63' },
   { label: adminT("Rose.", "玫瑰"), value: '#F06292' },
 
@@ -1624,7 +1624,7 @@ const save = async () => {
     }
 
     if (response.success) {
-      toast.success(props.banner ? 'successful' : 'successful')
+      toast.success(props.banner ? adminT('Updated successfully', '更新成功') : adminT('Created successfully', '创建成功'))
       emit('saved')
     } else {
       const msg = response.message || adminT('Save failed', '保存失败')
@@ -1632,7 +1632,7 @@ const save = async () => {
       toast.error(detail ? adminT('{msg}: {detail}', '{msg}：{detail}', { msg, detail }) : msg)
     }
   } catch (error: any) {
-    const msg = error?.response?.data?.message || error.message || ''
+    const msg = error?.response?.data?.message || error.message || adminT('Unknown error', '未知错误')
     const errors = error?.response?.data?.errors
     const detail = formatValidationErrors(errors)
     toast.error(adminT('Save failed', '保存失败') + adminT(': ', '：') + (detail ? adminT('{msg} ({detail})', '{msg}（{detail}）', { msg, detail }) : msg))

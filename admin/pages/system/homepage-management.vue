@@ -35,7 +35,7 @@
         <button
           @click="showPromotionModal = true"
           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm transition-colors"
-        > {{ $adminT("Banner", "创建Banner") }} </button>
+        > {{ $adminT("Create banner", "创建Banner") }} </button>
         <button
           @click="loadPromotions"
           :disabled="loadingPromotions"
@@ -74,14 +74,14 @@
                   {{ banner.is_enabled ? $adminT('Enabled', '启用') : $adminT('Disabled', '禁用') }}
                 </span>
                 <span class="text-xs text-gray-500">{{ $adminT("Sort:", "排序:") }} {{ banner.sort_order }}</span>
-                <span v-if="banner.start_time" class="text-xs text-gray-500">{{ $adminT("_Other Organiser", "开始:") }} {{ formatDateTime(banner.start_time) }}</span>
+                <span v-if="banner.start_time" class="text-xs text-gray-500">{{ $adminT("Start:", "开始:") }} {{ formatDateTime(banner.start_time) }}</span>
                 <span v-if="banner.end_time" class="text-xs text-gray-500">{{ $adminT("END:", "结束:") }} {{ formatDateTime(banner.end_time) }}</span>
               </div>
               <div class="flex gap-2">
                 <button
                   @click="duplicatePromotion(banner)"
                   class="px-3 py-1.5 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm transition-colors"
-                  :title="$adminT('Banner', '复制此Banner')"
+                  :title="$adminT('Duplicate this banner', '复制此Banner')"
                 >{{ $adminT("Copy", "复制") }}</button>
                 <button
                   @click="editPromotion(banner)"
@@ -106,7 +106,7 @@
         <button
           @click="showCarouselSettingsModal = true"
           class="px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 text-sm transition-colors"
-        > {{ $adminT("Settings", "轮播设置") }} </button>
+        > {{ $adminT("Carousel settings", "轮播设置") }} </button>
         <button
           @click="showCarouselModal = true"
           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm transition-colors"
@@ -153,7 +153,7 @@
             </div>
             <div class="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
               <div v-if="slide.start_time || slide.end_time" class="text-xs text-gray-500">
-                <span v-if="slide.start_time">{{ $adminT("_Other Organiser", "开始:") }} {{ formatDateTime(slide.start_time) }}</span>
+                <span v-if="slide.start_time">{{ $adminT("Start:", "开始:") }} {{ formatDateTime(slide.start_time) }}</span>
                 <span v-if="slide.start_time && slide.end_time" class="mx-1">|</span>
                 <span v-if="slide.end_time">{{ $adminT("END:", "结束:") }} {{ formatDateTime(slide.end_time) }}</span>
               </div>
@@ -250,10 +250,10 @@ const loadPromotions = async () => {
     if (response.success) {
       promotions.value = response.data.items || []
     } else {
-      toast.error(adminT("failed", "加载失败"))
+      toast.error(adminT("Load failed", "加载失败"))
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "加载失败:") + (error.message || adminT("Unknown error", "未知错误")))
+    toast.error(adminT("Load failed:", "加载失败:") + (error.message || adminT("Unknown error", "未知错误")))
   } finally {
     loadingPromotions.value = false
   }
@@ -269,10 +269,10 @@ const loadCarousel = async () => {
     if (response.success) {
       carouselSlides.value = response.data.items || []
     } else {
-      toast.error(adminT("failed", "加载失败"))
+      toast.error(adminT("Load failed", "加载失败"))
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "加载失败:") + (error.message || adminT("Unknown error", "未知错误")))
+    toast.error(adminT("Load failed:", "加载失败:") + (error.message || adminT("Unknown error", "未知错误")))
   } finally {
     loadingCarousel.value = false
   }
@@ -301,13 +301,13 @@ const duplicatePromotion = async (banner: any) => {
     }
     const response = await api.post('/api/admin/promotions', data)
     if (response.success) {
-      toast.success(adminT("successful", "复制成功"))
+      toast.success(adminT("Copied", "复制成功"))
       loadPromotions()
     } else {
-      toast.error(adminT("failed", "复制失败"))
+      toast.error(adminT("Copy failed", "复制失败"))
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "复制失败:") + (error.message || adminT("Unknown error", "未知错误")))
+    toast.error(adminT("Copy failed:", "复制失败:") + (error.message || adminT("Unknown error", "未知错误")))
   }
 }
 
@@ -316,7 +316,7 @@ const editPromotion = (banner: any) => {
 }
 
 const deletePromotion = async (id: number) => {
-  if (!confirm(adminT("Confirm Delete Banner？", "确定要删除这个Banner吗？"))) {
+  if (!confirm(adminT("Are you sure you want to delete this banner?", "确定要删除这个Banner吗？"))) {
     return
   }
   try {
@@ -354,7 +354,7 @@ const duplicateCarousel = async (slide: any) => {
       image_url: slide.image_url || '',
       video_url: slide.video_url || '',
       link_url: slide.link_url || '',
-      link_text: slide.link_text || adminT("More.", "了解更多"),
+      link_text: slide.link_text || adminT("Learn more", "了解更多"),
       button_style: slide.button_style || 'primary',
       overlay_opacity: slide.overlay_opacity !== undefined ? slide.overlay_opacity : 50,
       text_position: slide.text_position || 'center',
@@ -366,18 +366,18 @@ const duplicateCarousel = async (slide: any) => {
     }
     const response = await api.post('/api/admin/carousel', data)
     if (response.success) {
-      toast.success(adminT("successful", "复制成功"))
+      toast.success(adminT("Copied", "复制成功"))
       loadCarousel()
     } else {
-      toast.error(adminT("failed", "复制失败"))
+      toast.error(adminT("Copy failed", "复制失败"))
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "复制失败:") + (error.message || adminT("Unknown error", "未知错误")))
+    toast.error(adminT("Copy failed:", "复制失败:") + (error.message || adminT("Unknown error", "未知错误")))
   }
 }
 
 const deleteCarousel = async (id: number) => {
-  if (!confirm(adminT("Confirm Delete？", "确定要删除这个轮播图吗？"))) {
+  if (!confirm(adminT("Delete this carousel slide?", "确定要删除这个轮播图吗？"))) {
     return
   }
   try {

@@ -9,7 +9,7 @@
           <h2 class="text-lg font-medium text-gray-900 flex items-center gap-2">
             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg> {{ $adminT("Settings", "轮播设置") }} </h2>
+            </svg> {{ $adminT("Carousel settings", "轮播设置") }} </h2>
         </div>
         <div class="p-4 sm:p-6 space-y-4">
           <!--  -->
@@ -126,7 +126,7 @@ async function loadConfig() {
       }
     }
   } catch (e) {
-    toast.error(adminT("failed", "加载轮播配置失败"))
+    toast.error(adminT("Failed to load the carousel configuration", "加载轮播配置失败"))
   }
 }
 

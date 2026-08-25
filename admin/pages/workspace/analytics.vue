@@ -93,7 +93,7 @@
               <Maximize2 class="w-4 h-4" />
             </button>
             <div class="flex items-center justify-between mb-6 pr-10">
-              <h3 class="font-bold text-gray-800"> {{ $adminT("(USD)", "营收趋势 (USD)") }}</h3>
+              <h3 class="font-bold text-gray-800"> {{ $adminT("Revenue trend (USD)", "营收趋势 (USD)") }}</h3>
               <span class="text-xs text-gray-400">{{ $adminT("Cumulative: ~", "累计: $") }}{{ totalRevenue.toFixed(2) }}</span>
             </div>
             <div class="h-64">
@@ -499,7 +499,7 @@ const chartOptionsWithLegend = {
 const revenueChartData = computed(() => ({
   labels: labels.value,
   datasets: [{
-    label: adminT("Collection", "营收"),
+    label: adminT("Revenue", "营收"),
     data: history.value.map(h => h.revenue),
     borderColor: '#f59e0b',
     backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -596,7 +596,7 @@ const interactionChartData = computed(() => ({
       pointRadius: 3
     },
     {
-      label: adminT("Collection", "收藏"),
+      label: adminT("Favourites", "收藏"),
       data: history.value.map(h => h.new_favorites || 0),
       borderColor: '#f59e0b',
       backgroundColor: 'rgba(245, 158, 11, 0.08)',

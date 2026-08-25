@@ -63,13 +63,13 @@
                       v-model="workflowForm.description"
                       rows="3"
                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 resize-none"
-                      :placeholder="$adminT('Description', '工作流描述')"
+                      :placeholder="$adminT('Workflow description', '工作流描述')"
                     />
                   </div>
                   
                   <!-- Work Type -->
                   <div class="relative">
-                    <label class="block text-xs font-medium text-gray-700 mb-1"> {{ $adminT("Type", "工作类型") }} <span class="text-red-500">*</span>
+                    <label class="block text-xs font-medium text-gray-700 mb-1"> {{ $adminT("Workflow type", "工作类型") }} <span class="text-red-500">*</span>
                     </label>
                     <button
                       type="button"
@@ -118,7 +118,7 @@
                       {{ formatDateTime(workflowMetadata.updated_at) }}
                     </div>
                     <div v-if="workflowMetadata.created_at" class="text-xs text-gray-500">
-                      <span class="font-medium text-gray-600">{{ $adminT("_Other Organiser", "创建时间：") }}</span>
+                      <span class="font-medium text-gray-600">{{ $adminT("Created at:", "创建时间：") }}</span>
                       {{ formatDateTime(workflowMetadata.created_at) }}
                     </div>
                     <div v-if="workflowMetadata.created_by" class="text-xs text-gray-500">
@@ -165,8 +165,8 @@
               @click="updateEdgeType('step')"
               :class="edgeType === 'step' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'"
               class="px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150"
-              :title="$adminT('Straight Corner', '直角折线')"
-            >{{ $adminT("Straight Corner", "直角") }}</button>
+              :title="$adminT('Right-angle polyline', '直角折线')"
+            >{{ $adminT("Step", "直角") }}</button>
           </div>
           
           <!-- Auto layout button -->
@@ -202,7 +202,7 @@
         :class="isNodePaletteCollapsed ? 'w-12 p-2' : 'w-48 p-4'"
       >
         <div class="flex items-center justify-between mb-3">
-          <h3 v-if="!isNodePaletteCollapsed" class="text-sm font-semibold text-gray-700">{{ $adminT("Type", "节点类型") }}</h3>
+          <h3 v-if="!isNodePaletteCollapsed" class="text-sm font-semibold text-gray-700">{{ $adminT("Node type", "节点类型") }}</h3>
           <button
             type="button"
             class="ml-auto p-1.5 rounded hover:bg-gray-100 text-gray-600"
@@ -231,7 +231,7 @@
                     <Check class="w-4 h-4 text-green-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Prompt", "Prompt 预埋") }} </div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Preset prompt", "Prompt 预埋") }} </div>
                   </div>
                 </div>
               </div>
@@ -270,7 +270,7 @@
                     <ImageIcon class="w-4 h-4 text-yellow-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">{{ $adminT("List", "媒体列表演示") }}</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Media list demo", "媒体列表演示") }}</div>
                   </div>
                 </div>
               </div>
@@ -291,7 +291,7 @@
                     <Zap class="w-4 h-4 text-purple-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "图片生成API") }}</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Image generation API", "图片生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -305,7 +305,7 @@
                     <Zap class="w-4 h-4 text-pink-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "视频生成API") }}</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Video generation API", "视频生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -319,7 +319,7 @@
                     <Zap class="w-4 h-4 text-green-600" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900">{{ $adminT("API", "文本生成API") }}</div>
+                    <div class="text-xs font-medium text-gray-900">{{ $adminT("Text generation API", "文本生成API") }}</div>
                   </div>
                 </div>
               </button>
@@ -336,7 +336,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              :title="$adminT('Prompt', 'Prompt 预埋')"
+              :title="$adminT('Preset prompt', 'Prompt 预埋')"
               @click="() => addInputNode('prompt_default_hidden')"
             >
               <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center">
@@ -366,7 +366,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              :title="$adminT('List', '媒体列表演示')"
+              :title="$adminT('Media list demo', '媒体列表演示')"
               @click="() => addInputNode('media_array')"
             >
               <div class="w-6 h-6 bg-yellow-100 rounded flex items-center justify-center">
@@ -380,7 +380,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              :title="$adminT('API', '图片生成API')"
+              :title="$adminT('Image generation API', '图片生成API')"
               @click.stop="() => addApiNode('image')"
             >
               <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center">
@@ -390,7 +390,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              :title="$adminT('API', '视频生成API')"
+              :title="$adminT('Video generation API', '视频生成API')"
               @click.stop="() => addApiNode('video')"
             >
               <div class="w-6 h-6 bg-pink-100 rounded flex items-center justify-center">
@@ -400,7 +400,7 @@
             <button
               type="button"
               class="w-9 h-9 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center justify-center"
-              :title="$adminT('API', '文本生成API')"
+              :title="$adminT('Text generation API', '文本生成API')"
               @click.stop="() => addApiNode('text')"
             >
               <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center">
@@ -471,7 +471,7 @@
               v-model="quickSearchQuery"
               type="text"
               class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-              :placeholder="$adminT('Search Type', '输入关键词搜索节点类型...')"
+              :placeholder="$adminT('Type a keyword to search node types...', '输入关键词搜索节点类型...')"
               @keyup.enter="handleQuickSearchSelect"
               @keyup.escape="showQuickSearch = false"
             />
@@ -493,7 +493,7 @@
                 <span class="text-sm">{{ option.label }}</span>
                 <span class="text-xs text-gray-500 ml-auto">{{ option.description }}</span>
               </div>
-              <div v-if="filteredQuickSearchOptions.length === 0" class="px-3 py-2 text-sm text-gray-500 text-center"> {{ $adminT("Type", "未找到匹配的节点类型") }} </div>
+              <div v-if="filteredQuickSearchOptions.length === 0" class="px-3 py-2 text-sm text-gray-500 text-center"> {{ $adminT("No matching node type found", "未找到匹配的节点类型") }} </div>
             </div>
             <div class="mt-4 text-xs text-gray-500"> {{ $adminT("Press OM to confirm, Esc cancel", "按 Enter 确认，Esc 取消") }} </div>
           </div>
@@ -534,8 +534,8 @@
           <div class="relative bg-white rounded-lg shadow-xl w-full max-w-2xl p-6" @click.stop>
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-semibold text-gray-900">
-                {{ currentPromptNode?.type === 'paramInput' ? ` ${currentPromptNode?.data?.param_name || ''}` :
-                   currentPromptNode?.type === 'prompt_default_hidden' ? ' Prompt （）' : ' Prompt' }}
+                {{ currentPromptNode?.type === 'paramInput' ? $adminT('Enter {param}', '输入 {param}', { param: currentPromptNode?.data?.param_name || $adminT('parameter', '参数') }) :
+                   currentPromptNode?.type === 'prompt_default_hidden' ? $adminT('Enter the Prompt default (hidden)', '输入 Prompt 默认值（不可见）') : $adminT('Enter a Prompt', '输入 Prompt') }}
               </h3>
               <button
                 @click="showPromptInputModal = false"
@@ -933,11 +933,11 @@ const quickSearchPosition = ref({ x: 0, y: 0 })
 
 // Quick search options
 const quickSearchOptions = computed(() => [
-  { value: 'image', label: adminT("Default Image", "图片默认"), description: '', type: 'image_default', color: 'text-purple-600' },
-  { value: 'video', label: adminT("Default Video", "视频默认"), description: '', type: 'video_default', color: 'text-red-600' },
-  { value: 'media_array', label: 'List', description: 'List（）', type: 'media_list_default', color: 'text-yellow-600' },
-  { value: 'prompt_default_hidden', label: 'Prompt （）', description: 'Prompt （，）', type: 'prompt_default_hidden', color: 'text-green-600' },
-  { value: 'api', label: 'API ', description: ' API', type: 'apiCall', color: 'text-blue-600' }
+  { value: 'image', label: adminT("Default Image", "图片默认"), description: adminT('Image default-value node', '图片默认值节点'), type: 'image_default', color: 'text-purple-600' },
+  { value: 'video', label: adminT("Default Video", "视频默认"), description: adminT('Video default-value node', '视频默认值节点'), type: 'video_default', color: 'text-red-600' },
+  { value: 'media_array', label: adminT('Media list demo', '媒体列表演示'), description: adminT('Media list demo node (pick multiple images or videos)', '媒体列表演示节点（可多选图片或视频）'), type: 'media_list_default', color: 'text-yellow-600' },
+  { value: 'prompt_default_hidden', label: adminT('Prompt default (hidden)', 'Prompt 默认（不可见）'), description: adminT('Prompt default-value node (injected by the system, hidden from users)', 'Prompt 默认值节点（系统注入，用户不可见）'), type: 'prompt_default_hidden', color: 'text-green-600' },
+  { value: 'api', label: adminT('API call', 'API 调用'), description: adminT('Call an external API', '调用外部 API'), type: 'apiCall', color: 'text-blue-600' }
 ])
 
 const filteredQuickSearchOptions = computed(() => {
@@ -1454,9 +1454,9 @@ const addInputNode = (paramType: string, position?: { x: number, y: number }) =>
     } else if (paramType === 'video') {
       nodeData = { label: adminT("Default Video", "视频默认") }
     } else if (paramType === 'prompt_default_hidden') {
-      nodeData = { label: 'Prompt （）' }
+      nodeData = { label: adminT('Prompt default (hidden)', 'Prompt 默认（不可见）') }
     } else if (paramType === 'media_array') {
-      nodeData = { label: 'List', value: [] }
+      nodeData = { label: adminT('Media list demo', '媒体列表演示'), value: [] }
     } else {
       nodeData = { label: adminT("Parameter Input", "参数输入"), param_name: paramType }
     }
@@ -1473,16 +1473,16 @@ const addApiNodeAtPosition = (position: { x: number, y: number }, outputType?: '
   try {
     // Ensure addNodes function is available
     if (!addNodes || typeof addNodes !== 'function') {
-      console.error('addNodes ，Vue Flow ')
-      toast.error('，')
+      console.error('addNodes is unavailable; Vue Flow may not be initialised correctly')
+      toast.error(adminT('The system is not ready, please refresh the page and try again', '系统未就绪，请刷新页面后重试'))
       return
     }
-    
+
     nextTick(() => {
-      const nodeLabel = outputType === 'image' ? '' :
-                        outputType === 'video' ? '' :
-                        outputType === 'text' ? '' :
-                        ' API '
+      const nodeLabel = outputType === 'image' ? adminT('Image generation node', '图片生成节点') :
+                        outputType === 'video' ? adminT('Video generation node', '视频生成节点') :
+                        outputType === 'text' ? adminT('Text generation node', '文本生成节点') :
+                        adminT('New API node', '新 API 节点')
       const newNode = {
         id: `node_${Date.now()}`, 
         type: 'apiCall', 
@@ -1503,8 +1503,8 @@ const addApiNodeAtPosition = (position: { x: number, y: number }, outputType?: '
       saveToHistory()
     })
   } catch (error) {
-    console.error(adminT("API failed", "计算节点位置失败:"), error)
-    toast.error(' API failed，')
+    console.error('Failed to add the API node:', error)
+    toast.error(adminT('Failed to add the API node, please try again', '添加 API 节点失败，请重试'))
   }
 }
 
@@ -1533,7 +1533,7 @@ const addApiNode = (outputType?: 'image' | 'video' | 'text' | null) => {
     }
     addApiNodeAtPosition(position, outputType)
   } catch (error) {
-    console.error('failed:', error)
+    console.error('Failed to compute the node position:', error)
     // Fallback to default position
     addApiNodeAtPosition({ x: 400, y: 200 }, outputType)
   }
@@ -1951,17 +1951,17 @@ const handleToggleParamVisibility = (nodeId: string, paramName: string) => {
       const sourceNode = nodes.value.find(n => n.id === edge.source)
       if (sourceNode && sourceNode.type === 'apiCall') {
         // API-to-API connection cannot be switched to user input
-        toast.error('APIAPI，，')
+        toast.error(adminT('When an API output feeds an API input, this parameter must use the system preset and cannot be switched to user input', 'API输出连接到API输入时，该参数必须使用系统预设，不能改为用户输入'))
         return
       }
       if (sourceNode && sourceNode.type === 'userInput') {
         // UserInput connection cannot be switched to user input (it's already system preset)
-        toast.error('API，，')
+        toast.error(adminT('When a UserInput node feeds an API, this parameter must use the system preset and cannot be switched to user input', '用户输入节点连接到API时，该参数必须使用系统预设，不能改为用户输入'))
         return
       }
       if (sourceNode && sourceNode.type === 'prompt_default_hidden') {
         // PromptPreset connection cannot be switched to user input (it's already system preset)
-        toast.error('PromptAPI，，')
+        toast.error(adminT('When a preset-prompt node feeds an API, this parameter must use the system preset and cannot be switched to user input', 'Prompt预埋节点连接到API时，该参数必须使用系统预设，不能改为用户输入'))
         return
       }
     }
@@ -2067,7 +2067,7 @@ const autoLayout = () => {
 }
 
 const handleTestNode = async (nodeId: string) => {
-  toast.info('，')
+  toast.info(adminT('Test feature is under development, please test with full workflow', '测试功能开发中，请使用完整工作流测试'))
 }
 
 const savePromptInput = () => {
@@ -2175,7 +2175,7 @@ const deleteSelected = (selectedNodes: any[] = [], selectedEdges: any[] = []) =>
       edges.value = edges.value.filter(e => !edgeIdsToDelete.has(e.id))
     }
     selectedNode.value = null
-    toast.success('Delete')
+    toast.success(adminT('Selected items deleted', '已删除选中项'))
   } finally {
     //  nextTick  VueFlow Reset
     nextTick(() => {
@@ -2200,7 +2200,7 @@ const deleteNode = () => {
       nodes.value = nodes.value.filter(n => n.id !== nodeId)
       edges.value = edges.value.filter(e => e.source !== nodeId && e.target !== nodeId)
       selectedNode.value = null
-      toast.success('Delete')
+      toast.success(adminT('Node deleted', '节点已删除'))
     } finally {
       //  nextTick  VueFlow Reset
       nextTick(() => {
@@ -2211,7 +2211,7 @@ const deleteNode = () => {
 }
 
 const validateAndSave = async () => {
-  if (!workflowForm.name.trim()) return toast.error('Please enter')
+  if (!workflowForm.name.trim()) return toast.error(adminT('Please enter a workflow name', '请输入工作流名称'))
   if (nodes.value.length === 0) return toast.error(adminT("A workflow requires at least one node", "工作流至少需要一个节点"))
   
   // Validate and fix all nodes before saving
@@ -2381,7 +2381,7 @@ const pasteFromClipboard = () => {
   }
   
   if (!dataToPaste || !dataToPaste.nodes || dataToPaste.nodes.length === 0) {
-    toast.info('，')
+    toast.info(adminT('Clipboard is empty, please copy nodes first', '剪贴板为空，请先复制节点'))
     return
   }
   
@@ -2614,8 +2614,8 @@ const pasteFromClipboard = () => {
     addNodes(nodesToAdd)
     edges.value.push(...newEdges)
   } catch (error) {
-    console.error(':', error)
-    toast.error('，')
+    console.error('Failed to paste nodes:', error)
+    toast.error(adminT('Failed to paste nodes', '粘贴节点失败'))
     return
   }
   
@@ -2626,7 +2626,7 @@ const pasteFromClipboard = () => {
     edges: JSON.parse(JSON.stringify(newEdges))
   }
   
-  toast.success(` ${nodesToAdd.length}  ${newEdges.length} `)
+  toast.success(adminT('Pasted {n} nodes and {m} connections', '已粘贴 {n} 个节点和 {m} 条连接', { n: nodesToAdd.length, m: newEdges.length }))
 }
 
 // Load clipboard from localStorage

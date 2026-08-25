@@ -52,7 +52,7 @@
               <p class="text-sm text-gray-700 leading-relaxed mb-4">{{ message }}</p>
               
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Action", "操作理由") }} <span class="text-gray-400 font-normal">{{ $adminT("(optional)", "(可选)") }}</span>
+                <label class="block text-sm font-medium text-gray-700 mb-2"> {{ $adminT("Reason", "操作理由") }} <span class="text-gray-400 font-normal">{{ $adminT("(optional)", "(可选)") }}</span>
                 </label>
                 <textarea
                   v-model="reason"

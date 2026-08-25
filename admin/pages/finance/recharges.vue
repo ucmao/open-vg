@@ -26,8 +26,8 @@
             <option value="">{{ $adminT("All", "全部") }}</option>
             <option value="completed">{{ $adminT("Completed", "已完成") }}</option>
             <option value="pending">{{ $adminT("Ongoing", "进行中") }}</option>
-            <option value="failed">{{ $adminT("failed", "已失败") }}</option>
-            <option value="cancelled">{{ $adminT("Cancel", "已取消") }}</option>
+            <option value="failed">{{ $adminT("Failed", "已失败") }}</option>
+            <option value="cancelled">{{ $adminT("Cancelled", "已取消") }}</option>
           </select>
         </div>
 
@@ -40,7 +40,7 @@
           :disabled="rechargeData.length === 0"
           style="margin-left: auto;"
         >
-          <Download class="w-4 h-4" /> {{ $adminT("CSV", "导出 CSV") }} </button>
+          <Download class="w-4 h-4" /> {{ $adminT("Export CSV", "导出 CSV") }} </button>
       </div>
 
       <!-- Table -->
@@ -342,7 +342,7 @@ const exportToCSV = () => {
   // Generate filename with current date and filters
   const dateStr = new Date().toISOString().split('T')[0]
   const filterStr = filters.value.status ? `_${filters.value.status}` : ''
-  const filename = `_${dateStr}${filterStr}.csv`
+  const filename = `recharge-records_${dateStr}${filterStr}.csv`
   
   link.setAttribute('href', url)
   link.setAttribute('download', filename)
@@ -351,7 +351,7 @@ const exportToCSV = () => {
   link.click()
   document.body.removeChild(link)
   
-  toast.success('successful')
+  toast.success(adminT('Export successful', '导出成功'))
 }
 
 onMounted(() => {

@@ -15,7 +15,7 @@
         </svg>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-sm font-semibold text-gray-900 truncate"> {{ $adminT("List", "媒体列表演示") }} </div>
+        <div class="text-sm font-semibold text-gray-900 truncate"> {{ $adminT("Media list demo", "媒体列表演示") }} </div>
       </div>
     </div>
     

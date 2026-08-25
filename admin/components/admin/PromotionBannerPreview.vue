@@ -207,7 +207,7 @@ const countdownText = (banner: any) => {
 
 const displayLinkText = (banner: any) => {
   const t = banner?.link_text?.trim()
-  return t ? t : adminT("More.", "了解更多")
+  return t ? t : adminT("Learn more", "了解更多")
 }
 
 // ：「」，（ link_url ）

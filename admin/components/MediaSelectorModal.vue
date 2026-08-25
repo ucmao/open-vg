@@ -49,7 +49,7 @@
             <input
               v-model="searchQuery"
               type="text"
-              :placeholder="$adminT('Search', '搜索文件...')"
+              :placeholder="$adminT('Search files...', '搜索文件...')"
               class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
               @input="handleSearch"
             />
@@ -178,7 +178,7 @@
       <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex items-center justify-between">
         <div class="text-sm text-gray-500">
           <span v-if="selectedItem">{{ $adminT("Selected:", "已选择：") }} <span class="text-gray-900 font-medium">{{ selectedItem.original_filename }}</span></span>
-          <span v-else>{{ $adminT("Please select", "请选择一个文件以继续") }}</span>
+          <span v-else>{{ $adminT("Select a file to continue", "请选择一个文件以继续") }}</span>
         </div>
         <div class="flex items-center space-x-3">
           <button
@@ -191,7 +191,7 @@
             @click.stop="confirmSelection"
             :disabled="!selectedItem"
             class="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-200 transition-all"
-          > {{ $adminT("Confirm", "确认选择") }} </button>
+          > {{ $adminT("Confirm selection", "确认选择") }} </button>
         </div>
       </div>
 
@@ -286,7 +286,7 @@ const fetchMedia = async (refresh = false) => {
       hasMore.value = newItems.length === pageSize.value
     }
   } catch (error: any) {
-    toast.error(adminT("failed", "加载素材库失败"))
+    toast.error(adminT("Failed to load the media library", "加载素材库失败"))
   } finally {
     loading.value = false
   }
@@ -352,7 +352,7 @@ const handleFileUpload = async (event: Event) => {
         toast.success(adminT('{ok} succeeded, {fail} failed', '成功 {ok} 个，失败 {fail} 个', { ok: successCount, fail: failCount }))
       }
     } else {
-      toast.error(failCount === 1 ? adminT("failed", "上传失败") : ` ${total} failed`)
+      toast.error(failCount === 1 ? adminT("Upload failed", "上传失败") : ` ${total} failed`)
     }
   } finally {
     uploading.value = false

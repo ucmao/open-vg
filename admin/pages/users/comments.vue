@@ -11,11 +11,11 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Search -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search", "搜索内容") }}</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">{{ $adminT("Search content", "搜索内容") }}</label>
           <input
             v-model="filters.search"
             type="text"
-            :placeholder="$adminT('Search', '搜索评论关键词...')"
+            :placeholder="$adminT('Search comment keywords...', '搜索评论关键词...')"
             class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             @keyup.enter="loadComments"
           />
@@ -37,7 +37,7 @@
     <!-- Loading -->
     <div v-if="loading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <p class="mt-2 text-gray-600">{{ $adminT("List", "正在获取评论列表...") }}</p>
+      <p class="mt-2 text-gray-600">{{ $adminT("Loading the comment list...", "正在获取评论列表...") }}</p>
     </div>
 
     <!-- Comments List -->
@@ -168,7 +168,7 @@
     <div v-else class="text-center py-20 bg-white border rounded-lg">
       <MessageCircle class="w-16 h-16 text-gray-300 mx-auto mb-4" />
       <h3 class="text-lg font-medium text-gray-900">{{ $adminT("No comment found", "未找到评论") }}</h3>
-      <p class="text-gray-500">{{ $adminT("Search", "尝试更换搜索关键词") }}</p>
+      <p class="text-gray-500">{{ $adminT("Try a different search keyword", "尝试更换搜索关键词") }}</p>
     </div>
   </div>
 </template>
@@ -223,7 +223,7 @@ const loadComments = async () => {
       }
     }
   } catch (error) {
-    toast.error(adminT("failed", "加载评论失败"))
+    toast.error(adminT("Failed to load comments", "加载评论失败"))
     console.error('Failed to load comments:', error)
   } finally {
     loading.value = false
@@ -253,12 +253,12 @@ const resetFilters = () => {
 
 const handleDelete = async (comment) => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除评论"),
+    title: adminT("Delete comment", "删除评论"),
     message: comment.reply_count > 0
       ? adminT('Delete this comment? This cannot be undone, and every reply under it will be deleted too.', '确定要删除该评论吗？此操作不可撤销，且会同时删除该评论下的所有回复。')
       : adminT('Delete this comment? This cannot be undone.', '确定要删除该评论吗？此操作不可撤销。'),
     type: 'danger',
-    confirmText: adminT("Confirm Delete", "确定删除")
+    confirmText: adminT("Confirm delete", "确定删除")
   })
 
   if (!confirmed) return
@@ -266,7 +266,7 @@ const handleDelete = async (comment) => {
   try {
     const response = await adminApi.delete(`/api/admin/comments/${comment.id}`)
     if (response.success) {
-      toast.success(adminT("Delete", "评论已删除"))
+      toast.success(adminT("Comment deleted", "评论已删除"))
       loadComments()
     }
   } catch (error) {

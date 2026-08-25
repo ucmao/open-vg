@@ -21,9 +21,9 @@
             <ChevronLeft class="w-5 h-5" />
           </NuxtLink>
           <div>
-            <h1 class="text-xl font-semibold text-gray-900">{{ $adminT("Edit", "编辑文章") }}</h1>
+            <h1 class="text-xl font-semibold text-gray-900">{{ $adminT("Edit post", "编辑文章") }}</h1>
             <p class="text-xs text-gray-500 mt-0.5 flex items-center">
-              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span> {{ $adminT("Save", "已启用自动保存") }} </p>
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span> {{ $adminT("Autosave enabled", "已启用自动保存") }} </p>
           </div>
         </div>
         
@@ -43,7 +43,7 @@
             v-model="form.status"
             class="px-3 py-2 text-sm border border-gray-300 text-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
           >
-            <option value="draft">{{ $adminT("Save", "保存为草稿") }}</option>
+            <option value="draft">{{ $adminT("Save as draft", "保存为草稿") }}</option>
             <option value="published">{{ $adminT("Release", "发布") }}</option>
             <option value="archived">{{ $adminT("Archive", "归档") }}</option>
           </select>
@@ -73,7 +73,7 @@
                 required
                 maxlength="200"
                 class="w-full text-3xl font-bold text-gray-900 placeholder-gray-400 border-0 border-b-2 border-transparent focus:border-blue-500 bg-transparent px-0 py-3 outline-none transition-colors"
-                :placeholder="$adminT('Title', '文章标题...')"
+                :placeholder="$adminT('Post title...', '文章标题...')"
               />
               <!-- URL Slug Preview -->
               <div class="mt-2 flex items-center text-sm">
@@ -111,7 +111,7 @@
             <!-- Publishing Options -->
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
             <h3 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
-              <Clock class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("Settings", "发布设置") }} </h3>
+              <Clock class="w-4 h-4 mr-2 text-gray-500" /> {{ $adminT("Publish settings", "发布设置") }} </h3>
 
             <div class="space-y-4">
               <!-- Author Selection -->
@@ -184,7 +184,7 @@
 
               <!-- Published Date -->
               <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Organisation", "定时发布") }}</label>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">{{ $adminT("Schedule publishing", "定时发布") }}</label>
                 <div class="relative">
                   <input
                     v-model="form.published_at"
@@ -203,7 +203,7 @@
                     v-model="form.category_id"
                     class="flex-1 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
                   >
-                    <option :value="null">{{ $adminT("Category", "未分类") }}</option>
+                    <option :value="null">{{ $adminT("Uncategorised", "未分类") }}</option>
                     <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                       {{ cat.name }}
                     </option>
@@ -211,7 +211,7 @@
                   <NuxtLink 
                     to="/content/taxonomy" 
                     class="p-2 text-gray-400 hover:text-blue-600 border border-gray-300 rounded-lg transition-colors"
-                    :title="$adminT('Category', '管理分类')"
+                    :title="$adminT('Manage categories', '管理分类')"
                   >
                     <Settings class="w-4 h-4" />
                   </NuxtLink>
@@ -396,7 +396,7 @@
                 :placeholder="$adminT('Short summary for preview...', '用于预览的简短总结...')"
               ></textarea>
               <div class="flex justify-between items-center mt-1.5">
-                <p class="text-xs text-gray-400">{{ $adminT("Search", "用于搜索结果和社交分享") }}</p>
+                <p class="text-xs text-gray-400">{{ $adminT("Used in search results and social shares", "用于搜索结果和社交分享") }}</p>
                 <span class="text-xs text-gray-400">{{ form.excerpt?.length || 0 }}/500</span>
               </div>
             </div>
@@ -421,26 +421,26 @@
 
               <div class="space-y-4">
                 <div>
-                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Title", "Meta 标题") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Title)", "(默认为文章标题)") }}</span>
+                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta title", "Meta 标题") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Title)", "(默认为文章标题)") }}</span>
                   </label>
                   <input
                     v-model="form.meta_title"
                     type="text"
                     maxlength="200"
                     class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                    :placeholder="$adminT('Meta Title', '自定义 Meta 标题...')"
+                    :placeholder="$adminT('Custom meta title...', '自定义 Meta 标题...')"
                   />
                 </div>
 
                 <div>
-                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta Description", "Meta 描述") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Default summary)", "(默认为摘要)") }}</span>
+                  <label class="block text-xs font-medium text-gray-600 mb-1.5"> {{ $adminT("Meta description", "Meta 描述") }} <span class="text-gray-400 font-normal ml-1">{{ $adminT("(Default summary)", "(默认为摘要)") }}</span>
                   </label>
                   <textarea
                     v-model="form.meta_description"
                     rows="3"
                     maxlength="500"
                     class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-                    :placeholder="$adminT('Meta Description', '自定义 Meta 描述...')"
+                    :placeholder="$adminT('Custom meta description...', '自定义 Meta 描述...')"
                   ></textarea>
                 </div>
               </div>
@@ -456,7 +456,7 @@
                 type="button"
                 @click="confirmDelete"
                 class="w-full px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
-              > {{ $adminT("Delete", "删除此文章") }} </button>
+              > {{ $adminT("Delete this post", "删除此文章") }} </button>
             </div>
           </div>
         </div>
@@ -494,7 +494,7 @@ definePageMeta({
 })
 
 useHead({
-  title: adminT("Edit", "编辑文章"),
+  title: adminT("Edit post", "编辑文章"),
   meta: [
     { name: 'robots', content: 'noindex, nofollow' }
   ]
@@ -630,19 +630,19 @@ const fetchPost = async () => {
         }
       }
     } else {
-      toast.error(response.message || adminT("failed", "加载文章失败"))
+      toast.error(response.message || adminT("Failed to load the post", "加载文章失败"))
       router.push('/content/blog')
     }
   } catch (error: any) {
     console.error('Failed to fetch post:', error)
     if (error.response?.status === 403) {
-      toast.error(adminT("Could not close temporary folder: %s", "需要管理员权限"))
+      toast.error(adminT("Administrator permission required", "需要管理员权限"))
       router.push('/')
     } else if (error.response?.status === 404) {
       toast.error(adminT("Article not found", "文章未找到"))
       router.push('/content/blog')
     } else {
-      toast.error(adminT("failed", "加载文章失败"))
+      toast.error(adminT("Failed to load the post", "加载文章失败"))
     }
   } finally {
     loading.value = false
@@ -718,13 +718,13 @@ const handleSubmit = async () => {
     }
     
     if (!form.slug?.trim()) {
-      toast.error(adminT("Required", "别名是必填项"))
+      toast.error(adminT("Slug is required", "别名是必填项"))
       saving.value = false
       return
     }
     
     if (!form.content?.trim() || form.content === '<p><br></p>') {
-      toast.error(adminT("Required", "内容是必填项"))
+      toast.error(adminT("Content is required", "内容是必填项"))
       saving.value = false
       return
     }
@@ -753,11 +753,11 @@ const handleSubmit = async () => {
       toast.success(adminT("Articles updated!", "文章已更新！"))
       router.push('/content/blog')
     } else {
-      toast.error(response.message || adminT("Could not close temporary folder: %s", "无法更新文章"))
+      toast.error(response.message || adminT("Could not update the post", "无法更新文章"))
     }
   } catch (error: any) {
     console.error('Failed to update post:', error)
-    toast.error(error.message || adminT("Could not close temporary folder: %s", "无法更新文章"))
+    toast.error(error.message || adminT("Could not update the post", "无法更新文章"))
   } finally {
     saving.value = false
   }
@@ -765,7 +765,7 @@ const handleSubmit = async () => {
 
 const generateSEO = async () => {
   if (!form.title || !form.content) {
-    toast.error(adminT("Title", "请先填写文章标题和内容"))
+    toast.error(adminT("Fill in the post title and content first", "请先填写文章标题和内容"))
     return
   }
   
@@ -777,7 +777,7 @@ const generateSEO = async () => {
       
       // Confirm
       const confirmed = await confirm({
-        title: adminT("Confirm SEO", "确认应用生成的 SEO 内容"),
+        title: adminT("Apply the generated SEO content", "确认应用生成的 SEO 内容"),
         message: adminT('Title: {title}\nDescription: {description}\nTags: {tags}\nExcerpt: {excerpt}', '标题: {title}\n描述: {description}\n标签: {tags}\n摘要: {excerpt}', {
           title: generated.title || adminT('(empty)', '(空)'),
           description: generated.description || adminT('(empty)', '(空)'),
@@ -802,16 +802,16 @@ const generateSEO = async () => {
             }
           })
         }
-        toast.success(adminT("SEO", "SEO 内容已应用"))
+        toast.success(adminT("SEO content applied", "SEO 内容已应用"))
       }
     } else {
-      toast.error(response.message || adminT("failed", "生成失败"))
+      toast.error(response.message || adminT("Generation failed", "生成失败"))
     }
   } catch (error: any) {
     console.error('Failed to generate SEO:', error)
     
     // Handle different error types
-    const errorMessage = error.response?.data?.message || error.message || adminT("failed", "生成失败")
+    const errorMessage = error.response?.data?.message || error.message || adminT("Generation failed", "生成失败")
     const statusCode = error.response?.status
     
     if (statusCode === 503) {
@@ -835,7 +835,7 @@ const generateSEO = async () => {
 
 const confirmDelete = async () => {
   const confirmed = await confirm({
-    title: adminT("Delete", "删除文章"),
+    title: adminT("Delete post", "删除文章"),
     message: adminT("Are you sure you want to delete this article? This operation cannot be revoked and all relevant data will be permanently deleted.", "您确定要删除此文章吗？此操作无法撤销，所有相关数据都将被永久删除。"),
     confirmText: adminT("Delete", "删除"),
     cancelText: adminT("Cancel", "取消"),
@@ -848,14 +848,14 @@ const confirmDelete = async () => {
     const response = await api.delete(`/api/admin/blog/posts/${route.params.id}`)
     
     if (response.success) {
-      toast.success(adminT("Delete！", "文章已删除！"))
+      toast.success(adminT("Article deleted!", "文章已删除！"))
       router.push('/content/blog')
     } else {
-      toast.error(response.message || adminT("Delete", "无法删除文章"))
+      toast.error(response.message || adminT("Could not delete the post", "无法删除文章"))
     }
   } catch (error: any) {
     console.error('Failed to delete post:', error)
-    toast.error(error.message || adminT("Delete", "无法删除文章"))
+    toast.error(error.message || adminT("Could not delete the post", "无法删除文章"))
   }
 }
 </script>
