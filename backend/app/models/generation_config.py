@@ -256,11 +256,11 @@ def get_model_cost(work_type: str, model_name: str, params: dict = None) -> int:
             param_value_str = str(param_value).lower() if isinstance(param_value, bool) else str(param_value)
             cost_addition = None
 
-            # 1) ：param_value  key
+            # 1) : param_value key
             if param_value_str in cost_additions:
                 cost_addition = cost_additions[param_value_str]
 
-            # 2) ：_ranges = [[min, max, cost], ...]， cost
+            # 2) : _ranges = [[min, max, cost], ...], cost
             if cost_addition is None and "_ranges" in cost_additions:
                 ranges = cost_additions["_ranges"]
                 if isinstance(ranges, list):

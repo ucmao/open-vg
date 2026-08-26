@@ -28,7 +28,6 @@ class BaseParser:
         return None
 
     def get_image_list(self):
-        """"""
         return []
 
     def get_subtitles(self):

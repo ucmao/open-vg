@@ -1,4 +1,4 @@
-"""：（ homepage_blocks type=carousel ，title  HTML）"""
+"""Carousel (homepage_blocks type=carousel)."""
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -14,7 +14,6 @@ router = APIRouter()
 
 @router.get("/carousel/config")
 def get_carousel_config_public(db: Session = Depends(get_db)):
-    """（，）"""
     try:
         block = (
             db.query(HomepageBlock)
@@ -73,7 +72,6 @@ def _filter_slide_by_time(slide, now):
 
 @router.get("/carousel/active")
 def get_active_carousel_slides(db: Session = Depends(get_db)):
-    """（）"""
     try:
         now = datetime.now(timezone.utc)
         block = (

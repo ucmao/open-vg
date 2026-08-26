@@ -820,8 +820,10 @@ import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -1046,17 +1048,6 @@ const deleteUser = async (user) => {
     toast.error(error.message || adminT("Delete failed", "删除失败"))
     console.error('Failed to delete user:', error)
   }
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString(localeTag.value, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 
 // Import works methods

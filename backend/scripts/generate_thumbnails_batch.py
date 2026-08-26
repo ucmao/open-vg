@@ -5,9 +5,9 @@
 :
     python scripts/generate_thumbnails_batch.py  #  thumbnail_url
     python scripts/generate_thumbnails_batch.py --limit 100  #
-    python scripts/generate_thumbnails_batch.py --all  #  works（）
-    python scripts/generate_thumbnails_batch.py --skip-existing  # （）
-    python scripts/generate_thumbnails_batch.py --only-empty  #  thumbnail_url （）
+    python scripts/generate_thumbnails_batch.py --all  # works()
+    python scripts/generate_thumbnails_batch.py --skip-existing
+    python scripts/generate_thumbnails_batch.py --only-empty  # thumbnail_url ()
     python scripts/generate_thumbnails_batch.py --type image  #
     python scripts/generate_thumbnails_batch.py --type video  #
 """
@@ -31,7 +31,6 @@ from app.utils.logger import logger
 
 
 def print_progress(current: int, total: int, work_id: int, status: str = ""):
-    """"""
     percentage = (current / total * 100) if total > 0 else 0
     bar_length = 50
     filled_length = int(bar_length * current / total) if total > 0 else 0
@@ -55,12 +54,12 @@ async def process_work(work_id: int, skip_existing: bool = False) -> tuple[bool,
     #
     db = SessionLocal()
     try:
-        #  work，
+        # work,
         work = db.query(Work).filter(Work.id == work_id).first()
         if not work:
             return False, "Work "
         
-        # （ None ）
+        # None )
         if skip_existing and work.thumbnail_url and work.thumbnail_url.strip():
             return True, "，"
         
@@ -77,7 +76,7 @@ async def process_work(work_id: int, skip_existing: bool = False) -> tuple[bool,
         
         # /
         if is_video:
-            # 🎬 Video:  H.264 + 480p， thumbnail_url
+            # 🎬 Video: H.264 + 480p, thumbnail_url
             compressed_video_data = await compress_video_h264(
                 video_url=work.file_url,
                 max_height=480,
@@ -87,7 +86,7 @@ async def process_work(work_id: int, skip_existing: bool = False) -> tuple[bool,
             if not compressed_video_data:
                 return False, ""
             
-            #  R2（： storage_key + ）
+            # R2(: storage_key + )
             compressed_key = f"{work.storage_key}.mp4"
             compressed_obj = BytesIO(compressed_video_data)
             storage.upload_file(
@@ -105,7 +104,7 @@ async def process_work(work_id: int, skip_existing: bool = False) -> tuple[bool,
                 quality=85
             )
             
-            #  R2（： storage_key + ）
+            # R2(: storage_key + )
             thumbnail_key = f"{work.storage_key}.webp"
             thumbnail_obj = BytesIO(thumbnail_data)
             storage.upload_file(
@@ -115,10 +114,10 @@ async def process_work(work_id: int, skip_existing: bool = False) -> tuple[bool,
                 public=False
             )
         
-        #  thumbnail URL（ title）
-        # ：R2  {storage_key}.webp  {storage_key}.mp4
+        # thumbnail URL( title)
+        # R2 {storage_key}.webp {storage_key}.mp4
         #  URL  canonical  {storage_key}-{title}_thumb.webp  {storage_key}-{title}_compressed.mp4
-        # ， canonical URL  key
+        # canonical URL key
         title = work.title or ""
         thumbnail_url = storage.generate_thumbnail_canonical_url(
             work.storage_key,
@@ -157,7 +156,6 @@ async def process_works_batch(
     
     print(f"\n {total}  works...\n")
     
-    # ，
     for i in range(0, total, batch_size):
         batch = works[i:i + batch_size]
         
@@ -186,7 +184,6 @@ async def process_works_batch(
                 
                 print_progress(current, total, work.id, message)
         
-        # ，
         if i + batch_size < total:
             await asyncio.sleep(0.1)
     
@@ -209,8 +206,8 @@ def main():
     
     args = parser.parse_args()
     
-    #  thumbnail_url ， --all
-    # --skip-existing  --only-empty （）
+    # thumbnail_url , --all
+    # --skip-existing --only-empty ()
     only_empty = not args.all
     
     db = SessionLocal()
@@ -227,7 +224,7 @@ def main():
                 Work.type.in_([WorkType.TEXT2VIDEO, WorkType.IMG2VIDEO])
             )
         
-        # （ thumbnail_url ）
+        # thumbnail_url )
         if only_empty:
             #  None
             from sqlalchemy import or_
@@ -241,7 +238,7 @@ def main():
         if args.limit:
             query = query.limit(args.limit)
         
-        #  ID ，
+        # ID ,
         query = query.order_by(Work.id)
         
         works = query.all()

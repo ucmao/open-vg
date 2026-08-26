@@ -30,7 +30,6 @@ INVITE_REWARD_EXPIRY_DAYS = int(os.getenv("INVITE_REWARD_EXPIRY_DAYS", "90"))
 def generate_invite_code(db: Session, length: int = INVITE_CODE_LENGTH) -> str:
     """ - Generate unique invite code."""
     while True:
-        # （）
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
         existing = db.query(Invitation).filter(Invitation.invite_code == code).first()
         if not existing:
@@ -169,7 +168,6 @@ def get_invitation_stats(
         - total_rewards:
     """
     try:
-        # （）
         total_invitations = db.query(func.count(Invitation.id)).filter(
             Invitation.inviter_id == current_user.id
         ).scalar() or 0
@@ -184,7 +182,6 @@ def get_invitation_stats(
             Invitation.status == "pending"
         ).scalar() or 0
         
-        # （ × ）
         total_rewards = completed_invitations * INVITE_REWARD_INVITER
         
         return success_response(
@@ -227,7 +224,6 @@ def verify_invite_code(
                 status_code=status.HTTP_404_NOT_FOUND
             )
         
-        # （）
         inviter = db.query(User).filter(User.id == invitation.inviter_id).first()
         
         return success_response(

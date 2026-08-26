@@ -71,7 +71,7 @@
     "model_version": null,
     "params": {
       "seed": "21703",
-      "image": "https://prompthero-webapp-production.s3.amazonaws.com/8ta5pgpjpbsj5a3lqfdlst9uyzn3?response-content-disposition=inline%3B%20filename%3D%221748104228_03b588fe-a884-4bda-83c5-a1fb678e5c46.png%22%3B%20filename%2A%3DUTF-8%27%271748104228_03b588fe-a884-4bda-83c5-a1fb678e5c46.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20250524%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250524T163028Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=cdc445026c4cb1ffd30b011e774265a97143dfeb988a16c2f852a88b23d1c3c2",
+      "image": "/demo/placeholder.svg",
       "model": "veo-2",
       "width": 512,
       "height": 512,
@@ -1138,7 +1138,7 @@
     "model_version": null,
     "params": {
       "seed": "430396",
-      "image": "https://prompthero-webapp-production.s3.amazonaws.com/1xdrzrabvuvaq9n7p1n84j93cz8x?response-content-disposition=inline%3B%20filename%3D%221747933085_Screenshot_2025-05-22_at_5.57.14%253FPM.png%22%3B%20filename%2A%3DUTF-8%27%271747933085_Screenshot_2025-05-22_at_5.57.14%25E2%2580%25AFPM.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20250522%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250522T165805Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=9aa7d3e1657e1de1809db82f75ba42b2f7104d3d6debcdec796ae83b8d378d3b",
+      "image": "/demo/placeholder.svg",
       "model": "veo-2",
       "width": 512,
       "height": 512,
@@ -1262,7 +1262,7 @@
       "prompt": "Selfie en primer plano, tomado con teléfono móvil. Yo (usa la cara del modelo de la imagen referencia del usuario) aparezco a la izquierda de la imagen. El esta se seca un selfie con el personaje de Saruman del Señor de los anillos, en una locación icónica de la pelicula del protagonista. Estilo realista fotográfico. Se vislumbran algunos elementos (pocos) que delatan que estamos en un set de grabación. NO debe verse ningún celular tomando la foto en las escenas. Todo tiene un ambiente navideño, los personajes llevan jersey navideños pero sin perder sus ropas reconocidas\n",
       "endpoint": "/v1/models/google/nano-banana-pro/predictions",
       "image_input": [
-        "https://cdn.prompthero.com/prompt-inputs/2025-12-18/y6qxin5i2os4fqfb.png"
+        "/demo/placeholder.svg"
       ],
       "aspect_ratio": "9:16",
       "credits_cost": 4,
@@ -1323,7 +1323,7 @@
       "seed": null,
       "model": "nano-bananma",
       "image_input": [
-        "https://prompthero-webapp-production.s3.amazonaws.com/ru020ma9kog8gja54iirp3v4aazs?response-content-disposition=inline%3B%20filename%3D%221763558562_1000143429.jpg%22%3B%20filename%2A%3DUTF-8%27%271763558562_1000143429.jpg&response-content-type=image%2Fjpeg&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20251119%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251119T132242Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=e1ec3e9d097a0eb63826c92d9f08aff94218ab059ef6efecf88a9b8ff61d2c57"
+        "/demo/placeholder.svg"
       ],
       "output_format": "jpg",
       "replicate_model_version": "nano-bananma"
@@ -3491,7 +3491,7 @@
       "seconds": 12,
       "resolution": "high",
       "aspect_ratio": "landscape",
-      "input_reference": "https://prompthero-webapp-production.s3.amazonaws.com/h8rfx2kzkt9h17r04iivuda9xp2p?response-content-disposition=inline%3B%20filename%3D%221762047783_THE_MAGIC_TREEHOUSE_2.png%22%3B%20filename%2A%3DUTF-8%27%271762047783_THE_MAGIC_TREEHOUSE_2.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20251102%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251102T014303Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ebe48eb35cdd823822b335350683262c15284d2cea2faa39677639a31d4f1bae",
+      "input_reference": "/demo/placeholder.svg",
       "replicate_model_version": "sora-2-pro"
     },
     "tags": [
@@ -3608,7 +3608,7 @@
       "seconds": 12,
       "resolution": "high",
       "aspect_ratio": "landscape",
-      "input_reference": "https://prompthero-webapp-production.s3.amazonaws.com/wzvm7q9j344spk0g3bk0h1k97rr5?response-content-disposition=inline%3B%20filename%3D%221762049229_THE_MAGIC_TREEHOUSE_2.png%22%3B%20filename%2A%3DUTF-8%27%271762049229_THE_MAGIC_TREEHOUSE_2.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20251102%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251102T020709Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5517220c2b48775db05359a1e620e366d18de438464d48957aa567555e3ee467",
+      "input_reference": "/demo/placeholder.svg",
       "replicate_model_version": "sora-2-pro"
     },
     "tags": [
@@ -3667,7 +3667,7 @@
       "seconds": 12,
       "resolution": "standard",
       "aspect_ratio": "landscape",
-      "input_reference": "https://prompthero-webapp-production.s3.amazonaws.com/f2j371mi0xkqx0m375ltpobnn33b?response-content-disposition=inline%3B%20filename%3D%221760520493_Frame_3.png%22%3B%20filename%2A%3DUTF-8%27%271760520493_Frame_3.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20251015%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251015T092813Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=de22b2e637e2bdcd316ecb1218b18b345e44cbe428c4d773307e19f650154b2e",
+      "input_reference": "/demo/placeholder.svg",
       "replicate_model_version": "sora-2"
     },
     "tags": [],
@@ -3847,7 +3847,7 @@
       "seconds": 12,
       "resolution": "high",
       "aspect_ratio": "landscape",
-      "input_reference": "https://prompthero-webapp-production.s3.amazonaws.com/82z5rgkz1461xh3s503n7wpe2dgl?response-content-disposition=inline%3B%20filename%3D%221762047111_THE_MAGIC_TREEHOUSE_1.png%22%3B%20filename%2A%3DUTF-8%27%271762047111_THE_MAGIC_TREEHOUSE_1.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47PESV7H4BJR65AB%2F20251102%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251102T013151Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=3392c6e49afcbda31a500ad0f0a494ecaa1ad4ade1b57c9ffa74bed8d110b539",
+      "input_reference": "/demo/placeholder.svg",
       "replicate_model_version": "sora-2"
     },
     "tags": [
@@ -6743,7 +6743,7 @@
     "model_version": null,
     "params": {
       "seed": 448466005,
-      "image": "https://cdn.prompthero.com/f4erdv38f87jukbmqwnhm8u8nj",
+      "image": "/demo/placeholder.svg",
       "model": "google/veo-3.1-fast",
       "prompt": "{\n  \"prompt\": \"ultra slow-motion cinematic shot of a cake exploding violently in mid air, pieces of fondant, cream, crumbs and colorful icing flying outward in all directions, captured at extremely high frame rate, dramatic particle dispersion, shallow depth of field, sharp focus on fragments, soft studio lighting, highly detailed textures, smooth motion blur, 4k hyperrealistic footage, black background for contrast\",\n  \"negative_prompt\": \"low resolution, blurry, unrealistic physics, fire, smoke, people, hands, cluttered background, deformed objects, text watermark\",\n  \"width\": 1280,\n  \"height\": 720,\n  \"num_outputs\": 4,\n  \"guidance_scale\": 8,\n  \"num_inference_steps\": 30,\n  \"seed\": 11223344\n}\n\n",
       "endpoint": "/v1/models/google/veo-3.1-fast/predictions",
@@ -6804,7 +6804,7 @@
     "model_version": null,
     "params": {
       "seed": 836607312,
-      "image": "https://prompthero-webapp-production.s3.us-east-1.amazonaws.com/prompt-inputs/2025-12-20/bxnju96fmkubzv0k.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA47PESV7HYTTUJPFO%2F20251220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251220T175842Z&X-Amz-Expires=3600&X-Amz-Signature=025a97ed6a459c36c7e2094327631ec7e937da53530a77ab0328ce359373b2aa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+      "image": "/demo/placeholder.svg",
       "model": "google/veo-3.1-fast",
       "prompt": "A young smiling woman wearing a Santa hat and a cream-colored sweater with written: \"La bellezza passa il natale rimane\" cross-legged in front of a fireplace. She holds a large, red, gift-wrapped box with a gold ribbon. barefoot. To her left is a small, decorated Christmas tree. Snowflakes are falling around the scene, and the fireplace has a warm glow. the woman, says: \"buon natale\"  gives a kiss to the air and raises the gift towards the camera.",
       "endpoint": "/v1/models/google/veo-3.1-fast/predictions",

@@ -51,7 +51,6 @@ class ModerationService:
         return lexicon_dict
     
     def _normalize_text(self, text: str) -> str:
-        """（，）"""
         if not text:
             return ""
         return text.lower().strip()
@@ -88,8 +87,7 @@ class ModerationService:
                 word = word_entry['word']
                 severity = word_entry['severity']
                 
-                # ，（ "ass"  "class"）
-                # （、）
+                # "ass" "class")
                 pattern = r'\b' + re.escape(word) + r'\b'
                 if re.search(pattern, normalized_text, re.IGNORECASE):
                     found_tags.add(category)
@@ -135,7 +133,7 @@ class ModerationService:
             # prompt
             prompt_result = self._check_text_for_keywords(prompt, lexicon_dict)
             
-            # negative_prompt（）
+            # negative_prompt()
             negative_result = {
                 'found_tags': [],
                 'flagged_keywords': [],
@@ -148,7 +146,6 @@ class ModerationService:
             all_tags = set(prompt_result['found_tags'] + negative_result['found_tags'])
             all_keywords = prompt_result['flagged_keywords'] + negative_result['flagged_keywords']
             
-            # （）
             has_high_severity = any(kw.get('severity') == LexiconSeverity.HIGH.value for kw in all_keywords)
             has_medium_severity = any(kw.get('severity') == LexiconSeverity.MEDIUM.value for kw in all_keywords)
             
@@ -175,7 +172,6 @@ class ModerationService:
             
         except Exception as e:
             logger.error(f"Error in NSFW check: {str(e)}", exc_info=True)
-            # （，）
             return {
                 'is_violation': False,
                 'nsfw_tags': [],
@@ -191,5 +187,4 @@ class ModerationService:
 
 
 def get_moderation_service(db: Session) -> ModerationService:
-    """"""
     return ModerationService(db)

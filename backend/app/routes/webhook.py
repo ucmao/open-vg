@@ -121,9 +121,9 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
                 except Exception as e:
                     logger.warning(f"Work {work_id}: HEAD request failed for URL fallback: {e}, keeping work_type")
         
-        # 2. Generate Metadata:  prompt （Gemini /  / ）
+        # 2. Generate Metadata: prompt (Gemini / / )
         from ..models.work import ShareStatus
-        # Prompt ： Gemini，； 0 「」
+        # Prompt : Gemini, ; 0 「」
         PROMPT_LENGTH_FOR_GEMINI = 80
         prompt_text = (work.prompt or "").strip()
         prompt_len = len(prompt_text)
@@ -140,7 +140,7 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
             category = "photography"
             logger.info(f"Work {work_id}: prompt empty, using default title/description")
         elif prompt_len <= PROMPT_LENGTH_FOR_GEMINI:
-            #  prompt： title、description， Gemini
+            # prompt: title、description, Gemini
             try:
                 title, description = generate_work_metadata(prompt_text, model_name)
             except Exception as e:
@@ -151,7 +151,7 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
             category = "photography"
             logger.info(f"Work {work_id}: prompt length {prompt_len} <= {PROMPT_LENGTH_FOR_GEMINI}, using concatenation for title/description")
         else:
-            #  prompt： Gemini  title、description、tags、category
+            # prompt: Gemini title、description、tags、category
             try:
                 from ..services.gemini_service import get_gemini_service
                 from ..models.category_page import CategoryPage
@@ -198,17 +198,15 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
         work.category = category if category else "photography"
         work.tags = tags
         
-        # 🚀 （private）， BLOCKED（BLOCKED ）
+        # 🚀 (private), BLOCKED(BLOCKED )
         if work.nsfw_status == NSFWStatus.BLOCKED.value:
-            # ，
             work.is_shared = False
             work.share_status = None
         else:
-            # （）
             work.is_shared = False
             if work.nsfw_status == NSFWStatus.APPROVED.value:
                 work.share_status = ShareStatus.APPROVED
-            # PENDING  is_shared=False，
+            # PENDING is_shared=False,
         
         db.commit()
         logger.info(f"Work {work_id} metadata saved: short_code={work.short_code}, url_slug={work.url_slug}, title={title}")
@@ -297,7 +295,7 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
         # 8. Final DB update - only update remaining fields (metadata already saved in step 3)
         from sqlalchemy import update
         
-        #  canonical_url、thumbnail_url  auto_moderated（3）
+        # canonical_url、thumbnail_url auto_moderated(3)
         update_values = {
             "thumbnail_url": thumbnail_url,
             "canonical_url": canonical_url,

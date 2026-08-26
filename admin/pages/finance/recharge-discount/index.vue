@@ -428,10 +428,13 @@ import type { EmailPreset, EmailPreview, PaginatedData, RechargePromo, UserSumma
 
 const { translateText: adminT, localeTag } = useAdminI18n()
 
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+
 definePageMeta({ layout: 'default' })
 
 const adminApi = useAdminApi()
 const { toast } = useToast()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 const loading = ref(false)
 const items = ref<RechargePromo[]>([])
@@ -474,16 +477,6 @@ function statusLabel (s: string) {
   if (s === 'expired') return ''
   if (s === 'pending') return ''
   return s
-}
-
-function formatDate (iso: string | null) {
-  if (!iso) return '-'
-  try {
-    const d = new Date(iso)
-    return d.toLocaleString(localeTag.value, { dateStyle: 'short', timeStyle: 'short' })
-  } catch {
-    return iso
-  }
 }
 
 async function loadList () {

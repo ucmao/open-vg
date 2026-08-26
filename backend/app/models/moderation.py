@@ -6,14 +6,13 @@ from .base import Base
 
 
 class ModerationType(str, Enum):
-    """"""
     NSFW = "NSFW"  # NSFW
-    SHARE_REVIEW = "SHARE_REVIEW"  # （）
+    SHARE_REVIEW = "SHARE_REVIEW"  # Share review
 
 
 class ModerationAction(str, Enum):
-    AUTO_BLOCKED = "AUTO_BLOCKED"  # （）
-    AUTO_FLAGGED = "AUTO_FLAGGED"  # （/）
+    AUTO_BLOCKED = "AUTO_BLOCKED"  # Auto blocked
+    AUTO_FLAGGED = "AUTO_FLAGGED"  # Auto flagged
     MANUAL_FLAGGED = "MANUAL_FLAGGED"  #
     AUTO_APPROVED = "AUTO_APPROVED"  #
     MANUAL_APPROVED = "MANUAL_APPROVED"  #
@@ -35,7 +34,6 @@ class LexiconCategory(str, Enum):
 
 
 class LexiconSeverity(str, Enum):
-    """"""
     LOW = "LOW"  #
     MEDIUM = "MEDIUM"  #
     HIGH = "HIGH"  #
@@ -71,10 +69,9 @@ class ModerationLog(Base):
     action_type = Column(SQLEnum(ModerationAction), nullable=False, index=True)
     
     # NSFW
-    nsfw_tags = Column(JSON, nullable=True)  # NSFW， ['violence', 'pornography']
+    nsfw_tags = Column(JSON, nullable=True)  # NSFW, ['violence', 'pornography']
     flagged_keywords = Column(JSON, nullable=True)  #
     
-    # （）
     moderator_id = Column(Integer, ForeignKey("admins.id", ondelete="SET NULL"), nullable=True, index=True)
     
     # /
@@ -85,13 +82,11 @@ class ModerationLog(Base):
     work = relationship("Work", backref="moderation_logs")
     moderator = relationship("Admin", backref="moderation_actions")
     
-    # ：
     __table_args__ = (
         Index('ix_moderation_logs_work_type', 'work_id', 'moderation_type'),
     )
     
     def to_dict(self, include_work=False, include_moderator=False):
-        """"""
         result = {
             "id": self.id,
             "work_id": self.work_id,
@@ -127,7 +122,6 @@ class Lexicon(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     
-    # （，）
     word = Column(String(200), nullable=False, index=True, unique=True)
     
     category = Column(SQLEnum(LexiconCategory), nullable=False, index=True)
@@ -142,7 +136,6 @@ class Lexicon(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     
     def to_dict(self):
-        """"""
         return {
             "id": self.id,
             "word": self.word,
@@ -163,12 +156,12 @@ class Report(Base):
     work_id = Column(Integer, ForeignKey("works.id", ondelete="CASCADE"), nullable=False, index=True)
     reporter_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     
-    # （DB ，SQLAlchemy  enum name）
+    # DB , SQLAlchemy enum name)
     report_type = Column(SQLEnum(ReportType), nullable=False, index=True)
     
     reason = Column(Text, nullable=True)
     
-    # （DB ，SQLAlchemy  enum name）
+    # DB , SQLAlchemy enum name)
     status = Column(SQLEnum(ReportStatus), default=ReportStatus.PENDING, nullable=False, index=True)
     
     resolved_at = Column(DateTime(timezone=True), nullable=True)
@@ -182,14 +175,12 @@ class Report(Base):
     reporter = relationship("User", foreign_keys=[reporter_id], backref="reports")
     resolver = relationship("Admin", foreign_keys=[resolved_by], backref="resolved_reports")
     
-    # ：
     __table_args__ = (
         Index('ix_reports_work_status', 'work_id', 'status'),
         Index('ix_reports_status_created', 'status', 'created_at'),
     )
     
     def to_dict(self, include_work=False, include_reporter=False, include_resolver=False):
-        """"""
         result = {
             "id": self.id,
             "work_id": self.work_id,

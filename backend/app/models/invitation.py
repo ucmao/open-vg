@@ -18,13 +18,13 @@ class Invitation(Base):
     #  - Invitee (nullable until someone registers with the code)
     invitee_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=True, index=True)
     
-    # （）- Unique invite code
+    # Unique invite code
     invite_code = Column(String(20), unique=True, index=True, nullable=False)
     
     #  - Whether rewards have been granted
     reward_granted = Column(Boolean, default=False, nullable=False)
     
-    # ：pending（）、completed（）、expired（）
+    # Statuses: pending, completed, expired
     # Status: pending (awaiting registration), completed (finished), expired (expired)
     status = Column(String(20), default="pending", nullable=False, index=True)
     

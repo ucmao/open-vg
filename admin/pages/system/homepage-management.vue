@@ -211,8 +211,10 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import AdminPromotionModal from '~/components/admin/PromotionModal.vue'
 import AdminCarouselModal from '~/components/admin/CarouselModal.vue'
 import AdminCarouselSettingsModal from '~/components/admin/CarouselSettingsModal.vue'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default'
@@ -410,18 +412,6 @@ const switchTab = (tab: 'promotions' | 'carousel') => {
     path: '/system/homepage-management',
     query: { tab }
   }, { replace: true })
-}
-
-const formatDateTime = (dateStr: string) => {
-  if (!dateStr) return ''
-  const date = new Date(dateStr)
-  return date.toLocaleString(localeTag.value, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 
 // Countdown tick（ PromotionBannerPreview ）

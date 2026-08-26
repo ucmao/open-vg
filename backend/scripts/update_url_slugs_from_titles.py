@@ -24,7 +24,7 @@ def update_url_slugs_from_titles(dry_run=True, batch_size=100):
     
     try:
         #
-        # ：status='success', share_status='approved', is_banned=False, deleted_at IS NULL,  title  short_code
+        # status='success', share_status='approved', is_banned=False, deleted_at IS NULL, title short_code
         query = db.query(Work).filter(
             Work.status == WorkStatus.SUCCESS,
             Work.share_status == ShareStatus.APPROVED,
@@ -54,7 +54,7 @@ def update_url_slugs_from_titles(dry_run=True, batch_size=100):
                     #  url_slug
                     new_url_slug = generate_url_slug(work.short_code, work.title)
                     
-                    #  slug ，
+                    # slug ,
                     if not new_url_slug:
                         print(f"⏭️  [ID: {work.id}] ： url_slug (short_code: {work.short_code}, title: {work.title})")
                         skipped_count += 1
@@ -86,7 +86,7 @@ def update_url_slugs_from_titles(dry_run=True, batch_size=100):
                     if not dry_run:
                         #
                         work.url_slug = new_url_slug
-                        db.flush()  # ，
+                        db.flush()
                         updated_count += 1
                     else:
                         updated_count += 1
@@ -99,7 +99,6 @@ def update_url_slugs_from_titles(dry_run=True, batch_size=100):
                     print(f"❌ [ID: {work.id}] : {str(e)}")
                     print()
             
-            # ，
             if not dry_run and updated_count > 0:
                 try:
                     db.commit()

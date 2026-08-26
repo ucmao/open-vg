@@ -86,8 +86,8 @@ def get_pending_nsfw_works(
         
         #
         if tag:
-            # JSONB（PostgreSQL）- JSON
-            #  cast  JSONB  @> ， SQLAlchemy
+            # JSONB(PostgreSQL)- JSON
+            # cast JSONB @> , SQLAlchemy
             query = query.filter(
                 cast(Work.nsfw_tags, JSONB).op("@>")(cast([tag], JSONB))
             )
@@ -340,7 +340,6 @@ def get_moderation_logs(
         #
         total = query.count()
         
-        # （）
         logs = query.order_by(
             desc(ModerationLog.created_at)
         ).offset((page - 1) * page_size).limit(page_size).all()
@@ -601,7 +600,7 @@ def create_lexicon(
                 status_code=status.HTTP_400_BAD_REQUEST
             )
         
-        # already exists（）
+        # already exists()
         existing = db.query(Lexicon).filter(
             func.lower(Lexicon.word) == request.word.lower()
         ).first()
@@ -936,7 +935,6 @@ def batch_update_lexicons(
 # ==================== Report Management Routes ====================
 
 class ResolveReportRequest(BaseModel):
-    """"""
     pass
 
 
@@ -946,7 +944,6 @@ class DismissReportRequest(BaseModel):
 
 
 class BanReportRequest(BaseModel):
-    """"""
     reason: str = Field(..., min_length=1, max_length=500, description="")
 
 
@@ -984,7 +981,7 @@ def get_reports(
             conditions = [
                 Report.reason.ilike(keyword_like),
             ]
-            #  Work  User （ outerjoin ，does not exist）
+            # Work User ( outerjoin , does not exist)
             conditions.extend([
                 Work.title.ilike(keyword_like),
                 Work.share_name.ilike(keyword_like),
@@ -996,13 +993,12 @@ def get_reports(
                 conditions.append(Report.work_id == int(kw))
             query = query.filter(or_(*conditions))
         
-        # （ join， distinct）
+        # join, distinct)
         if keyword and keyword.strip():
             total = query.distinct().count()
         else:
             total = query.count()
         
-        # （）
         if keyword and keyword.strip():
             reports = query.distinct().order_by(
                 desc(Report.created_at)
@@ -1082,7 +1078,7 @@ def get_reports(
         
     except Exception as e:
         logger.error(f"Error getting reports: {str(e)}", exc_info=True)
-        # does not exist，
+        # does not exist,
         error_str = str(e).lower()
         if 'does not exist' in error_str or 'no such table' in error_str or 'relation' in error_str:
             return paginated_response(

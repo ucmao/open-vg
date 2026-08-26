@@ -109,7 +109,6 @@ async def generate_image_thumbnail_webp(
         elif image.mode not in ('RGB', 'RGBA'):
             image = image.convert('RGB')
         
-        # ，
         ratio = min(max_width / original_width, max_height / original_height)
         
         if ratio < 1:
@@ -119,7 +118,6 @@ async def generate_image_thumbnail_webp(
             image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
             logger.info(f"Resized: {original_width}x{original_height} -> {new_width}x{new_height} (ratio: {ratio:.2f})")
         else:
-            # ，
             logger.info(f"Image already small: {original_width}x{original_height}, no resize needed")
         
         # Save to bytes as WebP
@@ -193,7 +191,7 @@ async def generate_video_thumbnail(
                 '-i', video_path,
                 '-vframes', '1',
                 '-q:v', '2',
-                '-vf', 'scale=800:-1',  #  800 ，
+                '-vf', 'scale=800:-1',  # 800 ,
                 thumb_path,
                 '-y'
             ], capture_output=True, check=True)
@@ -255,7 +253,6 @@ async def generate_video_thumbnail_webp(
         elif image.mode not in ('RGB', 'RGBA'):
             image = image.convert('RGB')
         
-        # ，
         ratio = min(max_width / original_width, max_height / original_height)
         
         if ratio < 1:
@@ -319,18 +316,18 @@ async def compress_video_h264(
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as compressed_file:
                 output_path = compressed_file.name
             
-            #  ffmpeg ：H.264 ，480p
-            # -vf scale=-2:480:  480，
+            # ffmpeg : H.264 , 480p
+            # -vf scale=-2:480: 480,
             # -c:v libx264:  H.264
-            # -crf 23: ，
-            # -preset medium: （medium ）
+            # -crf 23: ,
+            # -preset medium: (medium )
             # -movflags +faststart:
             # -c:a aac:  AAC
             # -b:a 128k:
             result = subprocess.run([
                 'ffmpeg',
                 '-i', input_path,
-                '-vf', f'scale=-2:{max_height}',  # ，
+                '-vf', f'scale=-2:{max_height}',
                 '-c:v', 'libx264',
                 '-crf', str(crf),
                 '-preset', 'medium',

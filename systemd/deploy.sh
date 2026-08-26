@@ -3,7 +3,7 @@
 # ============================================================================
 # Vidgen Systemd Deployment Script
 # ============================================================================
-# :  Systemd （Backend, Celery, Frontend, Admin）
+# : Systemd (Backend, Celery, Frontend, Admin)
 # : sudo ./deploy.sh
 # ============================================================================
 
@@ -25,7 +25,6 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# （）
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 BACKEND_DIR="$PROJECT_ROOT/backend"
@@ -57,7 +56,7 @@ echo ""
 #  service
 echo "2.  Systemd ..."
 
-# （ -> ）
+# -> )
 declare -A services=(
     ["backend"]="vidgen-backend"
     ["web"]="vidgen-web"

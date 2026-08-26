@@ -814,7 +814,7 @@
           <div class="mt-4 p-3 bg-blue-50 rounded text-xs text-blue-700">
             <p class="font-semibold mb-1">{{ $adminT("Field description:", "字段说明：") }}</p>
             <ul class="list-disc list-inside space-y-1">
-              <li><code class="bg-blue-100 px-1 rounded">required</code>{{ $adminT(": #9 means you have to fill in, you have to set a default value of #1", ": true 表示必填，若必填需设置 default 默认值") }} </li>
+              <li><code class="bg-blue-100 px-1 rounded">required</code>{{ $adminT(":  # 9 means you have to fill in, you have to set a default value of #1", ": true 表示必填, 若必填需设置 default 默认值") }} </li>
               <li><code class="bg-blue-100 px-1 rounded">cost_additions</code>{{ $adminT(": Additional costs (configure them on the", ": 附加成本（建议在") }} <NuxtLink to="/models/pricing" class="text-blue-600 hover:underline">{{ $adminT("Model pricing", "模型定价") }}</NuxtLink> {{ $adminT("page). For enum/bool fields, use key-value pairs such as {\"5\": 0, \"8\": 10}; for int/float fields, use ranges such as \"_ranges\": [[min, max, credits], ...].", "页配置）。枚举/bool 用键值: {\"5\": 0, \"8\": 10}；int/float 用区间: \"_ranges\": [[min, max, 积分], ...]") }}</li>
             </ul>
           </div>

@@ -290,7 +290,7 @@ def get_admin_stats(
         ).count()
         
         # --- Work Stats ---
-        #  /  （deleted_at）；「successful」， ≤100%
+        # / (deleted_at); 「successful」, ≤100%
         total_works = db.query(Work).filter(
             Work.status == WorkStatus.SUCCESS,
             Work.deleted_at == None
@@ -521,7 +521,6 @@ def get_admin_stats_snapshot(
             Work.deleted_at == None
         ).count()
 
-        # （）
         today_credit_records_count = db.query(CreditRecord).filter(
             CreditRecord.created_at >= today_start
         ).count()
@@ -2158,7 +2157,7 @@ def get_generation_models(
                     }
                 except Exception:
                     continue
-            #  API （）
+            # API ()
             workflow_api_names = []
             if getattr(model, "workflow", None) and model.workflow.nodes:
                 api_ids = []
@@ -2430,7 +2429,6 @@ def delete_generation_model(
 
 
 class BatchUpdateModelRequest(BaseModel):
-    """"""
     model_ids: Optional[List[int]] = Field(None, description="Model ID list")
     is_active: Optional[bool] = Field(None, description="Is enabled")
     is_featured: Optional[bool] = Field(None, description="Is featured")
@@ -2455,7 +2453,7 @@ def batch_update_models_pricing(
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
-    """： (Admin only)."""
+    """Admin only."""
     if not request.model_ids:
         return error_response(message="Model ID list", status_code=400)
     if request.cost is None and not request.cost_additions:

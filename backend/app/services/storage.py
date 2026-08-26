@@ -122,7 +122,7 @@ class StorageService:
             )
             
             # Generate the final URL
-            #  CDN （）， public
+            # CDN (), public
             if self.public_domain:
                 url = f"{self.public_domain}/{key}"
             else:
@@ -135,7 +135,6 @@ class StorageService:
             return url
             
         except Exception as e:
-            # ，
             logger.error(f"❌ OSS Upload Detailed Error: {type(e).__name__} - {str(e)}")
             return self._save_locally(BytesIO(file_data), key)
 
@@ -231,19 +230,19 @@ class StorageService:
                 else:
                     clean_key = remaining
         
-        # 5.  key  canonical （ _thumb.webp  _compressed.mp4）， key
-        # R2 ：{storage_key}.webp  {storage_key}.mp4
-        #  URL  canonical ：{storage_key}-{title}_thumb.webp  {storage_key}-{title}_compressed.mp4
+        # 5. key canonical ( _thumb.webp _compressed.mp4), key
+        # R2 : {storage_key}.webp {storage_key}.mp4
+        # URL canonical : {storage_key}-{title}_thumb.webp {storage_key}-{title}_compressed.mp4
         if clean_key.endswith('_thumb.webp'):
             #  canonical  28  ID + .webp
-            # ：{28ID}-{title}_thumb.webp -> {28ID}.webp
+            # {28ID}-{title}_thumb.webp -> {28ID}.webp
             import re
             match = re.match(r'^([A-Za-z0-9]{28})(-.*)?_thumb\.webp$', clean_key)
             if match:
                 clean_key = f"{match.group(1)}.webp"
         elif clean_key.endswith('_compressed.mp4'):
             #  canonical  28  ID + .mp4
-            # ：{28ID}-{title}_compressed.mp4 -> {28ID}.mp4
+            # {28ID}-{title}_compressed.mp4 -> {28ID}.mp4
             import re
             match = re.match(r'^([A-Za-z0-9]{28})(-.*)?_compressed\.mp4$', clean_key)
             if match:
@@ -320,7 +319,7 @@ class StorageService:
         Returns:
             28-character random string + extension
         """
-        # 28 （）
+        # 28 ()
         alphabet = string.ascii_letters + string.digits
         short_id = ''.join(secrets.choice(alphabet) for _ in range(28))
         
@@ -329,9 +328,9 @@ class StorageService:
             logger.warning(f"Generated ID has unexpected format: {short_id}, regenerating...")
             short_id = ''.join(secrets.choice(alphabet) for _ in range(28))
         
-        # （， URL ）
+        # URL )
         if filename:
-            #  filename  URL，
+            # filename URL,
             if filename.startswith('http'):
                 filename = filename.split('/')[-1].split('?')[0]
             ext = filename.split('.')[-1] if '.' in filename else 'jpg'
@@ -343,7 +342,7 @@ class StorageService:
         if len(ext) > 5 or not ext.isalnum():
             ext = 'jpg'
         
-        # ：ID +
+        # ID +
         return f"{short_id}.{ext}"
     
     @staticmethod

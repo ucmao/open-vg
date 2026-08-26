@@ -83,7 +83,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # CORS middleware
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 ADMIN_FRONTEND_URL = os.getenv("ADMIN_FRONTEND_URL", "http://localhost:3001")
-BACKEND_URL = os.getenv("BACKEND_URL", "")  # API （， API ）
+BACKEND_URL = os.getenv("BACKEND_URL", "")  # API (, API )
 
 #  CORS
 cors_origins = [
@@ -93,7 +93,7 @@ cors_origins = [
     "http://localhost:3001",  # Admin frontend
 ]
 
-#  API ，（ API ）
+# API , ( API )
 if BACKEND_URL:
     cors_origins.append(BACKEND_URL)
 

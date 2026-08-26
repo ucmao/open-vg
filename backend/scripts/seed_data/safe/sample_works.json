@@ -10,8 +10,14 @@
     "source": "PGC",
     "model_key": "flux2-klein-a8su",
     "model_name": "Flux2 klein",
-    "params": {"aspect_ratio": "16:9"},
-    "tags": ["nature", "landscape", "illustration"],
+    "params": {
+      "aspect_ratio": "16:9"
+    },
+    "tags": [
+      "nature",
+      "landscape",
+      "illustration"
+    ],
     "file_url": "/demo/placeholder.svg",
     "thumbnail_url": "/demo/placeholder.svg",
     "storage_key": null,

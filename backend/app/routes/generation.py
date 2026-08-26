@@ -279,10 +279,10 @@ async def check_moderation_before_generate(
             else:
                 max_severity = "LOW"
         
-        # HIGH，MEDIUMLOW（MEDIUM）
+        # HIGH, MEDIUMLOW(MEDIUM)
         can_proceed = max_severity != "HIGH"
         
-        # ： JSON，
+        # JSON,
         flagged_keywords = result.get("flagged_keywords") or []
         if flagged_keywords:
             outcome = (
@@ -318,7 +318,6 @@ async def check_moderation_before_generate(
         
     except Exception as e:
         logger.error(f"Error in moderation check: {str(e)}", exc_info=True)
-        # ，（）
         return success_response(
             data={
                 "has_violation": False,
@@ -358,7 +357,7 @@ async def create_generation(
         identity=f"user:{current_user.id}",
     )
     try:
-        from ..models.workflow import Workflow  # ， UnboundLocalError
+        from ..models.workflow import Workflow  # Import locally to avoid UnboundLocalError
         # Validate model exists (get base cost for initial check)
         try:
             base_cost = get_model_cost(request.type, request.model_name)
@@ -443,7 +442,6 @@ async def create_generation(
         
         # Convert work_type string to WorkType enum safely
         # Map string values to enum values (not enum names)
-        # ，
         work_type_map = {
             "text2img": WorkType.TEXT2IMG,
             "text-to-image": WorkType.TEXT2IMG,
@@ -540,7 +538,7 @@ async def create_generation(
             elif LexiconSeverity.MEDIUM.value in severities:
                 max_severity = "MEDIUM"
         
-        # ：， Provider API
+        # Provider API
         if max_severity == "HIGH":
             new_work.nsfw_status = NSFWStatus.BLOCKED.value
             new_work.is_shared = False
@@ -577,7 +575,7 @@ async def create_generation(
                 status_code=status.HTTP_400_BAD_REQUEST
             )
         
-        # /： PENDING，
+        # /: PENDING,
         initial_nsfw_status = NSFWStatus.APPROVED.value
         if nsfw_result.get('is_violation', False):
             initial_nsfw_status = NSFWStatus.PENDING.value
@@ -591,7 +589,6 @@ async def create_generation(
             )
             db.add(log)
         else:
-            # ：
             log = ModerationLog(
                 work_id=new_work.id,
                 moderation_type=ModerationType.NSFW,
@@ -629,14 +626,14 @@ async def create_generation(
         db.commit()
         db.refresh(new_work)
         
-        #  Celery （）
+        # Celery ()
         try:
             task = execute_workflow_task.delay(
                 work_id=new_work.id,
                 user_id=current_user.id
             )
             
-            #  Celery  ID（，）
+            # Celery ID(, )
             new_work.params["_celery_task_id"] = task.id
             from sqlalchemy.orm.attributes import flag_modified
             flag_modified(new_work, "params")
@@ -675,7 +672,7 @@ async def create_generation(
                     status_code=status.HTTP_201_CREATED
                 )
 
-            #  Celery （， Redis ）
+            # Celery (, Redis )
             import traceback
             logger.error(
                 f"Failed to queue task for work {new_work.id}: {str(e)}\n{traceback.format_exc()}"
@@ -791,7 +788,7 @@ async def get_generation_status(
                         execution_order = executor._topological_sort(valid_nodes, workflow.edges)
                         
                         if execution_order:
-                            # 1.  api_call  ID，（R2）
+                            # 1. api_call ID, (R2)
                             last_api_call_node_id = None
                             for nid in reversed(execution_order):
                                 node = executor._get_node_by_id(valid_nodes, nid)
@@ -799,7 +796,7 @@ async def get_generation_status(
                                     last_api_call_node_id = nid
                                     break
 
-                            # 2. （， 3+ ）
+                            # 2. (, 3+ )
                             class MockBackgroundTasks:
                                 def add_task(self, *args, **kwargs): pass
 
@@ -811,7 +808,7 @@ async def get_generation_status(
                                 #  ID
                                 if prediction_id and not is_success and not is_failed:
                                     poll_node = executor._get_node_by_id(valid_nodes, poll_node_id)
-                                    #  api_id（）， api_id （）
+                                    # api_id(), api_id ()
                                     if poll_node and not poll_node.get("api_id"):
                                         for nid in execution_order:
                                             cand = executor._get_node_by_id(valid_nodes, nid)
@@ -831,7 +828,7 @@ async def get_generation_status(
                                             if result.get("status") == "success":
                                                 logger.info(f"Workflow node {poll_node_id} completed via polling for work {work_id}")
                                                 from ..routes.webhook import _handle_workflow_node_webhook
-                                                #  get_status  result ， sync （ Gemini） handle_webhook  text
+                                                # get_status result , sync ( Gemini) handle_webhook text
                                                 is_final = poll_node_id == last_api_call_node_id
                                                 current_bg_tasks = background_tasks if is_final else MockBackgroundTasks()
                                                 try:

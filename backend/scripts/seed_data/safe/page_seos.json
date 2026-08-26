@@ -1,66 +1,90 @@
 [
   {
+    "id": 1,
     "page_name": "home",
     "page_path": "/",
-    "title": "VidGen — Open-Source AI Image and Video Platform",
-    "description": "Build and operate image and video generation workflows with an open-source full-stack platform.",
-    "keywords": "AI image generation, AI video generation, open source",
-    "is_enabled": true
+    "title": "Vidgen AI: Unlimited Video Generator - Ultimate VidGen Alternative",
+    "description": "Looking for Vidgen AI or VidGen? VidGenerator is the ultimate unlimited AI video and image generator. Experience accurate vision AI with this top model.",
+    "keywords": "Vidgen, Vidgen ai, Vidgen studio, Vidgeni, VidGen",
+    "is_enabled": true,
+    "created_at": "2026-01-11 16:51:19.300568+08:00",
+    "updated_at": "2026-06-03 16:01:34.560276+08:00"
   },
   {
-    "page_name": "explore",
-    "page_path": "/explore",
-    "title": "Explore AI Creations",
-    "description": "Browse safe local demonstration artwork included with VidGen.",
-    "keywords": "AI gallery, generative art",
-    "is_enabled": true
-  },
-  {
-    "page_name": "create",
-    "page_path": "/generate",
-    "title": "Create Images and Videos with AI",
-    "description": "Configure an AI provider and create images or videos from a reusable workflow.",
-    "keywords": "AI creator, workflow",
-    "is_enabled": true
-  },
-  {
+    "id": 4,
     "page_name": "blog",
     "page_path": "/blog",
-    "title": "VidGen Guides",
-    "description": "Deployment and creative workflow guides for VidGen.",
-    "keywords": "VidGen guides",
-    "is_enabled": true
+    "title": "Vidgen AI Blog: Unlimited VidGen & AI Visual Tools Creation Tips",
+    "description": "Discover master tips for Vidgen AI, VidGen, and AI Visual Tools. Use VidGenerator to unlock unlimited content creation and elevate your video and image AI skills.",
+    "keywords": "Vidgen, Vidgen ai, VidGen, AI Visual Generator, AI Generator",
+    "is_enabled": true,
+    "created_at": "2026-01-11 16:51:19.300568+08:00",
+    "updated_at": "2026-06-03 16:04:33.320662+08:00"
   },
   {
-    "page_name": "topics",
-    "page_path": "/topic",
-    "title": "AI Creation Topics",
-    "description": "Browse neutral AI creation topics and workflow ideas.",
-    "keywords": "AI topics",
-    "is_enabled": true
-  },
-  {
-    "page_name": "effects",
-    "page_path": "/effects",
-    "title": "AI Image and Video Effects",
-    "description": "Explore configurable image and video workflow effects.",
-    "keywords": "AI effects",
-    "is_enabled": true
-  },
-  {
+    "id": 8,
     "page_name": "category",
     "page_path": "/category",
-    "title": "AI Creation Categories",
-    "description": "Browse safe demonstration categories.",
-    "keywords": "AI categories",
-    "is_enabled": true
+    "title": "Get Inspired: Unlimited AI Video Styles & Collections",
+    "description": "Need ideas? Explore our curated categories of AI video masterpieces. See how creators are using VidGenerator Magic to redefine visual storytelling.",
+    "keywords": "AIGC, Category",
+    "is_enabled": true,
+    "created_at": "2026-01-24 21:01:59.801681+08:00",
+    "updated_at": "2026-02-03 11:33:38.888997+08:00"
   },
   {
+    "id": 6,
     "page_name": "templates",
     "page_path": "/templates",
-    "title": "AI Workflow Templates",
-    "description": "Start from reusable image and video workflow templates.",
-    "keywords": "AI templates",
-    "is_enabled": true
+    "title": "Free AI Video Templates | Create Videos Instantly",
+    "description": "Access our official library of AI video templates. From marketing ads to social media stories, choose a template, input your text, and let VidGen Magic do the rest.",
+    "keywords": "AIGC, Templates, Effects",
+    "is_enabled": true,
+    "created_at": "2026-01-23 19:27:30.656275+08:00",
+    "updated_at": "2026-02-03 11:34:48.024920+08:00"
+  },
+  {
+    "id": 2,
+    "page_name": "explore",
+    "page_path": "/explore",
+    "title": "Unlimited AI Content Creation & Vision AI",
+    "description": "Discover top AI generated works at vidgen, the ultimate video generator. Use VidGenerator for Unlimited vision AI and creative inspiration.",
+    "keywords": "AIGC, Explore",
+    "is_enabled": true,
+    "created_at": "2026-01-11 16:51:19.300568+08:00",
+    "updated_at": "2026-01-23 19:27:30.656275+08:00"
+  },
+  {
+    "id": 3,
+    "page_name": "create",
+    "page_path": "/generate",
+    "title": "Unlimited AI Content Creation & Video Generator",
+    "description": "Create Unlimited content with Vidgen. Our Unlimited AI Model & VidGenerator empower limitless creativity with vision AI. Start creating now.",
+    "keywords": "AIGC, Create",
+    "is_enabled": true,
+    "created_at": "2026-01-11 16:51:19.300568+08:00",
+    "updated_at": "2026-01-23 19:27:30.656275+08:00"
+  },
+  {
+    "id": 5,
+    "page_name": "topics",
+    "page_path": "/topic",
+    "title": "Trending AI Tools & Unlimited Video Innovations",
+    "description": "Discover trending AI topics with Vidgen. Leverage our Unlimited AI Model and VidGenerator for Unlimited content and the latest in vision AI tech.",
+    "keywords": "AIGC, Topics",
+    "is_enabled": true,
+    "created_at": "2026-01-11 16:51:19.300568+08:00",
+    "updated_at": "2026-01-23 19:27:30.656275+08:00"
+  },
+  {
+    "id": 7,
+    "page_name": "effects",
+    "page_path": "/effects",
+    "title": "AI Video Effects: Add Stunning Visuals Instantly",
+    "description": "Elevate your content with VidGenerator’s AI video effects. Apply cinematic filters, transitions, and AI overlays in one click. Try it for free!",
+    "keywords": "",
+    "is_enabled": true,
+    "created_at": "2026-01-24 21:01:59.801681+08:00",
+    "updated_at": "2026-02-13 11:50:25.130132+08:00"
   }
 ]

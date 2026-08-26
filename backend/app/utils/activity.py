@@ -34,4 +34,4 @@ def record_user_activity(user_id: int, db: "Session") -> None:
         return
     log = UserActivityLog(user_id=user_id, activity_date=activity_date)
     db.add(log)
-    #  commit，（login/heartbeat） commit
+    # commit, (login/heartbeat) commit

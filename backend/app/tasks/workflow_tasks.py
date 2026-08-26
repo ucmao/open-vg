@@ -1,4 +1,3 @@
-""""""
 import asyncio
 from celery import Task
 
@@ -13,10 +12,8 @@ from ..utils.logger import logger
 
 
 class WorkflowCallbackTask(Task):
-    """，"""
     
     def on_failure(self, exc, task_id, args, kwargs, einfo):
-        """"""
         work_id = kwargs.get('work_id')
         logger.error(
             f"Task {task_id} failed for work {work_id}: {exc}\n"
@@ -47,14 +44,14 @@ class WorkflowCallbackTask(Task):
 
 @celery_app.task(
     base=WorkflowCallbackTask,
-    bind=True,                   #  self（task ）
+    bind=True,                   # Pass self (task instance) as first argument
     name="execute_workflow",     #
     max_retries=3,               #  3
     default_retry_delay=60,      #  60
     autoretry_for=(Exception,),  #
     retry_backoff=True,          #
     retry_backoff_max=600,       #  10
-    retry_jitter=True,           # （）
+    retry_jitter=True,
 )
 def execute_workflow_task(self, work_id: int, user_id: int):
     """
@@ -136,7 +133,7 @@ def execute_workflow_task(self, work_id: int, user_id: int):
         
         logger.info(f"[Celery] Workflow execution initiated for work {work_id}: {result}")
         
-        #  ID ，
+        # ID ,
         prediction_id = result.get("prediction_id")
         node_id = result.get("node_id")
         
@@ -164,16 +161,14 @@ def execute_workflow_task(self, work_id: int, user_id: int):
     except Exception as e:
         logger.error(f"[Celery] Task failed for work {work_id}: {str(e)}")
         
-        # （）
         retry_count = self.request.retries
         if retry_count < self.max_retries:
-            # ：60s, 120s, 240s
+            # Retry intervals: 60s, 120s, 240s
             countdown = 60 * (2 ** retry_count)
             logger.info(f"[Celery] Retrying task for work {work_id} in {countdown}s (attempt {retry_count + 1}/{self.max_retries})")
             raise self.retry(exc=e, countdown=countdown)
         else:
-            # ，
-            # on_failure （、）
+            # on_failure (、)
             logger.error(f"[Celery] Task failed permanently for work {work_id} after {self.max_retries} retries")
             raise
             

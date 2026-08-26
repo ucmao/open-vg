@@ -209,7 +209,6 @@ async def upload_file(
                     )
                     logger.info(f"Upload video WebP thumbnail: {thumbnail_url}")
         except Exception as e:
-            # ，
             logger.warning(f"Failed to generate thumbnail for upload: {str(e)}")
             thumbnail_url = None
         

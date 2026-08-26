@@ -13,10 +13,10 @@ class CheckIn(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     
-    # （）- Check-in date (used to prevent duplicate check-ins)
+    # Check-in date (used to prevent duplicate check-ins)
     check_date = Column(Date, nullable=False, index=True)
     
-    # （）- Consecutive check-in days
+    # Consecutive check-in days
     consecutive_days = Column(Integer, default=1, nullable=False)
     
     #  - Credits earned from this check-in
@@ -28,7 +28,7 @@ class CheckIn(Base):
     #  - Relationships
     user = relationship("User", backref="checkins")
     
-    # ： - Unique constraint: one check-in per user per day
+    # Unique constraint: one check-in per user per day
     __table_args__ = (
         UniqueConstraint('user_id', 'check_date', name='uq_user_check_date'),
     )

@@ -1149,7 +1149,6 @@ def submit_share(
 
 
 class ReportWorkRequest(BaseModel):
-    """"""
     report_type: str = Field(..., description=": pornography, violence, gore, harassment, spam, copyright, other")
     reason: Optional[str] = Field(None, max_length=500, description="")
 
@@ -1176,7 +1175,6 @@ def report_work(
                 status_code=status.HTTP_404_NOT_FOUND
             )
         
-        # （）
         existing_report = db.query(Report).filter(
             Report.work_id == work_id,
             Report.reporter_id == current_user.id,

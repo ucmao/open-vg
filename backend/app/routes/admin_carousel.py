@@ -1,4 +1,4 @@
-"""Admin：（ homepage_blocks type=carousel，config.slides ， API ）"""
+"""Admin: Carousel (homepage_blocks type=carousel)."""
 from fastapi import APIRouter, Depends, status, Query
 from sqlalchemy.orm import Session
 from typing import Optional, List
@@ -20,7 +20,7 @@ def _get_carousel_block(db: Session):
 
 
 def _slide_to_dict(s: dict) -> dict:
-    """ slide ，（）。"""
+    """Slide configuration."""
     return {
         "id": s.get("id"),
         "title": s.get("title"),

@@ -39,7 +39,7 @@ from app.models.base import SessionLocal
 from app.models.work import Work, WorkStatus, ShareStatus
 from app.services.gemini_service import get_gemini_service
 
-# ： last work id
+# last work id
 CHECKPOINT_FILE = Path(__file__).parent.parent / ".backfill_work_tags_checkpoint.json"
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_DELAY_SEC = 1.5
@@ -92,7 +92,7 @@ def run(dry_run: bool, batch_size: int, delay_sec: float, limit: int, resume: bo
             if after_id > 0:
                 print(f"📌 ：last_id={after_id}\n")
 
-        # （ limit，）
+        # limit, )
         count_query = build_query(db, after_id=after_id, limit=0)
         total = count_query.count()
         if limit > 0:
@@ -148,7 +148,7 @@ def run(dry_run: bool, batch_size: int, delay_sec: float, limit: int, resume: bo
                 err_count += len(batch)
                 tag_lists = [[] for _ in batch]
 
-            # ： batch
+            # batch
             for w, tags in zip(batch, tag_lists):
                 w.tags = tags if isinstance(tags, list) else []
                 last_id = w.id

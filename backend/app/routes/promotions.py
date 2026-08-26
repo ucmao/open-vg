@@ -1,4 +1,4 @@
-"""： Banner（ homepage_blocks type=banner ，）"""
+"""Banner (homepage_blocks type=banner)."""
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, and_, or_
@@ -41,7 +41,7 @@ def _block_to_banner_item(block):
 
 @router.get("/promotions/active")
 def get_active_promotion_banners(db: Session = Depends(get_db)):
-    """Banner（）"""
+    """Banner."""
     try:
         now = datetime.now(timezone.utc)
         blocks = (

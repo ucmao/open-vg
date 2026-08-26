@@ -82,7 +82,7 @@ def get_all_generate_pages(
         )
 
 
-# Category（category_name + sort_order），/ work_type
+# Category(category_name + sort_order), / work_type
 DEFAULT_LEVEL1_CATEGORIES = [
     ("video-effects", 0),
     ("image-effects", 1),
@@ -224,10 +224,10 @@ def sync_generate_pages_from_models(
             p.id: p.category_name for p in parents if p.category_name
         }
 
-        # ：(work_type, model_key)
+        # (work_type, model_key)
         model_slugs_set: Set[Tuple[str, str]] = {(wt, mk) for wt, mk, _ in models}
 
-        # 1) ： (parent_work_type, slug)  model_slugs_set
+        # 1) : (parent_work_type, slug) model_slugs_set
         deleted_count = 0
         if parent_ids_to_sync:
             children = (
@@ -242,7 +242,7 @@ def sync_generate_pages_from_models(
                 work_type = parent_id_to_work_type.get(child.parent_id)
                 if work_type is None:
                     continue
-                # slug = page_path ， /generate/text-to-image/veo-3 -> veo-3
+                # slug = page_path , /generate/text-to-image/veo-3 -> veo-3
                 parts = (child.page_path or "").strip("/").split("/")
                 slug = parts[-1] if len(parts) >= 2 else ""
                 if (work_type, slug) not in model_slugs_set:
@@ -564,7 +564,7 @@ def delete_generate_page(
 
         category_name = page.category_name
 
-        # ，Category（ DB CASCADE）
+        # Category( DB CASCADE)
         if page.level == 1:
             children = (
                 db.query(GeneratePage)

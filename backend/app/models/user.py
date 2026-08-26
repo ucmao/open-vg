@@ -15,10 +15,10 @@ class Gender(str, Enum):
 
 class UserSource(str, Enum):
     """User registration source enumeration."""
-    REGISTER = "REGISTER"          # （）
+    REGISTER = "REGISTER"          # User registration
     GOOGLE = "GOOGLE"              # Google OAuth
     ADMIN_CREATED = "ADMIN_CREATED"  #
-    IMPORT = "IMPORT"              # （、）
+    IMPORT = "IMPORT"              # Data import
 
 
 class User(Base):
@@ -57,7 +57,7 @@ class User(Base):
     # Credits
     total_credits = Column(Integer, default=0, nullable=False)
     
-    # （）； Admin
+    # Admin permissions
     is_admin = Column(Boolean, default=False, nullable=False)
     
     # Account status

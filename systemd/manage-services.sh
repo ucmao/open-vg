@@ -3,7 +3,7 @@
 # ============================================================================
 # Vidgen Management Script
 # ============================================================================
-# :  Systemd （Backend, Celery, Frontend, Admin）
+# : Systemd (Backend, Celery, Frontend, Admin)
 # : sudo ./manage-services.sh {start|stop|restart|status|logs}
 # ============================================================================
 
@@ -13,7 +13,6 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# （）
 CORE_SERVICES=("vidgen-backend" "celery-worker" "vidgen-web" "vidgen-admin")
 
 OPTIONAL_SERVICES=("celery-beat" "flower")

@@ -378,7 +378,7 @@ def update_page_seo(
             page = PageSeo(page_name=page_name, page_path=path)
             db.add(page)
         
-        # page_path ， page_path
+        # page_path , page_path
         if request.title is not None:
             page.title = request.title
         if request.description is not None:

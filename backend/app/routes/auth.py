@@ -240,7 +240,7 @@ async def register(
             expire_at=expire_at,
         )
         
-        # ， - Grant invitation rewards if applicable
+        # Grant invitation rewards if applicable
         if inviter_id:
             reward_expiry = datetime.now(timezone.utc) + timedelta(days=INVITE_REWARD_EXPIRY_DAYS)
             
@@ -268,7 +268,7 @@ async def register(
             
             logger.info(f"Invitation rewards granted: inviter={inviter_id}, invitee={new_user.id}")
             
-            # （）- Bell notification for both (English)
+            # Bell notification for both
             create_notification(
                 db, inviter_id, NotificationType.CREDIT_UPDATE,
                 title="Referral reward",
@@ -624,7 +624,7 @@ async def google_callback(
         ).first()
         
         if user:
-            # ：，、，
+            # 、,
             # Existing user: login only, do not process or consume invite_code; code stays available for new users
             if not user.google_id:
                 user.google_id = google_id
@@ -675,7 +675,7 @@ async def google_callback(
                 )
                 db.commit()
             
-            # （）- Invitation rewards (same as email register)
+            # Invitation rewards (same as email register)
             if getattr(request, "invite_code", None):
                 invitation = db.query(Invitation).filter(
                     Invitation.invite_code == (request.invite_code or "").upper(),
@@ -708,7 +708,7 @@ async def google_callback(
                     db.refresh(user)
                     logger.info(f"Invitation rewards granted (Google signup): inviter={inviter_id}, invitee={user.id}")
                     
-                    # （）- Bell notification for both (English)
+                    # Bell notification for both
                     create_notification(
                         db, inviter_id, NotificationType.CREDIT_UPDATE,
                         title="Referral reward",

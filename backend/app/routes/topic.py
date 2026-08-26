@@ -18,7 +18,6 @@ from pydantic import BaseModel, Field
 router = APIRouter()
 
 class BatchUpdateTopicRequest(BaseModel):
-    """"""
     topic_ids: Optional[List[int]] = Field(None, description="ID")
     status: Optional[str] = Field(None, description="")
     is_featured: Optional[bool] = Field(None, description="")

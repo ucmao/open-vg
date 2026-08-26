@@ -962,7 +962,6 @@ class UpdatePromotionBannerRequest(BaseModel):
 
 # Carousel Slide Schemas
 class CreateCarouselSlideRequest(BaseModel):
-    """"""
     title: Optional[str] = Field(None, max_length=10000, description="（ HTML）")
     image_url: str = Field(..., max_length=500, description="URL（）")
     video_url: Optional[str] = Field(None, max_length=500, description="URL（）")
@@ -996,7 +995,6 @@ class UpdateCarouselSlideRequest(BaseModel):
 
 # HomepageBlock Schemas (Banner + Carousel )
 class CreateHomepageBlockRequest(BaseModel):
-    """"""
     type: str = Field(..., description="banner | carousel")
     config: dict = Field(..., description=" JSON")
     sort_order: int = Field(0, description="")

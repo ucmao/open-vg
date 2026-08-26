@@ -90,14 +90,14 @@ def daily_checkin(
                 status_code=status.HTTP_400_BAD_REQUEST
             )
         
-        # ：，； 7  1
+        # ; 7 1
         yesterday = today - timedelta(days=1)
         consecutive_before_today = _count_consecutive_days_backward(db, current_user.id, yesterday)
         raw_today = consecutive_before_today + 1
         consecutive_days = ((raw_today - 1) % CHECKIN_MAX_CONSECUTIVE) + 1  # 1~7
         
         #  - Calculate reward credits
-        #  + （）
+        # + ()
         # Base reward + consecutive bonus (capped)
         bonus_days = min(consecutive_days - 1, CHECKIN_MAX_CONSECUTIVE - 1)
         reward_credits = CHECKIN_BASE_REWARD + (CHECKIN_CONSECUTIVE_BONUS * bonus_days)
@@ -124,7 +124,7 @@ def daily_checkin(
         
         db.commit()
         
-        # （7  1 ）- Tomorrow's reward (day 1 after day 7)
+        # 7 1 )- Tomorrow's reward (day 1 after day 7)
         next_consecutive = (consecutive_days % CHECKIN_MAX_CONSECUTIVE) + 1
         next_bonus_days = min(next_consecutive - 1, CHECKIN_MAX_CONSECUTIVE - 1)
         next_reward = CHECKIN_BASE_REWARD + (CHECKIN_CONSECUTIVE_BONUS * next_bonus_days)
@@ -179,7 +179,7 @@ def get_checkin_status(
         
         has_checked_today = today_checkin is not None
         
-        # ：，； 7  1~7
+        # ; 7 1~7
         if today_checkin:
             raw = _count_consecutive_days_backward(db, current_user.id, today)
         else:
@@ -197,7 +197,7 @@ def get_checkin_status(
         
         checkin_dates = [c.check_date.isoformat() for c in recent_checkins]
         
-        # （7  1 ）- Next check-in reward (day 1 after day 7)
+        # 7 1 )- Next check-in reward (day 1 after day 7)
         next_reward = None
         if not has_checked_today:
             next_consecutive = (consecutive_days % CHECKIN_MAX_CONSECUTIVE) + 1

@@ -270,7 +270,7 @@ Please analyze the prompt content and extract the most relevant tags. Return onl
         
         self._load_config()
         
-        #  prompt， token
+        # prompt, token
         truncated = [
             (p[:max_prompt_chars] + ("..." if len(p) > max_prompt_chars else ""))
             for p in prompt_contents

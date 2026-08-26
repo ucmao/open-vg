@@ -190,9 +190,12 @@ const emit = defineEmits<{
   }): void
 }>()
 
-const adminApi = useAdminApi()
-const { toast } = useToast()
-const { getWorkImageUrl, getWorkVideoUrl, isVideoWork } = useWorkMedia()
+import { useAdminApi } from '~/composables/useAdminApi'
+import { useToast } from '~/composables/useToast'
+import { useWorkMedia } from '~/composables/useWorkMedia'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+
+const { formatDate } = useAdminTimezone()
 
 const searchQuery = ref(props.initialKeyword || '')
 const filterType = ref('') // 「Type」Filter，
@@ -328,12 +331,6 @@ const handleConfirm = () => {
 
 const handleClose = () => {
   emit('close')
-}
-
-const formatDate = (dateStr: string | null | undefined) => {
-  if (!dateStr) return ''
-  const d = new Date(dateStr)
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 watch(() => props.isOpen, (open) => {

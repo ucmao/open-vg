@@ -83,7 +83,7 @@ def admin_login(
         admin.last_login = datetime.now(timezone.utc)
         db.commit()
 
-        # Generate JWT token -  sub ， token
+        # Generate JWT token - sub , token
         access_token = create_access_token(
             data={
                 "sub": f"admin:{admin.id}",
