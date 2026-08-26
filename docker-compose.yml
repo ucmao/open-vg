@@ -49,8 +49,6 @@ services:
       - CONFIG_ENCRYPTION_KEY=${CONFIG_ENCRYPTION_KEY:-local-development-only-config-key}
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/vidgen
       - REDIS_URL=redis://redis:6379/0
-      - SEED_PROFILE=${SEED_PROFILE:-safe}
-      - ALLOW_UNSAFE_FULL_SEED=${ALLOW_UNSAFE_FULL_SEED:-false}
       - BACKEND_URL=http://localhost:8000
       - FRONTEND_URL=http://localhost:3000
       - ADMIN_FRONTEND_URL=http://localhost:3001

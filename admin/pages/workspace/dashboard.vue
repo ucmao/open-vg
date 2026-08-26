@@ -534,6 +534,10 @@ const retentionGrowth = computed(() => {
   return Math.round(((c - p) / p) * 100)
 })
 
+const payRateGrowth = payingUsersGrowth
+const payRateText = payingUsersRate
+const retentionRateText = retentionText
+
 async function loadSnapshot() {
   try {
     const res = await adminApi.get(`/api/admin/stats/snapshot?timezone=${encodeURIComponent(timezone.value)}`)

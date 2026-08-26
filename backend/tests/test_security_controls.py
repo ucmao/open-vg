@@ -17,8 +17,8 @@ from app.utils import rate_limit
 from app.utils.auth import create_access_token, get_current_user
 
 
-def make_request(ip: str = "203.0.113.10") -> Request:
-    return Request({"type": "http", "client": (ip, 1234), "headers": []})
+def make_request(ip: str = "203.0.113.10", headers: list[tuple[bytes, bytes]] | None = None) -> Request:
+    return Request({"type": "http", "client": (ip, 1234), "headers": headers or []})
 
 
 def make_websocket(headers: list[tuple[bytes, bytes]]) -> WebSocket:
@@ -58,6 +58,67 @@ class RateLimitTests(unittest.TestCase):
             with self.assertRaises(HTTPException) as raised:
                 rate_limit.enforce_rate_limit(make_request(), "test", 1, 60)
         self.assertEqual(raised.exception.status_code, 503)
+
+    def test_get_client_ip_ignores_headers_when_not_trusted(self):
+        request = make_request(
+            ip="203.0.113.10",
+            headers=[
+                (b"x-real-ip", b"198.51.100.22"),
+                (b"x-forwarded-for", b"198.51.100.33, 198.51.100.44"),
+            ],
+        )
+        with patch.dict(os.environ, {"TRUST_PROXY_HEADERS": "false"}):
+            self.assertEqual(rate_limit.get_client_ip(request), "203.0.113.10")
+
+    def test_get_client_ip_prioritizes_x_real_ip_when_trusted(self):
+        request = make_request(
+            ip="127.0.0.1",
+            headers=[
+                (b"x-real-ip", b"198.51.100.22"),
+                (b"x-forwarded-for", b"1.2.3.4, 198.51.100.33"),
+            ],
+        )
+        with patch.dict(os.environ, {"TRUST_PROXY_HEADERS": "true"}):
+            self.assertEqual(rate_limit.get_client_ip(request), "198.51.100.22")
+
+    def test_get_client_ip_uses_rightmost_xff_ip_to_prevent_spoofing(self):
+        request = make_request(
+            ip="127.0.0.1",
+            headers=[
+                (b"x-forwarded-for", b"1.2.3.4, 198.51.100.55"),
+            ],
+        )
+        with patch.dict(os.environ, {"TRUST_PROXY_HEADERS": "true"}):
+            self.assertEqual(rate_limit.get_client_ip(request), "198.51.100.55")
+
+    @patch("app.utils.rate_limit.get_redis", return_value=None)
+    def test_write_endpoint_rate_limit_configs(self, _get_redis):
+        from app.routes import comments, invitation, works, payment
+
+        request = make_request()
+        user = MagicMock(id=101)
+        db = MagicMock()
+
+        with patch.object(comments, "COMMENT_RATE_LIMIT", 1):
+            with patch.dict(os.environ, {"ENVIRONMENT": "development"}):
+                comments.create_comment(work_id=1, request=MagicMock(parent_id=None, content="hi"), http_request=request, current_user=user, db=db)
+                with self.assertRaises(HTTPException) as raised:
+                    comments.create_comment(work_id=1, request=MagicMock(parent_id=None, content="hi"), http_request=request, current_user=user, db=db)
+                self.assertEqual(raised.exception.status_code, 429)
+
+        with patch.object(invitation, "INVITE_VERIFY_RATE_LIMIT", 1):
+            with patch.dict(os.environ, {"ENVIRONMENT": "development"}):
+                invitation.verify_invite_code(invite_code="TEST1234", http_request=request, db=db)
+                with self.assertRaises(HTTPException) as raised:
+                    invitation.verify_invite_code(invite_code="TEST1234", http_request=request, db=db)
+                self.assertEqual(raised.exception.status_code, 429)
+
+        with patch.object(works, "WORK_INTERACTION_RATE_LIMIT", 1):
+            with patch.dict(os.environ, {"ENVIRONMENT": "development"}):
+                works.toggle_like(work_id=1, http_request=request, current_user=user, db=db)
+                with self.assertRaises(HTTPException) as raised:
+                    works.toggle_like(work_id=1, http_request=request, current_user=user, db=db)
+                self.assertEqual(raised.exception.status_code, 429)
 
 
 class VerificationCodeSafetyTests(unittest.TestCase):

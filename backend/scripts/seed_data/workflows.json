@@ -5154,167 +5154,6 @@
     "created_by": 1
   },
   {
-    "id": 92,
-    "name": "gpt-image-2",
-    "description": "gpt-image-2",
-    "work_type": "image-to-image",
-    "nodes": [
-      {
-        "id": "node_1776837059540",
-        "type": "api_call",
-        "api_id": 25,
-        "position": {
-          "x": 400.0,
-          "y": 200.0
-        },
-        "data": {
-          "preset_params": {},
-          "param_mappings": {
-            "prompt": "$.user_input.prompt",
-            "aspect_ratio": "$.user_input.aspect_ratio",
-            "input_images": "$.user_input.input_images",
-            "quality": "$.user_input.quality"
-          },
-          "params_visibility": {
-            "prompt": true,
-            "openai_api_key": false,
-            "aspect_ratio": true,
-            "input_images": true,
-            "number_of_images": false,
-            "quality": true,
-            "background": false,
-            "output_compression": false,
-            "output_format": false,
-            "moderation": false,
-            "user_id": false
-          },
-          "value": null,
-          "label": "Gpt Image 2",
-          "param_name": null,
-          "api_id": 25,
-          "provider": "replicate",
-          "params_schema": {
-            "prompt": {
-              "type": "text",
-              "name": "Prompt",
-              "required": true,
-              "multiline": true,
-              "placeholder": "A text description of the desired image, generation content or image editing instructions",
-              "description": "Text prompt for image generation and image editing"
-            },
-            "openai_api_key": {
-              "type": "string",
-              "name": "OpenAI API Key",
-              "required": false,
-              "visible": false,
-              "description": "Your OpenAI API key (optional - uses proxy if not provided)"
-            },
-            "aspect_ratio": {
-              "type": "string",
-              "name": "Aspect Ratio",
-              "default": "1:1",
-              "options": [
-                "1:1",
-                "3:2",
-                "2:3"
-              ],
-              "description": "The aspect ratio of the generated image"
-            },
-            "input_images": {
-              "type": "file[]",
-              "name": "Input Images",
-              "required": false,
-              "default": [],
-              "description": "A list of images to use as input for image generation, style transfer and image editing"
-            },
-            "number_of_images": {
-              "type": "integer",
-              "name": "Number Of Images",
-              "default": 1,
-              "min": 1,
-              "max": 10,
-              "description": "Number of images to generate in a single request (1-10)"
-            },
-            "quality": {
-              "type": "string",
-              "name": "Quality",
-              "default": "auto",
-              "options": [
-                "auto",
-                "low",
-                "medium",
-                "high"
-              ],
-              "description": "The quality of the generated image, lower quality is faster and cheaper"
-            },
-            "background": {
-              "type": "string",
-              "name": "Background",
-              "default": "auto",
-              "options": [
-                "auto",
-                "opaque"
-              ],
-              "description": "Set whether the background is transparent or opaque or choose automatically. GPT Image 2 does not support transparent backgrounds."
-            },
-            "output_compression": {
-              "type": "integer",
-              "name": "Output Compression",
-              "default": 90,
-              "min": 0,
-              "max": 100,
-              "description": "Image compression level (0-100%)"
-            },
-            "output_format": {
-              "type": "string",
-              "name": "Output Format",
-              "default": "webp",
-              "options": [
-                "webp",
-                "png",
-                "jpeg"
-              ],
-              "description": "Output image file format"
-            },
-            "moderation": {
-              "type": "string",
-              "name": "Moderation",
-              "default": "auto",
-              "options": [
-                "auto",
-                "low"
-              ],
-              "description": "Content moderation level, low for less strict content filtering"
-            },
-            "user_id": {
-              "type": "text",
-              "name": "User ID",
-              "required": false,
-              "multiline": true,
-              "placeholder": "An optional unique identifier representing your end-user",
-              "description": "Unique end-user identifier, helps OpenAI monitor and detect abuse"
-            }
-          },
-          "param_defaults": {
-            "moderation": "auto",
-            "output_format": "webp",
-            "output_compression": 90,
-            "background": "auto",
-            "number_of_images": 1
-          },
-          "output_type": "image",
-          "provider_model_id": "openai/gpt-image-2"
-        }
-      }
-    ],
-    "edges": [],
-    "viewport": null,
-    "is_active": true,
-    "created_at": "2026-04-22 13:51:36.615616+08:00",
-    "updated_at": "2026-04-22 13:51:36.615616+08:00",
-    "created_by": 1
-  },
-  {
     "id": 57,
     "name": "Seedance 1.5 Pro",
     "description": "Seedance 1.5 Pro",
@@ -5748,7 +5587,7 @@
     "id": 63,
     "name": "Qwen Image Edit",
     "description": "Qwen Image Edit",
-    "work_type": "text-to-image",
+    "work_type": "image-to-image",
     "nodes": [
       {
         "id": "node_1769660872253",
@@ -6255,7 +6094,7 @@
               "description": "A text description of the image you want to generate"
             },
             "image_input": {
-              "type": "file[]",
+              "type": "array",
               "name": "Image Input",
               "default": [],
               "description": "Input images to transform or use as reference (supports up to 14 images)"
@@ -6872,7 +6711,7 @@
               "description": "Text prompt for image generation"
             },
             "image_input": {
-              "type": "file[]",
+              "type": "array",
               "name": "Image Input",
               "default": [],
               "description": "Input image(s) for image-to-image generation. List of 1-14 images for single or multi-reference generation."
@@ -7244,21 +7083,21 @@
               "description": "生成的视频终止尾帧图片。必须配合首帧图片 (image) 一起使用。"
             },
             "reference_images": {
-              "type": "file_array",
+              "type": "array",
               "name": "参考图片集 (Reference Images)",
               "required": false,
               "default": [],
               "description": "参考图片列表（最多 30 张），Prompt 中可用 [Image1]、[Image2] 引用。不可与首尾帧图片同时使用。"
             },
             "reference_videos": {
-              "type": "file_array",
+              "type": "array",
               "name": "参考视频集 (Reference Videos)",
               "required": false,
               "default": [],
               "description": "参考视频列表（最多 10 个，总时长不超过 30 秒），Prompt 中可用 [Video1] 引用。"
             },
             "reference_audios": {
-              "type": "file_array",
+              "type": "array",
               "name": "参考音频集 (Reference Audios)",
               "required": false,
               "default": [],
@@ -7586,7 +7425,7 @@
               "description": "Text prompt for image generation"
             },
             "image_input": {
-              "type": "file[]",
+              "type": "array",
               "name": "Image Input",
               "default": [],
               "description": "Input image(s) for image-to-image generation. List of 1-14 images for single or multi-reference generation."
@@ -8993,7 +8832,7 @@
               "description": "Describe elements to avoid in the generated video."
             },
             "audio": {
-              "type": "file",
+              "type": "image",
               "name": "Audio File",
               "required": false,
               "description": "Optional: Audio file (wav/mp3, 3-30s) for voice or music synchronization."
@@ -9903,7 +9742,7 @@
               "description": "The aspect ratio of the generated image"
             },
             "input_images": {
-              "type": "file[]",
+              "type": "array",
               "name": "Input Images",
               "required": false,
               "default": [],

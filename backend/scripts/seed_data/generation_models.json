@@ -166,38 +166,6 @@
     "badge": "new"
   },
   {
-    "id": 129,
-    "model_key": "g-jkl9",
-    "name": "GPT Image 2",
-    "description": "",
-    "cost": 15,
-    "is_active": true,
-    "sort_order": 0,
-    "params_config": {
-      "aspect_ratio": {},
-      "quality": {
-        "cost_additions": {
-          "auto": 0,
-          "low": 0,
-          "medium": 5,
-          "high": 5
-        }
-      }
-    },
-    "notes": "",
-    "created_at": "2026-04-22 15:07:26.687557+08:00",
-    "updated_at": "2026-04-22 15:10:04.878691+08:00",
-    "created_by": 1,
-    "example_galleries": [],
-    "model_level": "",
-    "category": "",
-    "work_type": "image-to-image",
-    "is_featured": true,
-    "workflow_id": 92,
-    "icon_url": "https://cdn.vidgenerator.ai/usoXYyCHKrXBNakJsnSbRN0vlkE0.png",
-    "badge": null
-  },
-  {
     "id": 131,
     "model_key": "s-6dbn",
     "name": "Seedance 2.5",
@@ -1201,7 +1169,7 @@
     "example_galleries": [],
     "model_level": "",
     "category": "",
-    "work_type": "text-to-image",
+    "work_type": "image-to-image",
     "is_featured": true,
     "workflow_id": 63,
     "icon_url": "https://cdn.vidgenerator.ai/idYfyviejDv8qGH84McHZMnrPMKW.webp",

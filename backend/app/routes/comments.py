@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 from typing import Optional
@@ -11,8 +11,12 @@ from ..models.schemas import CreateCommentRequest, CommentResponse
 from ..utils.auth import get_current_active_user, get_current_user_optional
 from ..utils.responses import success_response, error_response, paginated_response
 from ..utils.logger import logger
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 router = APIRouter()
+
+COMMENT_RATE_LIMIT = env_limit("COMMENT_RATE_LIMIT", 10)
+COMMENT_RATE_WINDOW = env_limit("COMMENT_RATE_WINDOW_SECONDS", 60)
 
 
 @router.get("/works/{work_id}/comments")
@@ -85,12 +89,20 @@ def get_comments(
 def create_comment(
     work_id: int,
     request: CreateCommentRequest,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """
     Create a comment on a work.
     """
+    enforce_rate_limit(
+        http_request,
+        "comment:user",
+        COMMENT_RATE_LIMIT,
+        COMMENT_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         # Check if work exists
         work = db.query(Work).filter(Work.id == work_id).first()

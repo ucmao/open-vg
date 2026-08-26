@@ -774,7 +774,7 @@
         "description": "Describe elements to avoid in the generated video."
       },
       "audio": {
-        "type": "file",
+        "type": "image",
         "name": "Audio File",
         "required": false,
         "description": "Optional: Audio file (wav/mp3, 3-30s) for voice or music synchronization."
@@ -848,7 +848,7 @@
         "description": "A text description of the image you want to generate"
       },
       "image_input": {
-        "type": "file[]",
+        "type": "array",
         "name": "Image Input",
         "default": [],
         "description": "Input images to transform or use as reference (supports up to 14 images)"
@@ -937,7 +937,7 @@
         "description": "Text prompt for image generation"
       },
       "image_input": {
-        "type": "file[]",
+        "type": "array",
         "name": "Image Input",
         "default": [],
         "description": "Input image(s) for image-to-image generation. List of 1-14 images for single or multi-reference generation."
@@ -1043,7 +1043,7 @@
         "description": "The aspect ratio of the generated image"
       },
       "input_images": {
-        "type": "file[]",
+        "type": "array",
         "name": "Input Images",
         "required": false,
         "default": [],
@@ -1206,21 +1206,21 @@
         "description": "Ending frame image for the generated video. Must be used together with the starting frame image (image)."
       },
       "reference_images": {
-        "type": "file_array",
+        "type": "array",
         "name": "Reference Images",
         "required": false,
         "default": [],
         "description": "List of reference images (max 30). Reference via [Image1], [Image2] in the Prompt. Cannot be used together with start‑end frame images."
       },
       "reference_videos": {
-        "type": "file_array",
+        "type": "array",
         "name": "Reference Videos",
         "required": false,
         "default": [],
         "description": "List of reference videos (max 10, total duration ≤ 30 seconds). Reference via [Video1] in the Prompt."
       },
       "reference_audios": {
-        "type": "file_array",
+        "type": "array",
         "name": "Reference Audios",
         "required": false,
         "default": [],

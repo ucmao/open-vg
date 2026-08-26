@@ -1341,7 +1341,7 @@ const imageParamKeys = computed(() => {
   if (!currentModelConfig.value?.params) return []
   return Object.keys(currentModelConfig.value.params).filter(key => {
     const config = currentModelConfig.value.params[key]
-    return (config.type === 'image' || config.type === 'video' || config.type === 'array') && config.visible !== false
+    return (['image', 'video', 'array', 'file', 'file[]', 'file_array', 'image[]', 'video[]'].includes(config.type)) && config.visible !== false
   })
 })
 
@@ -1438,7 +1438,7 @@ const updateDefaultParams = (preserve = false) => {
 
   Object.entries(config.params).forEach(([key, p]: [string, any]) => {
     // When preserving: only replace image/video if current value equals the *previous model's* default (so user-uploaded/pasted URLs are kept)
-    const isImageOrVideo = p.type === 'image' || p.type === 'video'
+    const isImageOrVideo = p.type === 'image' || p.type === 'video' || p.type === 'file'
     const currentVal = form.params[key]
     const wasPreviousModelDefault = isImageOrVideo && typeof currentVal === 'string' && currentVal === defaultImageUrlsByParam.value[key]
     const shouldPreserve = preserve && currentVal !== undefined && !wasPreviousModelDefault
@@ -1447,7 +1447,7 @@ const updateDefaultParams = (preserve = false) => {
       newParams[key] = form.params[key]
       if (isImageOrVideo && typeof form.params[key] === 'string' && (form.params[key].startsWith('http') || form.params[key].startsWith('data:image'))) {
         newPreviews[key] = form.params[key]
-      } else if (p.type === 'array' && form.params[key]) {
+      } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(p.type) && form.params[key]) {
         // Preserve array value and show first item as preview
         const arrayValue = getArrayValue(key)
         if (arrayValue.length > 0) {
@@ -1459,9 +1459,9 @@ const updateDefaultParams = (preserve = false) => {
       }
     } else {
       newParams[key] = p.default
-      if ((p.type === 'image' || p.type === 'video') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:image') || p.default.startsWith('data:video'))) {
+      if ((p.type === 'image' || p.type === 'video' || p.type === 'file') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:image') || p.default.startsWith('data:video'))) {
         newPreviews[key] = p.default
-      } else if (p.type === 'array' && p.default) {
+      } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(p.type) && p.default) {
         // Handle array default value
         let defaultArray: string[] = []
         if (Array.isArray(p.default)) {
@@ -2609,9 +2609,9 @@ const handleRemixEvent = async (event: Event) => {
   if (targetModel?.params) {
     Object.entries(targetModel.params).forEach(([key, p]: [string, any]) => {
       newParams[key] = p.default
-      if ((p.type === 'image' || p.type === 'video') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:image') || p.default.startsWith('data:video'))) {
+      if ((p.type === 'image' || p.type === 'video' || p.type === 'file') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:image') || p.default.startsWith('data:video'))) {
         newPreviews[key] = p.default
-      } else if (p.type === 'array' && p.default) {
+      } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(p.type) && p.default) {
         // Handle array default value
         let defaultArray: string[] = []
         if (Array.isArray(p.default)) {
@@ -2642,7 +2642,7 @@ const handleRemixEvent = async (event: Event) => {
   const nextDefaults: Record<string, string> = {}
   if (targetModel?.params) {
     Object.entries(targetModel.params).forEach(([key, p]: [string, any]) => {
-      if ((p.type === 'image' || p.type === 'video') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:'))) {
+      if ((p.type === 'image' || p.type === 'video' || p.type === 'file') && typeof p.default === 'string' && (p.default.startsWith('http') || p.default.startsWith('data:'))) {
         nextDefaults[key] = p.default
       }
     })
@@ -2667,9 +2667,9 @@ const handleRemixEvent = async (event: Event) => {
       if (paramConfig) {
         form.params[key] = normalizedValue
         // Update preview for image/video params
-        if ((paramConfig.type === 'image' || paramConfig.type === 'video') && typeof normalizedValue === 'string' && (normalizedValue.startsWith('http') || normalizedValue.startsWith('data:image') || normalizedValue.startsWith('data:video'))) {
+        if ((paramConfig.type === 'image' || paramConfig.type === 'video' || paramConfig.type === 'file') && typeof normalizedValue === 'string' && (normalizedValue.startsWith('http') || normalizedValue.startsWith('data:image') || normalizedValue.startsWith('data:video'))) {
           form.image_previews[key] = normalizedValue
-        } else if (paramConfig.type === 'array') {
+        } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(paramConfig.type)) {
           // Handle array type restoration
           let arrayValue: string[] = []
           if (Array.isArray(normalizedValue)) {

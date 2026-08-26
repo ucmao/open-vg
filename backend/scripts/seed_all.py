@@ -99,11 +99,10 @@ def main():
 
     print(flush=True)
 
-    # Step 3: Import the selected profile (safe by default).
-    profile = os.getenv("SEED_PROFILE", "safe").strip().lower()
+    # Step 3: Import seed dataset
     if not run_command(
         ["scripts/import_seed_dataset.py"],
-        f"Importing '{profile}' Seed Dataset",
+        "Importing Seed Dataset",
     ):
         return False
 
@@ -111,7 +110,7 @@ def main():
     print("=" * 68, flush=True)
     print("🎉 VIDGEN MASTER SEED & CONTAINER INITIALIZATION COMPLETED!", flush=True)
     print("=" * 68, flush=True)
-    print(f"  🌐 Web Frontend: http://localhost:3000 (seed profile: {profile})", flush=True)
+    print("  🌐 Web Frontend: http://localhost:3000", flush=True)
     print("  🔑 Admin Login:  http://localhost:3001 (see the admin creation log above)", flush=True)
     print("  🐍 Backend API:   http://localhost:8000/docs", flush=True)
     print("=" * 68, flush=True)

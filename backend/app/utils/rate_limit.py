@@ -54,10 +54,17 @@ def get_client_ip(request: Request) -> str:
     if os.getenv("TRUST_PROXY_HEADERS", "false").lower() not in {"1", "true", "yes", "on"}:
         return direct_ip
 
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip:
+        try:
+            return str(ipaddress.ip_address(real_ip.strip()))
+        except ValueError:
+            pass
+
     candidate = request.headers.get("cf-connecting-ip")
     if not candidate:
         forwarded = request.headers.get("x-forwarded-for", "")
-        candidate = forwarded.split(",", 1)[0].strip() if forwarded else ""
+        candidate = forwarded.split(",")[-1].strip() if forwarded else ""
     if not candidate:
         return direct_ip
     try:

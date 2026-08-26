@@ -195,6 +195,9 @@ import { useToast } from '~/composables/useToast'
 import { useWorkMedia } from '~/composables/useWorkMedia'
 import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
+const adminApi = useAdminApi()
+const { toast } = useToast()
+const { getWorkImageUrl, getWorkVideoUrl, isVideoWork } = useWorkMedia()
 const { formatDate } = useAdminTimezone()
 
 const searchQuery = ref(props.initialKeyword || '')

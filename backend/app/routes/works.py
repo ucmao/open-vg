@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, Request, status, Query
 from fastapi.responses import StreamingResponse
 import httpx
 from sqlalchemy.orm import Session
@@ -18,8 +18,14 @@ from ..utils.logger import logger
 from ..utils.work_metadata import generate_work_title, generate_work_description
 from ..models.schemas import SubmitShareRequest, UpdateWorkRequest
 from ..services.storage import get_storage_service
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 router = APIRouter()
+
+WORK_INTERACTION_RATE_LIMIT = env_limit("WORK_INTERACTION_RATE_LIMIT", 30)
+WORK_INTERACTION_RATE_WINDOW = env_limit("WORK_INTERACTION_RATE_WINDOW_SECONDS", 60)
+WORK_REPORT_RATE_LIMIT = env_limit("WORK_REPORT_RATE_LIMIT", 10)
+WORK_REPORT_RATE_WINDOW = env_limit("WORK_REPORT_RATE_WINDOW_SECONDS", 60)
 
 
 @router.get("")
@@ -805,12 +811,20 @@ def get_work_forks(
 @router.post("/{work_id}/like")
 def toggle_like(
     work_id: int,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """
     Toggle like status for a work.
     """
+    enforce_rate_limit(
+        http_request,
+        "work_interaction:user",
+        WORK_INTERACTION_RATE_LIMIT,
+        WORK_INTERACTION_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         work = db.query(Work).filter(
             Work.id == work_id,
@@ -877,12 +891,20 @@ def toggle_like(
 @router.post("/{work_id}/favorite")
 def toggle_favorite(
     work_id: int,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """
     Toggle favorite status for a work.
     """
+    enforce_rate_limit(
+        http_request,
+        "work_interaction:user",
+        WORK_INTERACTION_RATE_LIMIT,
+        WORK_INTERACTION_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         work = db.query(Work).filter(
             Work.id == work_id,
@@ -1157,12 +1179,20 @@ class ReportWorkRequest(BaseModel):
 def report_work(
     work_id: int,
     request: ReportWorkRequest,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """
     Report work
     """
+    enforce_rate_limit(
+        http_request,
+        "work_report:user",
+        WORK_REPORT_RATE_LIMIT,
+        WORK_REPORT_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         work = db.query(Work).filter(
             Work.id == work_id,

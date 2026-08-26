@@ -1,5 +1,5 @@
 """Invitation routes for referral system."""
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 import random
@@ -15,6 +15,7 @@ from ..models.credit_record import CreditRecord, CreditType
 from ..utils.auth import get_current_user
 from ..utils.responses import success_response, error_response
 from ..utils.logger import logger
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 load_dotenv()
 
@@ -23,6 +24,8 @@ router = APIRouter()
 #  - Invitation reward configuration
 INVITE_REWARD_INVITER = int(os.getenv("INVITE_REWARD_INVITER", "10"))
 INVITE_REWARD_INVITEE = int(os.getenv("INVITE_REWARD_INVITEE", "10"))
+INVITE_VERIFY_RATE_LIMIT = env_limit("INVITE_VERIFY_RATE_LIMIT", 10)
+INVITE_VERIFY_RATE_WINDOW = env_limit("INVITE_VERIFY_RATE_WINDOW_SECONDS", 60)
 INVITE_CODE_LENGTH = int(os.getenv("INVITE_CODE_LENGTH", "8"))
 INVITE_REWARD_EXPIRY_DAYS = int(os.getenv("INVITE_REWARD_EXPIRY_DAYS", "90"))
 
@@ -205,6 +208,7 @@ def get_invitation_stats(
 @router.get("/invitation/verify/{invite_code}")
 def verify_invite_code(
     invite_code: str,
+    http_request: Request,
     db: Session = Depends(get_db)
 ):
     """
@@ -212,6 +216,12 @@ def verify_invite_code(
     
     This endpoint doesn't require authentication (used during registration).
     """
+    enforce_rate_limit(
+        http_request,
+        "invite:verify",
+        INVITE_VERIFY_RATE_LIMIT,
+        INVITE_VERIFY_RATE_WINDOW,
+    )
     try:
         invitation = db.query(Invitation).filter(
             Invitation.invite_code == invite_code.upper(),

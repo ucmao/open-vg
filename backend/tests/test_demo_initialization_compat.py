@@ -42,7 +42,7 @@ def test_seed_sanitizer_replaces_domains_in_nested_content():
 
     assert sanitized["url"] == "http://localhost:3000/generate"
     assert sanitized["nested"] == [
-        "/demo/placeholder.svg",
+        "https://cdn.vidgenerator.ai/image.webp",
         "localhost:3000",
         "http://localhost:3000/topic/demo",
         "admin@example.com",
@@ -50,27 +50,9 @@ def test_seed_sanitizer_replaces_domains_in_nested_content():
     assert not contains_production_domain(sanitized)
 
 
-def test_seed_sanitizer_keeps_external_media_only_with_explicit_opt_in():
+def test_seed_sanitizer_preserves_external_media():
     source = {"thumbnail_url": "https://media.example.test/demo.webp"}
-
-    assert sanitize_seed_data(source)["thumbnail_url"] == "/demo/placeholder.svg"
-    assert sanitize_seed_data(
-        source,
-        allow_external_media=True,
-    )["thumbnail_url"] == source["thumbnail_url"]
-
-
-def test_safe_seed_profile_contains_only_local_neutral_demo_media():
-    seed_dir = Path(__file__).resolve().parents[1] / "scripts" / "seed_data" / "safe"
-    with (seed_dir / "sample_works.json").open(encoding="utf-8") as file_handle:
-        works = json.load(file_handle)
-    with (seed_dir / "blog_posts.json").open(encoding="utf-8") as file_handle:
-        blog_posts = json.load(file_handle)
-
-    assert works
-    assert blog_posts == []
-    assert all(work["file_url"].startswith("/demo/") for work in works)
-    assert all(work["thumbnail_url"].startswith("/demo/") for work in works)
+    assert sanitize_seed_data(source)["thumbnail_url"] == source["thumbnail_url"]
 
 
 def test_seed_sanitizer_redacts_and_disables_tracking_code():

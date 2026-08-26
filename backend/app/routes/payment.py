@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status, Query, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, Request, status, Query, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from ..models.base import get_db
@@ -17,8 +17,12 @@ from ..utils.logger import logger, log_payment
 from ..services.paypal_service import get_paypal_service
 from ..services.stripe_service import get_stripe_service
 from ..services.email import send_recharge_success_email
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 router = APIRouter()
+
+PAYMENT_CREATE_RATE_LIMIT = env_limit("PAYMENT_CREATE_RATE_LIMIT", 10)
+PAYMENT_CREATE_RATE_WINDOW = env_limit("PAYMENT_CREATE_RATE_WINDOW_SECONDS", 60)
 
 
 def _complete_payment_order_and_notify(
@@ -113,12 +117,20 @@ async def get_payment_tiers(db: Session = Depends(get_db)):
 @router.post("/create")
 async def create_payment(
     request: CreatePaymentRequest,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """
-    Create a PayPal payment order for credit purchase.
+    Create a payment order for credit purchase.
     """
+    enforce_rate_limit(
+        http_request,
+        "payment:create",
+        PAYMENT_CREATE_RATE_LIMIT,
+        PAYMENT_CREATE_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         # Validate credits and get amount from database
         package = db.query(RechargePackage).filter(

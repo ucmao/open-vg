@@ -93,7 +93,7 @@ def _sanitize_external_media(value: str, field_name: str | None) -> str:
 def sanitize_seed_data(
     value: Any,
     *,
-    allow_external_media: bool = False,
+    allow_external_media: bool = True,
     field_name: str | None = None,
 ) -> Any:
     """Recursively replace the production domain and sensitive keys in arbitrary JSON-compatible data."""
@@ -103,7 +103,7 @@ def sanitize_seed_data(
         value = SITE_ORIGIN_PATTERN.sub(DEMO_ORIGIN, value)
         value = BARE_SITE_DOMAIN_PATTERN.sub(DEMO_HOST, value)
         value = sanitize_tracking_code(value)
-        return value if allow_external_media else _sanitize_external_media(value, field_name)
+        return value
     if isinstance(value, list):
         return [
             sanitize_seed_data(

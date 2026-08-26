@@ -116,7 +116,7 @@ class="flex-1 min-h-0 overflow-y-auto custom-scrollbar md:overflow-y-auto overfl
                   {{ formatKey(key) }}
                   <span v-if="currentModelConfig.params[key].required" class="text-[8px] text-[#8E919E]/50 font-normal ml-0.5">*</span>
                 </span>
-                <span v-if="currentModelConfig.params[key].type !== 'image' && currentModelConfig.params[key].type !== 'video' && currentModelConfig.params[key].type !== 'text' && currentModelConfig.params[key].type !== 'bool' && currentModelConfig.params[key].type !== 'array' && !isSeedParam(key)" class="text-[#F5F5F7] font-mono font-black text-[12px]">{{ form.params[key] }}{{ currentModelConfig.params[key].unit || '' }}</span>
+                <span v-if="!['image', 'video', 'file', 'text', 'bool', 'array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(currentModelConfig.params[key].type) && !isSeedParam(key)" class="text-[#F5F5F7] font-mono font-black text-[12px]">{{ form.params[key] }}{{ currentModelConfig.params[key].unit || '' }}</span>
               </label>
               
               <!-- Seed Input (special handling - no slider) -->
@@ -249,14 +249,14 @@ class="flex-1 min-h-0 overflow-y-auto custom-scrollbar md:overflow-y-auto overfl
               </button>
 
               <!-- Additional Image/Video Input (hidden file input + custom click area to avoid browser locale text like "") -->
-              <div v-else-if="currentModelConfig.params[key].type === 'image' || currentModelConfig.params[key].type === 'video'" class="space-y-3">
+              <div v-else-if="currentModelConfig.params[key].type === 'image' || currentModelConfig.params[key].type === 'video' || currentModelConfig.params[key].type === 'file'" class="space-y-3">
                 <div 
                   class="relative w-full aspect-[21/9] rounded-xl bg-black/40 border border-dashed border-white/10 overflow-hidden group hover:border-violet-500/50 transition-colors cursor-pointer"
                   :class="{ 'border-solid border-violet-500/50': getMediaPreviewUrl(key) }"
                   @click="triggerSingleImageInput(key)"
                 >
                   <div v-if="getMediaPreviewUrl(key)" class="relative w-full h-full pointer-events-none">
-                    <img v-if="currentModelConfig.params[key].type === 'image' || isImageUrl(getMediaPreviewUrl(key))" :src="getMediaPreviewUrl(key)" class="w-full h-full object-contain" />
+                    <img v-if="currentModelConfig.params[key].type === 'image' || currentModelConfig.params[key].type === 'file' || isImageUrl(getMediaPreviewUrl(key))" :src="getMediaPreviewUrl(key)" class="w-full h-full object-contain" />
                     <video
                       v-else
                       :src="getMediaPreviewUrl(key)"
@@ -278,7 +278,7 @@ class="flex-1 min-h-0 overflow-y-auto custom-scrollbar md:overflow-y-auto overfl
                   <input
                     :ref="el => { if (el) singleImageFileInputs[String(key)] = el as HTMLInputElement }"
                     type="file"
-                    :accept="currentModelConfig.params[key].type === 'image' ? 'image/*' : 'video/*'"
+                    :accept="(currentModelConfig.params[key].type === 'image' || currentModelConfig.params[key].type === 'file') ? 'image/*' : 'video/*'"
                     class="hidden"
                     :multiple="currentModelConfig.params[key].multiple"
                     @change="(e) => handleAdditionalImageUpload(e, key)"
@@ -296,7 +296,7 @@ class="flex-1 min-h-0 overflow-y-auto custom-scrollbar md:overflow-y-auto overfl
               </div>
 
               <!-- Array Input (Multiple Images) -->
-              <div v-else-if="currentModelConfig.params[key].type === 'array'" class="space-y-3">
+              <div v-else-if="currentModelConfig.params[key].type === 'array' || currentModelConfig.params[key].type === 'file[]' || currentModelConfig.params[key].type === 'file_array' || currentModelConfig.params[key].type === 'image[]' || currentModelConfig.params[key].type === 'video[]'" class="space-y-3">
                 <div class="grid grid-cols-2 gap-2">
                   <div
                     v-for="(item, index) in getArrayPreviewItems(key)"
@@ -1909,7 +1909,7 @@ const updateDefaultParams = (preserveParams: boolean = false) => {
               }
             }
           }
-        } else if (config.type === 'array') {
+        } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(config.type)) {
           // Preserve user-uploaded array (e.g. image list) when switching models when we have content
           const arr = Array.isArray(oldValue) ? oldValue : (typeof oldValue === 'string' ? (() => { try { const p = JSON.parse(oldValue); return Array.isArray(p) ? p : [oldValue]; } catch { return oldValue ? [oldValue] : []; } })() : [])
           const strArr = arr.filter((item: unknown): item is string => typeof item === 'string')
@@ -1947,9 +1947,9 @@ const updateDefaultParams = (preserveParams: boolean = false) => {
       } else {
         const effectiveDefault = inferDefaultFromCostAdditions(config) ?? config.default
         newParams[key] = effectiveDefault
-        if ((config.type === 'image' || config.type === 'video') && typeof effectiveDefault === 'string' && (effectiveDefault.startsWith('http') || effectiveDefault.startsWith('data:image') || effectiveDefault.startsWith('data:video'))) {
+        if ((config.type === 'image' || config.type === 'video' || config.type === 'file') && typeof effectiveDefault === 'string' && (effectiveDefault.startsWith('http') || effectiveDefault.startsWith('data:image') || effectiveDefault.startsWith('data:video'))) {
           newPreviews[key] = effectiveDefault
-        } else if (config.type === 'array' && config.default) {
+        } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(config.type) && config.default) {
           // Handle array default value (could be array of URLs or JSON string)
           let defaultArray: string[] = []
           if (Array.isArray(config.default)) {
@@ -3194,11 +3194,11 @@ onMounted(async () => {
                 mergedParams[key] = rounded
               }
             }
-          } else if ((config.type === 'image' || config.type === 'video') && typeof value === 'string' && (value.startsWith('http') || value.startsWith('data:image') || value.startsWith('data:video'))) {
+          } else if ((config.type === 'image' || config.type === 'video' || config.type === 'file') && typeof value === 'string' && (value.startsWith('http') || value.startsWith('data:image') || value.startsWith('data:video'))) {
             // For image/video params, load into both params and previews
             mergedParams[key] = value
             form.image_previews[key] = value
-          } else if (config.type === 'array') {
+          } else if (['array', 'file[]', 'file_array', 'image[]', 'video[]'].includes(config.type)) {
             // Handle array type - could be array of URLs or JSON string
             let arrayValue: string[] = []
             if (Array.isArray(value)) {
@@ -3241,7 +3241,7 @@ onMounted(async () => {
     // Special case: If we have a remix reference image but no image parameter set yet,
     // find the first 'image' type parameter and fill it.
     if (remixReferenceImage.value) {
-      const firstImageKey = Object.keys(modelConfig.params || {}).find(k => modelConfig.params[k].type === 'image')
+      const firstImageKey = Object.keys(modelConfig.params || {}).find(k => ['image', 'file', 'array', 'file[]', 'file_array', 'image[]'].includes(modelConfig.params[k].type))
       if (firstImageKey && !mergedParams[firstImageKey]) {
         mergedParams[firstImageKey] = remixReferenceImage.value
         form.image_previews[firstImageKey] = remixReferenceImage.value
@@ -3253,7 +3253,7 @@ onMounted(async () => {
     const nextDefaults: Record<string, string> = {}
     if (modelConfig.params) {
       Object.entries(modelConfig.params).forEach(([key, config]: [string, any]) => {
-        if ((config.type === 'image' || config.type === 'video') && typeof config.default === 'string' && (config.default.startsWith('http') || config.default.startsWith('data:'))) {
+        if ((config.type === 'image' || config.type === 'video' || config.type === 'file') && typeof config.default === 'string' && (config.default.startsWith('http') || config.default.startsWith('data:'))) {
           nextDefaults[key] = config.default
         }
       })
