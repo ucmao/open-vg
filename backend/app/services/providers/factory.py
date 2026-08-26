@@ -1,7 +1,6 @@
 from typing import Dict
 from .base import BaseProvider
 from .replicate_provider import ReplicateProvider
-from .siliconflow_provider import SiliconFlowProvider
 from .gemini_provider import GeminiProvider
 from .a2e_provider import A2EProvider
 
@@ -13,8 +12,6 @@ class ProviderFactory:
         if provider_name not in cls._instances:
             if provider_name == "replicate":
                 cls._instances[provider_name] = ReplicateProvider()
-            elif provider_name == "siliconflow":
-                cls._instances[provider_name] = SiliconFlowProvider()
             elif provider_name == "gemini":
                 cls._instances[provider_name] = GeminiProvider()
             elif provider_name == "a2e":

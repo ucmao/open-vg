@@ -1,6 +1,6 @@
 # AI Provider Extension Guide (3-Step Tutorial)
 
-This guide walks developers through adding custom AI model provider adapters (SiliconFlow, Replicate, Gemini, HunyuanVideo, Wan 2.1, Midjourney, etc.) to VidGen.
+This guide walks developers through adding custom AI model provider adapters (Replicate, Gemini, HunyuanVideo, Wan 2.1, Midjourney, etc.) to VidGen.
 
 ---
 
@@ -54,7 +54,6 @@ from app.services.ai_providers.custom_provider import CustomProviderAdapter
 
 class ProviderFactory:
     _adapters = {
-        "siliconflow": SiliconFlowAdapter,
         "replicate": ReplicateAdapter,
         "gemini": GeminiAdapter,
         "custom_provider": CustomProviderAdapter,  # <-- Register your new adapter

@@ -1,7 +1,8 @@
 export const zh: Record<string, string> = {
   // Navigation & General
+  'nav.workspace': '工作台',
   'nav.dashboard': '仪表盘',
-  'nav.analytics': '数据分析',
+  'nav.analytics': '数据概览',
   'nav.user_management': '用户管理',
   'nav.user_list': '用户列表',
   'nav.sockpuppets': '马甲专区',
@@ -24,7 +25,8 @@ export const zh: Record<string, string> = {
   'nav.models': 'AI 模型与工作流',
   'nav.models_list': '模型列表',
   'nav.pricing': '模型定价',
-  'nav.workflows': '工作流',
+  'nav.workflows': '工作流管理',
+  'nav.api_config': '底层API库',
   'nav.finance': '财务与充值',
   'nav.recharge_packages': '充值套餐',
   'nav.recharges': '充值记录',

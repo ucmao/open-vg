@@ -10,16 +10,6 @@
     "updated_at": "2026-01-11 08:07:10.270173+08:00"
   },
   {
-    "id": 1,
-    "config_group": "providers",
-    "config_key": "siliconflow_api_key",
-    "config_value": null,
-    "is_encrypted": true,
-    "description": "SiliconFlow API Key",
-    "created_at": "2026-01-11 08:06:48.693298+08:00",
-    "updated_at": "2026-01-11 08:07:32.082062+08:00"
-  },
-  {
     "id": 5,
     "config_group": "providers",
     "config_key": "gemini_fallback_model",

@@ -999,14 +999,14 @@ const workflowMetadata = reactive({
   created_by_name: null as string | null
 })
 
-// work_type （）
+// work_type 中文 label 映射
 const workTypeLabelMap: Record<string, string> = {
-  'video-effects': '',
-  'image-effects': '',
-  'image-to-video': '→',
-  'text-to-video': '→',
-  'image-to-image': '→',
-  'text-to-image': '→'
+  'video-effects': adminT('Video Effects', '视频特效模板'),
+  'image-effects': adminT('Image Effects', '图片特效模板'),
+  'image-to-video': adminT('Image to Video', '图片→视频'),
+  'text-to-video': adminT('Text to Video', '文本→视频'),
+  'image-to-image': adminT('Image to Image', '图片→图片'),
+  'text-to-image': adminT('Text to Image', '文本→图片')
 }
 
 //  work_type（ generate-pages Category）

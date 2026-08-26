@@ -2,7 +2,7 @@
 Mock AI Generation Service for Local Development & Open-Source Testing.
 ======================================================================
 Allows developers to test generation workflows, UI progress bars, credit economics,
-and WebSocket notifications without invoking external paid APIs (Replicate, SiliconFlow, Gemini).
+and WebSocket notifications without invoking external paid APIs (Replicate, Gemini).
 
 To enable:
     Set MOCK_AI_GENERATION=true in backend/.env or docker-compose.yml

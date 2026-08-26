@@ -134,7 +134,7 @@
                       'bg-gray-100 text-gray-800'
                     ]"
                   >
-                    {{ post.status === 'published' ? '' : post.status === 'draft' ? '' : post.status === 'archived' ? '' : post.status }}
+                    {{ post.status === 'published' ? $adminT('Published', '已发布') : post.status === 'draft' ? $adminT('Draft', '草稿') : post.status === 'archived' ? $adminT('Archived', '已归档') : post.status }}
                   </span>
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-600">

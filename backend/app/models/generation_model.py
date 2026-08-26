@@ -19,7 +19,7 @@ class APILibrary(Base):
     output_type = Column(String(50), nullable=True)  # Output type: "image", "video", "string", etc.
     
     # Provider configuration
-    provider = Column(String(50), nullable=False)  # siliconflow, replicate
+    provider = Column(String(50), nullable=False)  # replicate, gemini, a2e
     provider_model_id = Column(String(200), nullable=False)  # Unified external ID
     
     # Parameters configuration (stored as JSON)

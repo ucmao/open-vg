@@ -864,7 +864,7 @@
                 <input
                   v-model="apiForm.name"
                   type="text"
-                  :placeholder="$adminT('For example: SiliconFlowtax.1 Schell', '如：SiliconFlow Flux.1 Schnell')"
+                  :placeholder="$adminT('For example: Replicate Flux.1 Schnell', '如：Replicate Flux.1 Schnell')"
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -885,7 +885,7 @@
                 v-model="apiForm.api_key"
                 type="text"
                 :disabled="isEditingApi"
-                :placeholder="$adminT('For example: sf_tanx_scheng', '如：sf_flux_schnell')"
+                :placeholder="$adminT('For example: replicate_flux_schnell', '如：replicate_flux_schnell')"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono"
               />
             </div>
@@ -898,7 +898,6 @@
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
                   <option value="">{{ $adminT("Please select", "请选择") }}</option>
-                  <option value="siliconflow">SiliconFlow</option>
                   <option value="replicate">Replicate</option>
                 </select>
               </div>
@@ -2006,12 +2005,12 @@ const getPriceRange = (model: any): string => {
 
 const getWorkTypeLabel = (type: string) => {
   const labels: Record<string, string> = {
-    'text-to-image': '→',
-    'image-to-image': '→',
-    'text-to-video': '→',
-    'image-to-video': '→',
-    'video-effects': '',
-    'image-effects': ''
+    'text-to-image': adminT('Text to Image', '文本→图片'),
+    'image-to-image': adminT('Image to Image', '图片→图片'),
+    'text-to-video': adminT('Text to Video', '文本→视频'),
+    'image-to-video': adminT('Image to Video', '图片→视频'),
+    'video-effects': adminT('Video Effects', '视频特效模板'),
+    'image-effects': adminT('Image Effects', '图片特效模板')
   }
   return labels[type] || type
 }
@@ -2588,14 +2587,14 @@ onMounted(async () => {
   // Load workflows for selection
   loadWorkflows()
   
-  // work_type （）
+  // work_type 中文 label 映射
   const workTypeLabelMap: Record<string, string> = {
-    'video-effects': '',
-    'image-effects': '',
-    'image-to-video': '→',
-    'text-to-video': '→',
-    'image-to-image': '→',
-    'text-to-image': '→'
+    'video-effects': adminT('Video Effects', '视频特效模板'),
+    'image-effects': adminT('Image Effects', '图片特效模板'),
+    'image-to-video': adminT('Image to Video', '图片→视频'),
+    'text-to-video': adminT('Text to Video', '文本→视频'),
+    'image-to-image': adminT('Image to Image', '图片→图片'),
+    'text-to-image': adminT('Text to Image', '文本→图片')
   }
   //  work_type （ generate-pages Category）
   const loadWorkTypes = async () => {

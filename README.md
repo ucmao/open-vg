@@ -43,7 +43,7 @@ Whether you are launching an AI image/video generation platform or building cust
 - **Image-to-Video (Img2Video)**: Animate static photos into high-definition videos with motion control.
 
 ### 🤖 Multi-Provider Workflow Engine
-- **Flexible AI Integration**: Built-in support for SiliconFlow, Replicate, Gemini API, and custom provider pipelines.
+- **Flexible AI Integration**: Built-in support for Replicate, Gemini API, and custom provider pipelines.
 - **Node-Based Workflow Executor**: Execute complex multi-step generation workflows (`backend/app/services/workflow_executor.py`).
 - **Asynchronous Task Queue**: Celery task processor for heavy generation jobs, preventing API thread blocking.
 - **Real-Time Job Updates**: Real-time progress notifications streamed via WebSocket & Redis Pub/Sub.
@@ -79,7 +79,7 @@ Whether you are launching an AI image/video generation platform or building cust
 | **Task Queue & Workers** | **Celery 5.4+**, **Flower 2.0+** (Monitoring), **Redis 7** (Broker & Cache) |
 | **Database** | **PostgreSQL 15+** with **Alembic** database migration tracking |
 | **Storage & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3-compatible object storage) |
-| **AI Providers** | SiliconFlow, Replicate, Google Gemini, Custom Provider Adapters |
+| **AI Providers** | Replicate, Google Gemini, Custom Provider Adapters |
 | **Payments** | PayPal SDK, Stripe API |
 | **Containerization** | **Docker**, **Docker Compose** (One-click stack orchestration) |
 | **Service Management** | Unified **systemd** service suite (`systemd/`), Nginx Reverse Proxy |
@@ -154,7 +154,7 @@ docker compose up -d
 > [!IMPORTANT]
 > **External Integrations & API Keys Checklist**:  
 > Running Docker spins up full local infrastructure, database schemas, frontend/admin panels, and demo datasets out of the box. To activate real external third-party services, configure your `backend/.env`:
-> - **AI Generation**: Fill `REPLICATE_API_KEY` / `SILICONFLOW_API_KEY` (or keep `MOCK_AI_GENERATION=true` for zero-cost testing).
+> - **AI Generation**: Fill `REPLICATE_API_KEY` (or keep `MOCK_AI_GENERATION=true` for zero-cost testing).
 > - **Payments**: Fill `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET`.
 > - **Email Verification**: Fill `SMTP_HOST` / `SMTP_PORT` (in dev mode, verification codes are returned directly in API responses).
 > - **OAuth Login**: Fill `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.

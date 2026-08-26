@@ -26,7 +26,6 @@ This document serves as the authoritative reference for all environment variable
 
 | Variable Name | Required | Default Value | Description |
 |---|---|---|---|
-| `SILICONFLOW_API_KEY` | No | `""` | SiliconFlow API Key (FLUX, HunyuanVideo, SDXL) |
 | `REPLICATE_API_KEY` | No | `""` | Replicate API key; the backend passes it to the Replicate SDK |
 | `GEMINI_API_KEY` | No | `""` | Google Gemini API Key |
 | `MIDJOURNEY_API_KEY` | No | `""` | Midjourney Proxy API Key |

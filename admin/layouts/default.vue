@@ -23,7 +23,7 @@
         :class="sidebarCollapsed ? 'md:justify-center md:px-0' : ''"
       >
         <NuxtLink 
-          to="/users/list"
+          to="/workspace/dashboard"
           class="flex items-center gap-2 min-w-0 overflow-hidden"
           :class="sidebarCollapsed ? 'md:w-0 md:opacity-0 md:pointer-events-none md:overflow-hidden md:invisible' : ''"
         >
@@ -57,6 +57,9 @@
         v-show="sidebarCollapsed && !isMobile" 
         class="flex-1 flex flex-col items-center py-3 gap-1 overflow-y-auto"
       >
+        <button type="button" @click="expandSidebarAndGroup('workspace')" class="w-10 h-10 flex items-center justify-center rounded-lg transition-colors" :class="isGroupActive('workspace') ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'" :title="t('nav.workspace', 'Workspace')">
+          <Home class="w-5 h-5" />
+        </button>
         <button type="button" @click="expandSidebarAndGroup('userCenter')" class="w-10 h-10 flex items-center justify-center rounded-lg transition-colors" :class="isGroupActive('userCenter') ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'" title="Users">
           <Users class="w-5 h-5" />
         </button>
@@ -85,6 +88,42 @@
         v-show="!sidebarCollapsed || isMobile" 
         class="flex-1 px-3 py-4 space-y-2 overflow-y-auto"
       >
+        <!-- Workspace (工作台) -->
+        <div class="nav-group">
+          <button
+            @click="toggleGroup('workspace')"
+            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
+            :class="isGroupActive('workspace') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
+          >
+            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
+              <Home class="w-4 h-4 shrink-0" />
+              <span class="truncate whitespace-nowrap" :title="t('nav.workspace', 'Workspace')">{{ t('nav.workspace', 'Workspace') }}</span>
+            </span>
+            <ChevronDown
+              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
+              :class="{ 'rotate-180': expandedGroups.workspace }"
+            />
+          </button>
+          <div v-show="expandedGroups.workspace" class="space-y-0.5 mt-1 pl-4">
+            <NuxtLink
+              to="/workspace/dashboard"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
+              :class="isActive('/workspace/dashboard')"
+            >
+              <LayoutDashboard class="w-4 h-4 mr-2.5 shrink-0" />
+              <span class="truncate whitespace-nowrap" :title="t('nav.dashboard', 'Dashboard')">{{ t('nav.dashboard', 'Dashboard') }}</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/workspace/analytics"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
+              :class="isActive('/workspace/analytics')"
+            >
+              <BarChart3 class="w-4 h-4 mr-2.5 shrink-0" />
+              <span class="truncate whitespace-nowrap" :title="t('nav.analytics', 'Analytics')">{{ t('nav.analytics', 'Analytics') }}</span>
+            </NuxtLink>
+          </div>
+        </div>
+
         <!-- User Management -->
         <div class="nav-group">
           <button
@@ -282,6 +321,14 @@
             >
               <Workflow class="w-4 h-4 mr-2.5 shrink-0" />
               <span class="truncate whitespace-nowrap" :title="t('nav.workflows', 'Workflows')">{{ t('nav.workflows', 'Workflows') }}</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/models/api-config"
+              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
+              :class="isActive('/models/api-config')"
+            >
+              <Code class="w-4 h-4 mr-2.5 shrink-0" />
+              <span class="truncate whitespace-nowrap" :title="t('nav.api_config', 'API Config')">{{ t('nav.api_config', 'API Config') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -531,6 +578,10 @@ import {
   ChevronsLeft,
   X,
   Menu,
+  Home,
+  LayoutDashboard,
+  BarChart3,
+  Code,
   Users,
   UserCircle,
   Image,
@@ -648,6 +699,7 @@ function checkMobile() {
 }
 
 const expandedGroups = reactive({
+  workspace: false,
   userCenter: false,
   moderation: false,
   content: false,
@@ -665,7 +717,9 @@ function resetExpandedGroups() {
 
 function applyDefaultGroupsByPath(path: string) {
   resetExpandedGroups()
-  if (path.startsWith('/users')) {
+  if (path.startsWith('/workspace')) {
+    expandedGroups.workspace = true
+  } else if (path.startsWith('/users')) {
     expandedGroups.userCenter = true
   } else if (path.startsWith('/moderation')) {
     expandedGroups.moderation = true

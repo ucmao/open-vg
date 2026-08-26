@@ -111,7 +111,7 @@ def main():
     print("  🐍 Backend API:   http://localhost:8000/docs", flush=True)
     print("=" * 68, flush=True)
     print("  ⚠️  EXTERNAL SERVICES CONFIGURATION CHECKLIST (.env):", flush=True)
-    print("     • AI Generation:    Configure REPLICATE_API_KEY / SILICONFLOW_API_KEY", flush=True)
+    print("     • AI Generation:    Configure REPLICATE_API_KEY", flush=True)
     print("                         (Or set MOCK_AI_GENERATION=true for zero-cost testing)", flush=True)
     print("     • Payments:         Configure PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET", flush=True)
     print("     • OAuth Login:      Configure GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET", flush=True)

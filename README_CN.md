@@ -43,7 +43,7 @@
 - **图生视频 (Image-to-Video)**：将静态照片一键转化为高帧率动态视频，支持运动幅度微调。
 
 ### 🤖 多厂商工作流与异步队列
-- **多厂商 API 适配**：内置 SiliconFlow（硅基流动）、Replicate、Gemini API 以及自定义 Provider 拓展机制。
+- **多厂商 API 适配**：内置 Replicate、Gemini API 以及自定义 Provider 拓展机制。
 - **节点化工作流引擎**：支持复杂多步骤 AI 工作流的编排与执行 (`backend/app/services/workflow_executor.py`)。
 - **Celery 异步任务队列**：耗时视频/大图生成任务完全解耦异步化，防止阻塞 API 响应线程。
 - **WebSocket 实时状态推送**：通过 Redis Pub/Sub 与 WebSocket 技术，实时推送作品生成进度。
@@ -79,7 +79,7 @@
 | **任务队列与监控** | **Celery 5.4+**, **Flower 2.0+** (队列监控), **Redis 7** (Broker & 缓存) |
 | **数据库** | **PostgreSQL 15+**, **Alembic** 版本迁移工具 |
 | **存储与 CDN** | **Cloudflare R2** / AWS S3 / 阿里云 OSS (兼容 S3 协议) |
-| **AI 服务商** | SiliconFlow, Replicate, Google Gemini, 自定义 Adapter |
+| **AI 服务商** | Replicate, Google Gemini, 自定义 Adapter |
 | **支付网关** | PayPal SDK, Stripe API |
 | **容器化编排** | **Docker**, **Docker Compose** (一键全栈容器编排) |
 | **运维与部署** | 统一 **systemd** 服务管理器 (`systemd/`), Nginx 反向代理 |
@@ -154,7 +154,7 @@ docker compose up -d
 > [!IMPORTANT]
 > **第三方服务配置清单 (External Services Checklist)**：  
 > Docker 一键启动会自动装载全套本地基础设施、数据库表、前后台界面与精选 Demo 数据。若需接入真实的第三方服务，请在 `backend/.env` 中配置：
-> - **AI 生成 API**：配置 `REPLICATE_API_KEY` 或 `SILICONFLOW_API_KEY`（零成本测试可保持 `MOCK_AI_GENERATION=true`）。
+> - **AI 生成 API**：配置 `REPLICATE_API_KEY`（零成本测试可保持 `MOCK_AI_GENERATION=true`）。
 > - **支付网关**：配置 `PAYPAL_CLIENT_ID` 与 `PAYPAL_CLIENT_SECRET`。
 > - **邮件验证**：配置 `SMTP_HOST` 与 `SMTP_PORT`（开发模式下验证码也会直接在 API 响应中返回）。
 > - **Google 快捷登录**：配置 `GOOGLE_CLIENT_ID` 与 `GOOGLE_CLIENT_SECRET`。

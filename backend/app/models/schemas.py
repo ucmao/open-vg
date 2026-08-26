@@ -315,7 +315,7 @@ class CreateAPILibraryRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=200)
     task_type: Optional[str] = Field(None, max_length=100)
     output_type: Optional[str] = Field(None, pattern="^(image|video|text)$", description="Output type: image, video, or text")
-    provider: str = Field(..., pattern="^(siliconflow|replicate|gemini|a2e)$")
+    provider: str = Field(..., pattern="^(replicate|gemini|a2e)$")
     provider_model_id: str = Field(..., max_length=200)
     params_schema: Dict[str, Any] = Field(default_factory=dict)
     api_docs_url: Optional[str] = Field(None, max_length=500)
@@ -331,7 +331,7 @@ class UpdateAPILibraryRequest(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=200)
     task_type: Optional[str] = Field(None, max_length=100)
     output_type: Optional[str] = Field(None, pattern="^(image|video|text)$", description="Output type: image, video, or text")
-    provider: Optional[str] = Field(None, pattern="^(siliconflow|replicate|gemini|a2e)$")
+    provider: Optional[str] = Field(None, pattern="^(replicate|gemini|a2e)$")
     provider_model_id: Optional[str] = Field(None, max_length=200)
     params_schema: Optional[Dict[str, Any]] = None
     api_docs_url: Optional[str] = Field(None, max_length=500)

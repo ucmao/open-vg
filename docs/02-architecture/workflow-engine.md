@@ -11,7 +11,7 @@ Each AI model in `generation_models` references a JSON-encoded node graph in the
 ```
 +-------------------+      +-------------------+      +-----------------------+
 |  User Input Node  | ---> | Parameter Mapping | ---> |   API Call Node       |
-|  (Prompt, Image)  |      | Preset Guidance   |      | (SiliconFlow / Flux)  |
+|  (Prompt, Image)  |      | Preset Guidance   |      |   (Replicate / Flux)  |
 +-------------------+      +-------------------+      +-----------+-----------+
                                                                   |
                                                                   v
@@ -32,7 +32,7 @@ The workflow graph consists of `nodes` and `edges`:
   {
     "id": "node_api_1",
     "type": "api_call",
-    "api_id": "siliconflow_flux_1_dev",
+    "api_id": "replicate_flux_1_dev",
     "data": {
       "preset_params": {
         "num_inference_steps": 25,

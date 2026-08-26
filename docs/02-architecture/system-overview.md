@@ -45,8 +45,8 @@ This document provides a comprehensive architectural overview of **VidGen**, cov
                                                       v
                                         +--------------------------+
                                         | Multi-AI Provider Adapters|
-                                        | SiliconFlow/Replicate/   |
-                                        | Gemini/Hunyuan/Flux/Wan  |
+                                        | Replicate / Gemini /     |
+                                        | Hunyuan / Flux / Wan     |
                                         +--------------------------+
 ```
 

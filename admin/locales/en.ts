@@ -1,5 +1,6 @@
 export const en: Record<string, string> = {
   // Navigation & General
+  'nav.workspace': 'Workspace',
   'nav.dashboard': 'Dashboard',
   'nav.analytics': 'Analytics',
   'nav.user_management': 'User Management',
@@ -25,6 +26,7 @@ export const en: Record<string, string> = {
   'nav.models_list': 'Models List',
   'nav.pricing': 'Model Pricing',
   'nav.workflows': 'Workflows',
+  'nav.api_config': 'API Config',
   'nav.finance': 'Finance & Billing',
   'nav.recharge_packages': 'Recharge Packages',
   'nav.recharges': 'Recharge Records',

@@ -181,16 +181,9 @@ def init_provider_configs(
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
-    """Initialize default provider configurations (SiliconFlow, Replicate, Gemini)."""
+    """Initialize default provider configurations (Replicate, Gemini)."""
     try:
         default_configs = [
-            {
-                "config_group": "providers",
-                "config_key": "siliconflow_api_key",
-                "config_value": "",
-                "is_encrypted": True,
-                "description": "SiliconFlow API Key"
-            },
             {
                 "config_group": "providers",
                 "config_key": "replicate_api_key",
