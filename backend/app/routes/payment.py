@@ -35,7 +35,7 @@ def _complete_payment_order_and_notify(
     """
     payment_order = db.query(PaymentOrder).filter(
         PaymentOrder.id == payment_order.id
-    ).with_for_update().first()
+    ).with_for_update().populate_existing().first()
     if not payment_order or payment_order.status == PaymentStatus.COMPLETED:
         return
 

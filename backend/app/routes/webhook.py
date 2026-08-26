@@ -26,6 +26,7 @@ from ..services.email import send_recharge_success_email
 from ..utils.notification import create_notification
 from ..models.notification import NotificationType
 from ..services.stripe_service import get_stripe_service
+from ..services.realtime import publish_user_event
 from ..utils.auth import decode_access_token
 
 router = APIRouter()
@@ -308,9 +309,7 @@ async def process_webhook_success(work_id: int, result: dict, work_type: str, us
         )
         db.commit()
         
-        # Notify via WebSocket for metadata update (optional but good)
-        ws_manager = get_connection_manager()
-        await ws_manager.send_message(user_id, {
+        publish_user_event(user_id, {
             "type": "work_metadata_updated",
             "work_id": work_id,
             "title": title,
@@ -519,9 +518,7 @@ async def _handle_workflow_node_webhook(
                 
                 db.commit()
                 
-                # WebSocket notification
-                ws_manager = get_connection_manager()
-                await ws_manager.send_message(work.user_id, {
+                publish_user_event(work.user_id, {
                     "type": "generation_complete",
                     "work_id": work_id,
                     "status": "success",
@@ -707,8 +704,7 @@ async def _handle_workflow_node_webhook(
                         mark_work_failed(db, work, f"Failed to execute next node {next_node_id}: {str(e)}")
                         db.commit()
                         notify_generation_failed(db, work.user_id)
-                        ws_manager = get_connection_manager()
-                        await ws_manager.send_message(work.user_id, {
+                        publish_user_event(work.user_id, {
                             "type": "generation_complete",
                             "work_id": work_id,
                             "status": "failed",
@@ -724,8 +720,7 @@ async def _handle_workflow_node_webhook(
             mark_work_failed(db, work, f"Workflow node {node_id} failed: {error_msg}")
             db.commit()
             notify_generation_failed(db, work.user_id)
-            ws_manager = get_connection_manager()
-            await ws_manager.send_message(work.user_id, {
+            publish_user_event(work.user_id, {
                 "type": "generation_complete",
                 "work_id": work_id,
                 "status": "failed",

@@ -12,6 +12,10 @@ This document serves as the authoritative reference for all environment variable
 |---|---|---|---|
 | `DATABASE_URL` | **Yes** | `postgresql://user:password@localhost:5432/aigc_platform` | SQLAlchemy database URI for PostgreSQL 15+ |
 | `REDIS_URL` | **Yes** | `redis://localhost:6379` | Redis 7+ connection URI for Celery broker & WebSocket Pub/Sub |
+| `REALTIME_REDIS_CHANNEL` | No | `realtime:user-events` | Namespaced Pub/Sub channel for cross-process user events |
+| `AUTO_CREATE_TABLES` | No | `false` | Local/test-only create-all escape hatch; rejected in production |
+| `SEED_PROFILE` | No | `safe` | Seed profile: `core`, `safe`, or explicitly reviewed `full` |
+| `ALLOW_UNSAFE_FULL_SEED` | No | `false` | Required acknowledgement before importing the historical full export |
 
 ### Authentication & Security
 

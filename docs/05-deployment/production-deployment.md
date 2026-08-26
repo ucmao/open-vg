@@ -51,9 +51,13 @@ python3.11 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-# Apply migrations and initialize the admin account, AI models, recharge
-# packages, and SEO settings in one step.
-python scripts/seed_all.py
+# Apply schema migrations before starting the API. Startup independently
+# verifies that the database revision equals the repository's Alembic head.
+python -m alembic upgrade head
+
+# Optional first-install bootstrap. This creates the admin and imports the
+# reviewed safe seed profile; it does not import historical external media.
+SEED_PROFILE=safe python scripts/seed_all.py
 ```
 
 ### 4. Build Frontends

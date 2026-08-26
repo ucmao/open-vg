@@ -1,8 +1,10 @@
 """
-Importer for Complete Off-Line Seed Dataset (Ultra-Fast Delta Import)
-======================================================================
-This script loads exported JSON configuration files from `scripts/seed_data/`
-and safely upserts all configuration and sample demo data into the target database.
+Profile-aware offline seed importer.
+
+Profiles:
+  core  - runtime configuration only, with a curated model subset
+  safe  - core plus local, neutral demo content (default)
+  full  - historical exported dataset with external media (explicit opt-in)
 """
 import os
 import sys
@@ -35,7 +37,104 @@ from app.models.work import Work
 from app.utils.seed_sanitizer import sanitize_seed_data
 from app.utils.logger import logger
 
-DATA_DIR = os.path.join(backend_dir, "scripts", "seed_data")
+DATA_DIR = Path(backend_dir) / "scripts" / "seed_data"
+SAFE_DATA_DIR = DATA_DIR / "safe"
+SEED_PROFILES = {"core", "safe", "full"}
+
+# Deliberately allowlisted: new exported models do not silently become part of
+# the public default dataset. Full exports remain available through opt-in.
+SAFE_MODEL_KEYS = {
+    "ai-aging-filter-ajq4",
+    "ai-character-swap-3erd",
+    "ai-teacher-generator-op7y",
+    "ai-travel-generator-da6l",
+    "ai-walk-generator-ymet",
+    "cat-cooking-generator-06sk",
+    "flux2-klein-a8su",
+    "g-0xcn",
+    "g-jkl9",
+    "google-veo-3-1-hdol",
+    "google-veo-3-1-jtki",
+    "hailuo-2-3-n1c5",
+    "hailuo-2-3-pzdp",
+    "kling-v2-6-yjjl",
+    "nano-banana-2-t2i",
+    "nano-banana-2-vtur",
+    "nano-banana-pro-geug",
+    "qwen-image-eh68",
+    "s-6dbn",
+    "s-f0f5",
+    "s-jvfs",
+    "seedance-1-5-pro-irm6",
+    "seedance-1-5-pro-uyfh",
+    "seedance-2-0-etvr",
+    "seedance-2-0-pro-xkyd",
+    "seedream-4-5-w1j4",
+    "vidgen-4pan",
+    "vidgen-imno",
+    "vidgen-pjpm",
+    "vidgen-x5ij",
+    "wan-2-6-i2v-jmj4",
+}
+
+
+def _read_json(path: Path):
+    with path.open("r", encoding="utf-8") as file_handle:
+        return json.load(file_handle)
+
+
+def _safe_dependency_ids() -> tuple[set[int], set[int]]:
+    models = _read_json(DATA_DIR / "generation_models.json")
+    workflow_ids = {
+        item["workflow_id"]
+        for item in models
+        if item.get("model_key") in SAFE_MODEL_KEYS and item.get("workflow_id")
+    }
+    workflows = _read_json(DATA_DIR / "workflows.json")
+    api_ids = {
+        node["api_id"]
+        for workflow in workflows
+        if workflow.get("id") in workflow_ids
+        for node in (workflow.get("nodes") or [])
+        if node.get("type") == "api_call" and node.get("api_id") is not None
+    }
+    return workflow_ids, api_ids
+
+
+def load_seed_items(filename: str, profile: str):
+    """Load and sanitize one file according to the selected profile."""
+    override = SAFE_DATA_DIR / filename
+    path = override if profile != "full" and override.exists() else DATA_DIR / filename
+    if not path.exists():
+        return None
+
+    items = _read_json(path)
+    if profile != "full" and path.parent == DATA_DIR:
+        workflow_ids, api_ids = _safe_dependency_ids()
+        if filename == "generation_models.json":
+            items = [item for item in items if item.get("model_key") in SAFE_MODEL_KEYS]
+        elif filename == "workflows.json":
+            items = [item for item in items if item.get("id") in workflow_ids]
+        elif filename == "api_library.json":
+            items = [item for item in items if item.get("id") in api_ids]
+        elif filename == "generate_pages.json":
+            items = [
+                item
+                for item in items
+                if item.get("parent_id") is None
+                or str(item.get("page_path", "")).rsplit("/", 1)[-1] in SAFE_MODEL_KEYS
+            ]
+
+    # Exported configuration may reference an administrator that exists only
+    # in the source deployment. Safe/core imports are ownership-neutral and
+    # must work after migrations on a completely empty database.
+    if profile != "full" and filename in {"generation_models.json", "workflows.json"}:
+        items = [{**item, "created_by": None} for item in items]
+
+    return sanitize_seed_data(
+        items,
+        allow_external_media=(profile == "full"),
+    )
 
 def is_different(curr, v):
     if curr == v:
@@ -81,16 +180,11 @@ def order_self_referencing_rows(items, existing_ids):
     return ordered
 
 
-def import_table_data(db, filename, model_cls, pk_field='id', preserve_when_empty=()):
-    filepath = os.path.join(DATA_DIR, filename)
-    if not os.path.exists(filepath):
+def import_table_data(db, filename, model_cls, pk_field='id', preserve_when_empty=(), profile="safe"):
+    items = load_seed_items(filename, profile)
+    if items is None:
         print(f"  ⚠️ Seed file not found: {filename}, skipping...", flush=True)
         return 0
-
-    with open(filepath, "r", encoding="utf-8") as f:
-        # Defense in depth: never write the production hostname to a freshly
-        # initialized database, even if a future export was not sanitized.
-        items = sanitize_seed_data(json.load(f))
 
     columns = {c.name: c for c in model_cls.__table__.columns}
     inserted = 0
@@ -139,15 +233,15 @@ def import_table_data(db, filename, model_cls, pk_field='id', preserve_when_empt
     return len(items)
 
 
-def synchronize_table_to_seed(db, filename, model_cls, pk_field="id"):
+def synchronize_table_to_seed(db, filename, model_cls, pk_field="id", profile="safe"):
     """Delete rows absent from the canonical seed file.
 
     Models, workflows, and provider APIs form one versioned runtime bundle. Keeping
     additive leftovers here can expose parameterless legacy models in the product UI.
     """
-    filepath = os.path.join(DATA_DIR, filename)
-    with open(filepath, "r", encoding="utf-8") as file_handle:
-        items = sanitize_seed_data(json.load(file_handle))
+    items = load_seed_items(filename, profile)
+    if items is None:
+        raise ValueError(f"Missing canonical seed file: {filename}")
 
     seed_keys = {
         item[pk_field]
@@ -186,41 +280,58 @@ def reset_postgres_sequences(db, model_classes):
             {"table_name": table_name},
         )
 
-def import_all():
-    print("🚀 Importing Complete Seed Dataset into Database...\n", flush=True)
+def import_all(profile=None):
+    profile = (profile or os.getenv("SEED_PROFILE", "safe")).strip().lower()
+    if profile not in SEED_PROFILES:
+        raise ValueError(f"SEED_PROFILE must be one of: {', '.join(sorted(SEED_PROFILES))}")
+    if profile == "full" and os.getenv("ALLOW_UNSAFE_FULL_SEED", "false").lower() not in {
+        "1", "true", "yes", "on"
+    }:
+        raise RuntimeError(
+            "The full seed contains historical external media and non-neutral content. "
+            "Set ALLOW_UNSAFE_FULL_SEED=true only after reviewing its licenses and content."
+        )
+
+    print(f"🚀 Importing '{profile}' Seed Dataset into Database...\n", flush=True)
     db = next(get_db())
 
     try:
         # Order matters for foreign key relationships
-        import_table_data(db, "page_seos.json", PageSeo, pk_field="page_name")
-        import_table_data(db, "seo_configs.json", SeoConfig, pk_field="config_key")
+        common = {"profile": profile}
+        import_table_data(db, "page_seos.json", PageSeo, pk_field="page_name", **common)
+        import_table_data(db, "seo_configs.json", SeoConfig, pk_field="config_key", **common)
         import_table_data(
             db,
             "system_configs.json",
             SystemConfig,
             pk_field="config_key",
             preserve_when_empty=("config_value",),
+            **common,
         )
-        import_table_data(db, "api_library.json", APILibrary, pk_field="id")
-        import_table_data(db, "workflows.json", Workflow, pk_field="id")
-        import_table_data(db, "generation_models.json", GenerationModel, pk_field="id")
-        import_table_data(db, "category_pages.json", CategoryPage, pk_field="id")
-        import_table_data(db, "generate_pages.json", GeneratePage, pk_field="id")
-        import_table_data(db, "effects_pages.json", EffectsPage, pk_field="id")
-        import_table_data(db, "homepage_blocks.json", HomepageBlock, pk_field="id")
-        import_table_data(db, "blog_categories.json", BlogCategory, pk_field="id")
-        import_table_data(db, "topics.json", Topic, pk_field="id")
-        import_table_data(db, "recharge_packages.json", RechargePackage, pk_field="id")
-        import_table_data(db, "sample_users.json", User, pk_field="id")
-        import_table_data(db, "recharge_promos.json", RechargePromo, pk_field="id")
-        import_table_data(db, "blog_posts.json", BlogPost, pk_field="id")
-        import_table_data(db, "sample_works.json", Work, pk_field="id")
+        import_table_data(db, "api_library.json", APILibrary, **common)
+        import_table_data(db, "workflows.json", Workflow, **common)
+        import_table_data(db, "generation_models.json", GenerationModel, **common)
+        import_table_data(db, "category_pages.json", CategoryPage, **common)
+        import_table_data(db, "generate_pages.json", GeneratePage, **common)
+        import_table_data(db, "effects_pages.json", EffectsPage, **common)
+        import_table_data(db, "recharge_packages.json", RechargePackage, **common)
 
-        # The checked-in model bundle is authoritative. Delete historical rows in
-        # dependency order so an old additive import can never leak into the UI.
-        synchronize_table_to_seed(db, "generation_models.json", GenerationModel)
-        synchronize_table_to_seed(db, "workflows.json", Workflow)
-        synchronize_table_to_seed(db, "api_library.json", APILibrary)
+        if profile in {"safe", "full"}:
+            import_table_data(db, "homepage_blocks.json", HomepageBlock, **common)
+            import_table_data(db, "blog_categories.json", BlogCategory, **common)
+            import_table_data(db, "topics.json", Topic, **common)
+            import_table_data(db, "sample_users.json", User, **common)
+            import_table_data(db, "recharge_promos.json", RechargePromo, **common)
+            import_table_data(db, "blog_posts.json", BlogPost, **common)
+            import_table_data(db, "sample_works.json", Work, **common)
+
+        # Only the explicitly requested historical full export is authoritative.
+        # Safe/core profiles are deliberately additive: an upgrade must never
+        # delete operator-created models merely because they are not allowlisted.
+        if profile == "full":
+            synchronize_table_to_seed(db, "generation_models.json", GenerationModel, profile=profile)
+            synchronize_table_to_seed(db, "workflows.json", Workflow, profile=profile)
+            synchronize_table_to_seed(db, "api_library.json", APILibrary, profile=profile)
 
         reset_postgres_sequences(
             db,
@@ -246,7 +357,7 @@ def import_all():
         from app.models.generation_config import invalidate_cache
         invalidate_cache()
 
-        print("\n✨ All Seed Dataset tables imported successfully!", flush=True)
+        print(f"\n✨ '{profile}' seed dataset imported successfully!", flush=True)
     except Exception as e:
         db.rollback()
         print(f"❌ Error during seed dataset import: {e}", flush=True)

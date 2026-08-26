@@ -39,7 +39,11 @@ def get_db() -> Generator[Session, None, None]:
 
 def init_db():
     """
-    Initialize database - create all tables.
-    Should be called on application startup.
+    Create tables for explicit local/test bootstrapping only.
+
+    Normal application startup verifies Alembic state instead. Production must
+    never use this helper because create_all cannot perform schema upgrades.
     """
+    if os.getenv("ENVIRONMENT", "development").strip().lower() == "production":
+        raise RuntimeError("Base.metadata.create_all is forbidden in production")
     Base.metadata.create_all(bind=engine)

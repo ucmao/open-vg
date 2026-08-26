@@ -61,7 +61,7 @@ cp .env.example .env
 ```bash
 python scripts/seed_all.py
 ```
-> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the `admin` superadmin (printing a generated local password when `INITIAL_ADMIN_PASSWORD` is omitted), and imports the complete seed dataset.
+> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the `admin` superadmin (printing a generated local password when `INITIAL_ADMIN_PASSWORD` is omitted), and imports the safe seed profile with neutral, bundled demo media. The historical full export requires the explicit `SEED_PROFILE=full ALLOW_UNSAFE_FULL_SEED=true` opt-in after a license/content review.
 
 ### Step 4: (Optional) Enable Zero-Cost Mock AI Generation Mode
 To test AI video and image generation locally without paid API keys:

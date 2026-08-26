@@ -4,9 +4,8 @@ import re
 from typing import Any
 
 
-# Public CDN media is intentionally retained so the lightweight demo can show
-# real content without committing binary assets. Product-site links always point
-# to the locally running web app; email domains and third-party URLs are retained.
+# Product-site links point to the local app. External media is removed from safe
+# seed profiles; the historical full profile requires an explicit opt-in.
 SITE_ORIGIN_PATTERN = re.compile(
     r"https?://(?:vidgenerator\.ai|example\.com)(?::\d+)?",
     re.IGNORECASE,
@@ -17,6 +16,23 @@ BARE_SITE_DOMAIN_PATTERN = re.compile(
 )
 DEMO_ORIGIN = "http://localhost:3000"
 DEMO_HOST = "localhost:3000"
+LOCAL_MEDIA_PLACEHOLDER = "/demo/placeholder.svg"
+
+MEDIA_URL_FIELDS = {
+    "after_url",
+    "avatar_url",
+    "background_image_url",
+    "before_url",
+    "cover_url",
+    "file_url",
+    "icon_url",
+    "image",
+    "image_url",
+    "og_image",
+    "thumbnail_url",
+    "trailing_image_url",
+    "video_url",
+}
 
 TRACKING_CODE_REPLACEMENTS = (
     (re.compile(r"(?<![A-Z0-9])G-[A-Z0-9]{6,}(?![A-Z0-9])"), "G-XXXXXXXXXX"),
@@ -64,22 +80,49 @@ def sanitize_tracking_code(value: str) -> str:
     return sanitized
 
 
-def sanitize_seed_data(value: Any) -> Any:
+def _sanitize_external_media(value: str, field_name: str | None) -> str:
+    if not re.match(r"^https?://", value, flags=re.IGNORECASE):
+        return value
+    is_media_field = bool(field_name and field_name.lower() in MEDIA_URL_FIELDS)
+    has_media_extension = bool(
+        re.search(r"\.(?:avif|gif|jpe?g|mp4|png|webm|webp)(?:\?.*)?$", value, re.IGNORECASE)
+    )
+    return LOCAL_MEDIA_PLACEHOLDER if is_media_field or has_media_extension else value
+
+
+def sanitize_seed_data(
+    value: Any,
+    *,
+    allow_external_media: bool = False,
+    field_name: str | None = None,
+) -> Any:
     """Recursively replace the production domain and sensitive keys in arbitrary JSON-compatible data."""
     if isinstance(value, str):
         for pattern in SECRET_PATTERNS:
             value = pattern.sub("REDACTED", value)
         value = SITE_ORIGIN_PATTERN.sub(DEMO_ORIGIN, value)
         value = BARE_SITE_DOMAIN_PATTERN.sub(DEMO_HOST, value)
-        return sanitize_tracking_code(value)
+        value = sanitize_tracking_code(value)
+        return value if allow_external_media else _sanitize_external_media(value, field_name)
     if isinstance(value, list):
-        return [sanitize_seed_data(item) for item in value]
+        return [
+            sanitize_seed_data(
+                item,
+                allow_external_media=allow_external_media,
+                field_name=field_name,
+            )
+            for item in value
+        ]
     if isinstance(value, dict):
         sanitized = {}
         for key, item in value.items():
             if key in ("openai_api_key", "api_secret", "secret_key", "access_token"):
                 continue
-            sanitized[key] = sanitize_seed_data(item)
+            sanitized[key] = sanitize_seed_data(
+                item,
+                allow_external_media=allow_external_media,
+                field_name=str(key),
+            )
         # Exported custom code must never execute automatically in a new
         # installation. The placeholder remains visible as a setup template.
         if str(sanitized.get("config_key", "")).startswith("custom_code_"):

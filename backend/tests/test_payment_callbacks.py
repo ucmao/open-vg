@@ -38,7 +38,7 @@ class PaymentCompletionTests(unittest.TestCase):
         db = MagicMock()
         order = make_order()
         user = make_user()
-        db.query.return_value.filter.return_value.with_for_update.return_value.first.return_value = order
+        db.query.return_value.filter.return_value.with_for_update.return_value.populate_existing.return_value.first.return_value = order
         background_tasks = BackgroundTasks()
 
         _complete_payment_order_and_notify(db, order, user, background_tasks)
@@ -58,7 +58,7 @@ class PaymentCompletionTests(unittest.TestCase):
     def test_completion_is_idempotent_for_completed_order(self, add_credits):
         db = MagicMock()
         order = make_order(status=PaymentStatus.COMPLETED)
-        db.query.return_value.filter.return_value.with_for_update.return_value.first.return_value = order
+        db.query.return_value.filter.return_value.with_for_update.return_value.populate_existing.return_value.first.return_value = order
 
         _complete_payment_order_and_notify(db, order, make_user(), BackgroundTasks())
 

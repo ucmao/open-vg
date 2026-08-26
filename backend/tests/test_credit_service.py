@@ -10,10 +10,11 @@ from app.services.credit_service import (
 
 
 class CreditServiceTests(unittest.TestCase):
-    def test_consume_credits_locks_user_and_records_negative_amount(self):
+    def test_consume_credits_uses_conditional_update_and_records_negative_amount(self):
         db = MagicMock()
-        user = MagicMock(total_credits=80)
-        db.query.return_value.filter.return_value.with_for_update.return_value.first.return_value = user
+        updated = MagicMock()
+        updated.scalar_one_or_none.return_value = 50
+        db.execute.return_value = updated
 
         balance = consume_credits(
             db,
@@ -29,19 +30,22 @@ class CreditServiceTests(unittest.TestCase):
         self.assertEqual(record.amount, -30)
         self.assertEqual(record.type, CreditType.CONSUME)
         self.assertEqual(record.work_id, 99)
-        self.assertEqual(db.flush.call_count, 2)
+        self.assertEqual(db.flush.call_count, 1)
         db.execute.assert_called_once()
 
     def test_consume_credits_rejects_insufficient_balance_without_writes(self):
         db = MagicMock()
-        user = MagicMock(total_credits=10)
-        db.query.return_value.filter.return_value.with_for_update.return_value.first.return_value = user
+        updated = MagicMock()
+        updated.scalar_one_or_none.return_value = None
+        selected = MagicMock()
+        selected.scalar_one_or_none.return_value = 10
+        db.execute.side_effect = [updated, selected]
 
         with self.assertRaisesRegex(InsufficientCreditsError, "Required: 20"):
             consume_credits(db, 7, 20, "Generate video")
 
         db.add.assert_not_called()
-        db.execute.assert_not_called()
+        self.assertEqual(db.execute.call_count, 2)
 
     def test_add_credits_records_ledger_and_returns_persisted_balance(self):
         db = MagicMock()

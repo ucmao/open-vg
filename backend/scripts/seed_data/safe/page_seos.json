@@ -1,0 +1,66 @@
+[
+  {
+    "page_name": "home",
+    "page_path": "/",
+    "title": "VidGen — Open-Source AI Image and Video Platform",
+    "description": "Build and operate image and video generation workflows with an open-source full-stack platform.",
+    "keywords": "AI image generation, AI video generation, open source",
+    "is_enabled": true
+  },
+  {
+    "page_name": "explore",
+    "page_path": "/explore",
+    "title": "Explore AI Creations",
+    "description": "Browse safe local demonstration artwork included with VidGen.",
+    "keywords": "AI gallery, generative art",
+    "is_enabled": true
+  },
+  {
+    "page_name": "create",
+    "page_path": "/generate",
+    "title": "Create Images and Videos with AI",
+    "description": "Configure an AI provider and create images or videos from a reusable workflow.",
+    "keywords": "AI creator, workflow",
+    "is_enabled": true
+  },
+  {
+    "page_name": "blog",
+    "page_path": "/blog",
+    "title": "VidGen Guides",
+    "description": "Deployment and creative workflow guides for VidGen.",
+    "keywords": "VidGen guides",
+    "is_enabled": true
+  },
+  {
+    "page_name": "topics",
+    "page_path": "/topic",
+    "title": "AI Creation Topics",
+    "description": "Browse neutral AI creation topics and workflow ideas.",
+    "keywords": "AI topics",
+    "is_enabled": true
+  },
+  {
+    "page_name": "effects",
+    "page_path": "/effects",
+    "title": "AI Image and Video Effects",
+    "description": "Explore configurable image and video workflow effects.",
+    "keywords": "AI effects",
+    "is_enabled": true
+  },
+  {
+    "page_name": "category",
+    "page_path": "/category",
+    "title": "AI Creation Categories",
+    "description": "Browse safe demonstration categories.",
+    "keywords": "AI categories",
+    "is_enabled": true
+  },
+  {
+    "page_name": "templates",
+    "page_path": "/templates",
+    "title": "AI Workflow Templates",
+    "description": "Start from reusable image and video workflow templates.",
+    "keywords": "AI templates",
+    "is_enabled": true
+  }
+]

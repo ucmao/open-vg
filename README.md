@@ -149,7 +149,7 @@ docker compose up -d
 - 🔧 **Admin Panel**: `http://localhost:3001` (user: `admin`; the first startup log prints a generated local password unless `INITIAL_ADMIN_PASSWORD` is set)
 - 🐍 **Backend API (Swagger Docs)**: `http://localhost:8000/docs`
 
-> 💡 **Local initialization**: On container startup, `scripts/seed_all.py` applies migrations, creates the superadmin, and imports the demo dataset. The development stack binds published ports to `127.0.0.1` and must not be exposed directly to the internet.
+> 💡 **Local initialization**: On container startup, `scripts/seed_all.py` applies migrations, creates the superadmin, and imports the safe seed profile: reviewed runtime configuration plus neutral demo content using bundled local media. The development stack binds published ports to `127.0.0.1` and must not be exposed directly to the internet.
 
 > [!IMPORTANT]
 > **External Integrations & API Keys Checklist**:  
@@ -219,11 +219,22 @@ cp .env.example .env
 export INITIAL_ADMIN_USERNAME=admin
 export INITIAL_ADMIN_PASSWORD=replace-with-a-secure-password
 
-# Apply migrations, create the admin, and import the complete demo dataset
+# Apply migrations, create the admin, and import the safe local demo dataset
 python scripts/seed_all.py
 ```
 
 The command is safe to run repeatedly. A failed migration or initialization step exits with a non-zero status instead of continuing with a partial setup.
+
+The historical exported dataset is retained only for operators who have
+reviewed its content and media licenses. It is never imported implicitly:
+
+```bash
+SEED_PROFILE=full ALLOW_UNSAFE_FULL_SEED=true python scripts/seed_all.py
+```
+
+Safe/core imports are additive and never delete operator-created model or
+workflow rows. Moving an existing deployment away from the historical full
+dataset therefore requires an explicit, reviewed cleanup migration.
 
 #### Run FastAPI Development Server
 

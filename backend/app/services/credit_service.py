@@ -60,17 +60,26 @@ def consume_credits(
     work_id: Optional[int] = None,
 ) -> int:
     """
-    Deduct credits: lock user row, check balance, insert consume record (negative amount), update total_credits.
+    Deduct credits with one conditional database update, then insert the ledger record.
     Does not commit; caller must commit.
     Raises InsufficientCreditsError if balance < amount.
     Returns the new total_credits for the user.
     """
-    user = db.query(User).filter(User.id == user_id).with_for_update().first()
-    if not user:
-        raise InsufficientCreditsError("User not found")
-    if user.total_credits < amount:
+    stmt = (
+        update(User)
+        .where(User.id == user_id, User.total_credits >= amount)
+        .values(total_credits=User.total_credits - amount)
+        .returning(User.total_credits)
+    )
+    new_balance = db.execute(stmt).scalar_one_or_none()
+    if new_balance is None:
+        available = db.execute(
+            select(User.total_credits).where(User.id == user_id)
+        ).scalar_one_or_none()
+        if available is None:
+            raise InsufficientCreditsError("User not found")
         raise InsufficientCreditsError(
-            f"Insufficient credits. Required: {amount}, Available: {user.total_credits}"
+            f"Insufficient credits. Required: {amount}, Available: {available}"
         )
     record = CreditRecord(
         user_id=user_id,
@@ -81,7 +90,4 @@ def consume_credits(
     )
     db.add(record)
     db.flush()
-    stmt = update(User).where(User.id == user_id).values(total_credits=User.total_credits - amount)
-    db.execute(stmt)
-    db.flush()
-    return user.total_credits - amount
+    return int(new_balance)

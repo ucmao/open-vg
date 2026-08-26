@@ -1,0 +1,44 @@
+[
+  {
+    "id": -9001,
+    "parent_id": null,
+    "category_name": "Nature",
+    "level": 1,
+    "sort_order": 1,
+    "page_path": "/category/nature",
+    "title": "AI Nature Gallery",
+    "description": "Landscapes, wildlife, plants, and outdoor scenes.",
+    "keywords": "nature, landscape, wildlife",
+    "display_description": "Explore safe nature-themed demonstration creations.",
+    "is_active": true,
+    "show_in_explore": true
+  },
+  {
+    "id": -9002,
+    "parent_id": null,
+    "category_name": "Product Design",
+    "level": 1,
+    "sort_order": 2,
+    "page_path": "/category/product-design",
+    "title": "AI Product Design Gallery",
+    "description": "Product concepts, packaging, and commercial mockups.",
+    "keywords": "product design, mockup",
+    "display_description": "Explore product-oriented demonstration creations.",
+    "is_active": true,
+    "show_in_explore": true
+  },
+  {
+    "id": -9003,
+    "parent_id": null,
+    "category_name": "Illustration",
+    "level": 1,
+    "sort_order": 3,
+    "page_path": "/category/illustration",
+    "title": "AI Illustration Gallery",
+    "description": "Editorial, storybook, and abstract illustrations.",
+    "keywords": "illustration, generative art",
+    "display_description": "Explore safe illustration demonstration creations.",
+    "is_active": true,
+    "show_in_explore": true
+  }
+]

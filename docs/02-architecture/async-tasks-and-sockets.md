@@ -45,7 +45,9 @@ The browser connects to `/api/webhook/ws` with its JWT in the WebSocket
 subprotocol header. The server derives the user ID from that verified token;
 clients cannot choose a user ID in the URL.
 
-Notifications emitted inside the API process can be delivered immediately over
-that connection. Celery runs in a separate process and currently persists job
-state to PostgreSQL, so the browser's status polling is the authoritative path
-for worker completion. A Redis Pub/Sub relay is not implemented yet.
+API and Celery processes publish user events to a namespaced Redis Pub/Sub
+channel. Every API instance subscribes to that channel and forwards matching
+events to its own in-process WebSocket connections, so worker completions cross
+process and container boundaries. PostgreSQL remains the durable job-state
+source and browser polling remains the recovery path because Redis Pub/Sub is
+intentionally transient.

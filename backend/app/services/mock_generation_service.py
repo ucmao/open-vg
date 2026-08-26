@@ -8,14 +8,13 @@ To enable:
     Set MOCK_AI_GENERATION=true in backend/.env or docker-compose.yml
 """
 import os
-import asyncio
 import time
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
 from ..models.work import Work, WorkStatus
 from ..services.storage import get_storage_service
-from ..services.websocket import get_connection_manager
+from ..services.realtime import publish_user_event
 from ..utils.logger import logger
 
 
@@ -74,20 +73,16 @@ def process_mock_generation(db: Session, work_id: int, delay_seconds: float = 3.
 
     logger.info(f"✅ [MOCK AI GENERATION] Work {work_id} completed successfully (Mock Mode).")
 
-    # 5. Broadcast WebSocket completion notification
-    try:
-        ws_manager = get_connection_manager()
-        asyncio.run(ws_manager.send_message(work.user_id, {
-            "type": "generation_complete",
-            "work_id": work_id,
-            "status": "completed",
-            "file_url": sample_file,
-            "thumbnail_url": sample_thumb,
-            "canonical_url": canonical,
-            "is_mock": True
-        }))
-    except Exception as ws_err:
-        logger.warning(f"[MOCK AI GENERATION] WebSocket notification omitted/failed: {ws_err}")
+    # 5. Publish completion for delivery by the API WebSocket subscriber.
+    publish_user_event(work.user_id, {
+        "type": "generation_complete",
+        "work_id": work_id,
+        "status": "success",
+        "file_url": sample_file,
+        "thumbnail_url": sample_thumb,
+        "canonical_url": canonical,
+        "is_mock": True,
+    })
 
     return {
         "status": "completed",

@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 import os
 from dotenv import load_dotenv
 
-from .models.base import init_db
+from .models.base import engine, init_db
 from .utils.logger import logger, log_request, log_error
 from .utils.responses import error_response
 
@@ -28,9 +28,19 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting VidGen API...")
     try:
-        # Initialize database
-        init_db()
-        logger.info("Database initialized successfully")
+        auto_create = os.getenv("AUTO_CREATE_TABLES", "false").strip().lower() in {
+            "1", "true", "yes", "on"
+        }
+        environment = os.getenv("ENVIRONMENT", "development").strip().lower()
+        if auto_create:
+            if environment == "production":
+                raise RuntimeError("AUTO_CREATE_TABLES is forbidden in production")
+            init_db()
+            logger.warning("AUTO_CREATE_TABLES enabled for local development")
+        else:
+            from .utils.migrations import verify_database_at_head
+            verify_database_at_head(engine)
+            logger.info("Database migration state verified")
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
         raise
@@ -42,9 +52,13 @@ async def lifespan(app: FastAPI):
     except Exception as sec_err:
         logger.warning(f"Security check failed: {sec_err}")
 
+    from .services.realtime import realtime_subscriber
+    await realtime_subscriber.start()
+
     yield
     
     # Shutdown
+    await realtime_subscriber.stop()
     logger.info("Shutting down VidGen API...")
 
 
@@ -244,4 +258,3 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
-

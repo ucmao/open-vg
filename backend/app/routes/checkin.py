@@ -65,6 +65,18 @@ def daily_checkin(
     try:
         # Use UTC date so one user can only check in once per calendar day globally (avoids timezone bugs)
         today = datetime.now(timezone.utc).date()
+
+        # Serialize check-ins for one user. The unique constraint remains the
+        # final guard, while this row lock also keeps the credit grant and the
+        # check-in record in the same race-free transaction.
+        locked_user = db.query(User).filter(
+            User.id == current_user.id
+        ).with_for_update().first()
+        if not locked_user:
+            return error_response(
+                message="User not found",
+                status_code=status.HTTP_404_NOT_FOUND,
+            )
         
         #  - Check if already checked in today
         existing = db.query(CheckIn).filter(
@@ -103,7 +115,7 @@ def daily_checkin(
         expire_at = datetime.now(timezone.utc) + timedelta(days=CHECKIN_REWARD_EXPIRY_DAYS)
         total_credits = credit_service_add_credits(
             db,
-            current_user.id,
+            locked_user.id,
             reward_credits,
             CreditType.GIFT,
             f"Daily check-in reward (consecutive {consecutive_days} {'day' if consecutive_days == 1 else 'days'})",

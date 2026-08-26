@@ -30,6 +30,7 @@ from ..utils.responses import success_response, error_response
 from ..utils.logger import logger, log_generation_start
 from ..tasks.workflow_tasks import execute_workflow_task
 from ..services.providers.factory import ProviderFactory
+from ..services.realtime import publish_user_event
 from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 load_dotenv()
@@ -559,10 +560,7 @@ async def create_generation(
             mark_work_failed(db, new_work, "Content blocked by safety policy before generation")
             db.commit()
             notify_generation_failed(db, new_work.user_id)
-            # WebSocket: notify user of failure
-            from ..services.websocket import get_connection_manager
-            ws_manager = get_connection_manager()
-            await ws_manager.send_message(current_user.id, {
+            publish_user_event(current_user.id, {
                 "type": "generation_complete",
                 "work_id": new_work.id,
                 "status": "failed",
@@ -752,9 +750,7 @@ async def get_generation_status(
                 )
                 db.commit()
                 notify_generation_failed(db, work.user_id)
-                from ..services.websocket import get_connection_manager
-                ws_manager = get_connection_manager()
-                await ws_manager.send_message(work.user_id, {
+                publish_user_event(work.user_id, {
                     "type": "generation_complete",
                     "work_id": work_id,
                     "status": "failed",
@@ -862,9 +858,7 @@ async def get_generation_status(
                                                 )
                                                 db.commit()
                                                 notify_generation_failed(db, work.user_id)
-                                                from ..services.websocket import get_connection_manager
-                                                ws_manager = get_connection_manager()
-                                                await ws_manager.send_message(work.user_id, {
+                                                publish_user_event(work.user_id, {
                                                     "type": "generation_complete",
                                                     "work_id": work_id,
                                                     "status": "failed",

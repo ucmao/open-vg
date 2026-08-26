@@ -4,7 +4,8 @@ Unified Master Database Seed & Initialization Script
 This script initializes the database tables and populates all initial required data:
 1. Runs Alembic database migrations (`alembic upgrade head`)
 2. Creates the initial Super Admin account (a local password is generated when omitted)
-3. Imports full system configurations, page SEOs (Explore, Magic, Create, Blog, Topics enabled), models, workflows, categories, recharge packages, blogs, and 105 anonymized image/video demo works covering every Explore category, using public CDN media URLs with bundled frontend fallbacks.
+3. Imports the selected seed profile. The default `safe` profile contains a
+   reviewed model subset and neutral demo content backed only by local assets.
 
 Usage:
     python scripts/seed_all.py
@@ -98,15 +99,19 @@ def main():
 
     print(flush=True)
 
-    # Step 3: Import Complete Seed Dataset (Configs, Pages, Models, Workflows, Sample Works & Assets)
-    if not run_command(["scripts/import_seed_dataset.py"], "Importing Full Configurations, Pages & Demo Dataset"):
+    # Step 3: Import the selected profile (safe by default).
+    profile = os.getenv("SEED_PROFILE", "safe").strip().lower()
+    if not run_command(
+        ["scripts/import_seed_dataset.py"],
+        f"Importing '{profile}' Seed Dataset",
+    ):
         return False
 
     print(flush=True)
     print("=" * 68, flush=True)
     print("🎉 VIDGEN MASTER SEED & CONTAINER INITIALIZATION COMPLETED!", flush=True)
     print("=" * 68, flush=True)
-    print("  🌐 Web Frontend: http://localhost:3000 (All pages & demo data enabled)", flush=True)
+    print(f"  🌐 Web Frontend: http://localhost:3000 (seed profile: {profile})", flush=True)
     print("  🔑 Admin Login:  http://localhost:3001 (see the admin creation log above)", flush=True)
     print("  🐍 Backend API:   http://localhost:8000/docs", flush=True)
     print("=" * 68, flush=True)

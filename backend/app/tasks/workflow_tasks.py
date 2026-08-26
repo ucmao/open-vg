@@ -8,7 +8,7 @@ from ..models.work import Work, WorkStatus
 from ..models.workflow import Workflow
 from ..models.generation_model import GenerationModel
 from ..services.workflow_executor import WorkflowExecutor
-from ..services.websocket import get_connection_manager
+from ..services.realtime import publish_user_event
 from ..utils.logger import logger
 
 
@@ -32,16 +32,12 @@ class WorkflowCallbackTask(Task):
                     mark_work_failed(db, work, f"Task failed: {type(exc).__name__}: {exc}")
                     db.commit()
                     notify_generation_failed(db, work.user_id)
-                    ws_manager = get_connection_manager()
-                    try:
-                        asyncio.run(ws_manager.send_message(work.user_id, {
-                            "type": "generation_complete",
-                            "work_id": work_id,
-                            "status": "failed",
-                            "error_message": work.error_message,
-                        }))
-                    except Exception as ws_error:
-                        logger.error(f"Failed to send WebSocket notification: {ws_error}")
+                    publish_user_event(work.user_id, {
+                        "type": "generation_complete",
+                        "work_id": work_id,
+                        "status": "failed",
+                        "error_message": work.error_message,
+                    })
                     
             except Exception as e:
                 logger.error(f"Error in on_failure callback: {e}")
