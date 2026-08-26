@@ -466,7 +466,7 @@
                     <input
                       v-model="form.model_key"
                       type="text"
-                      :placeholder="$adminT('For example:', '如：kolors, flux-schnell')"
+                      :placeholder="$adminT('For example: stable-model-key', '例如：stable-model-key')"
                       class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm font-mono"
                     />
                   </div>

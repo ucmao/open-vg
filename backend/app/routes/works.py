@@ -275,12 +275,15 @@ def get_hot_works(
 @router.get("/featured/preview")
 def get_featured_preview(
     media_type: Optional[str] = None,  # 'image' or 'video'
+    work_type: Optional[str] = None,
     limit: int = 15,
     db: Session = Depends(get_db)
 ):
     """
     Get random featured works for preview carousel.
-    Filters by media_type: 'image' (text2img/img2img) or 'video' (text2video/img2video)
+    Filters by media_type: 'image' (text2img/img2img) or 'video' (text2video/img2video).
+    `work_type`, when supplied by the generation screen, narrows the carousel
+    to that exact generation mode.
     Returns random featured works for carousel display.
     """
     try:
@@ -308,6 +311,9 @@ def get_featured_preview(
             query = query.filter(Work.type.in_([WorkType.TEXT2IMG, WorkType.IMG2IMG]))
         elif media_type == 'video':
             query = query.filter(Work.type.in_([WorkType.TEXT2VIDEO, WorkType.IMG2VIDEO]))
+
+        if work_type in {item.value for item in WorkType}:
+            query = query.filter(Work.type == WorkType(work_type))
         
         # Random order and limit
         works = query.order_by(func.random()).limit(limit).all()
@@ -1219,4 +1225,3 @@ def report_work(
             message="An error occurred",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-

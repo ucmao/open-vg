@@ -23,7 +23,7 @@
         :class="sidebarCollapsed ? 'md:justify-center md:px-0' : ''"
       >
         <NuxtLink 
-          to="/workspace/dashboard" 
+          to="/users/list"
           class="flex items-center gap-2 min-w-0 overflow-hidden"
           :class="sidebarCollapsed ? 'md:w-0 md:opacity-0 md:pointer-events-none md:overflow-hidden md:invisible' : ''"
         >
@@ -57,9 +57,6 @@
         v-show="sidebarCollapsed && !isMobile" 
         class="flex-1 flex flex-col items-center py-3 gap-1 overflow-y-auto"
       >
-        <button type="button" @click="expandSidebarAndGroup('workspace')" class="w-10 h-10 flex items-center justify-center rounded-lg transition-colors" :class="isGroupActive('workspace') ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'" title="Workspace">
-          <Home class="w-5 h-5" />
-        </button>
         <button type="button" @click="expandSidebarAndGroup('userCenter')" class="w-10 h-10 flex items-center justify-center rounded-lg transition-colors" :class="isGroupActive('userCenter') ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'" title="Users">
           <Users class="w-5 h-5" />
         </button>
@@ -88,42 +85,6 @@
         v-show="!sidebarCollapsed || isMobile" 
         class="flex-1 px-3 py-4 space-y-2 overflow-y-auto"
       >
-        <!-- Workspace -->
-        <div class="nav-group">
-          <button
-            @click="toggleGroup('workspace')"
-            class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
-            :class="isGroupActive('workspace') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'"
-          >
-            <span class="flex items-center gap-2 min-w-0 overflow-hidden">
-              <Home class="w-4 h-4 shrink-0" />
-              <span class="truncate whitespace-nowrap" :title="t('nav.workspace', 'Workspace')">{{ t('nav.workspace', 'Workspace') }}</span>
-            </span>
-            <ChevronDown
-              class="w-4 h-4 transition-transform duration-200 shrink-0 ml-1"
-              :class="{ 'rotate-180': expandedGroups.workspace }"
-            />
-          </button>
-          <div v-show="expandedGroups.workspace" class="space-y-0.5 mt-1 pl-4">
-            <NuxtLink
-              to="/workspace/dashboard"
-              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
-              :class="isActive('/workspace/dashboard')"
-            >
-              <LayoutDashboard class="w-4 h-4 mr-2.5 shrink-0" />
-              <span class="truncate whitespace-nowrap" :title="t('nav.dashboard', 'Dashboard')">{{ t('nav.dashboard', 'Dashboard') }}</span>
-            </NuxtLink>
-            <NuxtLink
-              to="/workspace/analytics"
-              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
-              :class="isActive('/workspace/analytics')"
-            >
-              <BarChart3 class="w-4 h-4 mr-2.5 shrink-0" />
-              <span class="truncate whitespace-nowrap" :title="t('nav.analytics', 'Analytics')">{{ t('nav.analytics', 'Analytics') }}</span>
-            </NuxtLink>
-          </div>
-        </div>
-
         <!-- User Management -->
         <div class="nav-group">
           <button
@@ -321,14 +282,6 @@
             >
               <Workflow class="w-4 h-4 mr-2.5 shrink-0" />
               <span class="truncate whitespace-nowrap" :title="t('nav.workflows', 'Workflows')">{{ t('nav.workflows', 'Workflows') }}</span>
-            </NuxtLink>
-            <NuxtLink
-              to="/models/api-config"
-              class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors min-w-0"
-              :class="isActive('/models/api-config')"
-            >
-              <Code class="w-4 h-4 mr-2.5 shrink-0" />
-              <span class="truncate whitespace-nowrap" :title="t('nav.api_library', 'API Providers')">{{ t('nav.api_library', 'API Providers') }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -578,9 +531,6 @@ import {
   ChevronsLeft,
   X,
   Menu,
-  Home,
-  LayoutDashboard,
-  BarChart3,
   Users,
   UserCircle,
   Image,
@@ -600,7 +550,6 @@ import {
   Cpu,
   CircleDollarSign,
   Workflow,
-  Code,
   Percent,
   Settings,
   Search,
@@ -699,7 +648,6 @@ function checkMobile() {
 }
 
 const expandedGroups = reactive({
-  workspace: false,
   userCenter: false,
   moderation: false,
   content: false,
@@ -717,9 +665,7 @@ function resetExpandedGroups() {
 
 function applyDefaultGroupsByPath(path: string) {
   resetExpandedGroups()
-  if (path.startsWith('/workspace')) {
-    expandedGroups.workspace = true
-  } else if (path.startsWith('/users')) {
+  if (path.startsWith('/users')) {
     expandedGroups.userCenter = true
   } else if (path.startsWith('/moderation')) {
     expandedGroups.moderation = true
@@ -734,7 +680,7 @@ function applyDefaultGroupsByPath(path: string) {
   } else if (path.startsWith('/system')) {
     expandedGroups.system = true
   } else {
-    expandedGroups.workspace = true
+    expandedGroups.userCenter = true
   }
 }
 
@@ -818,9 +764,6 @@ function expandSidebarAndGroup(groupKey: keyof typeof expandedGroups) {
 
   let targetPath: string | null = null
   switch (groupKey) {
-    case 'workspace':
-      targetPath = '/workspace/dashboard'
-      break
     case 'userCenter':
       targetPath = '/users/list'
       break
@@ -852,8 +795,6 @@ function expandSidebarAndGroup(groupKey: keyof typeof expandedGroups) {
 function isGroupActive(groupKey: string): boolean {
   const path = route.path
   switch (groupKey) {
-    case 'workspace':
-      return path.startsWith('/workspace')
     case 'userCenter':
       return path.startsWith('/users')
     case 'moderation':
@@ -897,8 +838,6 @@ watch(() => route.path, (newPath) => {
 })
 
 const pageTitle = computed(() => {
-  if (route.path === '/workspace/dashboard') return t('nav.dashboard', 'Dashboard')
-  if (route.path === '/workspace/analytics') return t('nav.analytics', 'Analytics')
   if (route.path === '/users/list') return t('nav.user_list', 'User List')
   if (route.path === '/users/works') return t('nav.works_list', 'Works Management')
   if (route.path === '/users/comments') return t('nav.comments', 'Comments Management')
@@ -915,7 +854,6 @@ const pageTitle = computed(() => {
   if (route.path.startsWith('/content/topics')) return t('nav.topics', 'Topics & Specials')
   if (route.path === '/models/list') return t('nav.models_list', 'Models List')
   if (route.path === '/models/pricing') return t('nav.pricing', 'Model Pricing')
-  if (route.path === '/models/api-config') return t('nav.api_library', 'API Providers')
   if (route.path.startsWith('/models/workflows')) {
     if (route.params.id === 'new') return t('nav.new_workflow', 'New Workflow')
     if (route.params.id) return t('nav.edit_workflow', 'Edit Workflow')

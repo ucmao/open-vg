@@ -4,7 +4,7 @@ Unified Master Database Seed & Initialization Script
 This script initializes the database tables and populates all initial required data:
 1. Runs Alembic database migrations (`alembic upgrade head`)
 2. Creates the initial Super Admin account (default: admin / admin123)
-3. Imports full system configurations, page SEOs (Explore, Magic, Create, Blog, Topics enabled), models, workflows, categories, recharge packages, blogs, and sample demo works using public CDN media URLs.
+3. Imports full system configurations, page SEOs (Explore, Magic, Create, Blog, Topics enabled), models, workflows, categories, recharge packages, blogs, and 105 anonymized image/video demo works covering every Explore category, using public CDN media URLs with bundled frontend fallbacks.
 
 Usage:
     python scripts/seed_all.py

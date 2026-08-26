@@ -221,11 +221,11 @@ def get_model_cost(work_type: str, model_name: str, params: dict = None) -> int:
         
     Example:
         # Base cost only
-        cost = get_model_cost("text-to-video", "veo-3-fast")
+        cost = get_model_cost("text-to-video", "google-veo-3-1-jtki")
         
         # With dynamic cost based on parameters
         params = {"duration": 8, "resolution": "720p"}
-        cost = get_model_cost("text-to-video", "veo-3-fast", params)
+        cost = get_model_cost("text-to-video", "google-veo-3-1-jtki", params)
     """
     config = get_model_config(work_type, model_name)
     base_cost = config["cost"]

@@ -100,10 +100,6 @@ class ReplicateProvider(BaseProvider):
             if negative_prompt:
                 input_data["negative_prompt"] = negative_prompt
             
-            # Special case: black-forest-labs/flux-redux-schnell doesn't use prompt
-            if model_id == "flux-redux" and "prompt" in input_data:
-                del input_data["prompt"]
-            
             # Prepare prediction parameters (no webhook: completion is detected by polling only)
             prediction_params = {
                 "input": input_data,
@@ -312,4 +308,3 @@ class ReplicateProvider(BaseProvider):
                 "status": "failed",
                 "error": str(e)
             }
-

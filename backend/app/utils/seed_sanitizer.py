@@ -5,10 +5,18 @@ from typing import Any
 
 
 # Public CDN media is intentionally retained so the lightweight demo can show
-# real content without committing binary assets. Only the production website
-# hostname is replaced in links and copy.
-PRODUCTION_DOMAIN_PATTERN = re.compile(r"(?<!cdn\.)vidgenerator\.ai", re.IGNORECASE)
-DEMO_DOMAIN = "example.com"
+# real content without committing binary assets. Product-site links always point
+# to the locally running web app; email domains and third-party URLs are retained.
+SITE_ORIGIN_PATTERN = re.compile(
+    r"https?://(?:vidgenerator\.ai|example\.com)(?::\d+)?",
+    re.IGNORECASE,
+)
+BARE_SITE_DOMAIN_PATTERN = re.compile(
+    r"(?<!cdn\.)(?<!@)\b(?:vidgenerator\.ai|example\.com)\b",
+    re.IGNORECASE,
+)
+DEMO_ORIGIN = "http://localhost:3000"
+DEMO_HOST = "localhost:3000"
 
 TRACKING_CODE_REPLACEMENTS = (
     (re.compile(r"(?<![A-Z0-9])G-[A-Z0-9]{6,}(?![A-Z0-9])"), "G-XXXXXXXXXX"),
@@ -43,6 +51,11 @@ TRACKING_CODE_REPLACEMENTS = (
 )
 
 
+SECRET_PATTERNS = (
+    re.compile(r"sk-[a-zA-Z0-9_-]{20,}"),
+)
+
+
 def sanitize_tracking_code(value: str) -> str:
     """Replace analytics, ads, and site-verification identifiers with placeholders."""
     sanitized = value
@@ -52,14 +65,21 @@ def sanitize_tracking_code(value: str) -> str:
 
 
 def sanitize_seed_data(value: Any) -> Any:
-    """Recursively replace the production domain in arbitrary JSON-compatible data."""
+    """Recursively replace the production domain and sensitive keys in arbitrary JSON-compatible data."""
     if isinstance(value, str):
-        value = PRODUCTION_DOMAIN_PATTERN.sub(DEMO_DOMAIN, value)
+        for pattern in SECRET_PATTERNS:
+            value = pattern.sub("REDACTED", value)
+        value = SITE_ORIGIN_PATTERN.sub(DEMO_ORIGIN, value)
+        value = BARE_SITE_DOMAIN_PATTERN.sub(DEMO_HOST, value)
         return sanitize_tracking_code(value)
     if isinstance(value, list):
         return [sanitize_seed_data(item) for item in value]
     if isinstance(value, dict):
-        sanitized = {key: sanitize_seed_data(item) for key, item in value.items()}
+        sanitized = {}
+        for key, item in value.items():
+            if key in ("openai_api_key", "api_secret", "secret_key", "access_token"):
+                continue
+            sanitized[key] = sanitize_seed_data(item)
         # Exported custom code must never execute automatically in a new
         # installation. The placeholder remains visible as a setup template.
         if str(sanitized.get("config_key", "")).startswith("custom_code_"):
@@ -69,9 +89,12 @@ def sanitize_seed_data(value: Any) -> Any:
 
 
 def contains_production_domain(value: Any) -> bool:
-    """Return whether a nested seed value still contains the production domain."""
+    """Return whether nested seed data still contains a non-local product domain."""
     if isinstance(value, str):
-        return bool(PRODUCTION_DOMAIN_PATTERN.search(value))
+        return bool(
+            SITE_ORIGIN_PATTERN.search(value)
+            or BARE_SITE_DOMAIN_PATTERN.search(value)
+        )
     if isinstance(value, list):
         return any(contains_production_domain(item) for item in value)
     if isinstance(value, dict):

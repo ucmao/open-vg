@@ -243,8 +243,8 @@
                       </div>
 
                       <!-- Models -->
-                      <div class="mt-5 pt-5 border-t border-white/10">
-                        <div class="flex items-center justify-between mb-3">
+                      <div v-if="allGenerationModels?.length" class="mt-4 pt-4 border-t border-white/10">
+                        <div class="flex items-center justify-between mb-2.5">
                           <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Models</div>
                           <NuxtLink
                             to="/generate"
@@ -254,21 +254,21 @@
                             View all
                           </NuxtLink>
                         </div>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-1.5">
                           <NuxtLink
-                            v-for="model in (allGenerationModels || [])"
+                            v-for="model in allGenerationModels"
                             :key="`${model.work_type}-${model.name}`"
                             :to="getModelUrl(model)"
-                            class="px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all whitespace-nowrap flex items-center gap-2"
+                            class="px-2.5 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all whitespace-nowrap flex items-center gap-1.5"
                             @click="showCreateMenu = false"
                           >
-                            <span v-if="model.icon_url" class="flex-shrink-0 w-4 h-4 rounded overflow-hidden bg-white/5">
+                            <span v-if="model.icon_url" class="flex-shrink-0 w-3.5 h-3.5 rounded overflow-hidden bg-white/5">
                               <img :src="model.icon_url" alt="" class="w-full h-full object-contain" @error="($event.target as HTMLImageElement).style.display = 'none'" />
                             </span>
                             {{ model.display_name || model.name }}
                             <span
                               v-if="model.badge"
-                              class="flex-shrink-0 text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase"
+                              class="flex-shrink-0 text-[9px] font-semibold px-1 py-0.5 rounded uppercase"
                               :class="getBadgeClassObject(model.badge, 'dark')"
                             >{{ getBadgeLabel(model.badge) }}</span>
                           </NuxtLink>
@@ -764,26 +764,28 @@
                 <div class="text-[10px] text-gray-500 mt-0.5">{{ item.desc }}</div>
               </NuxtLink>
 
-              <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-4 pt-2">Models</div>
-              <div class="flex flex-wrap gap-2 px-4">
-                <NuxtLink
-                  v-for="model in (allGenerationModels || [])"
-                  :key="`${model.work_type}-${model.name}`"
-                  :to="getModelUrl(model)"
-                  class="px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all whitespace-nowrap flex items-center gap-2"
-                  @click="mobileMenuOpen = false; mobileCreateOpen = false"
-                >
-                  <span v-if="model.icon_url" class="flex-shrink-0 w-4 h-4 rounded overflow-hidden bg-white/5">
-                    <img :src="model.icon_url" alt="" class="w-full h-full object-contain" @error="($event.target as HTMLImageElement).style.display = 'none'" />
-                  </span>
-                  {{ model.display_name || model.name }}
-                  <span
-                    v-if="model.badge"
-                    class="flex-shrink-0 text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase"
-                    :class="getBadgeClassObject(model.badge, 'dark')"
-                  >{{ getBadgeLabel(model.badge) }}</span>
-                </NuxtLink>
-              </div>
+              <template v-if="allGenerationModels?.length">
+                <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-4 pt-2">Models</div>
+                <div class="flex flex-wrap gap-1.5 px-4">
+                  <NuxtLink
+                    v-for="model in allGenerationModels"
+                    :key="`${model.work_type}-${model.name}`"
+                    :to="getModelUrl(model)"
+                    class="px-2.5 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all whitespace-nowrap flex items-center gap-1.5"
+                    @click="mobileMenuOpen = false; mobileCreateOpen = false"
+                  >
+                    <span v-if="model.icon_url" class="flex-shrink-0 w-3.5 h-3.5 rounded overflow-hidden bg-white/5">
+                      <img :src="model.icon_url" alt="" class="w-full h-full object-contain" @error="($event.target as HTMLImageElement).style.display = 'none'" />
+                    </span>
+                    {{ model.display_name || model.name }}
+                    <span
+                      v-if="model.badge"
+                      class="flex-shrink-0 text-[9px] font-semibold px-1 py-0.5 rounded uppercase"
+                      :class="getBadgeClassObject(model.badge, 'dark')"
+                    >{{ getBadgeLabel(model.badge) }}</span>
+                  </NuxtLink>
+                </div>
+              </template>
 
               <NuxtLink
                 to="/generate"
@@ -999,7 +1001,7 @@ const { data: generationModelsData } = await useAsyncData('header-generation-mod
         'image-to-image': 4
       }
       
-      const modelsMap = new Map<string, { name: string; display_name: string; work_type: string; priority: number; icon_url?: string | null; badge?: string | null }>()
+      const modelsMap = new Map<string, { name: string; display_name: string; work_type: string; priority: number; icon_url?: string | null; badge?: string | null; is_featured: boolean }>()
       
       Object.keys(typePriority).sort((a, b) => typePriority[a] - typePriority[b]).forEach(workType => {
         if (data[workType] && Array.isArray(data[workType])) {
@@ -1007,6 +1009,7 @@ const { data: generationModelsData } = await useAsyncData('header-generation-mod
             const modelName = model.name || model.display_name
             const displayName = model.display_name || model.name
             const key = displayName.toLowerCase()
+            const isFeatured = !!model.is_featured
             if (!modelsMap.has(key) || modelsMap.get(key)!.priority > typePriority[workType]) {
               modelsMap.set(key, {
                 name: modelName,
@@ -1014,18 +1017,21 @@ const { data: generationModelsData } = await useAsyncData('header-generation-mod
                 work_type: workType,
                 priority: typePriority[workType],
                 icon_url: model.icon_url ?? null,
-                badge: model.badge ?? null
+                badge: model.badge ?? null,
+                is_featured: isFeatured
               })
             }
           })
         }
       })
       
-      const createModels = Array.from(modelsMap.values()).sort((a, b) => {
-        const typeDiff = a.priority - b.priority
-        if (typeDiff !== 0) return typeDiff
-        return (a.display_name || a.name).localeCompare(b.display_name || b.name)
-      })
+      const createModels = Array.from(modelsMap.values())
+        .filter(m => m.is_featured)
+        .sort((a, b) => {
+          const typeDiff = a.priority - b.priority
+          if (typeDiff !== 0) return typeDiff
+          return (a.display_name || a.name).localeCompare(b.display_name || b.name)
+        })
 
       // Magic ： text2video/img2video/text2img/img2img， video-effects、image-effects ， 8
       const toItem = (m: any, wt: string) => ({ name: m.name || m.display_name, display_name: m.display_name || m.name, work_type: wt, icon_url: m.icon_url ?? null, badge: m.badge ?? null })

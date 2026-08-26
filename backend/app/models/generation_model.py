@@ -71,7 +71,7 @@ class GenerationModel(Base):
     # workflow relationship is defined via backref in Workflow model
     
     # Model identification (Specific to this product instance)
-    model_key = Column(String(100), nullable=False, unique=True, index=True)  # kolors, flux-schnell, etc.
+    model_key = Column(String(100), nullable=False, unique=True, index=True)
     name = Column(String(200), nullable=False)  # Display name
     work_type = Column(String(50), nullable=False, index=True)  # text-to-image, text-to-video, etc.
     description = Column(Text, nullable=True)

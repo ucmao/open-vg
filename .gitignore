@@ -60,6 +60,7 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+scratch/
 
 # Build outputs
 build/

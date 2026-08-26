@@ -137,7 +137,7 @@ const handleLogin = async () => {
       })
       authCookie.value = token
       
-      router.push('/workspace/dashboard')
+      router.push('/users/list')
     } else {
       error.value = response.message || t('login.failed', 'Login failed')
     }

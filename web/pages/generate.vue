@@ -1646,7 +1646,7 @@ const fetchFeaturedWorks = async () => {
   
   try {
     const response = await api.get('/api/works/featured/preview', {
-      params: { media_type: mediaType, limit: 15 }
+      params: { media_type: mediaType, work_type: form.type, limit: 15 }
     })
     if (response.success && response.data) {
       featuredWorks.value = response.data

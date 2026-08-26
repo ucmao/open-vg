@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Redirect admin root to dashboard
+// Redirect admin root to the first maintained management page
 definePageMeta({
   layout: false,
   middleware: []
@@ -12,6 +12,5 @@ useHead({
   ]
 })
 
-// Redirect to dashboard
-navigateTo('/workspace/dashboard')
+navigateTo('/users/list')
 </script>

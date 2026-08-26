@@ -139,6 +139,35 @@ def import_table_data(db, filename, model_cls, pk_field='id', preserve_when_empt
     return len(items)
 
 
+def synchronize_table_to_seed(db, filename, model_cls, pk_field="id"):
+    """Delete rows absent from the canonical seed file.
+
+    Models, workflows, and provider APIs form one versioned runtime bundle. Keeping
+    additive leftovers here can expose parameterless legacy models in the product UI.
+    """
+    filepath = os.path.join(DATA_DIR, filename)
+    with open(filepath, "r", encoding="utf-8") as file_handle:
+        items = sanitize_seed_data(json.load(file_handle))
+
+    seed_keys = {
+        item[pk_field]
+        for item in items
+        if item.get(pk_field) is not None
+    }
+    if not seed_keys:
+        raise ValueError(f"Refusing to synchronize {model_cls.__tablename__} from an empty seed")
+
+    removed = db.query(model_cls).filter(
+        getattr(model_cls, pk_field).notin_(seed_keys)
+    ).delete(synchronize_session=False)
+    db.flush()
+    print(
+        f"  🧹 Removed {removed} obsolete records from {model_cls.__tablename__}",
+        flush=True,
+    )
+    return removed
+
+
 def reset_postgres_sequences(db, model_classes):
     """Advance PostgreSQL sequences after importing rows with explicit IDs."""
     if db.bind.dialect.name != "postgresql":
@@ -187,6 +216,12 @@ def import_all():
         import_table_data(db, "blog_posts.json", BlogPost, pk_field="id")
         import_table_data(db, "sample_works.json", Work, pk_field="id")
 
+        # The checked-in model bundle is authoritative. Delete historical rows in
+        # dependency order so an old additive import can never leak into the UI.
+        synchronize_table_to_seed(db, "generation_models.json", GenerationModel)
+        synchronize_table_to_seed(db, "workflows.json", Workflow)
+        synchronize_table_to_seed(db, "api_library.json", APILibrary)
+
         reset_postgres_sequences(
             db,
             (
@@ -207,6 +242,9 @@ def import_all():
             ),
         )
         db.commit()
+
+        from app.models.generation_config import invalidate_cache
+        invalidate_cache()
 
         print("\n✨ All Seed Dataset tables imported successfully!", flush=True)
     except Exception as e:

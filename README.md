@@ -148,7 +148,7 @@ docker compose up -d
 - 🔧 **Admin Panel**: `http://localhost:3001` (Default Admin: `admin` / Password: `admin123`)
 - 🐍 **Backend API (Swagger Docs)**: `http://localhost:8000/docs`
 
-> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and demo works referencing public CDN media. If CDN media is unavailable, the frontend automatically displays its bundled placeholder. Production API credentials and analytics identifiers are intentionally excluded; analytics templates are imported disabled and must be configured separately.
+> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and 105 balanced image/video demo works covering every Explore category. Media references public CDN assets; if unavailable, both the public site and admin console automatically display a bundled placeholder. Demo users and operational statistics are anonymized; production API credentials and analytics identifiers are intentionally excluded, and analytics templates are imported disabled.
 
 ---
 
@@ -277,8 +277,8 @@ The `backend/scripts/` folder provides utility scripts for administrative mainte
 # Add credits to a user account
 python scripts/add_credits.py --email user@example.com --amount 1000
 
-# Import new AI models into system database
-python scripts/import_models.py
+# Reapply the canonical configuration and demo dataset
+python scripts/seed_all.py
 
 # Backfill work tags and slugs
 python scripts/update_url_slugs_from_titles.py

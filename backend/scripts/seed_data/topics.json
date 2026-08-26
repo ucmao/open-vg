@@ -18,21 +18,21 @@
               "image_url": "",
               "video_url": "https://cdn.vidgenerator.ai/RlZk8vUVIytBNi3SvnCgMS2CFsUS.mp4",
               "poster_url": "",
-              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+              "link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator"
             },
             {
               "type": "video",
               "image_url": "",
               "video_url": "https://cdn.vidgenerator.ai/nyMtGXCZvsqJv3DdC0kR8IhePGEX.mp4",
               "poster_url": "",
-              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+              "link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator"
             },
             {
               "type": "video",
               "image_url": "",
               "video_url": "https://cdn.vidgenerator.ai/fhCgqgyz5bil7KeMPNj7nHSU2hLv.mp4",
               "poster_url": "",
-              "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator"
+              "link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator"
             }
           ],
           "interval": 3
@@ -112,7 +112,7 @@
           "id": 1770262798169.2578,
           "type": "button",
           "text": "Free Try Now",
-          "link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+          "link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator",
           "style": "remix",
           "target": "_self",
           "size": "medium",
@@ -249,12 +249,12 @@
           "title": "The Stage Awaits Your Vision",
           "description": "From raw power to delicate grace—design your next masterpiece of motion. Start generating now.",
           "button_text": "Unleash My Dance Vision ✨",
-          "button_link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+          "button_link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Start Your Dance Creation",
-      "hero_button_link": "https://example.com/generate?type=video_effects&effect=ai-dance-generator",
+      "hero_button_link": "http://localhost:3000/generate?type=video_effects&effect=ai-dance-generator",
       "hero_button_style": "remix",
       "featured_image_focus": "50,36"
     },
@@ -357,7 +357,7 @@
           "id": 1770868879813.4038,
           "type": "button",
           "text": "GENERATE MY ANIME MOMENT ✨",
-          "link": "https://example.com/generate?type=text2img",
+          "link": "http://localhost:3000/generate?type=text2img",
           "style": "remix",
           "target": "_self",
           "size": "medium",
@@ -499,12 +499,12 @@
           "title": "Turn Your \"Ship\" Into High-Art",
           "description": "Stop waiting for a new episode. Create the iconic romantic scenes you’ve always imagined today.",
           "button_text": "START MY STORY NOW ❤️",
-          "button_link": "https://example.com/generate?type=text2img",
+          "button_link": "http://localhost:3000/generate?type=text2img",
           "style": "gradient"
         }
       ],
       "hero_button_text": "GENERATE MY ANIME MOMENT ✨",
-      "hero_button_link": "https://example.com/generate?type=text2img",
+      "hero_button_link": "http://localhost:3000/generate?type=text2img",
       "hero_button_style": "remix",
       "featured_image_focus": "46,47"
     },
@@ -591,7 +591,7 @@
           "id": 1769919361192.647,
           "type": "button",
           "text": "Try Free Nano Banana Pro Now",
-          "link": "https://example.com/generate",
+          "link": "http://localhost:3000/generate",
           "style": "primary",
           "target": "_self",
           "size": "medium",
@@ -755,12 +755,12 @@
           "title": "Try Google Free Nano Banana AI on Pollo AI Now!",
           "description": "EXPERIENCE PERFECTION with Nano Banana Pro",
           "button_text": "Try Nano Banana for Free",
-          "button_link": "https://example.com/generate",
+          "button_link": "http://localhost:3000/generate",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Try Free Nano Banana Pro Now",
-      "hero_button_link": "https://example.com/generate",
+      "hero_button_link": "http://localhost:3000/generate",
       "hero_button_style": "remix",
       "featured_image_focus": "50,50"
     },
@@ -917,7 +917,7 @@
           "id": 1772089662470.4346,
           "type": "button",
           "text": "TRY SEEDANCE 2.0 NOW — FREE 🚀",
-          "link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+          "link": "http://localhost:3000/generate?type=img2video&model=Seedance+2.0",
           "style": "remix",
           "target": "_self",
           "size": "medium",
@@ -1077,12 +1077,12 @@
           "title": "The Stage is Yours. The AI is Ready",
           "description": "Don't just watch the future—create it. Step into the next era of digital performance with Seedance 2.0.",
           "button_text": "TRY SEEDANCE 2.0 NOW — FREE 🚀",
-          "button_link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+          "button_link": "http://localhost:3000/generate?type=img2video&model=Seedance+2.0",
           "style": "gradient"
         }
       ],
       "hero_button_text": "UPGRADE TO SEEDANCE 2.0 — START GENERATING",
-      "hero_button_link": "https://example.com/generate?type=img2video&model=Seedance+2.0",
+      "hero_button_link": "http://localhost:3000/generate?type=img2video&model=Seedance+2.0",
       "hero_button_style": "remix",
       "featured_image_focus": "48,55"
     },
@@ -1112,7 +1112,7 @@
     "id": 10,
     "slug": "love-in-motion",
     "title": "Love in Motion\" – A Romantic Film Challenge",
-    "excerpt": "Win up to 500 Credits in the \"Love in Motion\" AI video challenge! Create romantic themed videos on example.com from March 2nd-8th. Share & earn more!",
+    "excerpt": "Win up to 500 Credits in the \"Love in Motion\" AI video challenge! Create romantic themed videos on localhost:3000 from March 2nd-8th. Share & earn more!",
     "content": "",
     "featured_image": "https://cdn.vidgenerator.ai/KE62N019E1DrnzVWbyWunnnkwy1o.webp",
     "icon": "🚀",
@@ -1186,7 +1186,7 @@
         {
           "id": 1772265156068.836,
           "type": "rich_text",
-          "content": "<h3><b>Create:</b></h3><p><!--StartFragment-->Use example.com to create a romantic-themed video (think cinematic couples, rainy dates, or sunset proposals).<!--EndFragment--></p>"
+          "content": "<h3><b>Create:</b></h3><p><!--StartFragment-->Use localhost:3000 to create a romantic-themed video (think cinematic couples, rainy dates, or sunset proposals).<!--EndFragment--></p>"
         },
         {
           "id": 1772265273672.0095,
@@ -1297,7 +1297,7 @@
           "id": 1772260884365.693,
           "type": "list",
           "items": [
-            "Originality: Entries must be generated using the example.com platform.",
+            "Originality: Entries must be generated using the localhost:3000 platform.",
             "Community Guidelines: Any content violating our safety or community standards will be disqualified.",
             "Verification: Shared social links must be set to \"Public\" for verification. Invalid or broken links will not be eligible for credits.",
             "Credit Validity: All rewards will be deposited by March 10th. "
@@ -1313,7 +1313,7 @@
         {
           "id": 1772261050380.7275,
           "type": "rich_text",
-          "content": "<h3>🐦 1. Twitter (X) - Viral &amp; Cinematic</h3><p><i>Best for: High engagement and quick scrolling.</i></p><blockquote><p><b>Post Caption:</b>\nCaptured a moment of pure cinematic romance with @VidGeneratorAI. 🌹</p><p>I’m entering the <b>#LoveInMotion</b> challenge to win up to 500 Credits! What do you think of this AI-generated magic? ✨</p><p>Create your own love story here: [Link to your video]</p><p>#AI #VidGenerator #AIAnimation #RomanticVibes #CinematicAI</p></blockquote><hr><h3>👥 2. Facebook - Emotional &amp; Story-driven</h3><p><i>Best for: Personal storytelling and reaching a broader audience.</i></p><blockquote><p><b>Post Caption:</b>\nLove is better in motion. ❤️</p><p>I just used example.com to turn a romantic dream into this cinematic reality. From the golden hour glow to the subtle emotions of the characters, AI is truly changing the way we tell stories.</p><p>I’ve officially joined the <b>\"Love in Motion\"</b> Challenge. Check out my creation and start yours to win a share of the Credit prize pool! 🎁</p><p>Watch the full video: [Link to your video]</p><p>#DigitalArt #AIVideo #RomanceInMotion #VidGeneratorAI #WesternAesthetics</p></blockquote><hr><h3>💬 3. Discord - Community &amp; Creator-focused</h3><p><i>Best for: Sharing in \"Art Showcase\" or \"AI-Video\" channels.</i></p><p><!--StartFragment--><!--EndFragment--></p><blockquote><p><b>Message:</b>\n🎬 <b>New Entry: \"Love in Motion\" Challenge</b></p><p>Just dropped a new romantic short generated on <b>example.com</b>. The lighting and character consistency for this Western-style couple are insane!</p><p>They are currently running a <b>Credit Giveaway</b> (Top 5 win up to 500 Credits!). If you want to grab some free credits, just make your video public and share it.</p><p>Check out my entry: [Link to your video]\nLet’s see who can create the most romantic shot! 🌹</p></blockquote>"
+          "content": "<h3>🐦 1. Twitter (X) - Viral &amp; Cinematic</h3><p><i>Best for: High engagement and quick scrolling.</i></p><blockquote><p><b>Post Caption:</b>\nCaptured a moment of pure cinematic romance with @VidGeneratorAI. 🌹</p><p>I’m entering the <b>#LoveInMotion</b> challenge to win up to 500 Credits! What do you think of this AI-generated magic? ✨</p><p>Create your own love story here: [Link to your video]</p><p>#AI #VidGenerator #AIAnimation #RomanticVibes #CinematicAI</p></blockquote><hr><h3>👥 2. Facebook - Emotional &amp; Story-driven</h3><p><i>Best for: Personal storytelling and reaching a broader audience.</i></p><blockquote><p><b>Post Caption:</b>\nLove is better in motion. ❤️</p><p>I just used localhost:3000 to turn a romantic dream into this cinematic reality. From the golden hour glow to the subtle emotions of the characters, AI is truly changing the way we tell stories.</p><p>I’ve officially joined the <b>\"Love in Motion\"</b> Challenge. Check out my creation and start yours to win a share of the Credit prize pool! 🎁</p><p>Watch the full video: [Link to your video]</p><p>#DigitalArt #AIVideo #RomanceInMotion #VidGeneratorAI #WesternAesthetics</p></blockquote><hr><h3>💬 3. Discord - Community &amp; Creator-focused</h3><p><i>Best for: Sharing in \"Art Showcase\" or \"AI-Video\" channels.</i></p><p><!--StartFragment--><!--EndFragment--></p><blockquote><p><b>Message:</b>\n🎬 <b>New Entry: \"Love in Motion\" Challenge</b></p><p>Just dropped a new romantic short generated on <b>localhost:3000</b>. The lighting and character consistency for this Western-style couple are insane!</p><p>They are currently running a <b>Credit Giveaway</b> (Top 5 win up to 500 Credits!). If you want to grab some free credits, just make your video public and share it.</p><p>Check out my entry: [Link to your video]\nLet’s see who can create the most romantic shot! 🌹</p></blockquote>"
         },
         {
           "id": 1772531908632.8787,
@@ -1348,7 +1348,7 @@
         }
       ],
       "hero_button_text": "Generate Now",
-      "hero_button_link": "https://example.com/generate/image-to-video",
+      "hero_button_link": "http://localhost:3000/generate/image-to-video",
       "hero_button_style": "remix",
       "featured_image_focus": "53,52"
     },
@@ -1359,7 +1359,7 @@
     "updated_at": "2026-08-22 00:52:26.087949+08:00",
     "sort_order": 0,
     "meta_title": "Love in Motion: AI Video Challenge & Prizes",
-    "meta_description": "Join example.com's \"Love in Motion\" film challenge! Create romantic AI videos, share on social media, and win up to 500 Credits. Contest ends March 8th!",
+    "meta_description": "Join localhost:3000's \"Love in Motion\" film challenge! Create romantic AI videos, share on social media, and win up to 500 Credits. Contest ends March 8th!",
     "category": null,
     "tags": [],
     "meta_keywords": null,
@@ -1425,7 +1425,7 @@
           "id": 1769925473490.675,
           "type": "button",
           "text": "Start Free Generating Now",
-          "link": "https://example.com/generate",
+          "link": "http://localhost:3000/generate",
           "style": "primary",
           "target": "_self",
           "size": "medium",
@@ -1624,12 +1624,12 @@
           "title": "Create Your First Image - It's Free",
           "description": "Ready to witness the speed of thought? Join thousands of creators using FLUX.2 Klein to bring their visions to life.",
           "button_text": "Create Your First Image - It's Free",
-          "button_link": "https://example.com/generate",
+          "button_link": "http://localhost:3000/generate",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Start Generating Now",
-      "hero_button_link": "https://example.com/generate",
+      "hero_button_link": "http://localhost:3000/generate",
       "hero_button_style": "remix",
       "featured_image_focus": "50,50"
     },
@@ -1678,7 +1678,7 @@
         {
           "id": 1770023552649.32,
           "type": "rich_text",
-          "content": "<p><!--StartFragment-->AI-generated images often stumble with complex human interactions. Hands become contorted, proportions distort, and emotions fall flat. Our&nbsp;<a href=\"https://example.com/generate?type=video_effects&amp;model=princess-carry-generator-0u8d\">Princess Carry Generator</a>, however, is painstakingly fine-tuned to excel where others fail, ensuring every embrace is flawless.<!--EndFragment--></p>"
+          "content": "<p><!--StartFragment-->AI-generated images often stumble with complex human interactions. Hands become contorted, proportions distort, and emotions fall flat. Our&nbsp;<a href=\"http://localhost:3000/generate?type=video_effects&amp;model=princess-carry-generator-0u8d\">Princess Carry Generator</a>, however, is painstakingly fine-tuned to excel where others fail, ensuring every embrace is flawless.<!--EndFragment--></p>"
         },
         {
           "id": 1770023614201.5847,
@@ -1842,12 +1842,12 @@
           "title": "Your Fairytale Awaits. Create Your Perfect Moment Now.",
           "description": "The ultimate romantic gesture, reimagined by AI. Start generating breathtaking Princess Carry scenes",
           "button_text": "Bring Our Romance to Life ❤️",
-          "button_link": "https://example.com/generate?type=video_effects&model=princess-carry-generator-0u8d",
+          "button_link": "http://localhost:3000/generate?type=video_effects&model=princess-carry-generator-0u8d",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Capture This Moment Foreve",
-      "hero_button_link": "https://example.com/generate?type=video_effects&model=princess-carry-generator-0u8d",
+      "hero_button_link": "http://localhost:3000/generate?type=video_effects&model=princess-carry-generator-0u8d",
       "hero_button_style": "remix",
       "featured_image_focus": "50,39"
     },
@@ -2046,12 +2046,12 @@
           "title": "Stop Dreaming. Start Sculpting",
           "description": "Unleash the power of the most advanced AI muscle engine today.",
           "button_text": "Transform My Vision ⚡",
-          "button_link": "https://example.com/generate?type=video_effects&model=ai-muscle-generator-z3bo",
+          "button_link": "http://localhost:3000/generate?type=video_effects&model=ai-muscle-generator-z3bo",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Sculpt My Physique Now 🔥",
-      "hero_button_link": "https://example.com/generate?type=video_effects&model=ai-muscle-generator-z3bo",
+      "hero_button_link": "http://localhost:3000/generate?type=video_effects&model=ai-muscle-generator-z3bo",
       "hero_button_style": "remix"
     },
     "status": "PUBLISHED",
@@ -2233,7 +2233,7 @@
           "id": 1769764942025.006,
           "type": "button",
           "text": "Create Girlfriend Video Now",
-          "link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+          "link": "http://localhost:3000/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
           "style": "primary",
           "target": "_blank"
         },
@@ -2254,12 +2254,12 @@
           "title": "Ready to meet her?",
           "description": "The only limit is your imagination. Start designing your perfect AI companion now for free.",
           "button_text": "Create Girlfriend Video Now",
-          "button_link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+          "button_link": "http://localhost:3000/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
           "style": "gradient"
         }
       ],
       "hero_button_text": "Create Girlfriend Video Now",
-      "hero_button_link": "https://example.com/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
+      "hero_button_link": "http://localhost:3000/generate?type=video_effects&model=ai-girlfriend-generator-0kir",
       "hero_button_style": "remix",
       "featured_image_focus": "50,50"
     },
