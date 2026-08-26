@@ -103,14 +103,20 @@ def main():
         return False
 
     print(flush=True)
-    print("=" * 65, flush=True)
-    print("🎉 ALL SEED & INITIALIZATION STEPS COMPLETED SUCCESSFULLY!", flush=True)
-    print("=" * 65, flush=True)
-    print("  🔑 Admin Login: http://localhost:3001", flush=True)
-    print("     Username: " + os.getenv("INITIAL_ADMIN_USERNAME", "admin"), flush=True)
-    print("     Password: [Configured via INITIAL_ADMIN_PASSWORD env variable, default: admin123]", flush=True)
+    print("=" * 68, flush=True)
+    print("🎉 VIDGEN MASTER SEED & CONTAINER INITIALIZATION COMPLETED!", flush=True)
+    print("=" * 68, flush=True)
     print("  🌐 Web Frontend: http://localhost:3000 (All pages & demo data enabled)", flush=True)
-    print("=" * 65, flush=True)
+    print("  🔑 Admin Login:  http://localhost:3001 (User: admin / Pass: admin123)", flush=True)
+    print("  🐍 Backend API:   http://localhost:8000/docs", flush=True)
+    print("=" * 68, flush=True)
+    print("  ⚠️  EXTERNAL SERVICES CONFIGURATION CHECKLIST (.env):", flush=True)
+    print("     • AI Generation:    Configure REPLICATE_API_KEY / SILICONFLOW_API_KEY", flush=True)
+    print("                         (Or set MOCK_AI_GENERATION=true for zero-cost testing)", flush=True)
+    print("     • Payments:         Configure PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET", flush=True)
+    print("     • OAuth Login:      Configure GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET", flush=True)
+    print("     • Email (SMTP):     Configure SMTP_HOST / SMTP_PORT for email verification", flush=True)
+    print("=" * 68, flush=True)
     print(flush=True)
     return True
 

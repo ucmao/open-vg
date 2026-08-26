@@ -30,7 +30,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 58,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": null
@@ -94,7 +94,7 @@
     "model_level": "",
     "category": "Hot Image effects|Popular",
     "work_type": "image-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 67,
     "icon_url": null,
     "badge": "new"
@@ -129,7 +129,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 72,
     "icon_url": "https://cdn.vidgenerator.ai/743ws0kQbA9MHQIXMpzzlWxmzK8T.jpg",
     "badge": null
@@ -160,7 +160,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 84,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": "new"
@@ -192,7 +192,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 92,
     "icon_url": "https://cdn.vidgenerator.ai/usoXYyCHKrXBNakJsnSbRN0vlkE0.png",
     "badge": null
@@ -263,7 +263,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 96,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -348,7 +348,7 @@
     "model_level": "basic",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 8,
     "icon_url": null,
     "badge": null
@@ -382,7 +382,7 @@
     "model_level": "",
     "category": "Hot Image effects|Popular",
     "work_type": "image-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 68,
     "icon_url": null,
     "badge": null
@@ -404,7 +404,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 55,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -426,7 +426,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 55,
     "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
     "badge": null
@@ -457,7 +457,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 91,
     "icon_url": "https://cdn.vidgenerator.ai/usoXYyCHKrXBNakJsnSbRN0vlkE0.png",
     "badge": null
@@ -494,7 +494,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 71,
     "icon_url": "https://cdn.vidgenerator.ai/idYfyviejDv8qGH84McHZMnrPMKW.webp",
     "badge": null
@@ -529,7 +529,7 @@
     "model_level": "member",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 98,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -703,7 +703,7 @@
     "model_level": "",
     "category": "Hot Image effects|Popular",
     "work_type": "image-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 69,
     "icon_url": null,
     "badge": null
@@ -753,7 +753,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 80,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -803,7 +803,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 57,
     "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
     "badge": "hot"
@@ -835,7 +835,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 86,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": null
@@ -945,7 +945,7 @@
     "model_level": "",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 23,
     "icon_url": null,
     "badge": null
@@ -979,7 +979,7 @@
     "model_level": "",
     "category": "Hot Image effects|Popular",
     "work_type": "image-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 70,
     "icon_url": null,
     "badge": null
@@ -1001,7 +1001,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 59,
     "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
     "badge": null
@@ -1081,7 +1081,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 57,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -1103,7 +1103,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 87,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -1125,7 +1125,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 54,
     "icon_url": "https://cdn.vidgenerator.ai/pSE7xPJHDKWuoD5MgWUf9noqRnzC.png",
     "badge": "hot"
@@ -1202,7 +1202,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 63,
     "icon_url": "https://cdn.vidgenerator.ai/idYfyviejDv8qGH84McHZMnrPMKW.webp",
     "badge": null
@@ -1252,7 +1252,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 60,
     "icon_url": "https://cdn.vidgenerator.ai/ezeQUxOPdnFKkfXHzKyV4RUPjHSB.png",
     "badge": null
@@ -1274,7 +1274,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 85,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -1296,7 +1296,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 52,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": "free"
@@ -1406,7 +1406,7 @@
     "model_level": "",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 31,
     "icon_url": null,
     "badge": null
@@ -1513,7 +1513,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 60,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": null
@@ -1548,7 +1548,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 56,
     "icon_url": "https://cdn.vidgenerator.ai/Rk7bLn3KXBNYxduluolGz394781K.png",
     "badge": null
@@ -1585,7 +1585,7 @@
     "model_level": "member",
     "category": "",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 75,
     "icon_url": "https://cdn.vidgenerator.ai/7Q7xGAwI5SGQR01QZeUKuxkLROU5.png",
     "badge": "new"
@@ -1747,7 +1747,7 @@
     "model_level": "",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 7,
     "icon_url": null,
     "badge": null
@@ -1783,7 +1783,7 @@
     "model_level": "",
     "category": "",
     "work_type": "image-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 61,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": null
@@ -1805,7 +1805,7 @@
     "model_level": "member",
     "category": "",
     "work_type": "text-to-image",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 90,
     "icon_url": "https://cdn.vidgenerator.ai/k8J1KxpSLnY0C9dFpTz7bvyFSY7O.png",
     "badge": "new"
@@ -1915,7 +1915,7 @@
     "model_level": "",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 14,
     "icon_url": null,
     "badge": null
@@ -1950,7 +1950,7 @@
     "model_level": "",
     "category": "",
     "work_type": "text-to-video",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 62,
     "icon_url": "https://cdn.vidgenerator.ai/Rk7bLn3KXBNYxduluolGz394781K.png",
     "badge": null
@@ -2005,7 +2005,7 @@
     "model_level": "basic",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 9,
     "icon_url": null,
     "badge": null
@@ -2039,7 +2039,7 @@
     "model_level": "",
     "category": "Hot Image effects|Popular",
     "work_type": "image-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 66,
     "icon_url": null,
     "badge": "hot"
@@ -2094,7 +2094,7 @@
     "model_level": "basic",
     "category": "Recommended Template|Hot",
     "work_type": "video-effects",
-    "is_featured": false,
+    "is_featured": true,
     "workflow_id": 49,
     "icon_url": null,
     "badge": null

@@ -2014,6 +2014,7 @@ watch(() => form.type, (newVal, oldVal) => {
     // Type change should reset all params to defaults for the selected model
     updateDefaultModel(false)
   }
+  fetchFeaturedWorks()
 })
 
 // ， URL（）

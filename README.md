@@ -143,12 +143,21 @@ cd vidgen
 # Launch all 6 services via Docker Compose
 docker compose up -d
 ```
+> 💡 *Tip: Omit `-d` or run `docker compose logs -f backend` to stream live startup logs & external API checklist.*
 
 - 🌐 **Web User Portal**: `http://localhost:3000`
 - 🔧 **Admin Panel**: `http://localhost:3001` (Default Admin: `admin` / Password: `admin123`)
 - 🐍 **Backend API (Swagger Docs)**: `http://localhost:8000/docs`
 
-> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and 105 balanced image/video demo works covering every Explore category. Media references public CDN assets; if unavailable, both the public site and admin console automatically display a bundled placeholder. Demo users and operational statistics are anonymized; production API credentials and analytics identifiers are intentionally excluded, and analytics templates are imported disabled.
+> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and 130 balanced image/video demo works covering every Explore category (including 15 text-to-video and 15 image-to-video featured landscape preview videos). Media references public CDN assets; if unavailable, both the public site and admin console automatically display a bundled placeholder. Demo users and operational statistics are anonymized; production API credentials and analytics identifiers are intentionally excluded, and analytics templates are imported disabled.
+
+> [!IMPORTANT]
+> **External Integrations & API Keys Checklist**:  
+> Running Docker spins up full local infrastructure, database schemas, frontend/admin panels, and demo datasets out of the box. To activate real external third-party services, configure your `backend/.env`:
+> - **AI Generation**: Fill `REPLICATE_API_KEY` / `SILICONFLOW_API_KEY` (or keep `MOCK_AI_GENERATION=true` for zero-cost testing).
+> - **Payments**: Fill `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET`.
+> - **Email Verification**: Fill `SMTP_HOST` / `SMTP_PORT` (in dev mode, verification codes are returned directly in API responses).
+> - **OAuth Login**: Fill `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
 
 ---
 

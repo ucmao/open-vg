@@ -27,6 +27,7 @@ cp admin/.env.example admin/.env
 # Spin up all containers in background
 docker compose up -d
 ```
+> 💡 *Tip: Omit `-d` or run `docker compose logs -f backend` to stream live startup logs & external API checklist.*
 
 ### 3. Verify Running Services
 
@@ -60,7 +61,7 @@ cp .env.example .env
 ```bash
 python scripts/seed_all.py
 ```
-> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the default superadmin (`admin` / `admin123`), imports AI models, credit recharge packages, and SEO settings.
+> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the default superadmin (`admin` / `admin123`), and imports the complete seed dataset (AI models, workflows, credit recharge packages, SEO settings, homepage banners, and 130 demo works covering every Explore category with 30 featured 16:9 preview videos).
 
 ### Step 4: (Optional) Enable Zero-Cost Mock AI Generation Mode
 To test AI video and image generation locally without paid API keys:
