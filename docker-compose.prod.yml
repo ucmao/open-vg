@@ -1,0 +1,134 @@
+# Production-oriented baseline. Services bind to loopback and are intended to
+# sit behind a TLS reverse proxy. Required secrets use Compose's fail-fast
+# interpolation so this file cannot start with demo credentials.
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: vidgen
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vidgen"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_prod_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    command: >
+      sh -c "python -m alembic upgrade head &&
+             python scripts/create_first_admin.py &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    environment: &backend_environment
+      ENVIRONMENT: production
+      RETURN_VERIFICATION_CODES: "false"
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@db:5432/vidgen
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET}
+      CONFIG_ENCRYPTION_KEY: ${CONFIG_ENCRYPTION_KEY:?Set CONFIG_ENCRYPTION_KEY}
+      INITIAL_ADMIN_USERNAME: ${INITIAL_ADMIN_USERNAME:-admin}
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:?Set INITIAL_ADMIN_EMAIL}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:?Set INITIAL_ADMIN_PASSWORD}
+      BACKEND_URL: ${BACKEND_URL:?Set BACKEND_URL}
+      FRONTEND_URL: ${FRONTEND_URL:?Set FRONTEND_URL}
+      ADMIN_FRONTEND_URL: ${ADMIN_FRONTEND_URL:?Set ADMIN_FRONTEND_URL}
+      WEBSOCKET_ALLOWED_ORIGINS: ${FRONTEND_URL:?Set FRONTEND_URL}
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-true}
+      CELERY_BROKER_URL: redis://redis:6379/2
+      CELERY_RESULT_BACKEND: redis://redis:6379/3
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET:-}
+      PAYPAL_MODE: ${PAYPAL_MODE:-live}
+      STRIPE_API_KEY: ${STRIPE_API_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      OVERSEAS_PARSER_TOKEN: ${OVERSEAS_PARSER_TOKEN:-}
+      REPLICATE_API_KEY: ${REPLICATE_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      A2E_API_TOKEN: ${A2E_API_TOKEN:-}
+      R2_ENDPOINT: ${R2_ENDPOINT:-}
+      R2_ACCESS_KEY: ${R2_ACCESS_KEY:-}
+      R2_SECRET_KEY: ${R2_SECRET_KEY:-}
+      R2_BUCKET_NAME: ${R2_BUCKET_NAME:-}
+      R2_PUBLIC_DOMAIN: ${R2_PUBLIC_DOMAIN:-}
+      MOCK_AI_GENERATION: "false"
+      GENERATION_MAX_ACTIVE_TASKS: ${GENERATION_MAX_ACTIVE_TASKS:-3}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    command: celery -A app.celery_app worker --loglevel=info -c ${CELERY_CONCURRENCY:-4}
+    environment: *backend_environment
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        NUXT_PUBLIC_API_BASE_URL: ${BACKEND_URL:?Set BACKEND_URL}
+    restart: always
+    ports:
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+    environment:
+      NUXT_PUBLIC_API_BASE_URL: ${BACKEND_URL:?Set BACKEND_URL}
+      NUXT_INTERNAL_API_URL: http://backend:8000
+      NUXT_PUBLIC_WS_URL: ${WEBSOCKET_URL:-}
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        NUXT_PUBLIC_API_BASE_URL: ${BACKEND_URL:?Set BACKEND_URL}
+    restart: always
+    ports:
+      - "127.0.0.1:${ADMIN_PORT:-3001}:3001"
+    environment:
+      NUXT_PUBLIC_API_BASE_URL: ${BACKEND_URL:?Set BACKEND_URL}
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_prod_data:
+  redis_prod_data:

@@ -2,6 +2,7 @@ import { getGenerationErrorMessage } from '~/utils/generationError'
 import type { ClientWebSocketMessage, ServerWebSocketEvent } from '~/types/domain'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const userStore = useUserStore()
   const { user, isAuthenticated } = useAuth()
   const { fetchUnreadCount } = useNotifications()
   const { toast } = useToast()
@@ -13,7 +14,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   let isIntentionallyDisconnected = false
 
   const connect = () => {
-    if (socket || !isAuthenticated.value || !user.value) return
+    if (socket || !isAuthenticated.value || !user.value || !userStore.token) return
 
     // Stop trying if we've exceeded max attempts
     if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
@@ -31,17 +32,17 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (wsBaseUrl && (wsBaseUrl.startsWith('ws://') || wsBaseUrl.startsWith('wss://'))) {
       // Use configured full URL directly, append path
       wsUrl = wsBaseUrl.endsWith('/') 
-        ? `${wsBaseUrl}api/webhook/ws/${user.value.id}`
-        : `${wsBaseUrl}/api/webhook/ws/${user.value.id}`
+        ? `${wsBaseUrl}api/webhook/ws`
+        : `${wsBaseUrl}/api/webhook/ws`
     } else {
       // Fallback if no configuration or relative path is provided
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
       const host = process.dev ? 'localhost:8000' : window.location.host
-      wsUrl = `${protocol}//${host}/api/webhook/ws/${user.value.id}`
+      wsUrl = `${protocol}//${host}/api/webhook/ws`
     }
 
     try {
-      socket = new WebSocket(wsUrl)
+      socket = new WebSocket(wsUrl, ['bearer', userStore.token])
 
       socket.onopen = () => {
         // Reset reconnect attempts on successful connection
@@ -91,7 +92,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
         // Only reconnect if it wasn't a normal closure (code 1000)
         // and we haven't exceeded max attempts
-        if (event.code !== 1000 && reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+        if (event.code !== 1000 && event.code !== 1008 && reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
           reconnectAttempts++
           // Exponential backoff: 5s, 10s, 20s, 40s, 80s
           const delay = Math.min(INITIAL_RECONNECT_DELAY * Math.pow(2, reconnectAttempts - 1), 80000)

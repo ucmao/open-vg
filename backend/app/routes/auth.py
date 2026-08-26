@@ -27,6 +27,7 @@ from ..utils.handle import generate_handle
 from ..models.notification import NotificationType
 from ..utils.notification import create_notification
 from ..services.email import send_verification_code, verify_code, send_welcome_email, send_password_reset_code
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 load_dotenv()
 
@@ -39,12 +40,45 @@ INVITE_REWARD_INVITER = int(os.getenv("INVITE_REWARD_INVITER", "10"))
 INVITE_REWARD_INVITEE = int(os.getenv("INVITE_REWARD_INVITEE", "10"))
 INVITE_REWARD_EXPIRY_DAYS = int(os.getenv("INVITE_REWARD_EXPIRY_DAYS", "90"))
 
+AUTH_LOGIN_LIMIT = env_limit("AUTH_LOGIN_RATE_LIMIT", 10)
+AUTH_LOGIN_WINDOW = env_limit("AUTH_LOGIN_RATE_WINDOW_SECONDS", 300)
+AUTH_EMAIL_IP_LIMIT = env_limit("AUTH_EMAIL_IP_RATE_LIMIT", 10)
+AUTH_EMAIL_ADDRESS_LIMIT = env_limit("AUTH_EMAIL_ADDRESS_RATE_LIMIT", 5)
+AUTH_EMAIL_WINDOW = env_limit("AUTH_EMAIL_RATE_WINDOW_SECONDS", 3600)
+AUTH_VERIFY_LIMIT = env_limit("AUTH_VERIFY_RATE_LIMIT", 10)
+AUTH_VERIFY_WINDOW = env_limit("AUTH_VERIFY_RATE_WINDOW_SECONDS", 600)
+AUTH_REGISTER_LIMIT = env_limit("AUTH_REGISTER_RATE_LIMIT", 5)
+AUTH_REGISTER_WINDOW = env_limit("AUTH_REGISTER_RATE_WINDOW_SECONDS", 3600)
+AUTH_OAUTH_LIMIT = env_limit("AUTH_OAUTH_RATE_LIMIT", 20)
+AUTH_OAUTH_WINDOW = env_limit("AUTH_OAUTH_RATE_WINDOW_SECONDS", 300)
+
+
+def _should_return_verification_codes() -> bool:
+    """Require an explicit opt-in before placing secrets in API responses."""
+    return (
+        os.getenv("ENVIRONMENT", "development").strip().lower() != "production"
+        and os.getenv("RETURN_VERIFICATION_CODES", "false").strip().lower()
+        in {"1", "true", "yes", "on"}
+    )
+
 
 @router.post("/send-code")
-async def send_code(request: SendCodeRequest, db: Session = Depends(get_db)):
+async def send_code(
+    request: SendCodeRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Send verification code to email.
     """
+    enforce_rate_limit(http_request, "auth:send-code:ip", AUTH_EMAIL_IP_LIMIT, AUTH_EMAIL_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:send-code:email",
+        AUTH_EMAIL_ADDRESS_LIMIT,
+        AUTH_EMAIL_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Check if email already exists
         existing_user = db.query(User).filter(User.email == request.email).first()
@@ -64,7 +98,7 @@ async def send_code(request: SendCodeRequest, db: Session = Depends(get_db)):
             )
         
         # In development, return the code for testing
-        if os.getenv("ENVIRONMENT") == "development":
+        if _should_return_verification_codes():
             logger.debug("Development mode: Verification code generated")
             return success_response(
                 data={"code": code, "expires_in": 300},
@@ -84,10 +118,22 @@ async def send_code(request: SendCodeRequest, db: Session = Depends(get_db)):
 
 
 @router.post("/verify-code")
-async def verify_code_endpoint(request: VerifyCodeRequest, db: Session = Depends(get_db)):
+async def verify_code_endpoint(
+    request: VerifyCodeRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Verify email verification code (without completing registration).
     """
+    enforce_rate_limit(http_request, "auth:verify-code:ip", AUTH_VERIFY_LIMIT, AUTH_VERIFY_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:verify-code:email",
+        AUTH_VERIFY_LIMIT,
+        AUTH_VERIFY_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Check if email already exists
         existing_user = db.query(User).filter(User.email == request.email).first()
@@ -118,10 +164,22 @@ async def verify_code_endpoint(request: VerifyCodeRequest, db: Session = Depends
 
 
 @router.post("/register")
-async def register(request: RegisterRequest, db: Session = Depends(get_db)):
+async def register(
+    request: RegisterRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Register a new user with email verification.
     """
+    enforce_rate_limit(http_request, "auth:register:ip", AUTH_REGISTER_LIMIT, AUTH_REGISTER_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:register:email",
+        AUTH_REGISTER_LIMIT,
+        AUTH_REGISTER_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Check if email already exists
         existing_user = db.query(User).filter(User.email == request.email).first()
@@ -261,15 +319,27 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-async def login(request: LoginRequest, db: Session = Depends(get_db)):
+async def login(
+    request: LoginRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Login with email and password.
     """
+    enforce_rate_limit(http_request, "auth:login:ip", AUTH_LOGIN_LIMIT, AUTH_LOGIN_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:login:account",
+        AUTH_LOGIN_LIMIT,
+        AUTH_LOGIN_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Find user by email
         user = db.query(User).filter(User.email == request.email).first()
         
-        if not user or not user.password_hash:
+        if not user or not user.password_hash or user.source == UserSource.ADMIN_CREATED:
             return error_response(
                 message="Invalid email or password",
                 status_code=status.HTTP_401_UNAUTHORIZED
@@ -327,6 +397,7 @@ async def google_auth_url(request: Request):
         redirect: Optional redirect path to return to after login
         invite: Optional invitation code for referral rewards (used when signing up from invite link)
     """
+    enforce_rate_limit(request, "auth:google-url:ip", AUTH_OAUTH_LIMIT, AUTH_OAUTH_WINDOW)
     from urllib.parse import quote
     import json
     
@@ -365,10 +436,22 @@ async def google_auth_url(request: Request):
 
 
 @router.post("/forgot-password")
-async def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db)):
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Send password reset code to user's email.
     """
+    enforce_rate_limit(http_request, "auth:forgot-password:ip", AUTH_EMAIL_IP_LIMIT, AUTH_EMAIL_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:forgot-password:email",
+        AUTH_EMAIL_ADDRESS_LIMIT,
+        AUTH_EMAIL_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Check if email exists
         user = db.query(User).filter(User.email == request.email).first()
@@ -388,7 +471,7 @@ async def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(
             )
         
         # In development, return the code for testing
-        if os.getenv("ENVIRONMENT") == "development":
+        if _should_return_verification_codes():
             logger.debug("Development mode: Password reset code generated")
             return success_response(
                 data={"code": code, "expires_in": 600},
@@ -408,10 +491,22 @@ async def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(
 
 
 @router.post("/reset-password")
-async def reset_password(request: ResetPasswordRequest, db: Session = Depends(get_db)):
+async def reset_password(
+    request: ResetPasswordRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Reset user password with verification code.
     """
+    enforce_rate_limit(http_request, "auth:reset-password:ip", AUTH_VERIFY_LIMIT, AUTH_VERIFY_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "auth:reset-password:email",
+        AUTH_VERIFY_LIMIT,
+        AUTH_VERIFY_WINDOW,
+        identity=f"email:{request.email}",
+    )
     try:
         # Find user by email
         user = db.query(User).filter(User.email == request.email).first()
@@ -448,12 +543,17 @@ async def reset_password(request: ResetPasswordRequest, db: Session = Depends(ge
 
 
 @router.post("/google/callback")
-async def google_callback(request: GoogleCallbackRequest, db: Session = Depends(get_db)):
+async def google_callback(
+    request: GoogleCallbackRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Handle Google OAuth callback and create/login user.
     
     Expects JSON body with 'code' field containing the authorization code from Google.
     """
+    enforce_rate_limit(http_request, "auth:google-callback:ip", AUTH_OAUTH_LIMIT, AUTH_OAUTH_WINDOW)
     try:
         code = request.code
         if not code:
@@ -654,4 +754,3 @@ async def google_callback(request: GoogleCallbackRequest, db: Session = Depends(
             message="An error occurred during Google authentication",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-

@@ -2,7 +2,7 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-**Production-Grade Open-Source AI Video & Image Generation Platform**
+**Full-Stack Open-Source AI Video & Image Generation Platform**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -46,7 +46,7 @@ Whether you are launching an AI image/video generation platform or building cust
 - **Flexible AI Integration**: Built-in support for Replicate, Gemini API, and custom provider pipelines.
 - **Node-Based Workflow Executor**: Execute complex multi-step generation workflows (`backend/app/services/workflow_executor.py`).
 - **Asynchronous Task Queue**: Celery task processor for heavy generation jobs, preventing API thread blocking.
-- **Real-Time Job Updates**: Real-time progress notifications streamed via WebSocket & Redis Pub/Sub.
+- **Job Updates**: Authenticated native WebSocket notifications with polling fallback for background-worker jobs.
 
 ### 💰 Monetization & Credit System
 - **Payment Gateways**: Integrated with **PayPal** and **Stripe** for seamless global subscriptions and credit package purchases.
@@ -73,9 +73,9 @@ Whether you are launching an AI image/video generation platform or building cust
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
+| **Frontend Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, native WebSocket |
 | **Admin Panel** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, custom i18n (EN/ZH), Axios |
-| **Backend API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
+| **Backend API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25** (synchronous ORM), **Pydantic 2.12.5**, JWT |
 | **Task Queue & Workers** | **Celery 5.4+**, **Flower 2.0+** (Monitoring), **Redis 7** (Broker & Cache) |
 | **Database** | **PostgreSQL 15+** with **Alembic** database migration tracking |
 | **Storage & CDN** | **Cloudflare R2** / AWS S3 / Aliyun OSS (S3-compatible object storage) |
@@ -146,18 +146,41 @@ docker compose up -d
 > 💡 *Tip: Omit `-d` or run `docker compose logs -f backend` to stream live startup logs & external API checklist.*
 
 - 🌐 **Web User Portal**: `http://localhost:3000`
-- 🔧 **Admin Panel**: `http://localhost:3001` (Default Admin: `admin` / Password: `admin123`)
+- 🔧 **Admin Panel**: `http://localhost:3001` (user: `admin`; the first startup log prints a generated local password unless `INITIAL_ADMIN_PASSWORD` is set)
 - 🐍 **Backend API (Swagger Docs)**: `http://localhost:8000/docs`
 
-> 💡 **One-command initialization**: On container startup, `scripts/seed_all.py` runs automatically to apply migrations, create the superadmin, and import page configuration, AI models and workflows, blogs, recharge configuration, and 130 balanced image/video demo works covering every Explore category (including 15 text-to-video and 15 image-to-video featured landscape preview videos). Media references public CDN assets; if unavailable, both the public site and admin console automatically display a bundled placeholder. Demo users and operational statistics are anonymized; production API credentials and analytics identifiers are intentionally excluded, and analytics templates are imported disabled.
+> 💡 **Local initialization**: On container startup, `scripts/seed_all.py` applies migrations, creates the superadmin, and imports the demo dataset. The development stack binds published ports to `127.0.0.1` and must not be exposed directly to the internet.
 
 > [!IMPORTANT]
 > **External Integrations & API Keys Checklist**:  
 > Running Docker spins up full local infrastructure, database schemas, frontend/admin panels, and demo datasets out of the box. To activate real external third-party services, configure your `backend/.env`:
 > - **AI Generation**: Fill `REPLICATE_API_KEY` (or keep `MOCK_AI_GENERATION=true` for zero-cost testing).
 > - **Payments**: Fill `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET`.
-> - **Email Verification**: Fill `SMTP_HOST` / `SMTP_PORT` (in dev mode, verification codes are returned directly in API responses).
+> - **Email Verification**: Fill `SMTP_HOST` / `SMTP_PORT`. For local testing without SMTP, explicitly start Compose with `RETURN_VERIFICATION_CODES=true`; this flag is ignored in production.
 > - **OAuth Login**: Fill `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
+
+---
+
+### 🔐 Production Docker baseline
+
+Do not deploy the development Compose file publicly. The production baseline requires strong credentials, disables verification-code responses, skips demo-data import, and binds application ports to loopback for a TLS reverse proxy:
+
+```bash
+# Save these and other integration credentials in a private .env.production file.
+POSTGRES_PASSWORD='replace-with-a-strong-database-password'
+JWT_SECRET='replace-with-at-least-32-random-characters'
+CONFIG_ENCRYPTION_KEY='replace-with-an-independent-random-secret'
+INITIAL_ADMIN_EMAIL='admin@example.com'
+INITIAL_ADMIN_PASSWORD='replace-with-a-strong-admin-password'
+BACKEND_URL='https://api.example.com'
+FRONTEND_URL='https://example.com'
+ADMIN_FRONTEND_URL='https://admin.example.com'
+WEBSOCKET_URL='wss://api.example.com'
+
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+```
+
+Terminate HTTPS at a reverse proxy and keep backend ports unreachable from untrusted networks. Redis is mandatory for production rate limiting.
 
 ---
 
@@ -192,7 +215,7 @@ cp .env.example .env
 #### Initialize Database & Seed Data
 
 ```bash
-# Optional: configure the initial admin (development defaults are used otherwise)
+# Optional: configure the initial admin (a random local password is generated otherwise)
 export INITIAL_ADMIN_USERNAME=admin
 export INITIAL_ADMIN_PASSWORD=replace-with-a-secure-password
 

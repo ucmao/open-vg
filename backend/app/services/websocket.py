@@ -1,7 +1,7 @@
 """WebSocket connection manager for real-time notifications."""
 from fastapi import WebSocket
 from typing import Dict, List
-import json
+import os
 
 from ..utils.logger import logger
 
@@ -13,7 +13,13 @@ class ConnectionManager:
         # user_id -> list of WebSocket connections
         self.active_connections: Dict[int, List[WebSocket]] = {}
     
-    async def connect(self, user_id: int, websocket: WebSocket):
+    async def connect(
+        self,
+        user_id: int,
+        websocket: WebSocket,
+        *,
+        subprotocol: str | None = None,
+    ) -> bool:
         """
         Connect a user's WebSocket.
         
@@ -21,13 +27,19 @@ class ConnectionManager:
             user_id: User ID
             websocket: WebSocket connection
         """
-        await websocket.accept()
+        max_connections = max(1, int(os.getenv("WEBSOCKET_MAX_CONNECTIONS_PER_USER", "5")))
+        if len(self.active_connections.get(user_id, [])) >= max_connections:
+            await websocket.close(code=1008, reason="Too many WebSocket connections")
+            return False
+
+        await websocket.accept(subprotocol=subprotocol)
         
         if user_id not in self.active_connections:
             self.active_connections[user_id] = []
         
         self.active_connections[user_id].append(websocket)
         logger.info(f"WebSocket connected for user {user_id}")
+        return True
     
     def disconnect(self, user_id: int, websocket: WebSocket):
         """
@@ -91,4 +103,3 @@ manager = ConnectionManager()
 def get_connection_manager() -> ConnectionManager:
     """Get the global connection manager instance."""
     return manager
-

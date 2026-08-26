@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL ?? '',
-      wsUrl: process.env.NUXT_PUBLIC_WS_URL ?? 'ws://localhost:8000/ws',
+      wsUrl: process.env.NUXT_PUBLIC_WS_URL ?? '',
       cdnUrl: process.env.NUXT_PUBLIC_CDN_URL ?? process.env.STORAGE_CDN_URL ?? '',
 
       // Company info & Contact config

@@ -2,7 +2,7 @@
 
 <img src="docs/assets/logo.png" alt="VidGen Logo" width="320" style="border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 
-**生产级开源 AI 视频与图像生成平台**
+**全栈开源 AI 视频与图像生成平台**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -46,7 +46,7 @@
 - **多厂商 API 适配**：内置 Replicate、Gemini API 以及自定义 Provider 拓展机制。
 - **节点化工作流引擎**：支持复杂多步骤 AI 工作流的编排与执行 (`backend/app/services/workflow_executor.py`)。
 - **Celery 异步任务队列**：耗时视频/大图生成任务完全解耦异步化，防止阻塞 API 响应线程。
-- **WebSocket 实时状态推送**：通过 Redis Pub/Sub 与 WebSocket 技术，实时推送作品生成进度。
+- **任务状态更新**：使用经过鉴权的原生 WebSocket 推送，并为后台 Worker 任务保留轮询兜底。
 
 ### 💰 商业化积分与支付变现
 - **全球主流支付集成**：原生集成 **PayPal** 与 **Stripe** 支付网关，支持全球化订阅与积分套餐购买。
@@ -73,9 +73,9 @@
 
 | 架构层级 | 技术选型 |
 | :--- | :--- |
-| **前台 Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, Socket.io |
+| **前台 Web** | **Nuxt 3.21.11** (Vue 3, SSR/ISR), **Pinia**, **Tailwind CSS**, **Lucide Icons**, Axios, 原生 WebSocket |
 | **管理后台 Admin** | **Nuxt 3.21.11** (Vue 3), **Tailwind CSS**, 自定义 i18n（中英双语）, Axios |
-| **后端 API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25** (Async ORM), **Pydantic 2.12.5**, JWT |
+| **后端 API** | **FastAPI 0.141.1** (Python 3.11+), **SQLAlchemy 2.0.25**（同步 ORM）, **Pydantic 2.12.5**, JWT |
 | **任务队列与监控** | **Celery 5.4+**, **Flower 2.0+** (队列监控), **Redis 7** (Broker & 缓存) |
 | **数据库** | **PostgreSQL 15+**, **Alembic** 版本迁移工具 |
 | **存储与 CDN** | **Cloudflare R2** / AWS S3 / 阿里云 OSS (兼容 S3 协议) |
@@ -146,18 +146,41 @@ docker compose up -d
 > 💡 *提示：去掉 `-d` 参数或运行 `docker compose logs -f backend` 可查看实时启动日志与 API 配置清单。*
 
 - 🌐 **Web 前端**: `http://localhost:3000`
-- 🔧 **Admin 管理后台**: `http://localhost:3001` (默认管理员账号: `admin` / 密码: `admin123`)
+- 🔧 **Admin 管理后台**: `http://localhost:3001`（账号为 `admin`；未设置 `INITIAL_ADMIN_PASSWORD` 时，首次启动日志会输出随机生成的本地密码）
 - 🐍 **后端 API 文档 (Swagger UI)**: `http://localhost:8000/docs`
 
-> 💡 **一键初始化**：容器启动时会自动运行 `scripts/seed_all.py`，完成数据库迁移、超级管理员创建、全站页面配置、AI 模型与工作流、博客、充值配置，以及覆盖全部 Explore 分类的 130 条图片/视频精选 Demo 作品（包含文生视频与图生视频各 15 条横版精选预览作品）。媒体优先引用公共 CDN，CDN 不可用时，前台和管理后台都会自动显示内置占位图。Demo 用户和运营统计已脱敏；生产 API 密钥和统计标识不会包含在种子数据中，统计代码模板会以关闭状态导入。
+> 💡 **本地初始化**：容器启动时会自动运行 `scripts/seed_all.py`，完成数据库迁移、超级管理员创建和 Demo 数据导入。开发 Compose 的公开端口只绑定 `127.0.0.1`，禁止直接暴露到公网。
 
 > [!IMPORTANT]
 > **第三方服务配置清单 (External Services Checklist)**：  
 > Docker 一键启动会自动装载全套本地基础设施、数据库表、前后台界面与精选 Demo 数据。若需接入真实的第三方服务，请在 `backend/.env` 中配置：
 > - **AI 生成 API**：配置 `REPLICATE_API_KEY`（零成本测试可保持 `MOCK_AI_GENERATION=true`）。
 > - **支付网关**：配置 `PAYPAL_CLIENT_ID` 与 `PAYPAL_CLIENT_SECRET`。
-> - **邮件验证**：配置 `SMTP_HOST` 与 `SMTP_PORT`（开发模式下验证码也会直接在 API 响应中返回）。
+> - **邮件验证**：配置 `SMTP_HOST` 与 `SMTP_PORT`。本地无 SMTP 测试时需显式设置 `RETURN_VERIFICATION_CODES=true`；生产环境会忽略该开关。
 > - **Google 快捷登录**：配置 `GOOGLE_CLIENT_ID` 与 `GOOGLE_CLIENT_SECRET`。
+
+---
+
+### 🔐 生产环境 Docker 基线
+
+不要把开发 Compose 直接部署到公网。生产配置会强制提供安全凭据、关闭验证码回传、跳过 Demo 数据导入，并将应用端口绑定到本机以供 TLS 反向代理使用：
+
+```bash
+# 将以下变量及第三方集成凭据保存到不提交 Git 的 .env.production 中。
+POSTGRES_PASSWORD='请替换为高强度数据库密码'
+JWT_SECRET='请替换为至少-32-位随机字符串'
+CONFIG_ENCRYPTION_KEY='请替换为独立的随机密钥'
+INITIAL_ADMIN_EMAIL='admin@example.com'
+INITIAL_ADMIN_PASSWORD='请替换为高强度管理员密码'
+BACKEND_URL='https://api.example.com'
+FRONTEND_URL='https://example.com'
+ADMIN_FRONTEND_URL='https://admin.example.com'
+WEBSOCKET_URL='wss://api.example.com'
+
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+```
+
+请在反向代理终止 HTTPS，并确保后端端口不对不受信任的网络开放。生产限流必须使用 Redis。
 
 ---
 
@@ -192,7 +215,7 @@ cp .env.example .env
 #### 初始化数据库与基础数据
 
 ```bash
-# 可选：先设置初始管理员；未设置时使用开发环境默认值
+# 可选：先设置初始管理员；未设置时会生成随机本地密码
 export INITIAL_ADMIN_USERNAME=admin
 export INITIAL_ADMIN_PASSWORD=请替换为安全密码
 

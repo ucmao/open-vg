@@ -25,7 +25,7 @@ def check_security_warnings():
     """Check configuration and print ASCII Security Warnings if insecure values are detected."""
     env_mode = os.getenv("ENVIRONMENT", "development").strip().lower()
     jwt_secret = os.getenv("JWT_SECRET", "your-secret-key-change-in-production").strip()
-    admin_pass = os.getenv("INITIAL_ADMIN_PASSWORD", "admin123").strip()
+    admin_pass = os.getenv("INITIAL_ADMIN_PASSWORD", "").strip()
     crypto_key = os.getenv("CONFIG_ENCRYPTION_KEY", "").strip()
     mock_mode = os.getenv("MOCK_AI_GENERATION", "false").strip().lower() in ("true", "1", "yes", "y", "on")
 
@@ -47,10 +47,12 @@ def check_security_warnings():
         )
 
     # 3. Check Admin Password in Production
-    if env_mode == "production" and admin_pass == "admin123":
+    if env_mode == "production" and (
+        len(admin_pass) < 12 or admin_pass.lower() in {"admin123", "password", "changeme"}
+    ):
         warnings.append(
-            "WARNING: Initial admin password is set to default ('admin123') in PRODUCTION!\n"
-            "   Please change INITIAL_ADMIN_PASSWORD or update admin password in Admin Panel."
+            "CRITICAL: INITIAL_ADMIN_PASSWORD is missing, weak, or uses a known default in PRODUCTION!\n"
+            "   Set a strong password of at least 12 characters."
         )
 
     # Print ASCII Warning Banner if warnings found

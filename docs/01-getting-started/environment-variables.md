@@ -69,7 +69,7 @@ This document serves as the authoritative reference for all environment variable
 |---|---|---|---|
 | `NUXT_PUBLIC_API_BASE_URL` | **Yes** | `http://localhost:8000` | Client-side API base URL (Must be `""` in production Nginx proxy) |
 | `NUXT_INTERNAL_API_URL` | **Yes** (SSR) | `http://127.0.0.1:8000` | Server-side Nuxt SSR internal API URL for Direct Backend Calls |
-| `NUXT_PUBLIC_WS_URL` | **Yes** | `ws://localhost:8000/ws` | Real-time WebSocket connection URL |
+| `NUXT_PUBLIC_WS_URL` | **Yes** | `ws://localhost:8000` | WebSocket server origin; the client appends `/api/webhook/ws` |
 | `NUXT_PUBLIC_SITE_URL` | No | `http://localhost:3000` | Public website domain URL for SSR fallback & canonical tags |
 
 ---
@@ -79,4 +79,4 @@ This document serves as the authoritative reference for all environment variable
 | Variable Name | Required | Default Value | Description |
 |---|---|---|---|
 | `NUXT_PUBLIC_API_BASE_URL` | **Yes** | `http://localhost:8000` | Admin API base URL |
-| `NUXT_PUBLIC_WS_URL` | No | `ws://localhost:8000/ws` | Admin real-time monitoring WebSocket URL |
+| `NUXT_PUBLIC_WS_URL` | No | `ws://localhost:8000` | WebSocket server origin |

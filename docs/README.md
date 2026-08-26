@@ -1,6 +1,6 @@
 # VidGen Documentation Index & Sitemap
 
-Welcome to the official technical documentation for **VidGen**, a production-grade open-source AI video and image generation platform.
+Welcome to the official technical documentation for **VidGen**, a full-stack open-source AI video and image generation platform.
 
 This documentation suite is organized into 6 modular categories to help developers, system administrators, and open-source contributors understand, develop, deploy, and extend the VidGen platform.
 
@@ -16,7 +16,7 @@ This documentation suite is organized into 6 modular categories to help develope
 ### 🏛️ [2. Architecture & Design](./02-architecture/)
 - [System Architecture Overview](./02-architecture/system-overview.md): High-level topology, Monorepo layout, and security model.
 - [Node-Based Workflow Engine](./02-architecture/workflow-engine.md): DAG execution engine and VueFlow node protocol.
-- [Asynchronous Queues & WebSockets](./02-architecture/async-tasks-and-sockets.md): Celery workers, Redis Pub/Sub, and WebSocket progress streaming.
+- [Asynchronous Queues & WebSockets](./02-architecture/async-tasks-and-sockets.md): Celery workers, authenticated WebSocket acceleration, and polling fallback.
 - [Credit Economics & Monetization](./02-architecture/credit-economics.md): Pay-as-you-go credits, transactional DB row locking, and auto-refunds.
 
 ### 🔧 [3. Subsystems & Data Models](./03-subsystems/)

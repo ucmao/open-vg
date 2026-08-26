@@ -41,15 +41,19 @@ services:
       sh -c "python scripts/seed_all.py &&
              uvicorn app.main:app --host 0.0.0.0 --port 8000"
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     environment:
       - ENVIRONMENT=development
+      - RETURN_VERIFICATION_CODES=${RETURN_VERIFICATION_CODES:-false}
+      - JWT_SECRET=${JWT_SECRET:-local-development-only-jwt-secret}
+      - CONFIG_ENCRYPTION_KEY=${CONFIG_ENCRYPTION_KEY:-local-development-only-config-key}
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/vidgen
       - REDIS_URL=redis://redis:6379/0
       - BACKEND_URL=http://localhost:8000
       - FRONTEND_URL=http://localhost:3000
+      - ADMIN_FRONTEND_URL=http://localhost:3001
       - INITIAL_ADMIN_USERNAME=${INITIAL_ADMIN_USERNAME:-admin}
-      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD:-admin123}
+      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD:-}
       - REPLICATE_API_KEY=${REPLICATE_API_KEY:-}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
     depends_on:
@@ -67,6 +71,8 @@ services:
     command: celery -A app.celery_app worker --loglevel=info -c 4
     environment:
       - ENVIRONMENT=development
+      - JWT_SECRET=${JWT_SECRET:-local-development-only-jwt-secret}
+      - CONFIG_ENCRYPTION_KEY=${CONFIG_ENCRYPTION_KEY:-local-development-only-config-key}
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/vidgen
       - REDIS_URL=redis://redis:6379/0
       - BACKEND_URL=http://localhost:8000
@@ -92,7 +98,7 @@ services:
     container_name: vidgen-web
     restart: always
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       - NUXT_PUBLIC_API_BASE_URL=http://localhost:8000
       - NUXT_INTERNAL_API_URL=http://backend:8000
@@ -109,7 +115,7 @@ services:
     container_name: vidgen-admin
     restart: always
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3001:3001"
     environment:
       - NUXT_PUBLIC_API_BASE_URL=http://localhost:8000
     depends_on:

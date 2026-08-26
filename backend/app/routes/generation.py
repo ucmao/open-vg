@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks, Body
+from fastapi import APIRouter, Depends, HTTPException, Request, status, BackgroundTasks, Body
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, func, or_
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 import json
@@ -30,6 +30,7 @@ from ..utils.responses import success_response, error_response
 from ..utils.logger import logger, log_generation_start
 from ..tasks.workflow_tasks import execute_workflow_task
 from ..services.providers.factory import ProviderFactory
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 load_dotenv()
 
@@ -37,6 +38,11 @@ router = APIRouter()
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 REPLICATE_API_KEY = os.getenv("REPLICATE_API_KEY", "")
+GENERATION_RATE_LIMIT = env_limit("GENERATION_RATE_LIMIT", 10)
+GENERATION_RATE_WINDOW = env_limit("GENERATION_RATE_WINDOW_SECONDS", 60)
+GENERATION_MAX_ACTIVE_TASKS = env_limit("GENERATION_MAX_ACTIVE_TASKS", 3)
+GENERATION_ASSISTANT_RATE_LIMIT = env_limit("GENERATION_ASSISTANT_RATE_LIMIT", 20)
+GENERATION_MODERATION_RATE_LIMIT = env_limit("GENERATION_MODERATION_RATE_LIMIT", 60)
 
 
 async def simulate_webhook_call(work_id: int):
@@ -66,6 +72,7 @@ async def simulate_webhook_call(work_id: int):
 
 @router.post("/prompt-assistant")
 async def prompt_assistant(
+    http_request: Request,
     request: dict = Body(...),
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
@@ -74,6 +81,13 @@ async def prompt_assistant(
     AI Prompt Assistant endpoint using Gemini.
     Requires user authentication.
     """
+    enforce_rate_limit(
+        http_request,
+        "generation:prompt-assistant:user",
+        GENERATION_ASSISTANT_RATE_LIMIT,
+        3600,
+        identity=f"user:{current_user.id}",
+    )
     try:
         from ..services.gemini_service import get_gemini_service
         
@@ -227,6 +241,7 @@ def _get_moderation_text_params(
 @router.post("/check-moderation")
 async def check_moderation_before_generate(
     request: GenerateRequest,
+    http_request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
@@ -234,6 +249,13 @@ async def check_moderation_before_generate(
     Pre-generation content moderation check endpoint.
     Checks prompt and parameters for sensitive or policy-violating content.
     """
+    enforce_rate_limit(
+        http_request,
+        "generation:moderation:user",
+        GENERATION_MODERATION_RATE_LIMIT,
+        60,
+        identity=f"user:{current_user.id}",
+    )
     try:
         from ..services.moderation import get_moderation_service
         from ..models.moderation import LexiconSeverity
@@ -312,6 +334,7 @@ async def check_moderation_before_generate(
 @router.post("")
 async def create_generation(
     request: GenerateRequest,
+    http_request: Request,
     background_tasks: BackgroundTasks,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
@@ -326,6 +349,13 @@ async def create_generation(
     4. Call Replicate API with webhook (or simulate in dev)
     5. Return work_id
     """
+    enforce_rate_limit(
+        http_request,
+        "generation:create:user",
+        GENERATION_RATE_LIMIT,
+        GENERATION_RATE_WINDOW,
+        identity=f"user:{current_user.id}",
+    )
     try:
         from ..models.workflow import Workflow  # ， UnboundLocalError
         # Validate model exists (get base cost for initial check)
@@ -389,6 +419,26 @@ async def create_generation(
                 message=f"Model '{request.model_name}' not found for type '{request.type}'",
                 status_code=status.HTTP_400_BAD_REQUEST
             )
+
+        # Serialize submissions for this user, then count unfinished tasks in
+        # the same transaction. This prevents parallel requests from all
+        # observing a free slot and exceeding the configured concurrency cap.
+        db.query(User).filter(User.id == current_user.id).with_for_update().one()
+        if GENERATION_MAX_ACTIVE_TASKS > 0:
+            active_task_count = db.query(func.count(Work.id)).filter(
+                Work.user_id == current_user.id,
+                Work.status.in_([WorkStatus.GENERATING, WorkStatus.PROCESSING]),
+                Work.deleted_at.is_(None),
+            ).scalar() or 0
+            if active_task_count >= GENERATION_MAX_ACTIVE_TASKS:
+                db.rollback()
+                return error_response(
+                    message=(
+                        "Too many active generation tasks. "
+                        "Wait for an existing task to finish before submitting another."
+                    ),
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                )
         
         # Convert work_type string to WorkType enum safely
         # Map string values to enum values (not enum names)

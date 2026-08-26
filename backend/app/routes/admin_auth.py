@@ -3,7 +3,7 @@ Admin authentication routes for system administrators.
  admins ，。
 """
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from pydantic import BaseModel, Field
@@ -13,8 +13,11 @@ from ..models.admin import Admin
 from ..utils.auth import hash_password, verify_password, create_access_token, get_current_admin
 from ..utils.responses import success_response, error_response
 from ..utils.logger import logger
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 router = APIRouter()
+ADMIN_LOGIN_LIMIT = env_limit("ADMIN_LOGIN_RATE_LIMIT", 5)
+ADMIN_LOGIN_WINDOW = env_limit("ADMIN_LOGIN_RATE_WINDOW_SECONDS", 300)
 
 
 class AdminLoginRequest(BaseModel):
@@ -29,7 +32,11 @@ class AdminLoginResponse(BaseModel):
 
 
 @router.post("/login")
-def admin_login(request: AdminLoginRequest, db: Session = Depends(get_db)):
+def admin_login(
+    request: AdminLoginRequest,
+    http_request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Admin Login。
 
@@ -37,6 +44,14 @@ def admin_login(request: AdminLoginRequest, db: Session = Depends(get_db)):
     - ：username  email + password
     - Token：sub  \"admin:<id>\" ，
     """
+    enforce_rate_limit(http_request, "admin-auth:login:ip", ADMIN_LOGIN_LIMIT, ADMIN_LOGIN_WINDOW)
+    enforce_rate_limit(
+        http_request,
+        "admin-auth:login:account",
+        ADMIN_LOGIN_LIMIT,
+        ADMIN_LOGIN_WINDOW,
+        identity=f"admin:{request.username}",
+    )
     try:
         # Find admin by username or email
         admin = db.query(Admin).filter(

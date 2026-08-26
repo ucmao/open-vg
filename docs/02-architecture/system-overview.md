@@ -25,7 +25,7 @@ This document provides a comprehensive architectural overview of **VidGen**, cov
                                                       v
                                    +------------------------------------+
                                    |    FastAPI Core API Service        |
-                                   |  Async ORM / JWT Auth / Port 8000  |
+                                   |  Sync ORM / JWT Auth / Port 8000   |
                                    +------------------+-----------------+
                                                       |
                   +-----------------------------------+-----------------------------------+
@@ -33,7 +33,7 @@ This document provides a comprehensive architectural overview of **VidGen**, cov
                   v                                   v                                   v
        +--------------------+               +--------------------+               +--------------------+
        | PostgreSQL 15+ DB  |               | Redis 7+ Broker    |               |  Object Storage    |
-       | Relational Storage |               | Pub/Sub & Caching  |               | Cloudflare R2 / S3 |
+       | Relational Storage |               | Broker & Caching   |               | Cloudflare R2 / S3 |
        +--------------------+               +---------+----------+               +--------------------+
                                                       |
                                                       v

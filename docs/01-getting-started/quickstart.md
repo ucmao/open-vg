@@ -61,7 +61,7 @@ cp .env.example .env
 ```bash
 python scripts/seed_all.py
 ```
-> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the default superadmin (`admin` / `admin123`), and imports the complete seed dataset (AI models, workflows, credit recharge packages, SEO settings, homepage banners, and 130 demo works covering every Explore category with 30 featured 16:9 preview videos).
+> 💡 `seed_all.py` automatically migrates database schema (`alembic upgrade head`), creates the `admin` superadmin (printing a generated local password when `INITIAL_ADMIN_PASSWORD` is omitted), and imports the complete seed dataset.
 
 ### Step 4: (Optional) Enable Zero-Cost Mock AI Generation Mode
 To test AI video and image generation locally without paid API keys:

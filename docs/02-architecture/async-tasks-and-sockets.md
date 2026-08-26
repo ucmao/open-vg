@@ -1,4 +1,4 @@
-# Asynchronous Tasks & WebSocket Progress Streaming
+# Asynchronous Tasks & Authenticated Job Updates
 
 This document details VidGen's task queuing architecture built on **Celery**, **Redis Broker**, and **WebSockets**.
 
@@ -19,15 +19,15 @@ This document details VidGen's task queuing architecture built on **Celery**, **
                                                    v
                                          [ Celery Worker Node ]
                                                    │
-                                     (4) Render & Progress Updates
+                                     (4) Render & Persist Status
                                                    │
                                                    v
-                                         [ Redis Pub/Sub Channel ]
+                                            [ PostgreSQL ]
                                                    │
-                                            (5) WS Event Relay
+                                            (5) Status Polling
                                                    │
                                                    v
-[ User Browser ] <──(6) Real-time Progress ─── [ FastAPI WebSocket ]
+[ User Browser ] <────── Job Status ──────── [ FastAPI Server ]
 ```
 
 ---
@@ -39,7 +39,13 @@ This document details VidGen's task queuing architecture built on **Celery**, **
 
 ---
 
-## 🌸 Real-Time WebSocket Streaming
+## 🌸 WebSocket acceleration
 
-1. **Celery Worker**: Publishes progress payloads to Redis Pub/Sub channel `work_progress_{work_id}`.
-2. **FastAPI WS Server**: Listens on `/ws` and streams progress percentages and status updates live to the user browser.
+The browser connects to `/api/webhook/ws` with its JWT in the WebSocket
+subprotocol header. The server derives the user ID from that verified token;
+clients cannot choose a user ID in the URL.
+
+Notifications emitted inside the API process can be delivered immediately over
+that connection. Celery runs in a separate process and currently persists job
+state to PostgreSQL, so the browser's status polling is the authoritative path
+for worker completion. A Redis Pub/Sub relay is not implemented yet.

@@ -3,7 +3,7 @@ Unified Master Database Seed & Initialization Script
 ======================================================
 This script initializes the database tables and populates all initial required data:
 1. Runs Alembic database migrations (`alembic upgrade head`)
-2. Creates the initial Super Admin account (default: admin / admin123)
+2. Creates the initial Super Admin account (a local password is generated when omitted)
 3. Imports full system configurations, page SEOs (Explore, Magic, Create, Blog, Topics enabled), models, workflows, categories, recharge packages, blogs, and 105 anonymized image/video demo works covering every Explore category, using public CDN media URLs with bundled frontend fallbacks.
 
 Usage:
@@ -107,7 +107,7 @@ def main():
     print("🎉 VIDGEN MASTER SEED & CONTAINER INITIALIZATION COMPLETED!", flush=True)
     print("=" * 68, flush=True)
     print("  🌐 Web Frontend: http://localhost:3000 (All pages & demo data enabled)", flush=True)
-    print("  🔑 Admin Login:  http://localhost:3001 (User: admin / Pass: admin123)", flush=True)
+    print("  🔑 Admin Login:  http://localhost:3001 (see the admin creation log above)", flush=True)
     print("  🐍 Backend API:   http://localhost:8000/docs", flush=True)
     print("=" * 68, flush=True)
     print("  ⚠️  EXTERNAL SERVICES CONFIGURATION CHECKLIST (.env):", flush=True)

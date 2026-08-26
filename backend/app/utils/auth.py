@@ -10,7 +10,7 @@ import os
 from dotenv import load_dotenv
 
 from ..models.base import get_db
-from ..models.user import User
+from ..models.user import User, UserSource
 from ..models.admin import Admin
 
 from ..utils.logger import logger
@@ -125,7 +125,6 @@ def decode_access_token(token: str) -> Optional[dict]:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         return payload
     except JWTError as e:
-        from ..utils.logger import logger
         logger.error(f"JWT Decode Error: {str(e)}")
         return None
 
@@ -157,13 +156,11 @@ async def get_current_user(
     payload = decode_access_token(token)
     
     if payload is None:
-        from ..utils.logger import logger
         logger.warning(f"Invalid token payload: {token[:10]}...")
         raise credentials_exception
     
     user_id = payload.get("sub")
     if user_id is None:
-        from ..utils.logger import logger
         logger.warning(f"Token missing 'sub' claim")
         raise credentials_exception
     
@@ -171,14 +168,19 @@ async def get_current_user(
         # Convert to int to ensure database query works correctly
         user_id = int(user_id)
     except (ValueError, TypeError):
-        from ..utils.logger import logger
         logger.warning(f"Invalid user_id type in token: {user_id}")
         raise credentials_exception
     
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        from ..utils.logger import logger
         logger.warning(f"User not found for ID: {user_id}")
+        raise credentials_exception
+
+    # Admin-created virtual users exist only to attribute seeded/community
+    # content. They must never become interactive login identities, including
+    # through a token issued before this check was added.
+    if user.source == UserSource.ADMIN_CREATED:
+        logger.warning("Authentication rejected for virtual user ID: %s", user_id)
         raise credentials_exception
     
     return user
@@ -362,4 +364,3 @@ async def get_current_user_optional(
     
     user = db.query(User).filter(User.id == user_id).first()
     return user
-

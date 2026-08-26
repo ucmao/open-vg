@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
+from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Request, status
 from sqlalchemy.orm import Session
 import os
 from dotenv import load_dotenv
@@ -12,6 +12,7 @@ from ..utils.responses import success_response, error_response
 from ..utils.logger import logger
 from ..services.storage import get_storage_service
 from ..services.thumbnail import generate_image_thumbnail_webp, generate_video_thumbnail_webp
+from ..utils.rate_limit import enforce_rate_limit, env_limit
 
 load_dotenv()
 
@@ -22,6 +23,8 @@ MAX_UPLOAD_SIZE_MB = int(os.getenv("MAX_UPLOAD_SIZE_MB", "100"))
 MAX_UPLOAD_SIZE_BYTES = MAX_UPLOAD_SIZE_MB * 1024 * 1024
 ALLOWED_IMAGE_TYPES = os.getenv("ALLOWED_IMAGE_TYPES", "jpg,jpeg,png,webp,gif").split(",")
 ALLOWED_VIDEO_TYPES = os.getenv("ALLOWED_VIDEO_TYPES", "mp4,webm,mov,avi").split(",")
+UPLOAD_RATE_LIMIT = env_limit("UPLOAD_RATE_LIMIT", 20)
+UPLOAD_RATE_WINDOW = env_limit("UPLOAD_RATE_WINDOW_SECONDS", 60)
 
 
 def validate_upload_file(file: UploadFile, source: str = "user_upload") -> tuple[bool, str]:
@@ -62,6 +65,7 @@ def validate_upload_file(file: UploadFile, source: str = "user_upload") -> tuple
 
 @router.post("")
 async def upload_file(
+    request: Request,
     file: UploadFile = File(...),
     source: str = Form("user_upload"),
     current_auth = Depends(get_current_user_or_admin),
@@ -71,6 +75,14 @@ async def upload_file(
     Upload a file (image or video) to R2 storage.
     Returns both permanent URL and presigned URL.
     """
+    identity_type = "admin" if isinstance(current_auth, Admin) else "user"
+    enforce_rate_limit(
+        request,
+        "upload:account",
+        UPLOAD_RATE_LIMIT,
+        UPLOAD_RATE_WINDOW,
+        identity=f"{identity_type}:{current_auth.id}",
+    )
     try:
         # Determine user_id for the media record
         if isinstance(current_auth, User):
@@ -245,4 +257,3 @@ async def upload_file(
             message=f"Failed to upload file: {str(e)}",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-

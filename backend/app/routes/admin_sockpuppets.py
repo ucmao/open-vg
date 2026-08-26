@@ -25,7 +25,7 @@ from ..models.work import Work, WorkType, WorkStatus, ShareStatus
 from ..models.comment import Comment
 from ..models.like import Like
 from ..models.favorite import Favorite
-from ..utils.auth import get_current_admin, hash_password
+from ..utils.auth import get_current_admin
 from ..utils.handle import generate_handle
 from ..utils.responses import success_response, error_response, paginated_response
 from ..utils.logger import logger
@@ -231,9 +231,6 @@ async def create_virtual_users(
                     custom_location=request.location if request.count == 1 else None
                 )
                 
-                # Hash password using email address (password same as email)
-                email_password_hash = hash_password(user_data["email"])
-                
                 # Create user in database first (to get user ID)
                 new_user = User(
                     handle=user_data["handle"],
@@ -243,7 +240,8 @@ async def create_virtual_users(
                     location=user_data["location"],
                     gender=Gender(user_data["gender"]),
                     source=UserSource.ADMIN_CREATED,
-                    password_hash=email_password_hash,  # Password is same as email address
+                    # Virtual users attribute curated content only and cannot log in.
+                    password_hash=None,
                     is_active=True,
                     email_verified=True,
                     total_credits=0,

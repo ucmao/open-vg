@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request, status, WebSocket, BackgroundTasks
+from fastapi import APIRouter, Depends, Request, status, WebSocket, WebSocketDisconnect, BackgroundTasks
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 import httpx
@@ -13,7 +13,7 @@ from ..services.credit_service import add_credits as credit_service_add_credits
 from ..models.generation_model import GenerationModel, APILibrary
 from ..models.workflow import Workflow
 from ..models.payment_order import PaymentOrder, PaymentStatus
-from ..models.user import User
+from ..models.user import User, UserSource
 from ..utils.responses import success_response, error_response
 from ..utils.logger import logger, log_generation_complete, log_payment
 from ..utils.work_metadata import generate_work_metadata
@@ -26,6 +26,7 @@ from ..services.email import send_recharge_success_email
 from ..utils.notification import create_notification
 from ..models.notification import NotificationType
 from ..services.stripe_service import get_stripe_service
+from ..utils.auth import decode_access_token
 
 router = APIRouter()
 
@@ -741,19 +742,84 @@ async def _handle_workflow_node_webhook(
         return error_response(message="Internal error in workflow node webhook")
 
 
-@router.websocket("/ws/{user_id}")
-async def websocket_endpoint(
-    user_id: int,
-    websocket: WebSocket
-):
-    ws_manager = get_connection_manager()
+def _websocket_token(websocket: WebSocket) -> str | None:
+    """Extract a bearer token from the WebSocket subprotocol header.
+
+    Browsers cannot set an Authorization header for WebSocket handshakes. The
+    client therefore offers ``bearer, <JWT>`` as subprotocols; the server only
+    selects ``bearer`` and never places the credential in the URL.
+    """
+    protocols = [
+        item.strip()
+        for item in websocket.headers.get("sec-websocket-protocol", "").split(",")
+        if item.strip()
+    ]
+    if len(protocols) != 2 or protocols[0].lower() != "bearer":
+        return None
+    return protocols[1]
+
+
+def _websocket_origin_allowed(websocket: WebSocket) -> bool:
+    origin = websocket.headers.get("origin")
+    if not origin:
+        return True
+    configured = os.getenv("WEBSOCKET_ALLOWED_ORIGINS", "").strip()
+    allowed = {
+        item.strip().rstrip("/")
+        for item in configured.split(",")
+        if item.strip()
+    }
+    if not allowed:
+        allowed = {
+            os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/"),
+            os.getenv("ADMIN_FRONTEND_URL", "http://localhost:3001").rstrip("/"),
+        }
+    return origin.rstrip("/") in allowed
+
+
+@router.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    token = _websocket_token(websocket)
+    payload = decode_access_token(token) if token else None
+    sub = payload.get("sub") if payload else None
     try:
-        await ws_manager.connect(user_id, websocket)
+        user_id = int(sub)
+    except (TypeError, ValueError):
+        await websocket.close(code=1008, reason="Authentication required")
+        return
+
+    if not _websocket_origin_allowed(websocket):
+        await websocket.close(code=1008, reason="Origin not allowed")
+        return
+
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+        if (
+            user is None
+            or not user.is_active
+            or user.source == UserSource.ADMIN_CREATED
+        ):
+            await websocket.close(code=1008, reason="Authentication required")
+            return
+    finally:
+        db.close()
+
+    ws_manager = get_connection_manager()
+    connected = False
+    try:
+        connected = await ws_manager.connect(user_id, websocket, subprotocol="bearer")
+        if not connected:
+            return
         while True:
             await websocket.receive_text()
-    except Exception as e:
-        # Disconnect on any exception (including WebSocketDisconnect)
-        ws_manager.disconnect(user_id, websocket)
+    except WebSocketDisconnect:
+        pass
+    except Exception as exc:
+        logger.warning("WebSocket error for user %s: %s", user_id, exc)
+    finally:
+        if connected:
+            ws_manager.disconnect(user_id, websocket)
 
 
 def _stripe_obj_to_dict(obj):

@@ -19,7 +19,7 @@
       <!-- Section 1: Language -->
       <div>
         <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
-          {{ isZh ? '界面语言 / Language' : 'Language / 语言' }}
+          {{ isZh ? '界面语言' : 'Language' }}
         </div>
         <div class="grid grid-cols-2 gap-1.5">
           <button
@@ -41,7 +41,7 @@
       <!-- Section 2: Timezone -->
       <div>
         <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
-          {{ isZh ? '统计时区 / Timezone' : 'Analytics Timezone' }}
+          {{ isZh ? '统计时区' : 'Analytics Timezone' }}
         </div>
         <div class="space-y-0.5 max-h-56 overflow-y-auto">
           <button
