@@ -394,9 +394,11 @@ import { ref, onMounted } from 'vue'
 import { ChevronDown, Download, Mail, Users, HelpCircle, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 import UserStatusChangeModal from '~/components/UserStatusChangeModal.vue'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDate, formatDateTime } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -643,27 +645,6 @@ const handleStatusChangeConfirm = async (reason) => {
 const handleStatusChangeCancel = () => {
   statusModal.value.show = false
   statusModal.value.user = null
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString(localeTag.value, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  })
-}
-
-const formatDateTime = (dateString) => {
-  if (!dateString) return ''
-  const d = new Date(dateString)
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  const h = String(d.getHours()).padStart(2, '0')
-  const min = String(d.getMinutes()).padStart(2, '0')
-  const s = String(d.getSeconds()).padStart(2, '0')
-  return `${y}-${m}-${day} ${h}:${min}:${s}`
 }
 
 const getSourceLabel = (source) => {

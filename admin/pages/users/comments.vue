@@ -178,10 +178,12 @@ import { ref, onMounted } from 'vue'
 import { Trash2, ChevronsLeft, ChevronsRight, MessageCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 import { useConfirm } from '~/composables/useConfirm'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -272,17 +274,6 @@ const handleDelete = async (comment) => {
   } catch (error) {
     toast.error(adminT("Failed to delete the comment", "删除评论失败"))
   }
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleString(localeTag.value, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 
 onMounted(() => {

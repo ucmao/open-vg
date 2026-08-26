@@ -173,17 +173,17 @@
 import { ref, onMounted } from 'vue'
 import { Download, ChevronsLeft, ChevronsRight } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 import { useToast } from '~/composables/useToast'
 import type { PaginatedData, PaymentOrder } from '~/types/domain'
-
-const { translateText: adminT, localeTag } = useAdminI18n()
-
 
 definePageMeta({
   layout: 'default',
   middleware: 'auth'
 })
 
+const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 const adminApi = useAdminApi()
 const { toast } = useToast()
 
@@ -243,11 +243,6 @@ const resetFilters = () => {
   filters.value = { search: '', status: '' }
   page.value = 1
   loadData()
-}
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return '-'
-  return new Date(dateString).toLocaleString(localeTag.value)
 }
 
 const formatStatus = (status: string) => {

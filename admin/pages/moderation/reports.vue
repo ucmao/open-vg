@@ -651,8 +651,10 @@ import { ref, computed, onMounted } from 'vue'
 import { Search, Video, ImageIcon, Check, X, Ban, ExternalLink, ChevronsLeft, ChevronsRight, CheckCircle, Eye, FileText } from '@lucide/vue'
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default'
@@ -1092,18 +1094,6 @@ const getReportTypeLabel = (type: string | null | undefined) => {
     'other': adminT("Other", "其他")
   }
   return labels[type] || type
-}
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString(localeTag.value, {
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 
 const formatDateShort = (dateString: string) => {

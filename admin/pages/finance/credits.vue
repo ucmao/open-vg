@@ -337,11 +337,12 @@ import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { Plus, Download, ChevronsLeft, ChevronsRight, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 import { validateReason } from '~/utils/reasonValidation'
 import type { CreditRecord, PaginatedData, UserSummary } from '~/types/domain'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
-
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -423,11 +424,6 @@ const resetFilters = () => {
   filters.value = { search: '', type: '', user_id: '' }
   page.value = 1
   loadData()
-}
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return '-'
-  return new Date(dateString).toLocaleString(localeTag.value)
 }
 
 const formatCreditType = (type: string) => {

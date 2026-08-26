@@ -238,23 +238,35 @@ def takedown_work(
         )
 
 
+def get_target_tz(tz_name: Optional[str] = None):
+    """Helper to parse requested timezone or fallback to UTC."""
+    if not tz_name:
+        return pytz.utc, "UTC"
+    try:
+        tz_obj = pytz.timezone(tz_name)
+        return tz_obj, tz_name
+    except Exception:
+        return pytz.utc, "UTC"
+
+
 @router.get("/stats")
 def get_admin_stats(
+    timezone_param: Optional[str] = Query(None, alias="timezone", description="Target timezone name, e.g. Asia/Shanghai, UTC"),
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
     """
     Get platform statistics for admin dashboard.
-    "" / "" are calculated in Asia/Shanghai (Beijing time) for Chinese admins.
+    Calculated based on requested timezone (defaults to Asia/Shanghai).
     """
     try:
-        tz_beijing = pytz.timezone("Asia/Shanghai")
+        target_tz, tz_name = get_target_tz(timezone_param)
         now_utc = datetime.now(timezone.utc)
-        now_beijing = now_utc.astimezone(tz_beijing)
-        # Today 00:00 Beijing -> UTC for DB comparison
-        today_start = now_beijing.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
-        # First day of current month 00:00 Beijing -> UTC
-        month_start = now_beijing.replace(day=1, hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
+        now_target = now_utc.astimezone(target_tz)
+        # Today 00:00 Target Timezone -> UTC for DB comparison
+        today_start = now_target.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
+        # First day of current month 00:00 Target Timezone -> UTC
+        month_start = now_target.replace(day=1, hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
         seven_days_ago = now_utc - timedelta(days=7)
         
         # --- User Stats ---
@@ -462,21 +474,19 @@ def get_admin_stats(
 
 @router.get("/stats/snapshot")
 def get_admin_stats_snapshot(
+    timezone_param: Optional[str] = Query(None, alias="timezone", description="Target timezone name, e.g. Asia/Shanghai, UTC"),
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
     """
-    Real-time snapshot for dashboard top strip. Not affected by time picker.
-    - : users with last_login in last 5 minutes (proxy for server load).
-    - : revenue so far today (Beijing time). : credit records count today (Beijing time).
-    - : pending NSFW count, pending reports (0 if no report model).
-    - : total users, total works.
+    Real-time snapshot for dashboard top strip.
+    Calculates today's metrics based on requested timezone.
     """
     try:
-        tz_beijing = pytz.timezone("Asia/Shanghai")
+        target_tz, tz_name = get_target_tz(timezone_param)
         now_utc = datetime.now(timezone.utc)
-        now_beijing = now_utc.astimezone(tz_beijing)
-        today_start = now_beijing.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
+        now_target = now_utc.astimezone(target_tz)
+        today_start = now_target.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
         five_min_ago = now_utc - timedelta(minutes=5)
 
         from ..models.user import UserSource
@@ -536,7 +546,7 @@ def get_admin_stats_snapshot(
         )
 
 
-def _period_stats(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
+def _period_stats(db: Session, start_dt: datetime, end_dt: datetime, target_tz: Optional[pytz.BaseTzInfo] = None, tz_name: str = "UTC") -> dict:
     """Compute stats for a single time window [start_dt, end_dt)."""
     from ..models.user import UserSource
     from ..models.user_activity_log import UserActivityLog
@@ -565,33 +575,48 @@ def _period_stats(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
         )
     ).count()
 
-    # DAU:  user_activity_logs（）， last_login
-    #  end_dt 「」（//7），end_date ，， <=；
-    #  end_dt  00:00（「」），， <。
-    tz_beijing = pytz.timezone("Asia/Shanghai")
-    start_date = start_dt.astimezone(tz_beijing).date()
-    end_dt_beijing = end_dt.astimezone(tz_beijing)
-    end_date = end_dt_beijing.date()
+    if not target_tz:
+        target_tz = pytz.utc
+    start_date = start_dt.astimezone(target_tz).date()
+    end_dt_target = end_dt.astimezone(target_tz)
+    end_date = end_dt_target.date()
     end_is_midnight = (
-        end_dt_beijing.hour == 0
-        and end_dt_beijing.minute == 0
-        and end_dt_beijing.second == 0
-        and end_dt_beijing.microsecond == 0
+        end_dt_target.hour == 0
+        and end_dt_target.minute == 0
+        and end_dt_target.second == 0
+        and end_dt_target.microsecond == 0
     )
-    if end_is_midnight:
-        active_users = db.query(UserActivityLog.user_id).filter(
-            and_(
-                UserActivityLog.activity_date >= start_date,
-                UserActivityLog.activity_date < end_date
-            )
-        ).distinct().count()
+    if tz_name == "Asia/Shanghai":
+        if end_is_midnight:
+            active_users = db.query(UserActivityLog.user_id).filter(
+                and_(
+                    UserActivityLog.activity_date >= start_date,
+                    UserActivityLog.activity_date < end_date
+                )
+            ).distinct().count()
+        else:
+            active_users = db.query(UserActivityLog.user_id).filter(
+                and_(
+                    UserActivityLog.activity_date >= start_date,
+                    UserActivityLog.activity_date <= end_date
+                )
+            ).distinct().count()
     else:
-        active_users = db.query(UserActivityLog.user_id).filter(
-            and_(
-                UserActivityLog.activity_date >= start_date,
-                UserActivityLog.activity_date <= end_date
-            )
-        ).distinct().count()
+        tz_log_date = func.date(func.timezone(tz_name, UserActivityLog.created_at))
+        if end_is_midnight:
+            active_users = db.query(UserActivityLog.user_id).filter(
+                and_(
+                    tz_log_date >= start_date,
+                    tz_log_date < end_date
+                )
+            ).distinct().count()
+        else:
+            active_users = db.query(UserActivityLog.user_id).filter(
+                and_(
+                    tz_log_date >= start_date,
+                    tz_log_date <= end_date
+                )
+            ).distinct().count()
 
     new_works = db.query(Work).filter(
         and_(
@@ -675,11 +700,11 @@ def _period_stats(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
     }
 
 
-def _day1_retention(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
+def _day1_retention(db: Session, start_dt: datetime, end_dt: datetime, tz_name: str = "UTC") -> dict:
     """
     Day-1 retention for real users: of users who registered in [start_dt, end_dt - 1 day),
-    the share who have at least one activity on or after (registration date + 1 day) in Beijing.
-    Uses user_activity_logs for accurate, stable retention (not last_login which gets overwritten).
+    the share who have at least one activity on or after (registration date + 1 day) in target timezone.
+    Uses user_activity_logs for accurate, stable retention.
     """
     from sqlalchemy import text
 
@@ -687,15 +712,12 @@ def _day1_retention(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
     if start_dt >= end_dt_minus_1:
         return {"retention_cohort": 0, "retention_count": 0, "retention_rate": None}
 
-    # Cohort = real users with created_at in [start_dt, end_dt - 1 day).
-    # Retained = cohort members with at least one user_activity_logs row
-    #   where activity_date >= (registration date in Beijing + 1 day).
     row = db.execute(
         text("""
         WITH cohort AS (
           SELECT
             u.id,
-            (date(u.created_at AT TIME ZONE 'Asia/Shanghai') + interval '1 day')::date AS day1_min
+            (date(u.created_at AT TIME ZONE :tz_name) + interval '1 day')::date AS day1_min
           FROM users u
           WHERE u.source IN ('REGISTER', 'GOOGLE')
             AND u.created_at >= :start_dt AND u.created_at < :end_dt_minus_1
@@ -704,11 +726,14 @@ def _day1_retention(db: Session, start_dt: datetime, end_dt: datetime) -> dict:
           COUNT(*)::int AS cohort,
           COUNT(*) FILTER (WHERE EXISTS (
             SELECT 1 FROM user_activity_logs ual
-            WHERE ual.user_id = cohort.id AND ual.activity_date >= cohort.day1_min
+            WHERE ual.user_id = cohort.id AND (
+              ual.activity_date >= cohort.day1_min OR
+              (date(ual.created_at AT TIME ZONE :tz_name) >= cohort.day1_min)
+            )
           ))::int AS retained
         FROM cohort
         """),
-        {"start_dt": start_dt, "end_dt_minus_1": end_dt_minus_1},
+        {"tz_name": tz_name, "start_dt": start_dt, "end_dt_minus_1": end_dt_minus_1},
     ).fetchone()
 
     cohort = row[0] or 0
@@ -722,26 +747,27 @@ def get_admin_stats_period(
     range_type: str = Query("7d", description="today | yesterday | 7d | 14d | 30d"),
     start: Optional[str] = Query(None, description="ISO datetime for custom range start"),
     end: Optional[str] = Query(None, description="ISO datetime for custom range end"),
+    timezone_param: Optional[str] = Query(None, alias="timezone", description="Target timezone name, e.g. Asia/Shanghai, UTC"),
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
     """
     Period stats for dashboard dynamic layer. Returns current period, previous period (same length),
-    and totals. Frontend uses this to show "big number = period total" and "small number = %".
+    and totals. Calculates date boundaries based on target timezone.
     """
     try:
-        tz_beijing = pytz.timezone("Asia/Shanghai")
+        target_tz, tz_name = get_target_tz(timezone_param)
         now_utc = datetime.now(timezone.utc)
-        now_beijing = now_utc.astimezone(tz_beijing)
+        now_target = now_utc.astimezone(target_tz)
 
         if range_type == "custom" and start and end:
             try:
                 start_dt = datetime.fromisoformat(start.replace("Z", "+00:00"))
                 end_dt = datetime.fromisoformat(end.replace("Z", "+00:00"))
                 if start_dt.tzinfo is None:
-                    start_dt = tz_beijing.localize(start_dt.replace(tzinfo=None)).astimezone(timezone.utc)
+                    start_dt = target_tz.localize(start_dt.replace(tzinfo=None)).astimezone(timezone.utc)
                 if end_dt.tzinfo is None:
-                    end_dt = tz_beijing.localize(end_dt.replace(tzinfo=None)).astimezone(timezone.utc)
+                    end_dt = target_tz.localize(end_dt.replace(tzinfo=None)).astimezone(timezone.utc)
             except ValueError:
                 return error_response(message="Invalid start/end ISO format", status_code=400)
             period_length = end_dt - start_dt
@@ -749,120 +775,119 @@ def get_admin_stats_period(
             prev_start_dt = start_dt - period_length
             period_label = ""
         else:
-            # today: from 00:00 Beijing today to now
+            # today: from 00:00 Target Timezone today to now
             if range_type == "today":
-                start_beijing = now_beijing.replace(hour=0, minute=0, second=0, microsecond=0)
+                start_target = now_target.replace(hour=0, minute=0, second=0, microsecond=0)
                 end_dt = now_utc
-                start_dt = start_beijing.astimezone(timezone.utc)
-                prev_end_beijing = start_beijing
-                prev_start_beijing = prev_end_beijing - timedelta(days=1)
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = prev_end_beijing.astimezone(timezone.utc)
+                start_dt = start_target.astimezone(timezone.utc)
+                prev_end_target = start_target
+                prev_start_target = prev_end_target - timedelta(days=1)
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
+                prev_end_dt = prev_end_target.astimezone(timezone.utc)
                 period_label = ""
-            # yesterday: full calendar day Beijing
+            # yesterday: full calendar day Target Timezone
             elif range_type == "yesterday":
-                yesterday = (now_beijing.date() - timedelta(days=1))
-                start_beijing = tz_beijing.localize(datetime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0, 0))
-                end_beijing = start_beijing + timedelta(days=1)
-                start_dt = start_beijing.astimezone(timezone.utc)
-                end_dt = end_beijing.astimezone(timezone.utc)
-                prev_start_beijing = start_beijing - timedelta(days=1)
-                prev_end_beijing = start_beijing
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = prev_end_beijing.astimezone(timezone.utc)
+                yesterday = (now_target.date() - timedelta(days=1))
+                start_target = target_tz.localize(datetime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0, 0))
+                end_target = start_target + timedelta(days=1)
+                start_dt = start_target.astimezone(timezone.utc)
+                end_dt = end_target.astimezone(timezone.utc)
+                prev_start_target = start_target - timedelta(days=1)
+                prev_end_target = start_target
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
+                prev_end_dt = prev_end_target.astimezone(timezone.utc)
                 period_label = ""
-            # 7： (-7) 00:00
+            # 7d: (-7) 00:00
             elif range_type == "7d":
-                start_date_7d = now_beijing.date() - timedelta(days=7)
-                start_beijing = tz_beijing.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_7d = now_target.date() - timedelta(days=7)
+                start_target = target_tz.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
                 prev_start_date = start_date_7d - timedelta(days=7)
-                prev_start_beijing = tz_beijing.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
+                prev_start_target = target_tz.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
                 prev_end_dt = start_dt
                 period_label = "7"
-            # 14： (-14) 00:00
+            # 14d: (-14) 00:00
             elif range_type == "14d":
-                start_date_14d = now_beijing.date() - timedelta(days=14)
-                start_beijing = tz_beijing.localize(datetime(start_date_14d.year, start_date_14d.month, start_date_14d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_14d = now_target.date() - timedelta(days=14)
+                start_target = target_tz.localize(datetime(start_date_14d.year, start_date_14d.month, start_date_14d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
                 prev_start_date = start_date_14d - timedelta(days=14)
-                prev_start_beijing = tz_beijing.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
+                prev_start_target = target_tz.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
                 prev_end_dt = start_dt
                 period_label = "14"
-            # 30： (-30) 00:00
+            # 30d: (-30) 00:00
             elif range_type == "30d":
-                start_date_30d = now_beijing.date() - timedelta(days=30)
-                start_beijing = tz_beijing.localize(datetime(start_date_30d.year, start_date_30d.month, start_date_30d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_30d = now_target.date() - timedelta(days=30)
+                start_target = target_tz.localize(datetime(start_date_30d.year, start_date_30d.month, start_date_30d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
                 prev_start_date = start_date_30d - timedelta(days=30)
-                prev_start_beijing = tz_beijing.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
+                prev_start_target = target_tz.localize(datetime(prev_start_date.year, prev_start_date.month, prev_start_date.day, 0, 0, 0, 0))
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
                 prev_end_dt = start_dt
                 period_label = "30"
-            # : from 1st 00:00 Beijing to now
+            # month: from 1st 00:00 Target Timezone to now
             elif range_type == "month":
-                start_beijing = now_beijing.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_target = now_target.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
-                #
-                prev_end_beijing = start_beijing
-                prev_start_beijing = (start_beijing.replace(day=1) - timedelta(days=1)).replace(day=1)
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = prev_end_beijing.astimezone(timezone.utc)
+                prev_end_target = start_target
+                prev_start_target = (start_target.replace(day=1) - timedelta(days=1)).replace(day=1)
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
+                prev_end_dt = prev_end_target.astimezone(timezone.utc)
                 period_label = ""
-            # : full last month Beijing; previous = month before last
+            # last_month: full last month Target Timezone
             elif range_type == "last_month":
-                first_this = now_beijing.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-                last_month_end_beijing = first_this
-                last_month_start_beijing = (first_this - timedelta(days=1)).replace(day=1)
-                start_dt = last_month_start_beijing.astimezone(timezone.utc)
-                end_dt = last_month_end_beijing.astimezone(timezone.utc)
-                prev_month_start_beijing = (last_month_start_beijing - timedelta(days=1)).replace(day=1)
-                prev_start_dt = prev_month_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = last_month_start_beijing.astimezone(timezone.utc)
+                first_this = now_target.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                last_month_end_target = first_this
+                last_month_start_target = (first_this - timedelta(days=1)).replace(day=1)
+                start_dt = last_month_start_target.astimezone(timezone.utc)
+                end_dt = last_month_end_target.astimezone(timezone.utc)
+                prev_month_start_target = (last_month_start_target - timedelta(days=1)).replace(day=1)
+                prev_start_dt = prev_month_start_target.astimezone(timezone.utc)
+                prev_end_dt = last_month_start_target.astimezone(timezone.utc)
                 period_label = ""
-            # : Q1 1-3, Q2 4-6, Q3 7-9, Q4 10-12; previous = full last quarter
+            # quarter
             elif range_type == "quarter":
-                q = (now_beijing.month - 1) // 3 + 1
-                start_beijing = now_beijing.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                q = (now_target.month - 1) // 3 + 1
+                start_target = now_target.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
                 if q == 1:
-                    prev_start_beijing = tz_beijing.localize(datetime(now_beijing.year - 1, 10, 1, 0, 0, 0, 0))
+                    prev_start_target = target_tz.localize(datetime(now_target.year - 1, 10, 1, 0, 0, 0, 0))
                 else:
-                    prev_start_beijing = tz_beijing.localize(datetime(now_beijing.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
-                prev_end_beijing = start_beijing
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = prev_end_beijing.astimezone(timezone.utc)
+                    prev_start_target = target_tz.localize(datetime(now_target.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
+                prev_end_target = start_target
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
+                prev_end_dt = prev_end_target.astimezone(timezone.utc)
                 period_label = ""
-            # : full last quarter; previous = quarter before
+            # last_quarter
             elif range_type == "last_quarter":
-                q = (now_beijing.month - 1) // 3 + 1
-                end_quarter_beijing = now_beijing.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                q = (now_target.month - 1) // 3 + 1
+                end_quarter_target = now_target.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
                 if q == 1:
-                    start_quarter_beijing = tz_beijing.localize(datetime(now_beijing.year - 1, 10, 1, 0, 0, 0, 0))
+                    start_quarter_target = target_tz.localize(datetime(now_target.year - 1, 10, 1, 0, 0, 0, 0))
                 else:
-                    start_quarter_beijing = tz_beijing.localize(datetime(now_beijing.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
-                start_dt = start_quarter_beijing.astimezone(timezone.utc)
-                end_dt = end_quarter_beijing.astimezone(timezone.utc)
+                    start_quarter_target = target_tz.localize(datetime(now_target.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
+                start_dt = start_quarter_target.astimezone(timezone.utc)
+                end_dt = end_quarter_target.astimezone(timezone.utc)
                 period_length = end_dt - start_dt
                 prev_end_dt = start_dt
                 prev_start_dt = prev_end_dt - period_length
                 period_label = ""
-            # : Jan 1 00:00 Beijing to now
+            # year
             elif range_type == "year":
-                start_beijing = now_beijing.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_target = now_target.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
-                prev_start_beijing = start_beijing.replace(year=now_beijing.year - 1)
-                prev_end_beijing = start_beijing
-                prev_start_dt = prev_start_beijing.astimezone(timezone.utc)
-                prev_end_dt = prev_end_beijing.astimezone(timezone.utc)
+                prev_start_target = start_target.replace(year=now_target.year - 1)
+                prev_end_target = start_target
+                prev_start_dt = prev_start_target.astimezone(timezone.utc)
+                prev_end_dt = prev_end_target.astimezone(timezone.utc)
                 period_label = ""
             else:
                 end_dt = now_utc
@@ -871,11 +896,11 @@ def get_admin_stats_period(
                 prev_start_dt = prev_end_dt - timedelta(days=7)
                 period_label = "7"
 
-        current = _period_stats(db, start_dt, end_dt)
-        previous = _period_stats(db, prev_start_dt, prev_end_dt)
+        current = _period_stats(db, start_dt, end_dt, target_tz=target_tz, tz_name=tz_name)
+        previous = _period_stats(db, prev_start_dt, prev_end_dt, target_tz=target_tz, tz_name=tz_name)
 
-        retention_current = _day1_retention(db, start_dt, end_dt)
-        retention_previous = _day1_retention(db, prev_start_dt, prev_end_dt)
+        retention_current = _day1_retention(db, start_dt, end_dt, tz_name=tz_name)
+        retention_previous = _day1_retention(db, prev_start_dt, prev_end_dt, tz_name=tz_name)
         current["retention_cohort"] = retention_current["retention_cohort"]
         current["retention_count"] = retention_current["retention_count"]
         current["retention_rate"] = retention_current["retention_rate"]
@@ -917,96 +942,96 @@ def get_admin_stats_history(
     range_type: str = Query("7d", description="today | yesterday | 7d | 14d | 30d | month | last_month | quarter | last_quarter | year | custom"),
     start: Optional[str] = Query(None, description="ISO datetime for custom range start"),
     end: Optional[str] = Query(None, description="ISO datetime for custom range end"),
+    timezone_param: Optional[str] = Query(None, alias="timezone", description="Target timezone name, e.g. Asia/Shanghai, UTC"),
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
     """
     Get historical statistics for charts (daily trend).
-    Matches the range selection logic of /stats/period.
+    Matches the range selection logic of /stats/period and groups by requested timezone.
     """
     try:
         from sqlalchemy import func, and_
         from ..models.user import UserSource
         from ..models.user_activity_log import UserActivityLog
         
-        tz_beijing = pytz.timezone("Asia/Shanghai")
+        target_tz, tz_name = get_target_tz(timezone_param)
         now_utc = datetime.now(timezone.utc)
-        now_beijing = now_utc.astimezone(tz_beijing)
+        now_target = now_utc.astimezone(target_tz)
         
-        # 1. Calculate the target date range (start_dt, end_dt) using the same logic as /stats/period
+        # 1. Calculate the target date range (start_dt, end_dt)
         if range_type == "custom" and start and end:
             try:
                 start_dt = datetime.fromisoformat(start.replace("Z", "+00:00"))
                 end_dt = datetime.fromisoformat(end.replace("Z", "+00:00"))
                 if start_dt.tzinfo is None:
-                    start_dt = tz_beijing.localize(start_dt.replace(tzinfo=None)).astimezone(timezone.utc)
+                    start_dt = target_tz.localize(start_dt.replace(tzinfo=None)).astimezone(timezone.utc)
                 if end_dt.tzinfo is None:
-                    end_dt = tz_beijing.localize(end_dt.replace(tzinfo=None)).astimezone(timezone.utc)
+                    end_dt = target_tz.localize(end_dt.replace(tzinfo=None)).astimezone(timezone.utc)
             except ValueError:
                 return error_response(message="Invalid start/end ISO format", status_code=400)
         else:
             if range_type == "today":
-                start_beijing = now_beijing.replace(hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_target = now_target.replace(hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "yesterday":
-                yesterday = (now_beijing.date() - timedelta(days=1))
-                start_beijing = tz_beijing.localize(datetime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0, 0))
-                end_beijing = start_beijing + timedelta(days=1)
-                start_dt = start_beijing.astimezone(timezone.utc)
-                end_dt = end_beijing.astimezone(timezone.utc)
+                yesterday = (now_target.date() - timedelta(days=1))
+                start_target = target_tz.localize(datetime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0, 0))
+                end_target = start_target + timedelta(days=1)
+                start_dt = start_target.astimezone(timezone.utc)
+                end_dt = end_target.astimezone(timezone.utc)
             elif range_type == "7d":
-                start_date_7d = now_beijing.date() - timedelta(days=7)
-                start_beijing = tz_beijing.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_7d = now_target.date() - timedelta(days=7)
+                start_target = target_tz.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "14d":
-                start_date_14d = now_beijing.date() - timedelta(days=14)
-                start_beijing = tz_beijing.localize(datetime(start_date_14d.year, start_date_14d.month, start_date_14d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_14d = now_target.date() - timedelta(days=14)
+                start_target = target_tz.localize(datetime(start_date_14d.year, start_date_14d.month, start_date_14d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "30d":
-                start_date_30d = now_beijing.date() - timedelta(days=30)
-                start_beijing = tz_beijing.localize(datetime(start_date_30d.year, start_date_30d.month, start_date_30d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_30d = now_target.date() - timedelta(days=30)
+                start_target = target_tz.localize(datetime(start_date_30d.year, start_date_30d.month, start_date_30d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "month":
-                start_beijing = now_beijing.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_target = now_target.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "last_month":
-                first_this = now_beijing.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-                last_month_start_beijing = (first_this - timedelta(days=1)).replace(day=1)
-                start_dt = last_month_start_beijing.astimezone(timezone.utc)
+                first_this = now_target.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                last_month_start_target = (first_this - timedelta(days=1)).replace(day=1)
+                start_dt = last_month_start_target.astimezone(timezone.utc)
                 end_dt = first_this.astimezone(timezone.utc)
             elif range_type == "quarter":
-                q = (now_beijing.month - 1) // 3 + 1
-                start_beijing = now_beijing.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                q = (now_target.month - 1) // 3 + 1
+                start_target = now_target.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             elif range_type == "last_quarter":
-                q = (now_beijing.month - 1) // 3 + 1
-                end_quarter_beijing = now_beijing.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                q = (now_target.month - 1) // 3 + 1
+                end_quarter_target = now_target.replace(month=(q - 1) * 3 + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
                 if q == 1:
-                    start_quarter_beijing = tz_beijing.localize(datetime(now_beijing.year - 1, 10, 1, 0, 0, 0, 0))
+                    start_quarter_target = target_tz.localize(datetime(now_target.year - 1, 10, 1, 0, 0, 0, 0))
                 else:
-                    start_quarter_beijing = tz_beijing.localize(datetime(now_beijing.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
-                start_dt = start_quarter_beijing.astimezone(timezone.utc)
-                end_dt = end_quarter_beijing.astimezone(timezone.utc)
+                    start_quarter_target = target_tz.localize(datetime(now_target.year, (q - 2) * 3 + 1, 1, 0, 0, 0, 0))
+                start_dt = start_quarter_target.astimezone(timezone.utc)
+                end_dt = end_quarter_target.astimezone(timezone.utc)
             elif range_type == "year":
-                start_beijing = now_beijing.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_target = now_target.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
             else:
-                start_date_7d = now_beijing.date() - timedelta(days=7)
-                start_beijing = tz_beijing.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
-                start_dt = start_beijing.astimezone(timezone.utc)
+                start_date_7d = now_target.date() - timedelta(days=7)
+                start_target = target_tz.localize(datetime(start_date_7d.year, start_date_7d.month, start_date_7d.day, 0, 0, 0, 0))
+                start_dt = start_target.astimezone(timezone.utc)
                 end_dt = now_utc
 
-        # 2. Optimized Data Querying using GROUP BY
-        # Use helper for date truncation in Beijing time
-        def bj_date(column):
-            return func.date(func.timezone('Asia/Shanghai', column))
+        # 2. Optimized Data Querying using GROUP BY with target timezone
+        def tz_date(column):
+            return func.date(func.timezone(tz_name, column))
 
         # 2.1 Get initial cumulative real users before start_dt
         initial_real_users_count = db.query(User).filter(
@@ -1018,79 +1043,87 @@ def get_admin_stats_history(
 
         # 2.2 Get daily counts for all metrics
         # Real Users
-        real_users_daily = db.query(bj_date(User.created_at), func.count(User.id)).filter(
+        real_users_daily = db.query(tz_date(User.created_at), func.count(User.id)).filter(
             and_(
                 User.source.in_([UserSource.REGISTER, UserSource.GOOGLE]),
                 User.created_at >= start_dt,
                 User.created_at < end_dt
             )
-        ).group_by(bj_date(User.created_at)).all()
+        ).group_by(tz_date(User.created_at)).all()
         real_users_map = {date: count for date, count in real_users_daily}
 
         # All Users
-        new_users_daily = db.query(bj_date(User.created_at), func.count(User.id)).filter(
+        new_users_daily = db.query(tz_date(User.created_at), func.count(User.id)).filter(
             and_(User.created_at >= start_dt, User.created_at < end_dt)
-        ).group_by(bj_date(User.created_at)).all()
+        ).group_by(tz_date(User.created_at)).all()
         new_users_map = {date: count for date, count in new_users_daily}
 
-        # Active Users (DAU) - UserActivityLog.activity_date is already a Date
-        active_users_daily = db.query(UserActivityLog.activity_date, func.count(func.distinct(UserActivityLog.user_id))).filter(
-            and_(
-                UserActivityLog.activity_date >= start_dt.astimezone(tz_beijing).date(),
-                UserActivityLog.activity_date <= end_dt.astimezone(tz_beijing).date()
-            )
-        ).group_by(UserActivityLog.activity_date).all()
+        # Active Users (DAU)
+        if tz_name == "Asia/Shanghai":
+            active_users_daily = db.query(UserActivityLog.activity_date, func.count(func.distinct(UserActivityLog.user_id))).filter(
+                and_(
+                    UserActivityLog.activity_date >= start_dt.astimezone(target_tz).date(),
+                    UserActivityLog.activity_date <= end_dt.astimezone(target_tz).date()
+                )
+            ).group_by(UserActivityLog.activity_date).all()
+        else:
+            active_users_daily = db.query(tz_date(UserActivityLog.created_at), func.count(func.distinct(UserActivityLog.user_id))).filter(
+                and_(
+                    UserActivityLog.created_at >= start_dt,
+                    UserActivityLog.created_at < end_dt
+                )
+            ).group_by(tz_date(UserActivityLog.created_at)).all()
         active_users_map = {date: count for date, count in active_users_daily}
 
         # New Works
-        new_works_daily = db.query(bj_date(Work.created_at), func.count(Work.id)).filter(
+        new_works_daily = db.query(tz_date(Work.created_at), func.count(Work.id)).filter(
             and_(Work.status == WorkStatus.SUCCESS, Work.created_at >= start_dt, Work.created_at < end_dt)
-        ).group_by(bj_date(Work.created_at)).all()
+        ).group_by(tz_date(Work.created_at)).all()
         works_map = {date: count for date, count in new_works_daily}
 
         # Revenue and Recharge Count
         payment_daily = db.query(
-            bj_date(PaymentOrder.completed_at),
+            tz_date(PaymentOrder.completed_at),
             func.sum(PaymentOrder.amount_usd),
             func.count(PaymentOrder.id)
         ).filter(
             and_(PaymentOrder.status == PaymentStatus.COMPLETED, PaymentOrder.completed_at >= start_dt, PaymentOrder.completed_at < end_dt)
-        ).group_by(bj_date(PaymentOrder.completed_at)).all()
+        ).group_by(tz_date(PaymentOrder.completed_at)).all()
         revenue_map = {date: float(rev or 0) for date, rev, _ in payment_daily}
         recharge_map = {date: count for date, _, count in payment_daily}
 
         # Consumes
-        consumes_daily = db.query(bj_date(CreditRecord.created_at), func.count(CreditRecord.id)).filter(
+        consumes_daily = db.query(tz_date(CreditRecord.created_at), func.count(CreditRecord.id)).filter(
             and_(CreditRecord.type == CreditType.CONSUME, CreditRecord.created_at >= start_dt, CreditRecord.created_at < end_dt)
-        ).group_by(bj_date(CreditRecord.created_at)).all()
+        ).group_by(tz_date(CreditRecord.created_at)).all()
         consumes_map = {date: count for date, count in consumes_daily}
 
         # Interaction (Comments, Likes, Favorites)
-        comments_daily = db.query(bj_date(Comment.created_at), func.count(Comment.id)).filter(
+        comments_daily = db.query(tz_date(Comment.created_at), func.count(Comment.id)).filter(
             and_(Comment.created_at >= start_dt, Comment.created_at < end_dt)
-        ).group_by(bj_date(Comment.created_at)).all()
+        ).group_by(tz_date(Comment.created_at)).all()
         comments_map = {date: count for date, count in comments_daily}
 
-        likes_daily = db.query(bj_date(Like.updated_at), func.count(Like.id)).filter(
+        likes_daily = db.query(tz_date(Like.updated_at), func.count(Like.id)).filter(
             and_(Like.updated_at >= start_dt, Like.updated_at < end_dt)
-        ).group_by(bj_date(Like.updated_at)).all()
+        ).group_by(tz_date(Like.updated_at)).all()
         likes_map = {date: count for date, count in likes_daily}
 
-        favorites_daily = db.query(bj_date(Favorite.updated_at), func.count(Favorite.id)).filter(
+        favorites_daily = db.query(tz_date(Favorite.updated_at), func.count(Favorite.id)).filter(
             and_(Favorite.updated_at >= start_dt, Favorite.updated_at < end_dt)
-        ).group_by(bj_date(Favorite.updated_at)).all()
+        ).group_by(tz_date(Favorite.updated_at)).all()
         favorites_map = {date: count for date, count in favorites_daily}
 
         # 3. Assemble History
         history = []
-        iter_start_beijing = start_dt.astimezone(tz_beijing).replace(hour=0, minute=0, second=0, microsecond=0)
-        iter_end_beijing = end_dt.astimezone(tz_beijing)
+        iter_start_target = start_dt.astimezone(target_tz).replace(hour=0, minute=0, second=0, microsecond=0)
+        iter_end_target = end_dt.astimezone(target_tz)
         
-        current_day_beijing = iter_start_beijing
+        current_day_target = iter_start_target
         cumulative_real_users = initial_real_users_count
         
-        while current_day_beijing.date() <= iter_end_beijing.date():
-            target_date = current_day_beijing.date()
+        while current_day_target.date() <= iter_end_target.date():
+            target_date = current_day_target.date()
             new_real = real_users_map.get(target_date, 0)
             cumulative_real_users += new_real
             
@@ -1108,7 +1141,7 @@ def get_admin_stats_history(
                 "new_favorites": favorites_map.get(target_date, 0),
                 "recharge_count": recharge_map.get(target_date, 0)
             })
-            current_day_beijing += timedelta(days=1)
+            current_day_target += timedelta(days=1)
             
         return success_response(data=history)
         

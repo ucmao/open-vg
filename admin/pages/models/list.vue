@@ -1145,8 +1145,10 @@ import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
 import { useModelBadge } from '~/composables/useModelBadge'
 import MediaSelectorModal from '~/components/MediaSelectorModal.vue'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 const { BADGE_OPTIONS, getBadgeLabel, getBadgeClassObject } = useModelBadge()
 
@@ -1951,18 +1953,6 @@ const playVideo = (event: Event) => {
 
 const pauseVideo = (event: Event) => {
   if (event.currentTarget instanceof HTMLVideoElement) event.currentTarget.pause()
-}
-
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return ''
-  const date = new Date(dateStr)
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-  const seconds = String(date.getSeconds()).padStart(2, '0')
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
 const getPriceRange = (model: any): string => {

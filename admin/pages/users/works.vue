@@ -787,8 +787,10 @@ import { useConfirm } from '~/composables/useConfirm'
 import { useWorkMedia } from '~/composables/useWorkMedia'
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -1408,11 +1410,6 @@ const getNSFWStatusText = (status) => {
 const truncateText = (text, maxLength) => {
   if (!text) return ''
   return text.length > maxLength ? text.substring(0, maxLength) + '...' : text
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleString(localeTag.value)
 }
 
 const loadingCategories = ref(false)

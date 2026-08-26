@@ -290,7 +290,9 @@
       <Info class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
       <div>
         <div class="text-sm font-bold text-blue-800">{{ $adminT("Stats Notice", "统计说明") }}</div>
-        <p class="text-xs text-blue-600 mt-1">{{ $adminT("All data is calculated based on Beijing Time (Asia/Shanghai) calendar days.", "所有数据按北京时间（Asia/Shanghai）自然日统计。本页为「按日趋势」，仪表盘为「实时快照 + 周期汇总」。点赞与收藏以更新时间为准。") }}</p>
+        <p class="text-xs text-blue-600 mt-1">
+          {{ $adminT(`All data is calculated based on ${currentTimezoneOption.labelEn} calendar days.`, `所有数据按 ${currentTimezoneOption.labelZh} 自然日统计。本页为「按日趋势」，仪表盘为「实时快照 + 周期汇总」。点赞与收藏以更新时间为准。`) }}
+        </p>
       </div>
     </div>
   </div>
@@ -301,6 +303,8 @@ import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Info, Maximize2, X } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+import AdminTimezoneSelect from '~/components/AdminTimezoneSelect.vue'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -338,6 +342,7 @@ useHead({
 })
 
 const adminApi = useAdminApi()
+const { timezone, currentTimezoneOption } = useAdminTimezone()
 const route = useRoute()
 const router = useRouter()
 const history = ref<any[]>([])
@@ -395,7 +400,7 @@ const customEnd = ref('')
 const loadHistory = async () => {
   loading.value = true
   try {
-    let url = `/api/admin/stats/history?range_type=${timeRange.value}`
+    let url = `/api/admin/stats/history?range_type=${timeRange.value}&timezone=${encodeURIComponent(timezone.value)}`
     if (timeRange.value === 'custom' && customStart.value && customEnd.value) {
       const startISO = new Date(customStart.value + 'T00:00:00+08:00').toISOString()
       const endNext = new Date(customEnd.value + 'T00:00:00+08:00')
@@ -613,7 +618,7 @@ onUnmounted(() => {
   document.removeEventListener('click', closeMoreDropdown)
 })
 
-watch(timeRange, (newVal) => {
+watch([timeRange, timezone], ([newVal]) => {
   if (newVal !== 'custom') {
     loadHistory()
   }

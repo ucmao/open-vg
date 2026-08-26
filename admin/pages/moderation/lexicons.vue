@@ -691,7 +691,10 @@ class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
 import { ref, onMounted, reactive } from 'vue'
 import { Plus, Upload, Download, ChevronsLeft, ChevronsRight, BookOpen } from '@lucide/vue'
 
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -1118,12 +1121,6 @@ const getSeverityLabel = (severity: string) => {
     'HIGH': adminT("High", "高")
   }
   return labels[severity] || severity
-}
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString(localeTag.value, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 // Selection Management

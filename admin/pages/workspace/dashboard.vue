@@ -267,7 +267,7 @@
           <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex justify-between items-start">
               <span class="text-sm text-gray-500">{{ $adminT("Remix Rate", "Remix 转化率") }}</span>
-              <span v-if="remixRateGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="remixRateGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ remixRateGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(remixRateGrowth).toFixed(0) }}%</span>
+              <span v-if="remixRateGrowth !== null" class="text-xs font-bold px-2 py-0.5 rounded" :class="remixRateGrowth >= 0 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">{{ remixRateGrowth >= 0 ? '↑' : '↓' }}{{ Math.abs(remixRateGrowth) }}%</span>
             </div>
             <div class="text-3xl font-bold text-gray-900 mt-2">{{ remixRateText }}</div>
             <div class="mt-3 text-xs text-gray-400">{{ $adminT("Remix count / Total works in period", "Remix 数 / 作品总数（周期内）") }}</div>
@@ -283,7 +283,9 @@
       </svg>
       <div>
         <div class="text-sm font-bold text-blue-800">{{ $adminT("Stats Notice", "统计说明") }}</div>
-        <p class="text-xs text-blue-600 mt-1">{{ $adminT("All statistics are based on Beijing Time (Asia/Shanghai). Top snapshot is real-time; period stats update with time picker.", "所有时间范围均按北京时间（Asia/Shanghai）统计。顶部「实时快照」不随时间切换；下方数据随「时间范围」联动。") }}</p>
+        <p class="text-xs text-blue-600 mt-1">
+          {{ $adminT(`All statistics are calculated based on ${currentTimezoneOption.labelEn}. Top snapshot is real-time; period stats update with time picker.`, `所有时间范围均按 ${currentTimezoneOption.labelZh} 统计。顶部「实时快照」不随时间切换；下方数据随「时间范围」联动。`) }}
+        </p>
       </div>
     </div>
   </div>
@@ -294,6 +296,8 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Activity, CircleDollarSign, TriangleAlert, Database, HelpCircle } from '@lucide/vue'
 import { useAdminApi } from '~/composables/useAdminApi'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+import AdminTimezoneSelect from '~/components/AdminTimezoneSelect.vue'
 
 definePageMeta({
   layout: 'default',
@@ -310,6 +314,7 @@ useHead({
 type TimeRangeValue = 'today' | 'yesterday' | '7d' | '30d' | 'month' | 'last_month' | 'quarter' | 'last_quarter' | 'year' | 'custom'
 
 const adminApi = useAdminApi()
+const { timezone, currentTimezoneOption } = useAdminTimezone()
 const route = useRoute()
 const router = useRouter()
 const snapshot = ref<{
@@ -323,60 +328,113 @@ const snapshot = ref<{
 } | null>(null)
 const period = ref<{
   period_label: string
-  current: Record<string, number>
-  previous: Record<string, number>
-  totals: { total_users: number; total_works: number; total_real_users: number }
+  period_start: string
+  period_end: string
+  current: {
+    revenue: number
+    recharge_count: number
+    new_users: number
+    active_users: number
+    new_works: number
+    likes: number
+    comments: number
+    favorites: number
+    remixes: number
+    payment_initiated: number
+    consume_frequency: number
+    successful_works: number
+    paying_users: number
+    retention_cohort: number
+    retention_count: number
+    retention_rate: number | null
+  }
+  previous: {
+    revenue: number
+    recharge_count: number
+    new_users: number
+    active_users: number
+    new_works: number
+    likes: number
+    comments: number
+    favorites: number
+    remixes: number
+    payment_initiated: number
+    consume_frequency: number
+    successful_works: number
+    paying_users: number
+    retention_cohort: number
+    retention_count: number
+    retention_rate: number | null
+  }
+  totals: {
+    total_users: number
+    total_works: number
+    total_real_users: number
+  }
 } | null>(null)
-const timeRange = ref<TimeRangeValue>('7d')
+
 const loading = ref(true)
-
-const primaryTimeOptions = computed(() => [
-  { value: 'today', label: (useAdminI18n().translateText)("Today", "今日") },
-  { value: 'yesterday', label: (useAdminI18n().translateText)("Yesterday", "昨日") },
-  { value: '7d', label: (useAdminI18n().translateText)("Last 7 Days", "近7天") },
-  { value: '30d', label: (useAdminI18n().translateText)("Last 30 Days", "近30天") },
-])
-
-const moreTimeOptions = computed(() => [
-  { value: 'month', label: (useAdminI18n().translateText)("This Month", "本月") },
-  { value: 'last_month', label: (useAdminI18n().translateText)("Last Month", "上月") },
-  { value: 'quarter', label: (useAdminI18n().translateText)("This Quarter", "本季度") },
-  { value: 'last_quarter', label: (useAdminI18n().translateText)("Last Quarter", "上季度") },
-  { value: 'year', label: (useAdminI18n().translateText)("This Year", "今年") },
-  { value: 'custom', label: (useAdminI18n().translateText)("Custom", "自定义") },
-])
-
+const timeRange = ref<TimeRangeValue>('7d')
 const showMoreDropdown = ref(false)
-const moreDropdownLabel = computed(() => {
-  const opt = moreTimeOptions.value.find(o => o.value === timeRange.value)
-  return opt ? opt.label : useAdminI18n().translateText("More", "更多")
-})
-const isMoreOptionActive = computed(() => moreTimeOptions.value.some(o => o.value === timeRange.value))
-
 const customStart = ref('')
 const customEnd = ref('')
 
+const primaryTimeOptions = computed(() => [
+  { value: 'today', label: useAdminI18n().translateText('Today', '今天') },
+  { value: 'yesterday', label: useAdminI18n().translateText('Yesterday', '昨天') },
+  { value: '7d', label: useAdminI18n().translateText('Last 7 Days', '近 7 天') },
+  { value: '30d', label: useAdminI18n().translateText('Last 30 Days', '近 30 天') }
+])
+
+const moreTimeOptions = computed(() => [
+  { value: 'month', label: useAdminI18n().translateText('This Month', '本月') },
+  { value: 'last_month', label: useAdminI18n().translateText('Last Month', '上月') },
+  { value: 'quarter', label: useAdminI18n().translateText('This Quarter', '本季度') },
+  { value: 'last_quarter', label: useAdminI18n().translateText('Last Quarter', '上季度') },
+  { value: 'year', label: useAdminI18n().translateText('This Year', '今年') },
+  { value: 'custom', label: useAdminI18n().translateText('Custom Range', '自定义') }
+])
+
+const moreDropdownLabel = computed(() => {
+  const opt = moreTimeOptions.value.find(o => o.value === timeRange.value)
+  return opt ? opt.label : useAdminI18n().translateText('More', '更多')
+})
+const isMoreOptionActive = computed(() => moreTimeOptions.value.some(o => o.value === timeRange.value))
+
 function setRange(value: string) {
   timeRange.value = value as TimeRangeValue
-  router.replace({ query: { ...route.query, range: value } })
   if (value !== 'custom') {
-    loadPeriod()
+    router.replace({ query: { ...route.query, range: value } })
   }
 }
 
 function applyCustomRange() {
   if (!customStart.value || !customEnd.value) return
-  if (customStart.value > customEnd.value) return
-  router.replace({ query: { ...route.query, range: 'custom', start: customStart.value, end: customEnd.value } })
+  router.replace({
+    query: {
+      ...route.query,
+      range: 'custom',
+      start: customStart.value,
+      end: customEnd.value
+    }
+  })
   loadPeriod()
 }
 
-const periodLabel = computed(() => period.value?.period_label ?? '')
+const periodLabel = computed(() => {
+  if (!period.value) return ''
+  if (period.value.period_start && period.value.period_end) {
+    const s = period.value.period_start.slice(0, 10)
+    const e = period.value.period_end.slice(0, 10)
+    return `${s} ~ ${e}`
+  }
+  return ''
+})
 
 function growthPercent(key: string): number | null {
   if (!period.value) return null
-  const prev = period.value.previous[key]
-  const curr = period.value.current[key]
+  const prev = (period.value.previous as any)[key]
+  const curr = (period.value.current as any)[key]
   if (prev === 0) return curr > 0 ? 100 : 0
   return Math.round(((curr - prev) / prev) * 100)
 }
@@ -389,22 +447,52 @@ const paymentConversionRateBar = computed(() => {
   return Math.min(100, (c.recharge_count / den) * 100)
 })
 
-const payRateText = computed(() => {
-  if (!period.value) return '—'
-  const c = period.value.current
-  const den = c.active_users || 0
-  if (den === 0) return '0%'
-  return ((c.paying_users / den) * 100).toFixed(1) + '%'
+const revenueGrowth = computed(() => {
+  if (!period.value) return null
+  const c = period.value.current.revenue
+  const p = period.value.previous.revenue
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
 })
 
-const payRateGrowth = computed(() => {
+const newUsersGrowth = computed(() => {
   if (!period.value) return null
-  const c = period.value.current
-  const p = period.value.previous
-  const currRate = c.active_users ? (c.paying_users / c.active_users) * 100 : 0
-  const prevRate = p.active_users ? (p.paying_users / p.active_users) * 100 : 0
-  if (prevRate === 0) return currRate > 0 ? 100 : 0
-  return Math.round(((currRate - prevRate) / prevRate) * 100)
+  const c = period.value.current.new_users
+  const p = period.value.previous.new_users
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
+})
+
+const activeUsersGrowth = computed(() => {
+  if (!period.value) return null
+  const c = period.value.current.active_users
+  const p = period.value.previous.active_users
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
+})
+
+const newWorksGrowth = computed(() => {
+  if (!period.value) return null
+  const c = period.value.current.new_works
+  const p = period.value.previous.new_works
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
+})
+
+const payingUsersRate = computed(() => {
+  if (!period.value) return '0.0%'
+  const p = period.value.current.paying_users
+  const u = period.value.current.active_users
+  if (u === 0) return '0.0%'
+  return ((p / u) * 100).toFixed(1) + '%'
+})
+
+const payingUsersGrowth = computed(() => {
+  if (!period.value) return null
+  const c = period.value.current.paying_users
+  const p = period.value.previous.paying_users
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
 })
 
 const interactionGrowth = computed(() => {
@@ -416,24 +504,22 @@ const interactionGrowth = computed(() => {
 })
 
 const remixRateText = computed(() => {
-  if (!period.value) return '—'
-  const works = period.value.current.new_works || 0
-  const remixes = period.value.current.remixes || 0
-  if (works === 0) return '0%'
-  return ((remixes / works) * 100).toFixed(1) + '%'
+  if (!period.value) return '0%'
+  const r = period.value.current.remixes
+  const w = period.value.current.new_works
+  if (w === 0) return '0%'
+  return ((r / w) * 100).toFixed(1) + '%'
 })
 
 const remixRateGrowth = computed(() => {
   if (!period.value) return null
-  const c = period.value.current
-  const p = period.value.previous
-  const currRate = c.new_works ? (c.remixes / c.new_works) * 100 : 0
-  const prevRate = p.new_works ? (p.remixes / p.new_works) * 100 : 0
-  if (prevRate === 0) return currRate > 0 ? 100 : 0
-  return Math.round(((currRate - prevRate) / prevRate) * 100)
+  const c = period.value.current.remixes
+  const p = period.value.previous.remixes
+  if (p === 0) return c > 0 ? 100 : 0
+  return Math.round(((c - p) / p) * 100)
 })
 
-const retentionRateText = computed(() => {
+const retentionText = computed(() => {
   if (!period.value) return '—'
   const r = period.value.current.retention_rate
   if (r == null) return '—'
@@ -450,7 +536,7 @@ const retentionGrowth = computed(() => {
 
 async function loadSnapshot() {
   try {
-    const res = await adminApi.get('/api/admin/stats/snapshot')
+    const res = await adminApi.get(`/api/admin/stats/snapshot?timezone=${encodeURIComponent(timezone.value)}`)
     if (res.success) snapshot.value = res.data
   } catch (e) {
     console.error('Failed to load snapshot:', e)
@@ -460,7 +546,7 @@ async function loadSnapshot() {
 async function loadPeriod() {
   loading.value = true
   try {
-    let url = `/api/admin/stats/period?range_type=${timeRange.value}`
+    let url = `/api/admin/stats/period?range_type=${timeRange.value}&timezone=${encodeURIComponent(timezone.value)}`
     if (timeRange.value === 'custom' && customStart.value && customEnd.value) {
       const startISO = new Date(customStart.value + 'T00:00:00+08:00').toISOString()
       const endNext = new Date(customEnd.value + 'T00:00:00+08:00')
@@ -502,7 +588,8 @@ onUnmounted(() => {
   document.removeEventListener('click', closeMoreDropdown)
 })
 
-watch(timeRange, () => {
+watch([timeRange, timezone], () => {
+  loadSnapshot()
   loadPeriod()
 })
 </script>

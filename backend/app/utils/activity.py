@@ -17,10 +17,8 @@ def record_user_activity(user_id: int, db: "Session") -> None:
      heartbeat ；。
     activity_date ，「」「」。
     """
-    tz_beijing = pytz.timezone("Asia/Shanghai")
     now_utc = datetime.now(timezone.utc)
-    now_beijing = now_utc.astimezone(tz_beijing)
-    activity_date = now_beijing.date()
+    activity_date = now_utc.date()
 
     from ..models.user_activity_log import UserActivityLog
 

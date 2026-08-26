@@ -397,8 +397,10 @@ import { Info, ExternalLink, Plus, Star, Eye, EyeOff, Check, X } from '@lucide/v
 import { useAdminApi } from '~/composables/useAdminApi'
 import { useToast } from '~/composables/useToast'
 import { useConfirm } from '~/composables/useConfirm'
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
 
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default',
@@ -639,17 +641,6 @@ const saveSnippet = async () => {
     toast.error(adminT("Save failed", "保存失败"))
     console.error('Failed to save snippet:', error)
   }
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return '-'
-  return new Date(dateString).toLocaleString(localeTag.value, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 
 onMounted(() => {

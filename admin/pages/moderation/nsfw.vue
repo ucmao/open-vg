@@ -467,7 +467,10 @@ import { Video, ImageIcon, Check, X, ExternalLink, CheckCircle, ChevronsLeft, Ch
 import { validateReason } from '~/utils/reasonValidation'
 import { useFrontendUrl } from '~/composables/useFrontendUrl'
 
+import { useAdminTimezone } from '~/composables/useAdminTimezone'
+
 const { translateText: adminT, localeTag } = useAdminI18n()
+const { formatDateTime: formatDate } = useAdminTimezone()
 
 definePageMeta({
   layout: 'default'
@@ -744,12 +747,6 @@ const getTagLabel = (tag: string) => {
 const truncateText = (text: string, maxLength: number) => {
   if (!text) return ''
   return text.length > maxLength ? text.substring(0, maxLength) + '...' : text
-}
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString(localeTag.value, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 const handleImageError = (event: Event) => {

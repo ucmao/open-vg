@@ -550,16 +550,9 @@
           <h1 class="text-lg font-semibold text-gray-900 truncate">{{ pageTitle }}</h1>
         </div>
 
-        <!-- Language Switcher in Header -->
+        <!-- Global Preferences (Language & Timezone Popover) -->
         <div class="flex items-center space-x-3">
-          <select
-            :value="lang"
-            @change="(e: any) => setLanguage(e.target.value)"
-            class="text-xs border rounded-lg px-2.5 py-1.5 bg-white text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-sm font-medium"
-          >
-            <option value="en">🇬🇧 English</option>
-            <option value="zh">🇨🇳 简体中文</option>
-          </select>
+          <AdminGlobalPreferences />
         </div>
       </header>
 
