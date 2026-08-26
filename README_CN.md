@@ -122,9 +122,12 @@ vidgen/
 │   └── *.service            # systemd 服务配置文件
 │
 └── docs/                    # 📚 技术开发与部署文档
-    ├── AA_PANEL_DEPLOYMENT_GUIDE.md
-    ├── SYSTEMD_UNIFIED_GUIDE.md
-    └── ...
+    ├── 01-getting-started/  # 环境配置与本地开发指南
+    ├── 02-architecture/     # 架构设计与工作流引擎
+    ├── 03-subsystems/        # 前后端子系统与数据库 Schema
+    ├── 04-integrations/     # 支付网关、存储与 AI 服务集成
+    ├── 05-deployment/       # Docker、systemd 与生产部署
+    └── 06-governance/       # 贡献指南与安全规范
 ```
 
 ---
@@ -224,6 +227,8 @@ python scripts/seed_all.py
 ```
 
 该命令可重复执行。初始化失败时会以非零状态退出，不会继续执行后续步骤。
+
+> 💡 **提示**：运行 `python scripts/seed_all.py` 会安全地应用数据库迁移、创建初始管理员并导入基础演示数据。如需了解高级数据导入选项，请参考 [docs/01-getting-started/quickstart.md](docs/01-getting-started/quickstart.md)。
 
 #### 启动 FastAPI 服务
 

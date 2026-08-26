@@ -122,9 +122,12 @@ vidgen/
 │   └── *.service            # Service unit configuration files
 │
 └── docs/                    # 📚 Technical Documentation & Guides
-    ├── AA_PANEL_DEPLOYMENT_GUIDE.md
-    ├── SYSTEMD_UNIFIED_GUIDE.md
-    └── ...
+    ├── 01-getting-started/  # Environment & local setup guides
+    ├── 02-architecture/     # System architecture & workflow engine
+    ├── 03-subsystems/        # Backend, frontend & database schemas
+    ├── 04-integrations/     # Payments, R2 storage & AI provider adapters
+    ├── 05-deployment/       # Docker, systemd & production guides
+    └── 06-governance/       # Security, contributing & code of conduct
 ```
 
 ---
@@ -225,16 +228,7 @@ python scripts/seed_all.py
 
 The command is safe to run repeatedly. A failed migration or initialization step exits with a non-zero status instead of continuing with a partial setup.
 
-The historical exported dataset is retained only for operators who have
-reviewed its content and media licenses. It is never imported implicitly:
-
-```bash
-SEED_PROFILE=full ALLOW_UNSAFE_FULL_SEED=true python scripts/seed_all.py
-```
-
-Safe/core imports are additive and never delete operator-created model or
-workflow rows. Moving an existing deployment away from the historical full
-dataset therefore requires an explicit, reviewed cleanup migration.
+> 💡 **Tip**: Running `python scripts/seed_all.py` safely applies migrations, creates the initial admin, and seeds safe demo content. For detailed dataset seeding options, refer to [docs/01-getting-started/quickstart.md](docs/01-getting-started/quickstart.md).
 
 #### Run FastAPI Development Server
 
